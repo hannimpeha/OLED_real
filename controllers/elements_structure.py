@@ -9,21 +9,30 @@ import threading
 
 file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv'
 file_png = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.png'
+file_emission = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/EML_graph.csv'
 emission_png = '/Users/hannahlee/PycharmProjects/AwesomeProject/controllers/resources/EML_graph.png'
 cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness', 'Unit']
 cols_emission = ['L#', 'EM Materials', 'Spectrum', 'ExcitonProp', 'Q.Y', 'D.O', 'EMZone']
 
 class Elements_Structure():
-
     def __init__(self, window):
         frame = Frame(window)
         frame.grid(row=0, column=1, sticky=NW, padx=20)
         label0 = Label(frame)
         label_elem = Label(label0, text="Elements Structure", font=("Arial", 13))
 
+        self.layer_name = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
+        self.material = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
+        self.refractive_index = ["Al.dat", "ETL.dat", "EML.dat", "HTL.dat", "HTL1.dat", "ITO.dat"]
+        self.thickness = [100, 100.5, 20, 10, 100.5, 70]
+        self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
+
+        self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness, self.unit]]
+        self.num_row = len(self.tempList)
+
         self.label1 = Label(frame)
-        label_measure = Label(self.label1, text="Number of Layers:")
-        spin = Spinbox(self.label1, to=11, width=5)
+        # label_measure = Label(self.label1, text="Number of Layers:")
+        # spin = Spinbox(self.label1, values= self.num_row, to=11, width=5)
         self.add_button = Button(self.label1, text="Add", command=self.add_row)
         self.del_button = Button(self.label1, text="Delete", command=self.delete_row)
         self.save_button = Button(self.label1, text="Save", command=self.save_row)
@@ -37,15 +46,6 @@ class Elements_Structure():
             self.listBox.column(col, width=85)
             self.listBox.heading(col, text=col, command=lambda _col=col: self.treeview_sort_column(self.listBox, _col, False))
 
-        self.layer_name=["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
-        self.material = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
-        self.refractive_index = ["Al.dat", "ETL.dat", "EML.dat", "HTL.dat", "HTL1.dat", "ITO.dat"]
-        self.thickness = [100, 100.5, 20, 10, 100.5, 70]
-        self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
-
-        self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness, self.unit]]
-        self.num_row = len(self.tempList)
-
         for i in range(len(self.layer_name)):
             self.num_row = i+1
             self.listBox.insert('', i, values=(self.num_row, self.layer_name[i], self.material[i],
@@ -56,8 +56,8 @@ class Elements_Structure():
         label0.grid(row=0, column=1, sticky=NW)
         label_elem.grid(row=0, column=0, sticky=NE)
         self.label1.grid(row=0, column=1, columnspan=6, sticky=NE)
-        label_measure.grid(row=0, column=1, sticky=NE)
-        spin.grid(row=0, column=2, sticky=NE)
+        # label_measure.grid(row=0, column=1, sticky=NE)
+        # spin.grid(row=0, column=2, sticky=NE)
         self.listbox.grid(row=2, column=1, columnspan=7, sticky=NW, pady=5)
         self.listBox.grid(row=0, column=0)
         self.add_button.grid(row=2, column=1, sticky=NE)
@@ -127,24 +127,107 @@ class Emission_Layer():
         frame = Frame(window)
         frame.grid(row=3, column=1, sticky=NW, pady=30)
         self.label = Label(frame, text="Emission Layer", font=("Arial",13))
-        #cols = ('L#', 'EM Materials', 'Spectrum', 'Exciton Prop', 'Q.Y', 'D.O', 'EM Zone')
-        self.listBox = Treeview(frame, columns=cols_emission, show='headings')
+        self.label1 = Label(frame)
+
+        self.add_button = Button(self.label1, text="Add", command=self.add_row)
+        self.del_button = Button(self.label1, text="Delete", command=self.delete_row)
+        self.save_button = Button(self.label1, text="Save", command=self.save_row)
+
+        self.listbox = Label(frame)
+        # cols = ('L#', 'Layer Name', 'Material', 'Refractive Index', 'Thickness', 'Unit')
+        self.listBox = Treeview(self.listbox, col=cols_emission, show="headings")
+        self.listBox.bind('<Double-1>', self.set_cell_value)
 
         for col in cols_emission:
             self.listBox.column(col, width=75)
-            self.listBox.heading(col, text=col)
-        tempList = [["none", "2pplAn_PL.dat", "1", "83", "94", "Sheet"]]
-        tempList.sort(key=lambda e: e[1], reverse=True)
-        for i, (em_materials, spectrum, exicton_prop, qy, do, em_zone) in enumerate(tempList, start=1):
-            self.listBox.insert("", "end", values=(i, em_materials, spectrum, exicton_prop, qy, do, em_zone))
-        self.label.grid(row=0, column=0, sticky=W)
-        self.listBox.grid(row=1, column=0, sticky=W)
+            self.listBox.heading(col, text=col, command=lambda _col=col: self.treeview_sort_column(self.listBox, _col, False))
+
+        self.EMMaterials = ["None"]
+        self.Spectrum = ["2pplAn_PL.dat", "ETL", "EML", "HTL2", "HTL1", "ITO"]
+        self.ExitonProp = [1]
+        self.QY = [83]
+        self.DO = [94]
+        self.EMZone = ["Sheet"]
+        self.tempList = [[self.EMMaterials, self.Spectrum, self.ExitonProp, self.QY, self.DO, self.EMZone]]
+        self.num_row = len(self.tempList)
+        self.tempList.sort(key=lambda e: e[1], reverse=True)
+
+        for i in range(len(self.EMMaterials)):
+            self.num_row = i + 1
+            self.listBox.insert('', i, values=(self.num_row, self.EMMaterials[i], self.Spectrum[i],
+                                               self.ExitonProp[i], self.QY[i],
+                                               self.DO[i], self.EMZone[i]))
+
+        self.label.grid(row=0, column=1, sticky=NW)
+        self.label1.grid(row=0, column=1, columnspan=6, sticky=NE)
+        self.listbox.grid(row=2, column=1, columnspan=7, sticky=NW, pady=5)
+        self.listBox.grid(row=0, column=0)
+        self.add_button.grid(row=2, column=1, sticky=NE)
+        self.del_button.grid(row=2, column=2, sticky=NE)
+        self.save_button.grid(row=2, column=3, sticky=NE)
+
+
+    def add_row(self):
+        self.num_row += 1
+        # for i, (layer_name, material, refractive_index, thickness, unit) in enumerate(self.tempList, start=1):
+        #     self.listBox.insert("", "end", values=(i, layer_name, material, refractive_index, thickness, unit))
+        self.EMMaterials.append("to be named")
+        self.Spectrum.append("to be named")
+        self.ExitonProp.append("to be named")
+        self.QY.append("to be named")
+        self.DO.append("to be named")
+        self.EMZone.append("to be named")
+        self.listBox.insert('', len(self.EMMaterials) - 1, values=(self.num_row,
+                                                                  self.EMMaterials[len(self.EMMaterials) - 1],
+                                                                  self.Spectrum[len(self.Spectrum) - 1],
+                                                                  self.ExitonProp[len(self.ExitonProp) - 1],
+                                                                  self.QY[len(self.QY) - 1],
+                                                                  self.DO[len(self.DO) - 1],
+                                                                  self.EMZone[len(self.EMZone)-1]))
+        #self.tempList.append([self.layer_name, self.material, self.refractive_index, self.thickness, self.unit])
+        self.listBox.update()
+
+    def delete_row(self):
+        tuple = self.listBox.selection()
+        self.listBox.delete(tuple)
+        self.num_row -= 1
+
+    def save_row(self):
+        for line in self.listBox.get_children():
+            with open(file_emission, "w") as foo:
+                foo.write(",".join([str(n) for n in cols_emission])+"\n")
+                foo.write(",".join([str(n) for n in self.listBox.item(line)['values']])+"\n")
+
+    def treeview_sort_column(self, tv, col, reverse):
+        l = [(tv.set(k, col), k) for k in tv.get_children('')]
+        l.sort(reverse=reverse)
+        for index, (val, k) in enumerate(l):
+            tv.move(k, '', index)
+            tv.heading(col, command=lambda: self.treeview_sort_column(tv, col, not reverse))
+
+    def set_cell_value(self, event):
+        for item in self.listBox.selection():
+            item_text = self.listBox.item(item, "values")
+            self.column = self.listBox.identify_column(event.x)
+            self.row = self.listBox.identify_row(event.y)
+        cn = int(str(self.column).replace('#', ''))
+        rn = int(str(self.row).replace('I', ''))
+        self.entryedit = Text(self.listBox, width=20, height=1)
+        self.entryedit.place(x= cn, y= rn)
+
+        self.okb = Button(self.listBox, text='OK', width=4, command=self.save_edit)
+        self.okb.place(x= cn + 150, y= rn )
+
+    def save_edit(self):
+        self.listBox.set(self.listBox.selection(), column=self.column, value=self.entryedit.get(0.0, "end"))
+        self.entryedit.destroy()
+        self.okb.destroy()
 
 
 class Emission_Zone_Setting():
     def __init__(self, window):
         self.frame = Frame(window)
-        self.frame.grid(row=4, column=1, sticky=NW)
+        self.frame.grid(row=5, column=1, sticky=NW)
         self.finished = False
 
         self.label0 = Label(self.frame)
