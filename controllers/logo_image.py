@@ -6,6 +6,7 @@ import socket
 
 
 # Logo_Image // Properties // Execute // Project_Info
+logo_image = '/Users/hannahlee/PycharmProjects/AwesomeProject/controllers/resources/Logo.png'
 
 class Logo_Image():
     def __init__(self, window):
@@ -13,7 +14,7 @@ class Logo_Image():
         frame.grid(row=0, column=2, sticky=NW, pady=10)
         self.width = 480
         self.height = 230
-        self.image = Image.open('/Users/hannahlee/PycharmProjects/AwesomeProject/controllers/resources/Logo.png').convert("RGB")
+        self.image = Image.open(logo_image).convert("RGB")
         self.copy = self.image.copy()
         self.photo = ImageTk.PhotoImage(self.image)
         self.label = Label(frame, image=self.photo)

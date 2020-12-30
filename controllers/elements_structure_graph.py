@@ -35,7 +35,7 @@ class Elements_Structure_Graph():
         tps.pivot_table(values=["Thickness"], columns="LayerName", aggfunc='sum')
         colors = ["slateblue", "thistle", "turquoise", "olive", "skyblue", "pink"]
         # tps.div(tps.sum(1), axis=0)
-        tps.set_index('LayerName').T.plot(kind='bar', stacked=True, ax=self.ax, color=colors)
+        tps.set_index('LayerName').T.plot(kind='bar', stacked=True, ax=self.ax, color=colors, width=200)
 
 
         for index, rect in enumerate(self.ax.patches):
