@@ -34,10 +34,7 @@ class Elements_Structure_Graph():
         tps = pd.DataFrame(list(zip(self.layer_name, self.thickness)), columns =['LayerName', 'Thickness'])
         tps.pivot_table(values=["Thickness"], columns="LayerName", aggfunc='sum')
         colors = ["slateblue", "thistle", "turquoise", "olive", "skyblue", "pink"]
-        # tps.div(tps.sum(1), axis=0)
         tps.set_index('LayerName').T.plot(kind='bar', stacked=True, ax=self.ax, color=colors, width=200)
-
-
         for index, rect in enumerate(self.ax.patches):
             height = rect.get_height()
             width = rect.get_width()
@@ -52,6 +49,8 @@ class Elements_Structure_Graph():
 
         self.ax.axes.get_xaxis().set_visible(False)
         self.ax.legend().remove()
+        #self.ax.set_axis_off()
+
         Emission_Layer_Graph(self.frame).__init__(self.frame)
 
     def draw(self):
