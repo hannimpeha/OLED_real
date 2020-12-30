@@ -12,7 +12,7 @@ class Simulator():
         self.root.title("JooAm Angular Luminance Spectrometer")
         self.root.iconbitmap("/Users/hannahlee/PycharmProjects/AwesomeProject/controllers/resources/pyc.ico")
         self.root.geometry('{}x{}'.format(1600, 900))
-        self.root.resizable(False, False)
+        # self.root.resizable(False, False)
         self.root.update()
         self.main()
 
@@ -40,11 +40,9 @@ class Simulator():
         tabControl.add(tab2, text="Result")
         tabControl.pack(expand=1, fill="both")
 
-        Elements_Structure_Graph(Frame(self.root)).__init__(tab1)
         Elements_Structure(Frame(self.root)).__init__(tab1)
         Logo_Image(Frame(self.root)).__init__(tab1)
 
-        Elements_Structure_Graph(Frame(self.root)).__init__(tab2)
         Axes_Properties(Frame(self.root)).__init__(tab2)
         Plotting_Param(Frame(self.root)).__init__(tab2)
 

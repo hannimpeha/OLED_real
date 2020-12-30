@@ -7,30 +7,34 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from PIL import Image, ImageTk
 
 # Elements_Structure_Graph // Emission_Layer_Graph
+root = Tk()
+
 
 class Elements_Structure_Graph():
     def __init__(self, window):
         frame = Frame(window)
         frame.grid(row=0, column=0, rowspan=3, sticky=NW)
+        label_graph = Label(frame, text="Elements Structure Graph")
+        label_graph.grid(row=0, column=0, padx=10)
 
-        df = pd.read_csv("/Users/hannahlee/PycharmProjects/AwesomeProject/controllers/resources/fakedata.csv", header=0)
-        tps = df.pivot_table(values=["Thickness"], columns="Layer name", aggfunc='sum')
-        tps = tps.div(tps.sum(1), axis=0)
-        fig = plt.Figure(figsize=(4.5,4.5))
-        ax = fig.add_subplot(111)
-        tps.plot.bar(stacked=True, ax=ax)
+        self.graph = Label(frame)
+        self.graph.grid(row=1, column=0, padx=10, pady=10)
+        df = pd.read_csv("/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv", header=0)
+        self.fig = plt.Figure(figsize=(4.5, 4.5))
+
         matplotlib.use('TkAgg')
-        canvas = FigureCanvasTkAgg(fig, master=frame)
-        canvas.get_tk_widget().grid(row=0, column=0, padx=10, pady=10)
-        fig.set_canvas(canvas=canvas)
-
-        Emission_Layer_Graph(frame).__init__(frame)
-
+        canvas = FigureCanvasTkAgg(self.fig, master=self.graph)
+        canvas.get_tk_widget().grid(row=1, column=0, padx=10, pady=10)
+        self.fig.set_canvas(canvas=canvas)
+        tps = df.pivot_table(values=["Thickness"], columns="LayerName", aggfunc='sum')
+        tps = tps.div(tps.sum(1), axis=0)
+        ax = self.fig.add_subplot(111)
+        tps.plot.bar(stacked=True, ax=ax)
 
 class Emission_Layer_Graph():
     def __init__(self, window):
         frame = Frame(window)
-        frame.grid(row=1, column=0, rowspan=2, sticky=SW, padx=30, pady=50)
+        frame.grid(row=2, column=0, rowspan=2, sticky=SW, padx=30, pady=50)
 
         label_graph = Label(frame, text="Emission Layer Graph")
         label_graph.grid(row=0, column=0, sticky=NW)
@@ -51,3 +55,6 @@ class Emission_Layer_Graph():
         photo = ImageTk.PhotoImage(image)
         event.label.config(image=photo)
         event.label.image = photo
+
+Elements_Structure_Graph(root).__init__(root)
+root.mainloop()
