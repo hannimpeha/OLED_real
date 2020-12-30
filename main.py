@@ -2,6 +2,7 @@ from controllers.elements_structure import *
 from controllers.logo_image import *
 from controllers.axes_properties import *
 from controllers.plotting_param import *
+from controllers.elements_structure_graph import *
 from tkinter import filedialog, simpledialog, ttk
 
 
@@ -40,9 +41,11 @@ class Simulator():
         tabControl.pack(expand=1, fill="both")
 
         Elements_Structure(Frame(self.root)).__init__(tab1)
+        Elements_Structure_Graph(Frame(self.root)).__init__(tab1)
         Logo_Image(Frame(self.root)).__init__(tab1)
 
         Axes_Properties(Frame(self.root)).__init__(tab2)
+        Elements_Structure_Graph(Frame(self.root)).__init__(tab2)
         Plotting_Param(Frame(self.root)).__init__(tab2)
 
     def file_new(self):

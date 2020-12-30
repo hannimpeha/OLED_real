@@ -2,23 +2,20 @@ from tkinter import *
 from tkinter.ttk import *
 from sympy import *
 from matplotlib import rcParams
-import pandas as pd
+
 import threading
-from PIL import Image, ImageTk
-import matplotlib
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 # Elements_Structure // Emission_Layer // Emission_Zone_Setting // Elements_Structure_Graph // Emission_Layer_Graph
 
 file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv'
+file_png = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.png'
+emission_png = '/Users/hannahlee/PycharmProjects/AwesomeProject/controllers/resources/EML_graph.png'
 cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness', 'Unit']
 cols_emission = ['L#', 'EM Materials', 'Spectrum', 'ExcitonProp', 'Q.Y', 'D.O', 'EMZone']
 
 class Elements_Structure():
 
     def __init__(self, window):
-
-        self.tempList = [["Al", "Al", "Al.dat", "100", "nm"]]
         frame = Frame(window)
         frame.grid(row=0, column=1, sticky=NW, padx=20)
         label0 = Label(frame)
@@ -40,31 +37,19 @@ class Elements_Structure():
             self.listBox.column(col, width=85)
             self.listBox.heading(col, text=col, command=lambda _col=col: self.treeview_sort_column(self.listBox, _col, False))
 
-        # layer_name = StringVar()
-        # material = StringVar()
-        # refractive_index = StringVar()
-        # thickness = StringVar()
-        # unit = StringVar()
-
-        self.layer_name=["Al"]
-        self.material = ["Al"]
-        self.refractive_index = ["Al.dat"]
-        self.thickness = [100]
-        self.unit = ["nm"]
+        self.layer_name=["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
+        self.material = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
+        self.refractive_index = ["Al.dat", "ETL.dat", "EML.dat", "HTL.dat", "HTL1.dat", "ITO.dat"]
+        self.thickness = [100, 100.5, 20, 10, 100.5, 70]
+        self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
 
         self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness, self.unit]]
         self.num_row = len(self.tempList)
 
-        for i in range(min(len(self.layer_name), len(self.material), len(self.refractive_index), len(self.thickness),
-                           len(self.unit))):
+        for i in range(len(self.layer_name)):
+            self.num_row = i+1
             self.listBox.insert('', i, values=(self.num_row, self.layer_name[i], self.material[i],
                                                self.refractive_index[i], self.thickness[i], self.unit[i]))
-
-        # self.layer_name = Entry(self.listBox, textvariable=layer_name, width=10)
-        # self.material = Entry(self.listBox, textvariable=material, width=10)
-        # self.refractive_index = Entry(self.listBox, textvariable=refractive_index, width=10)
-        # self.thickness = Entry(self.listBox, textvariable=thickness, width=10)
-        # self.unit = Entry(self.listBox, textvariable=unit, width=10)
 
         self.tempList.sort(key=lambda e: e[1], reverse=True)
 
@@ -81,8 +66,6 @@ class Elements_Structure():
 
         Emission_Layer(frame).__init__(frame)
         Emission_Zone_Setting(frame).__init__(frame)
-        Elements_Structure_Graph(frame).__init__(frame)
-        Emission_Layer_Graph(frame).__init__(frame)
 
 
     def add_row(self):
@@ -135,7 +118,7 @@ class Elements_Structure():
 
     def save_row(self):
         for line in self.listBox.get_children():
-            with open(file, "a+") as foo:
+            with open(file, "w") as foo:
                 foo.write(",".join([str(n) for n in cols_element])+"\n")
                 foo.write(",".join([str(n) for n in self.listBox.item(line)['values']])+"\n")
 
@@ -233,56 +216,3 @@ class Emission_Zone_Setting():
         with threading.Lock():
             finished = True
             self.text.insert('1.0', "y=a+bx")
-
-
-class Elements_Structure_Graph():
-    def __init__(self, window):
-        self.frame = Frame(window)
-        self.frame.grid(row=0, column=0, rowspan=4, sticky=NW)
-        label_graph = Label(self.frame, text="Elements Structure Graph")
-        label_graph.grid(row=0, column=0, padx=10, sticky=W)
-
-        #self.layer_name = ["LayerName", "Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
-        #self.thickness = ["Thickness", 100, 100.5, 20, 10, 100.5, 70]
-        self.button = Button(self.frame, text="ReLoad",command=self.write_graph)
-        self.button.grid(row=0, column=0, padx=10, sticky=E)
-
-    def write_graph(self):
-        df = pd.read_csv(file, header=0)
-        fig = plt.Figure(figsize=(4.5, 4.5))
-
-        matplotlib.use('TkAgg')
-        canvas = FigureCanvasTkAgg(fig, master=self.frame)
-        canvas.get_tk_widget().grid(row=2, column=0, padx=10, pady=10)
-        fig.set_canvas(canvas=canvas)
-
-        tps = df.pivot_table(values=["Thickness"], columns="LayerName", aggfunc='sum')
-        tps = tps.div(tps.sum(1), axis=0)
-        ax = fig.add_subplot(111)
-        tps.plot.bar(stacked=True, ax=ax)
-
-
-class Emission_Layer_Graph():
-    def __init__(self, window):
-        frame = Frame(window)
-        frame.grid(row=4, column=0, rowspan=3, padx=30, sticky=NW)
-
-        label_graph = Label(frame, text="Emission Layer Graph")
-        label_graph.grid(row=0, column=0, sticky=NW)
-        self.width = 450
-        self.height = 250
-        self.image = Image.open(
-            '/Users/hannahlee/PycharmProjects/AwesomeProject/controllers/resources/EML_graph.png').convert("RGB")
-        self.copy = self.image.copy()
-        self.photo = ImageTk.PhotoImage(self.image)
-        self.label = Label(frame, image=self.photo)
-        self.label.bind('<Configure>', self.resize_image())
-        self.label.grid(row=1, column=0)
-
-    def resize_image(event):
-        new_width = event.width
-        new_height = event.height
-        image = event.copy.resize((new_width, new_height))
-        photo = ImageTk.PhotoImage(image)
-        event.label.config(image=photo)
-        event.label.image = photo
