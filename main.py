@@ -1,5 +1,4 @@
 from controllers.elements_structure import *
-from controllers.elements_structure_graph import *
 from controllers.logo_image import *
 from controllers.axes_properties import *
 from controllers.plotting_param import *
@@ -12,7 +11,7 @@ class Simulator():
         self.root.title("JooAm Angular Luminance Spectrometer")
         self.root.iconbitmap("/Users/hannahlee/PycharmProjects/AwesomeProject/controllers/resources/pyc.ico")
         self.root.geometry('{}x{}'.format(1600, 900))
-        # self.root.resizable(False, False)
+        self.root.resizable(False, False)
         self.root.update()
         self.main()
 

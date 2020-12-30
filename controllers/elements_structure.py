@@ -10,6 +10,10 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 # Elements_Structure // Emission_Layer // Emission_Zone_Setting // Elements_Structure_Graph // Emission_Layer_Graph
 
+file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv'
+cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness', 'Unit']
+cols_emission = ['L#', 'EM Materials', 'Spectrum', 'ExcitonProp', 'Q.Y', 'D.O', 'EMZone']
+
 class Elements_Structure():
 
     def __init__(self, window):
@@ -25,13 +29,14 @@ class Elements_Structure():
         spin = Spinbox(self.label1, to=11, width=5)
         self.add_button = Button(self.label1, text="Add", command=self.add_row)
         self.del_button = Button(self.label1, text="Delete", command=self.delete_row)
+        self.save_button = Button(self.label1, text="Save", command=self.save_row)
 
         self.listbox = Label(frame)
-        cols = ('L#', 'Layer Name', 'Material', 'Refractive Index', 'Thickness', 'Unit')
-        self.listBox = Treeview(self.listbox, col=cols, show="headings")
+        #cols = ('L#', 'Layer Name', 'Material', 'Refractive Index', 'Thickness', 'Unit')
+        self.listBox = Treeview(self.listbox, col=cols_element, show="headings")
         self.listBox.bind('<Double-1>', self.set_cell_value)
 
-        for col in cols:
+        for col in cols_element:
             self.listBox.column(col, width=85)
             self.listBox.heading(col, text=col, command=lambda _col=col: self.treeview_sort_column(self.listBox, _col, False))
 
@@ -72,6 +77,7 @@ class Elements_Structure():
         self.listBox.grid(row=0, column=0)
         self.add_button.grid(row=2, column=1, sticky=NE)
         self.del_button.grid(row=2, column=2, sticky=NE)
+        self.save_button.grid(row=2, column=3, sticky=NE)
 
         Emission_Layer(frame).__init__(frame)
         Emission_Zone_Setting(frame).__init__(frame)
@@ -127,16 +133,21 @@ class Elements_Structure():
         self.listBox.delete(tuple)
         self.num_row -= 1
 
+    def save_row(self):
+        for line in self.listBox.get_children():
+            with open(file, "a+") as foo:
+                foo.write(",".join([str(n) for n in cols_element])+"\n")
+                foo.write(",".join([str(n) for n in self.listBox.item(line)['values']])+"\n")
 
 class Emission_Layer():
     def __init__(self, window):
         frame = Frame(window)
         frame.grid(row=3, column=1, sticky=NW, pady=30)
         self.label = Label(frame, text="Emission Layer", font=("Arial",13))
-        cols = ('L#', 'EM Materials', 'Spectrum', 'Exciton Prop', 'Q.Y', 'D.O', 'EM Zone')
-        self.listBox = Treeview(frame, columns=cols, show='headings')
+        #cols = ('L#', 'EM Materials', 'Spectrum', 'Exciton Prop', 'Q.Y', 'D.O', 'EM Zone')
+        self.listBox = Treeview(frame, columns=cols_emission, show='headings')
 
-        for col in cols:
+        for col in cols_emission:
             self.listBox.column(col, width=75)
             self.listBox.heading(col, text=col)
         tempList = [["none", "2pplAn_PL.dat", "1", "83", "94", "Sheet"]]
@@ -226,37 +237,29 @@ class Emission_Zone_Setting():
 
 class Elements_Structure_Graph():
     def __init__(self, window):
-        frame = Frame(window)
-        frame.grid(row=0, column=0, rowspan=4, sticky=NW)
-        label_graph = Label(frame, text="Elements Structure Graph")
+        self.frame = Frame(window)
+        self.frame.grid(row=0, column=0, rowspan=4, sticky=NW)
+        label_graph = Label(self.frame, text="Elements Structure Graph")
         label_graph.grid(row=0, column=0, padx=10, sticky=W)
 
-        self.layer_name = ["LayerName", "Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
-        self.thickness = ["Thickness", 100, 100.5, 20, 10, 100.5, 70]
+        #self.layer_name = ["LayerName", "Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
+        #self.thickness = ["Thickness", 100, 100.5, 20, 10, 100.5, 70]
+        self.button = Button(self.frame, text="ReLoad",command=self.write_graph)
+        self.button.grid(row=0, column=0, padx=10, sticky=E)
 
-        df = pd.read_csv('/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv', header=0)
-        self.graph = Label(frame)
-        self.graph.grid(row=0, column=0, rowspan=2, padx=10, pady=10)
-
-        button = Button(self.graph, command=self.write_graph, text="ReLoad")
-        button.grid(row=0, column=0, padx=10, sticky=E)
+    def write_graph(self):
+        df = pd.read_csv(file, header=0)
         fig = plt.Figure(figsize=(4.5, 4.5))
 
         matplotlib.use('TkAgg')
-        canvas = FigureCanvasTkAgg(fig, master=self.graph)
-        canvas.get_tk_widget().grid(row=1, column=0, padx=10, pady=10)
+        canvas = FigureCanvasTkAgg(fig, master=self.frame)
+        canvas.get_tk_widget().grid(row=2, column=0, padx=10, pady=10)
         fig.set_canvas(canvas=canvas)
 
         tps = df.pivot_table(values=["Thickness"], columns="LayerName", aggfunc='sum')
         tps = tps.div(tps.sum(1), axis=0)
         ax = fig.add_subplot(111)
         tps.plot.bar(stacked=True, ax=ax)
-
-    def write_graph(self):
-        file = open('/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv', 'w')
-        for i in range(len(self.layer_name)):
-            file.write(self.layer_name[i] + ',' + str(self.thickness[i])+"\n")
-        file.close()
 
 
 class Emission_Layer_Graph():

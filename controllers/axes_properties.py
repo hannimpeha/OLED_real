@@ -154,7 +154,7 @@ class Elements_Structure_Graph():
         self.layer_name = ["LayerName", "Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
         self.thickness = ["Thickness", 100, 100.5, 20, 10, 100.5, 70]
 
-        df = pd.read_csv('/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv', header=0)
+        df = pd.read_csv('/Users/hannahlee/PycharmProjects/penProject/controllers/resources/fakedata.csv', header=0)
         self.graph = Label(frame)
         self.graph.grid(row=0, column=0, rowspan=2, padx=10, pady=10)
 
