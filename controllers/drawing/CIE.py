@@ -2,7 +2,8 @@ from colour.plotting import *
 from colour.colorimetry import *
 import numpy as np
 
-data = np.loadtxt("output/#3-2/CIE/output_CIE_bottom.txt", unpack=True)
+data_path = "output/#3-2/CIE/output_CIE_bottom.txt"
+data = np.loadtxt(data_path, unpack=True)
 index = np.array(range(0,100,10))
 #labels = ('x', 'y', 'z')
 dic = {k: v for k, v in (zip(index, np.transpose(data)))}

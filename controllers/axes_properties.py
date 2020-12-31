@@ -3,7 +3,6 @@ from tkinter import filedialog
 from tkinter.ttk import *
 from os import *
 
-
 file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv'
 file_png = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.png'
 emission_png = '/Users/hannahlee/PycharmProjects/AwesomeProject/controllers/resources/EML_graph.png'
@@ -31,8 +30,6 @@ class Axes_Properties():
 
         Plotting(frame).__init__(frame)
         Exportation(frame).__init__(frame)
-        # Elements_Structure_Graph(frame).__init__(frame)
-        # Emission_Layer_Graph(frame).__init__(frame)
 
 
 class Plotting():

@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-data = np.genfromtxt("../output/#3-2/angular_intensity/output_angular_intensity_bottom.txt", unpack=True)
+data_path = "../../output/#3-2/angular_intensity/output_angular_intensity_bottom.txt"
+data = np.genfromtxt(data_path, unpack=True)
 
 theta = np.linspace(0,np.pi/2, 10)
 r = np.cos(theta)
