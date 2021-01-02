@@ -1,66 +1,65 @@
-from tkinter import ttk
-from tkinter import *
+import sys
 
-root = Tk()
-columns = ("Items", "Values")
-Treeview = ttk.Treeview(root, height=18, show="headings", columns=columns)  #
-
-Treeview.column("Items", width=200, anchor='center')
-Treeview.column("Values", width=200, anchor='center')
-
-Treeview.heading("Items", text="Items")
-Treeview.heading("Values", text="Values")
-
-Treeview.pack(side=LEFT, fill=BOTH)
-
-name = ['Item1', 'Item2', 'Item3']
-ipcode = ['10', '25', '163']
-for i in range(min(len(name), len(ipcode))):
-    Treeview.insert('', i, values=(name[i], ipcode[i]))
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QVBoxLayout, QSizePolicy, QMessageBox, QWidget, QPushButton
+from PyQt5.QtGui import QIcon
 
 
-def treeview_sort_column(tv, col, reverse):
-    l = [(tv.set(k, col), k) for k in tv.get_children('')]
-    l.sort(reverse=reverse)
-    for index, (val, k) in enumerate(l):
-        tv.move(k, '', index)
-        tv.heading(col, command=lambda: treeview_sort_column(tv, col, not reverse))
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
+
+import random
+
+class App(QMainWindow):
+
+    def __init__(self):
+        super().__init__()
+        self.left = 10
+        self.top = 10
+        self.title = 'PyQt5 matplotlib example - pythonspot.com'
+        self.width = 640
+        self.height = 400
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+
+        m = PlotCanvas(self, width=5, height=4)
+        m.move(0,0)
+
+        button = QPushButton('PyQt5 button', self)
+        button.setToolTip('This s an example button')
+        button.move(500,0)
+        button.resize(140,100)
+
+        self.show()
 
 
-def set_cell_value(event):
-    for item in Treeview.selection():
-        item_text = Treeview.item(item, "values")
-        column = Treeview.identify_column(event.x)
-        row = Treeview.identify_row(event.y)
-    cn = int(str(column).replace('#', ''))
-    rn = int(str(row).replace('I', ''))
-    entryedit = Text(root, width=10 + (cn - 1) * 16, height=1)
-    entryedit.place(x=16 + (cn - 1) * 130, y=6 + rn * 20)
+class PlotCanvas(FigureCanvas):
 
-    def saveedit():
-        Treeview.set(item, column=column, value=entryedit.get(0.0, "end"))
-        entryedit.destroy()
-        okb.destroy()
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
 
-    okb = ttk.Button(root, text='OK', width=4, command=saveedit)
-    okb.place(x=90 + (cn - 1) * 242, y=2 + rn * 20)
+        FigureCanvas.__init__(self, fig)
+        self.setParent(parent)
+
+        FigureCanvas.setSizePolicy(self,
+                QSizePolicy.Expanding,
+                QSizePolicy.Expanding)
+        FigureCanvas.updateGeometry(self)
+        self.plot()
 
 
-def newrow():
-    name.append('to be named')
-    ipcode.append('value')
-    Treeview.insert('', len(name) - 1, values=(name[len(name) - 1], ipcode[len(name) - 1]))
-    Treeview.update()
-    newb.place(x=120, y=(len(name) - 1) * 20 + 45)
-    newb.update()
+    def plot(self):
+        data = [random.random() for i in range(25)]
+        ax = self.figure.add_subplot(111)
+        ax.plot(data, 'r-')
+        ax.set_title('PyQt Matplotlib Example')
+        self.draw()
 
-
-Treeview.bind('<Double-1>', set_cell_value)
-newb = ttk.Button(root, text='new item', width=20, command=newrow)
-newb.place(x=120, y=(len(name) - 1) * 20 + 45)
-
-for col in columns:
-    Treeview.heading(col, text=col, command=lambda _col=col: treeview_sort_column(Treeview, _col, False))
-
-
-root.mainloop()
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = App()
+    sys.exit(app.exec_())
