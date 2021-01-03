@@ -1,30 +1,51 @@
+from PyQt5.QtWidgets import *
 import sys
 
-from PyQt5 import QtCore
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel
-
-logo_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Logo.png'
-
-class MyApp(QWidget):
-
+class Emission_Zone_Setting(QWidget):
     def __init__(self):
-        super().__init__()
-        self.initUI()
+        QWidget.__init__(self)
+        layout = QGridLayout()
+        self.setLayout(layout)
 
-    def initUI(self):
-        label = QLabel(self)
-        pixmap = QPixmap(logo_image)
-        pixmap = pixmap.scaled(300, 300, QtCore.Qt.KeepAspectRatio)
-        label.setPixmap(pixmap)
-        self.resize(pixmap.width(), pixmap.height())
+        # rcParams['text.usetex'] = True
+        # x, y, a, b, c, exp = symbols("x, y, a, b, c, exp")
 
-        self.setWindowTitle('QLogo_Image')
-        self.setGeometry(300, 300, 300, 200)
-        self.show()
+        radiobutton = QRadioButton("Sheet")
+        radiobutton.setChecked(True)
+        radiobutton.type = ""
+        radiobutton.toggled.connect(self.onClicked)
+        layout.addWidget(radiobutton, 0, 0)
+
+        radiobutton = QRadioButton("Constant")
+        radiobutton.type = "x=a"
+        radiobutton.toggled.connect(self.onClicked)
+        layout.addWidget(radiobutton, 0, 1)
+
+        radiobutton = QRadioButton("Linear")
+        radiobutton.type = "y=ax+b"
+        radiobutton.toggled.connect(self.onClicked)
+        layout.addWidget(radiobutton, 0, 2)
+
+        radiobutton = QRadioButton("Gaussian")
+        radiobutton.type = "y = a*e^{b+x}+c"
+        radiobutton.toggled.connect(self.onClicked)
+        layout.addWidget(radiobutton, 0, 3)
+
+        # self.lineEntry = QLineEdit(self)
+        # self.lineEntry.move(16, 16)
+        # self.lineEntry.resize(200, 40)
+
+        self.qlabel = QLabel(self)
+        layout.addWidget(self.qlabel, 0, 4)
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = MyApp()
-    sys.exit(app.exec_())
+    def onClicked(self):
+        radioButton = self.sender()
+        if radioButton.isChecked():
+            self.qlabel.setText(radioButton.type)
+
+
+app = QApplication(sys.argv)
+screen = Emission_Zone_Setting()
+screen.show()
+sys.exit(app.exec_())
