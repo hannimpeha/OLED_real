@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Qtcontrollers/project_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +47,7 @@
       <recent name="$PROJECT_DIR$/controllers/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.project_info">
+  <component name="RunManager" selected="Python.example4">
     <configuration name="CIE" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="penProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -71,7 +70,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="elements_structure_graph" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="axes_properties" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="penProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -84,7 +83,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -183,19 +182,19 @@
     </configuration>
     <list>
       <item itemvalue="Python.CIE" />
-      <item itemvalue="Python.elements_structure_graph" />
-      <item itemvalue="Python.example4" />
       <item itemvalue="Python.emission_layer_graph" />
       <item itemvalue="Python.emission_zone_setting" />
       <item itemvalue="Python.project_info" />
+      <item itemvalue="Python.axes_properties" />
+      <item itemvalue="Python.example4" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.example4" />
+        <item itemvalue="Python.axes_properties" />
         <item itemvalue="Python.project_info" />
         <item itemvalue="Python.emission_zone_setting" />
         <item itemvalue="Python.emission_layer_graph" />
-        <item itemvalue="Python.elements_structure_graph" />
-        <item itemvalue="Python.example4" />
       </list>
     </recent_temporary>
   </component>
@@ -233,7 +232,7 @@
       <workItem from="1609640224179" duration="2479000" />
       <workItem from="1609642811450" duration="102000" />
       <workItem from="1609642915597" duration="61000" />
-      <workItem from="1609642979162" duration="574000" />
+      <workItem from="1609642979162" duration="761000" />
     </task>
     <servers />
   </component>
