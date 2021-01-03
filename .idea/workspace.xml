@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Qtcontrollers/project_info.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qtcontrollers/emission_zone_setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/emission_zone_setting.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +48,7 @@
       <recent name="$PROJECT_DIR$/controllers/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.emission_zone_setting">
+  <component name="RunManager" selected="Python.project_info">
     <configuration name="CIE" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="penProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -63,28 +63,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/controllers/drawing/CIE.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="elements_structure" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="penProject" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -181,21 +159,43 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="project_info" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="penProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Qtcontrollers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Qtcontrollers/project_info.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.CIE" />
-      <item itemvalue="Python.elements_structure" />
       <item itemvalue="Python.elements_structure_graph" />
       <item itemvalue="Python.example4" />
       <item itemvalue="Python.emission_layer_graph" />
       <item itemvalue="Python.emission_zone_setting" />
+      <item itemvalue="Python.project_info" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.project_info" />
         <item itemvalue="Python.emission_zone_setting" />
         <item itemvalue="Python.emission_layer_graph" />
         <item itemvalue="Python.elements_structure_graph" />
         <item itemvalue="Python.example4" />
-        <item itemvalue="Python.elements_structure" />
       </list>
     </recent_temporary>
   </component>
@@ -233,7 +233,7 @@
       <workItem from="1609640224179" duration="2479000" />
       <workItem from="1609642811450" duration="102000" />
       <workItem from="1609642915597" duration="61000" />
-      <workItem from="1609642979162" duration="68000" />
+      <workItem from="1609642979162" duration="574000" />
     </task>
     <servers />
   </component>
@@ -254,10 +254,11 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/penProject$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1609572645099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/penProject$project_info.coverage" NAME="project_info Coverage Results" MODIFIED="1609643541188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Qtcontrollers" />
     <SUITE FILE_PATH="coverage/penProject$CIE.coverage" NAME="CIE Coverage Results" MODIFIED="1609326033933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/penProject$elements_structure_graph.coverage" NAME="elements_structure_graph Coverage Results" MODIFIED="1609581752188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Qtcontrollers" />
     <SUITE FILE_PATH="coverage/penProject$example4.coverage" NAME="example4 Coverage Results" MODIFIED="1609577833648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/penProject$emission_zone_setting.coverage" NAME="emission_zone_setting Coverage Results" MODIFIED="1609643028564" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Qtcontrollers" />
+    <SUITE FILE_PATH="coverage/penProject$emission_zone_setting.coverage" NAME="emission_zone_setting Coverage Results" MODIFIED="1609643263361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Qtcontrollers" />
     <SUITE FILE_PATH="coverage/penProject$color.coverage" NAME="color Coverage Results" MODIFIED="1609230475048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pythons2" />
     <SUITE FILE_PATH="coverage/penProject$main.coverage" NAME="main Coverage Results" MODIFIED="1609573940721" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/penProject$polar.coverage" NAME="Polar Coverage Results" MODIFIED="1609326170839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/controllers/drawing" />
