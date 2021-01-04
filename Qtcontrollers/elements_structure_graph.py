@@ -67,8 +67,8 @@ class Drawing(QWidget):
     def write_graph(self):
         return pd.read_csv(file, header=0)
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = Drawing()
-    window.show()
-    sys.exit(app.exec_())
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
+#     window = Drawing()
+#     window.show()
+#     sys.exit(app.exec_())

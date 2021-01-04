@@ -1,13 +1,22 @@
 import sys
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QAction, QTabWidget, QVBoxLayout, QApplication
+from PyQt5.QtWidgets import QWidget, QAction, QTabWidget, QVBoxLayout, QApplication
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
+from Qtcontrollers.elements_structure import *
 
-class MainWindow(QMainWindow):
+class Real(QWidget):
     def __init__(self):
         super().__init__()
-        menuBar = self.menuBar()
+        self.making_file()
+        self.making_tabs()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.menuBar)
+        self.setMinimumSize(QSize(1600, 900))
+        self.setWindowTitle('JooAm Angular Luminence Spectometer')
+
+    def making_file(self):
+        self.menuBar = QMenuBar()
 
         newAction = QAction(QIcon('new.png'), '&New', self)
         newAction.setShortcut('Ctrl+N')
@@ -18,14 +27,13 @@ class MainWindow(QMainWindow):
         exitAction = QAction(QIcon('exit.png'), '&Exit', self)
         exitAction.setShortcut('Ctrl+Q')
 
-        fileMenu = menuBar.addMenu('&File')
+        fileMenu = self.menuBar.addMenu('&File')
         fileMenu.addAction(newAction)
         fileMenu.addAction(openAction)
         fileMenu.addAction(exitAction)
 
-class MainVBox(QWidget):
-    def __init__(self):
-        super().__init__()
+
+    def making_tabs(self):
         tab1 = QWidget()
         tab2 = QWidget()
 
@@ -33,20 +41,16 @@ class MainVBox(QWidget):
         tabs.addTab(tab1, '2PPlAn_PL')
         tabs.addTab(tab2, 'Result')
 
-        vbox = QVBoxLayout()
-        vbox.addWidget(tabs)
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(tabs)
 
-        self.setLayout(vbox)
+        Elements_Structure(tab1).__init__(tab1)
+        self.setLayout(self.vbox)
 
-class Real(QWidget):
-    def __init__(self):
-        super().__init__()
-        layout = QVBoxLayout()
-        layout.addWidget(MainWindow())
-        layout.addWidget(MainVBox())
-        self.setLayout(layout)
-        self.setMinimumSize(QSize(1600, 900))
-        self.setWindowTitle('JooAm Angular Luminence Spectometer')
+
+
+
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

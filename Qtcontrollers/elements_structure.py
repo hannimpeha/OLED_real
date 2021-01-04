@@ -1,15 +1,11 @@
 from PyQt5.QtWidgets import *
 import sys
 
-class Elements_Structure(QWidget):
-    def __init__(self):
-        super().__init__()
+class Elements_Structure(QLayout):
+    def __init__(self, tab1):
+        super().__init__(tab1)
         real_table = self.make_table()
-        vbox = QVBoxLayout()
-        vbox.addWidget(real_table)
-        self.setLayout(vbox)
-        self.setWindowTitle('Elements_Structure')
-        self.setGeometry(300, 300, 300, 200)
+        self.addWidget(real_table)
 
     def make_table(self):
         self.table = QTableWidget()
@@ -35,9 +31,3 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.thickness[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
         return self.table
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = Elements_Structure()
-    window.show()
-    sys.exit(app.exec_())
