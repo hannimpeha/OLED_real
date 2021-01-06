@@ -1,11 +1,10 @@
 from PyQt5.QtWidgets import *
-import sys
 
 class Emission_Zone_Setting(QWidget):
     def __init__(self):
-        QWidget.__init__(self)
+        super().__init__()
         layout = QGridLayout()
-        self.setLayout(layout)
+        #self.setLayout(layout)
 
         # rcParams['text.usetex'] = True
         # x, y, a, b, c, exp = symbols("x, y, a, b, c, exp")
@@ -31,11 +30,7 @@ class Emission_Zone_Setting(QWidget):
         radiobutton.toggled.connect(self.onClicked)
         layout.addWidget(radiobutton, 0, 3)
 
-        # self.lineEntry = QLineEdit(self)
-        # self.lineEntry.move(16, 16)
-        # self.lineEntry.resize(200, 40)
-
-        self.qlabel = QLabel(self)
+        self.qlabel = QLabel()
         layout.addWidget(self.qlabel, 0, 4)
 
 
@@ -43,9 +38,3 @@ class Emission_Zone_Setting(QWidget):
         radioButton = self.sender()
         if radioButton.isChecked():
             self.qlabel.setText(radioButton.type)
-
-
-app = QApplication(sys.argv)
-screen = Emission_Zone_Setting()
-screen.show()
-sys.exit(app.exec_())

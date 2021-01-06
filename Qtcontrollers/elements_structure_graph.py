@@ -2,20 +2,19 @@ import sys
 
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QWidget
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import pandas as pd
 import numpy as np
-from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 
 file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv'
 foo_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/foo.png'
-class Drawing(QWidget):
+
+
+class Elements_Structure_Graph(QWidget):
     def __init__(self):
         super().__init__()
-        self.setGeometry(300, 300, 300, 200)
-        self.setWindowTitle('Elements_Structure_Graph')
         self.layer_name = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
         self.material = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
         self.refractive_index = ["Al.dat", "ETL.dat", "EML.dat", "HTL.dat", "HTL1.dat", "ITO.dat"]
@@ -23,7 +22,7 @@ class Drawing(QWidget):
         self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
         self.draw_fig()
 
-        label = QLabel(self)
+        label = QLabel()
         pixmap = QPixmap(foo_file)
         pixmap = pixmap.scaled(128, 128, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
@@ -66,9 +65,3 @@ class Drawing(QWidget):
 
     def write_graph(self):
         return pd.read_csv(file, header=0)
-
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     window = Drawing()
-#     window.show()
-#     sys.exit(app.exec_())

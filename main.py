@@ -1,8 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QAction, QTabWidget, QVBoxLayout, QApplication
+from PyQt5.QtWidgets import QWidget, QAction, QTabWidget, QVBoxLayout, QApplication, QMenuBar, QGridLayout
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
-from Qtcontrollers.elements_structure import *
+
+from tab1 import Tab1
 
 class Real(QWidget):
     def __init__(self):
@@ -44,13 +45,10 @@ class Real(QWidget):
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(tabs)
 
-        Elements_Structure(tab1).__init__(tab1)
+        grid = QGridLayout()
+        Tab1.setLayout(tab1, grid)
+
         self.setLayout(self.vbox)
-
-
-
-
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
