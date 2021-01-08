@@ -4,10 +4,7 @@ class Emission_Zone_Setting(QWidget):
     def __init__(self):
         super().__init__()
         layout = QGridLayout()
-        #self.setLayout(layout)
-
-        # rcParams['text.usetex'] = True
-        # x, y, a, b, c, exp = symbols("x, y, a, b, c, exp")
+        self.setLayout(layout)
 
         radiobutton = QRadioButton("Sheet")
         radiobutton.setChecked(True)

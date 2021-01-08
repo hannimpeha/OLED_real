@@ -35,3 +35,5 @@ class Emission_Layer(QWidget):
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.qy[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(str(self.pq[i])))
             self.table.setItem(self.num_row, 6, QTableWidgetItem(str(self.em_zone[i])))
+
+        return self.table

@@ -1,21 +1,23 @@
 from datetime import datetime
 import socket
 
-from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QApplication
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
 
-class Project_Info(QGridLayout):
+
+class Project_Info(QWidget):
     def __init__(self):
         super().__init__()
-        layout = QGridLayout()
-        #self.setLayout(layout)
+        layout = QVBoxLayout()
 
         qlabel = QLabel()
         qlabel.setText(self.get_ip())
-        layout.addWidget(qlabel, 0, 0)
+        layout.addWidget(qlabel)
 
         c_date = QLabel()
         c_date.setText(datetime.today().strftime('%Y-%m-%d'))
-        layout.addWidget(c_date, 1, 0)
+        layout.addWidget(c_date)
+
+        self.setLayout(layout)
 
     def get_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

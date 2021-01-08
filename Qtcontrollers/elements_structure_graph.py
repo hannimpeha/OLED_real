@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv'
 foo_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/foo.png'
-
+emission_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/EML_graph.png'
 
 class Elements_Structure_Graph(QWidget):
     def __init__(self):
@@ -21,14 +21,18 @@ class Elements_Structure_Graph(QWidget):
         self.thickness = np.asarray([100, 100.5, 20, 10, 100.5, 70])
         self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
         self.draw_fig()
+        graph = self.emission_layer_graph()
 
         label = QLabel()
         pixmap = QPixmap(foo_file)
         pixmap = pixmap.scaled(128, 128, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
 
-        layout = QVBoxLayout()
-        layout.addWidget(label)
+        layout = QGridLayout()
+        layout.addWidget(label, 0, 0)
+        layout.addWidget(graph, 1, 0)
+
+        self.setLayout(layout)
 
     def draw_fig(self):
         self.fig = plt.Figure(figsize=(4.5, 4.5))
@@ -65,3 +69,11 @@ class Elements_Structure_Graph(QWidget):
 
     def write_graph(self):
         return pd.read_csv(file, header=0)
+
+    def emission_layer_graph(self):
+        label = QLabel()
+        pixmap = QPixmap(emission_image)
+        pixmap = pixmap.scaled(128, 128, QtCore.Qt.KeepAspectRatio)
+        label.setPixmap(pixmap)
+        label.resize(pixmap.width(), pixmap.height())
+        return label

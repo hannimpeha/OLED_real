@@ -6,9 +6,8 @@ class Execute(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.initUI()
+        layout = QGridLayout()
 
-    def initUI(self):
         self.pbar = QProgressBar()
         self.pbar.setGeometry(30, 40, 200, 25)
 
@@ -18,6 +17,10 @@ class Execute(QWidget):
 
         self.timer = QBasicTimer()
         self.step = 0
+
+        layout.addWidget(self.pbar, 0, 0)
+        layout.addWidget(self.btn, 1, 0)
+        self.setLayout(layout)
 
     def timerEvent(self, e):
         if self.step >= 100:
