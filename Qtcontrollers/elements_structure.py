@@ -5,9 +5,10 @@ class Elements_Structure(QWidget):
         super().__init__()
         grid = QGridLayout()
         es_table = self.init_es_table()
-        el_table = self.init_el_table()
+        el_table = Emission_Layer()
+        emission_zone_setting = Emission_Zone_Setting()
 
-        tables = [es_table, el_table]
+        tables = [es_table, el_table, emission_zone_setting]
         positions = [(i, j) for i in range(4) for j in range(1)]
 
         for position, table in zip(positions, tables):
@@ -41,7 +42,15 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
         return self.table
 
-    def init_el_table(self):
+class Emission_Layer(QWidget):
+    def __init__(self):
+        super().__init__()
+        layer = QVBoxLayout()
+        self.initUI()
+        layer.addWidget(self.table)
+        self.setLayout(layer)
+
+    def initUI(self):
         self.table = QTableWidget()
         self.table.setRowCount(6)
         self.table.setColumnCount(7)
@@ -69,4 +78,41 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.qy[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(str(self.pq[i])))
             self.table.setItem(self.num_row, 6, QTableWidgetItem(str(self.em_zone[i])))
+
         return self.table
+
+class Emission_Zone_Setting(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QGridLayout()
+        self.setLayout(layout)
+
+        radiobutton = QRadioButton("Sheet")
+        radiobutton.setChecked(True)
+        radiobutton.type = ""
+        radiobutton.toggled.connect(self.onClicked)
+        layout.addWidget(radiobutton, 0, 0)
+
+        radiobutton = QRadioButton("Constant")
+        radiobutton.type = "x=a"
+        radiobutton.toggled.connect(self.onClicked)
+        layout.addWidget(radiobutton, 0, 1)
+
+        radiobutton = QRadioButton("Linear")
+        radiobutton.type = "y=ax+b"
+        radiobutton.toggled.connect(self.onClicked)
+        layout.addWidget(radiobutton, 0, 2)
+
+        radiobutton = QRadioButton("Gaussian")
+        radiobutton.type = "y = a*e^{b+x}+c"
+        radiobutton.toggled.connect(self.onClicked)
+        layout.addWidget(radiobutton, 0, 3)
+
+        self.qlabel = QLabel()
+        layout.addWidget(self.qlabel, 0, 4)
+
+
+    def onClicked(self):
+        radioButton = self.sender()
+        if radioButton.isChecked():
+            self.qlabel.setText(radioButton.type)

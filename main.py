@@ -5,12 +5,8 @@ from PyQt5.QtGui import QIcon
 
 from Qtcontrollers.elements_structure import Elements_Structure
 from Qtcontrollers.elements_structure_graph import Elements_Structure_Graph
-from Qtcontrollers.emission_layer import Emission_Layer
-from Qtcontrollers.emission_layer_graph import Emission_Layer_Graph
-from Qtcontrollers.emission_zone_setting import Emission_Zone_Setting
-from Qtcontrollers.execute import Execute
 from Qtcontrollers.logo_image import Logo_Image
-from Qtcontrollers.project_info import Project_Info
+
 
 class Real(QWidget):
     def __init__(self):
@@ -47,40 +43,29 @@ class Real(QWidget):
         tab1 = QWidget()
         tab2 = QWidget()
 
-        elem = [Elements_Structure_Graph(), Emission_Layer_Graph(),
-                Elements_Structure(), Emission_Zone_Setting(),
-                Logo_Image()]
+        elem = [Elements_Structure_Graph(), Elements_Structure(), Logo_Image()]
         grid_tab1 = QGridLayout()
         positions = [(i, j) for i in range(4) for j in range(4)]
 
-        for position, ele in zip(positions, elem):
-            grid_tab1.addWidget(ele, *position)
+        for position, element in zip(positions, elem):
+            grid_tab1.addWidget(element, *position)
+        tab1.setLayout(grid_tab1)
+
+
+        mlem = [Elements_Structure_Graph(), Elements_Structure(), Logo_Image()]
+        grid_tab2 = QGridLayout()
+        positions = [(i, j) for i in range(4) for j in range(4)]
+
+        for position, element in zip(positions, mlem):
+            grid_tab2.addWidget(element, *position)
+        tab2.setLayout(grid_tab2)
+
 
         tabs = QTabWidget()
         tabs.addTab(tab1, '2PPlAn_PL')
         tabs.addTab(tab2, 'Result')
-
-
-        tab1.setLayout(grid_tab1)
-
         grid = QVBoxLayout()
         grid.addWidget(tabs)
-
-        # logo_image = Logo_Image()
-        # emission_image = Emission_Layer_Graph()
-        # elements_structure_graph = Elements_Structure_Graph()
-        # emission_zone_setting = Emission_Zone_Setting()
-        # execute = Execute()
-        # project_info = Project_Info()
-
-        # tables = [es_table, el_table, logo_image, emission_image,
-        #                emission_zone_setting, execute, project_info,
-        #                elements_structure_graph]
-        # tables = [tab1, tab2]
-        # positions = [(i, j) for i in range(4) for j in range(1)]
-        #
-        # for position, table in zip(positions, tables):
-        #     grid.addWidget(table, *position)
 
         self.setLayout(grid)
 
