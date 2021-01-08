@@ -1,22 +1,40 @@
+from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 
 class Elements_Structure(QWidget):
     def __init__(self):
         super().__init__()
+        layout = QVBoxLayout()
+
+        label = QLabel()
+        label.setText("Elements Structure")
+        layout.addWidget(label)
+
         grid = QGridLayout()
+        connectButton = QPushButton('Add')
+        connectButton.clicked.connect(self.onConnectButtonClicked)
+        connectButton.setFixedSize(300, 30)
+
+        removeButton = QPushButton('Delete')
+        removeButton.clicked.connect(self.onRemoveButtonClicked)
+        removeButton.setFixedSize(300, 30)
+
         es_table = self.init_es_table()
         el_table = Emission_Layer()
         emission_zone_setting = Emission_Zone_Setting()
+        grid.addWidget(connectButton, 0, 0)
+        grid.addWidget(removeButton, 0, 1)
 
-        tables = [es_table, el_table, emission_zone_setting]
-        positions = [(i, j) for i in range(4) for j in range(1)]
+        layout.addLayout(grid)
+        layout.addWidget(es_table)
 
-        for position, table in zip(positions, tables):
-            grid.addWidget(table, *position)
+        layout.addWidget(el_table)
+        layout.addWidget(emission_zone_setting)
 
-        self.setLayout(grid)
+        self.setLayout(layout)
 
     def init_es_table(self):
+
         self.table = QTableWidget()
         self.table.setRowCount(6)
         self.table.setColumnCount(6)
@@ -30,7 +48,7 @@ class Elements_Structure(QWidget):
         self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
         self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness, self.unit]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(600, 200)
+        self.table.setFixedSize(610, 250)
 
         for i in range(len(self.layer_name)):
             self.num_row = i
@@ -42,17 +60,45 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
         return self.table
 
+    def onConnectButtonClicked(self):
+        self.currentRowCount = self.table.rowCount()
+        self.table.insertRow(self.currentRowCount)
+
+    @QtCore.pyqtSlot()
+    def onRemoveButtonClicked(self):
+        button = self.sender()
+        if button:
+            row = self.table.indexAt(button.pos()).row()
+            self.table.removeRow(row)
+
 class Emission_Layer(QWidget):
     def __init__(self):
         super().__init__()
-        layer = QVBoxLayout()
+        layout = QVBoxLayout()
         self.initUI()
-        layer.addWidget(self.table)
-        self.setLayout(layer)
+
+        label = QLabel()
+        label.setText("Emission Layer")
+        layout.addWidget(label)
+
+        grid = QGridLayout()
+        connectButton = QPushButton('Add')
+        connectButton.clicked.connect(self.onConnectButtonClicked)
+        connectButton.setFixedSize(300, 30)
+
+        removeButton = QPushButton('Delete')
+        removeButton.clicked.connect(self.onRemoveButtonClicked)
+        removeButton.setFixedSize(300, 30)
+
+        grid.addWidget(connectButton, 0, 0)
+        grid.addWidget(removeButton, 0, 1)
+        layout.addLayout(grid)
+        layout.addWidget(self.table)
+        self.setLayout(layout)
 
     def initUI(self):
         self.table = QTableWidget()
-        self.table.setRowCount(6)
+        self.table.setRowCount(1)
         self.table.setColumnCount(7)
 
         cols_element = ['L#', 'EMMaterials', 'Spectrum', 'ExcitonProp', 'QY', 'PQ', 'EMZone']
@@ -67,7 +113,7 @@ class Emission_Layer(QWidget):
         self.tempList = [[self.em_materials, self.spectrum, self.exciton_prop,
                           self.qy, self.pq, self.em_zone]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(720, 200)
+        self.table.setFixedSize(720, 300)
 
         for i in range(len(self.em_materials)):
             self.num_row = i
@@ -81,35 +127,86 @@ class Emission_Layer(QWidget):
 
         return self.table
 
+    def onConnectButtonClicked(self):
+        self.currentRowCount = self.table.rowCount()
+        self.table.insertRow(self.currentRowCount)
+
+    @QtCore.pyqtSlot()
+    def onRemoveButtonClicked(self):
+        button = self.sender()
+        if button:
+            row = self.table.indexAt(button.pos()).row()
+            self.table.removeRow(row)
+
 class Emission_Zone_Setting(QWidget):
     def __init__(self):
         super().__init__()
         layout = QGridLayout()
         self.setLayout(layout)
 
+        label = QLabel()
+        label.setText("Emission Zone Setting")
+        layout.addWidget(label, 0, 0)
+
         radiobutton = QRadioButton("Sheet")
         radiobutton.setChecked(True)
         radiobutton.type = ""
         radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 0, 0)
+        layout.addWidget(radiobutton, 1, 0)
 
         radiobutton = QRadioButton("Constant")
         radiobutton.type = "x=a"
         radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 0, 1)
+        layout.addWidget(radiobutton, 2, 0)
 
         radiobutton = QRadioButton("Linear")
         radiobutton.type = "y=ax+b"
         radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 0, 2)
+        layout.addWidget(radiobutton, 3, 0)
 
         radiobutton = QRadioButton("Gaussian")
         radiobutton.type = "y = a*e^{b+x}+c"
         radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 0, 3)
+        layout.addWidget(radiobutton, 4, 0)
+
+        label = QLabel()
+        label.setText("Equation")
+        layout.addWidget(label, 0, 1)
 
         self.qlabel = QLabel()
-        layout.addWidget(self.qlabel, 0, 4)
+        layout.addWidget(self.qlabel, 1, 1)
+
+        label = QLabel()
+        label.setText("Emit Range(nm): ")
+        layout.addWidget(label, 2, 1)
+
+        textLine = QLineEdit()
+        textLine.setFixedSize(100, 20)
+        layout.addWidget(textLine, 3, 1)
+
+        label = QLabel()
+        label.setText("Value a :")
+        layout.addWidget(label, 2, 2)
+
+        textLine = QLineEdit()
+        textLine.setFixedSize(100, 20)
+        layout.addWidget(textLine, 3, 2)
+
+        label = QLabel()
+        label.setText("Value b :")
+        layout.addWidget(label, 2, 3)
+
+        textLine = QLineEdit()
+        textLine.setFixedSize(100, 20)
+        layout.addWidget(textLine, 3, 3)
+
+        label = QLabel()
+        label.setText("Value c :")
+        layout.addWidget(label, 2, 4)
+
+        textLine = QLineEdit()
+        textLine.setFixedSize(100, 20)
+        layout.addWidget(textLine, 3, 4)
 
 
     def onClicked(self):
