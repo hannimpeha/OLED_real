@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/logo_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/logo_image.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example4.py" beforeDir="false" afterPath="$PROJECT_DIR$/example4.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,8 +202,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.example4" />
+        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.axes_properties" />
         <item itemvalue="Python.project_info" />
       </list>
@@ -254,7 +254,8 @@
       <workItem from="1609910679426" duration="95000" />
       <workItem from="1609911030572" duration="9906000" />
       <workItem from="1610020832066" duration="118000" />
-      <workItem from="1610080060807" duration="6630000" />
+      <workItem from="1610080060807" duration="6753000" />
+      <workItem from="1610094113263" duration="1607000" />
     </task>
     <servers />
   </component>
@@ -275,8 +276,8 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/penProject$CIE.coverage" NAME="CIE Coverage Results" MODIFIED="1609326033933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/penProject$example4.coverage" NAME="example4 Coverage Results" MODIFIED="1609643888056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/penProject$main.coverage" NAME="main Coverage Results" MODIFIED="1610086781963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/penProject$example4.coverage" NAME="example4 Coverage Results" MODIFIED="1610095434229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/penProject$main.coverage" NAME="main Coverage Results" MODIFIED="1610095784861" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/penProject$execute.coverage" NAME="execute Coverage Results" MODIFIED="1609573279362" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Qtcontrollers" />
     <SUITE FILE_PATH="coverage/penProject$emission_layer_graph.coverage" NAME="emission_layer_graph Coverage Results" MODIFIED="1609581804823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Qtcontrollers" />
     <SUITE FILE_PATH="coverage/penProject$project_info.coverage" NAME="project_info Coverage Results" MODIFIED="1609643541188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Qtcontrollers" />

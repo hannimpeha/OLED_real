@@ -11,8 +11,6 @@ class Axes_Properties(QWidget):
         super().__init__()
         layout = QGridLayout()
 
-
-
         self.qlabel = QLabel()
         self.qlabel.setText("X-axis")
         xcombo = QComboBox()

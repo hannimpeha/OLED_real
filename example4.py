@@ -1,65 +1,63 @@
 import sys
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView, QGridLayout, QWidget, QCheckBox
+from PyQt5.QtGui import QFont
+from functools import partial
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QVBoxLayout, QSizePolicy, QMessageBox, QWidget, QPushButton
-from PyQt5.QtGui import QIcon
-
-
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
-import matplotlib.pyplot as plt
-
-import random
-
-class App(QMainWindow):
-
+class MainWindow(QMainWindow):
     def __init__(self):
-        super().__init__()
-        self.left = 10
-        self.top = 10
-        self.title = 'PyQt5 matplotlib example - pythonspot.com'
-        self.width = 640
-        self.height = 400
-        self.initUI()
+        QMainWindow.__init__(self)
+        self.font = QFont("Helvetica", 9)
+        self.setFont(self.font)
+        self.showMaximized()
+        grid = QGridLayout()
+        self.setLayout(grid)
 
-    def initUI(self):
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-
-        m = PlotCanvas(self, width=5, height=4)
-        m.move(0,0)
-
-        button = QPushButton('PyQt5 button', self)
-        button.setToolTip('This s an example button')
-        button.move(500,0)
-        button.resize(140,100)
-
-        self.show()
+        positions = [(i,j) for i in range(5) for j in range(5)]
+        print('\npostions: ', positions)
+        wordlist = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y']
 
 
-class PlotCanvas(FigureCanvas):
+        for position, wordlist in zip(positions, wordlist):
+            checkB =(QCheckBox(wordlist))
+            checkB.setStatusTip("Crawling best singals for "+wordlist+"." ) # set Statusbar
+            checkB.stateChanged.connect(partial(self.checkState, wordlist))
+            grid.addWidget(checkB, *position)
 
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111)
+        checkBoxNone = QCheckBox("None Selected")
+        checkBoxNone.setChecked(True)
+        checkBoxNone.stateChanged.connect(self.checkState)
+        grid.addWidget(checkBoxNone, 6, 1)
 
-        FigureCanvas.__init__(self, fig)
-        self.setParent(parent)
+        checkAll = QCheckBox("Select All")
+        checkAll.setChecked(False)
+        checkAll.stateChanged.connect(self.selectAll)
+        grid.addWidget(checkAll, 6, 2)
 
-        FigureCanvas.setSizePolicy(self,
-                QSizePolicy.Expanding,
-                QSizePolicy.Expanding)
-        FigureCanvas.updateGeometry(self)
-        self.plot()
+        widget = QWidget()
+        widget.setLayout(grid)
+        self.setCentralWidget(widget)
 
+        self.statusBar().showMessage('Ready')
 
-    def plot(self):
-        data = [random.random() for i in range(25)]
-        ax = self.figure.add_subplot(111)
-        ax.plot(data, 'r-')
-        ax.set_title('PyQt Matplotlib Example')
-        self.draw()
+    # Here are the problems.
+    # Is it because I have create checkboxes with a for loop?
+
+    def selectAll(self, state):
+        if state == Qt.Checked:
+            if self.sender() == MainWindow.checkAll:
+                MainWindow.checkB.setChecked(True)
+
+    def checkState(self, checktext, state):
+        if state == Qt.Checked:
+            print(checktext)
+            if self.sender() == MainWindow.checkBoxNone:
+                MainWindow.checkB.setChecked(False)
+            elif self.sender() == MainWindow.checkB:
+                MainWindow.checkBoxNone.setChecked(False)
 
 if __name__ == '__main__':
+
     app = QApplication(sys.argv)
-    ex = App()
-    sys.exit(app.exec_())
+    app.setStyle('Fusion')
+    mw = MainWindow()
