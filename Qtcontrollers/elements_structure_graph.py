@@ -1,7 +1,7 @@
 import math
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QWidget
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QWidget, QTabWidget
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np
 import matplotlib.pyplot as plt
@@ -78,12 +78,24 @@ class Emission_Layer_Graph(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout()
+        tab1 = QWidget()
+        tab2 = QWidget()
+
         label = QLabel()
+        sub_layout = QVBoxLayout()
         pixmap = QPixmap(em_figure)
         pixmap = pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
-        layout.addWidget(label)
+        sub_layout.addWidget(label)
+
+        tabs = QTabWidget()
+        tabs.addTab(tab1, "hannimpeha1")
+        tabs.addTab(tab2, "hannimpeha2")
+
+        tabs.setLayout(sub_layout)
+        layout.addWidget(tabs)
+
         self.setLayout(layout)
 
         mu = 0

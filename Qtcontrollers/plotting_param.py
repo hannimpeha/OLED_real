@@ -1,12 +1,9 @@
-from PyQt5 import QtCore, QtWidgets, QtGui, Qt
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QComboBox, QTableWidget, QTableWidgetItem, QLineEdit, \
-    QPushButton, QCheckBox, QHBoxLayout, QScrollBar, QTableView, QAbstractItemView
+    QPushButton, QCheckBox, QHBoxLayout, QAbstractItemView
 import numpy as np
 import matplotlib.pyplot as plt
-from colour import MultiSpectralDistributions, write_image, read_image
-from colour.io import write_image_Imageio, write_image_OpenImageIO
-from colour.plotting import plot_chromaticity_diagram_CIE1931, plot_image
 
 logo_image = 'Qtcontrollers/resources/Logo.png'
 data_path = "output/#3-2/CIE/output_CIE_bottom.txt"
@@ -171,8 +168,8 @@ class Plotting(QWidget):
         self.table.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
 
         header = self.table.horizontalHeader()
-        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         return self.table
 
 

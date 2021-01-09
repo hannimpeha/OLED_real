@@ -1,4 +1,4 @@
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 
 file = 'Qtcontrollers/resources/text.csv'
@@ -132,18 +132,18 @@ class Emission_Layer(QWidget):
 
     def initUI(self):
         self.table = QTableWidget()
-        self.table.setRowCount(1)
+        self.table.setRowCount(2)
         self.table.setColumnCount(7)
 
         cols_element = ['L#', 'EMMaterials', 'Spectrum', 'ExcitonProp', 'QY', 'PQ', 'EMZone']
         self.table.setHorizontalHeaderLabels(cols_element)
 
-        self.em_materials = ["None"]
-        self.spectrum = ["2pplAn_PL"]
-        self.exciton_prop = [1]
-        self.qy = [83]
-        self.pq = [94]
-        self.em_zone = ["Sheet"]
+        self.em_materials = ["None", "None"]
+        self.spectrum = ["2pplAn_PL", "hannimpeha"]
+        self.exciton_prop = [1, 1]
+        self.qy = [83, 83]
+        self.pq = [94, 94]
+        self.em_zone = ["Sheet", "Linear"]
         self.tempList = [[self.em_materials, self.spectrum, self.exciton_prop,
                           self.qy, self.pq, self.em_zone]]
         self.num_row = len(self.tempList)
@@ -158,7 +158,15 @@ class Emission_Layer(QWidget):
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.qy[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(str(self.pq[i])))
             self.table.setItem(self.num_row, 6, QTableWidgetItem(str(self.em_zone[i])))
-        self.table.horizontalHeader().setStretchLastSection(True)
+
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(6, QtWidgets.QHeaderView.Stretch)
         return self.table
 
     def onConnectButtonClicked(self):
