@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QComboBox, QTableWidget, QTableWidgetItem, QLineEdit, \
-    QPushButton, QCheckBox
+    QPushButton, QCheckBox, QHBoxLayout
 
 logo_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Logo.png'
 
@@ -37,6 +37,7 @@ class Plotting(QWidget):
         label.setText("Plotting")
         layout.addWidget(label, 0, 0)
 
+        hlayout = QHBoxLayout()
         self.qlabel = QLabel()
         self.qlabel.setText("Graph: ")
 
@@ -45,10 +46,11 @@ class Plotting(QWidget):
         xcombo.addItem("Pear")
         xcombo.addItem("Lemon")
         xcombo.activated[str].connect(self.onChanged)
-        layout.addWidget(self.qlabel, 1, 0)
-        layout.addWidget(xcombo, 1, 1)
+        hlayout.addWidget(self.qlabel)
+        hlayout.addWidget(xcombo)
+        layout.addLayout(hlayout, 1, 0)
 
-
+        hlayout = QHBoxLayout()
         self.qlabel = QLabel()
         self.qlabel.setText("X-axis: ")
         xcombo = QComboBox()
@@ -56,9 +58,11 @@ class Plotting(QWidget):
         xcombo.addItem("Pear")
         xcombo.addItem("Lemon")
         xcombo.activated[str].connect(self.onChanged)
-        layout.addWidget(self.qlabel, 2, 0)
-        layout.addWidget(xcombo, 2, 1)
+        hlayout.addWidget(self.qlabel)
+        hlayout.addWidget(xcombo)
+        layout.addLayout(hlayout, 2, 0)
 
+        hlayout = QHBoxLayout()
         self.qlabel = QLabel()
         self.qlabel.setText("Y-axis: ")
         ycombo = QComboBox()
@@ -66,9 +70,11 @@ class Plotting(QWidget):
         ycombo.addItem("Pear")
         ycombo.addItem("Lemon")
         ycombo.activated[str].connect(self.onChanged)
-        layout.addWidget(self.qlabel, 3, 0)
-        layout.addWidget(ycombo, 3, 1)
+        hlayout.addWidget(self.qlabel)
+        hlayout.addWidget(ycombo)
+        layout.addLayout(hlayout, 3, 0)
 
+        hlayout = QHBoxLayout()
         self.qlabel = QLabel()
         self.qlabel.setText("Z-axis: ")
         zcombo = QComboBox()
@@ -76,8 +82,9 @@ class Plotting(QWidget):
         zcombo.addItem("Pear")
         zcombo.addItem("Lemon")
         zcombo.activated[str].connect(self.onChanged)
-        layout.addWidget(self.qlabel, 4, 0)
-        layout.addWidget(zcombo, 4, 1)
+        hlayout.addWidget(self.qlabel)
+        hlayout.addWidget(zcombo)
+        layout.addLayout(hlayout, 4, 0)
 
         label = QLabel()
         label.setText("Fixed Parameters:")
@@ -103,7 +110,7 @@ class Plotting(QWidget):
         self.y = ["50", "50"]
         self.tempList = [[self.x, self.y]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(600, 600)
+        self.table.setFixedSize(380, 600)
 
         for i in range(len(self.x)):
             self.num_row = i
@@ -121,40 +128,48 @@ class Exportation(QWidget):
         label.setText("Exportation")
         layout.addWidget(label, 0, 0)
 
+        hlayout = QHBoxLayout()
+        label = QLabel()
+        label.setText("Path: ")
+        hlayout.addWidget(label)
+
         lineEdit = QLineEdit()
         lineEdit.setFixedSize(100, 20)
-        layout.addWidget(lineEdit, 1, 1)
+        hlayout.addWidget(lineEdit)
 
         btn = QPushButton()
         btn.setText("Browse")
-        layout.addWidget(btn, 1, 2)
+        hlayout.addWidget(btn)
 
-        label = QLabel()
-        label.setText("Path: ")
-        layout.addWidget(label, 1, 0)
+        layout.addLayout(hlayout, 1, 0)
 
+        hlayout = QHBoxLayout()
         label = QLabel()
         label.setText("Type: ")
-        layout.addWidget(label, 2, 0)
+        hlayout.addWidget(label)
 
         check_text = QCheckBox()
         check_text.setText("Text")
-        layout.addWidget(check_text, 2, 1)
+        hlayout.addWidget(check_text)
 
         check_image = QCheckBox()
         check_image.setText("Image")
-        layout.addWidget(check_image, 2, 2)
+        hlayout.addWidget(check_image)
 
+        layout.addLayout(hlayout, 2, 0)
+
+        hlayout = QHBoxLayout()
         label = QLabel()
         label.setText("Name: ")
-        layout.addWidget(label, 3, 0)
+        hlayout.addWidget(label)
 
         lineEdit = QLineEdit()
         lineEdit.setFixedSize(100, 20)
-        layout.addWidget(lineEdit, 3, 1)
+        hlayout.addWidget(lineEdit)
 
         btn = QPushButton()
         btn.setText("Export")
-        layout.addWidget(btn, 4, 2)
+        hlayout.addWidget(btn)
 
+        layout.addLayout(hlayout, 3, 0)
         self.setLayout(layout)
