@@ -8,10 +8,10 @@ from colour import MultiSpectralDistributions, write_image, read_image
 from colour.io import write_image_Imageio, write_image_OpenImageIO
 from colour.plotting import plot_chromaticity_diagram_CIE1931, plot_image
 
-logo_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Logo.png'
+logo_image = 'Qtcontrollers/resources/Logo.png'
 data_path = "output/#3-2/CIE/output_CIE_bottom.txt"
 data_path2 = "output/#3-2/angular_intensity/output_angular_intensity_bottom.txt"
-graph = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Graph.png'
+graph = 'Qtcontrollers/resources/Graph.png'
 
 
 class Plotting_Param(QWidget):

@@ -2,9 +2,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QLabel, QWidget, QTableWidget, QTableWidgetItem, QVBoxLayout
 
-from Qtcontrollers.plotting_param import Plotting
-
-image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Graph.png'
+image = 'Qtcontrollers/resources/Graph.png'
 
 class Axes_Properties(QWidget):
 

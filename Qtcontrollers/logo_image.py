@@ -3,10 +3,9 @@ import socket
 from PyQt5 import QtCore
 from PyQt5.QtCore import QBasicTimer
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QPushButton, QProgressBar, QVBoxLayout, QCheckBox, QLineEdit, \
-    QTextEdit
+from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QPushButton, QProgressBar, QVBoxLayout, QCheckBox, QLineEdit
 
-logo_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Logo.png'
+logo_image = 'Qtcontrollers/resources/Logo.png'
 
 class Logo_Image(QWidget):
     def __init__(self):

@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from scipy import stats
 
-file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv'
-foo_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/foo.png'
-em_figure = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/EML_graph.png'
-txt_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text.csv'
-em_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text_em.csv'
+file = 'Qtcontrollers/resources/hannimpeha.csv'
+foo_file = 'Qtcontrollers/resources/foo.png'
+em_figure = 'Qtcontrollers/resources/EML_graph.png'
+txt_file = 'Qtcontrollers/resources/text.csv'
+em_file = 'Qtcontrollers/resources/text_em.csv'
 
 class Elements_Structure_Graph(QWidget):
     def __init__(self):

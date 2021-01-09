@@ -1,8 +1,8 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 
-file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text.csv'
-file_em = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text_em.csv'
+file = 'Qtcontrollers/resources/text.csv'
+file_em = 'Qtcontrollers/resources/text_em.csv'
 
 class Elements_Structure(QWidget):
     def __init__(self):
