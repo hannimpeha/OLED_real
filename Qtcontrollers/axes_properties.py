@@ -1,4 +1,4 @@
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QLabel, QWidget, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout
 
@@ -23,15 +23,16 @@ class Axes_Properties(QWidget):
     def making_table(self):
         self.table = QTableWidget()
         self.table.setRowCount(3)
-        self.table.setColumnCount(4)
-        cols_element = ["Axis", 'Name', 'Min', 'Max']
+        self.table.setColumnCount(5)
+        cols_element = ["Axis", 'Name', 'Min', 'Max', "Remark"]
         self.table.setHorizontalHeaderLabels(cols_element)
 
         self.axis = ["X-axis", "Y-axis", "Z-axis"]
         self.name = ["Angle", "Wavelength", "Intensity"]
         self.min = ["0" , "400", "0"]
         self.max = ["90", "700", "2.35"]
-        self.tempList = [[self.axis, self.name, self.min, self.max]]
+        self.remark = ["-","-","-"]
+        self.tempList = [[self.axis, self.name, self.min, self.max, self.remark]]
         self.num_row = len(self.tempList)
         self.table.setFixedSize(610, 200)
 
@@ -41,7 +42,14 @@ class Axes_Properties(QWidget):
             self.table.setItem(self.num_row, 1, QTableWidgetItem(self.name[i]))
             self.table.setItem(self.num_row, 2, QTableWidgetItem(self.min[i]))
             self.table.setItem(self.num_row, 3, QTableWidgetItem(self.max[i]))
-        self.table.horizontalHeader().setStretchLastSection(True)
+            self.table.setItem(self.num_row, 4, QTableWidgetItem(self.remark[i]))
+
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(4, QtWidgets.QHeaderView.Stretch)
         return self.table
 
     def contour_image(self):
