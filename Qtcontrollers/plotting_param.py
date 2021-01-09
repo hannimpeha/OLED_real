@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5 import QtCore, QtWidgets, QtGui, Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QComboBox, QTableWidget, QTableWidgetItem, QLineEdit, \
     QPushButton, QCheckBox, QHBoxLayout, QScrollBar, QTableView, QAbstractItemView
@@ -42,47 +42,43 @@ class Plotting(QWidget):
         self.qlabel.setText("Graph: ")
 
         xcombo = QComboBox()
-        xcombo.addItem("Emission Spectrum (3D)")
-        xcombo.addItem("Pear")
-        xcombo.addItem("Lemon")
-        xcombo.activated[str].connect(self.onChanged)
+        xcombo.addItems(["Emission Spectrum (3D)", "Pear", "Lemon", "Apple"])
+        #xcombo.activated[str].connect(self.onChanged)
+        xcombo.setFixedSize(330, 20)
         hlayout.addWidget(self.qlabel)
         hlayout.addWidget(xcombo)
         layout.addLayout(hlayout, 1, 0)
 
         hlayout = QHBoxLayout()
-        self.qlabel = QLabel()
-        self.qlabel.setText("X-axis: ")
+        self.qlabel_x = QLabel()
+        self.qlabel_x.setText("X-axis: ")
         xcombo = QComboBox()
-        xcombo.addItem("Angle")
-        xcombo.addItem("Pear")
-        xcombo.addItem("Lemon")
-        xcombo.activated[str].connect(self.onChanged)
-        hlayout.addWidget(self.qlabel)
+        xcombo.addItems(["Angle", "Pear", "Lemon", "Apple"])
+        xcombo.setFixedSize(330, 20)
+        #xcombo.activated[str].connect(self.onChanged)
+        hlayout.addWidget(self.qlabel_x)
         hlayout.addWidget(xcombo)
         layout.addLayout(hlayout, 2, 0)
 
         hlayout = QHBoxLayout()
-        self.qlabel = QLabel()
-        self.qlabel.setText("Y-axis: ")
+        self.qlabel_y = QLabel()
+        self.qlabel_y.setText("Y-axis: ")
         ycombo = QComboBox()
-        ycombo.addItem("Wavelength")
-        ycombo.addItem("Pear")
-        ycombo.addItem("Lemon")
-        ycombo.activated[str].connect(self.onChanged)
-        hlayout.addWidget(self.qlabel)
+        ycombo.addItems(["Wavelength","Pear", "Lemon", "Apple"])
+        ycombo.setFixedSize(330, 20)
+        #ycombo.activated[str].connect(self.onChanged)
+        hlayout.addWidget(self.qlabel_y)
         hlayout.addWidget(ycombo)
         layout.addLayout(hlayout, 3, 0)
 
         hlayout = QHBoxLayout()
-        self.qlabel = QLabel()
-        self.qlabel.setText("Z-axis: ")
+        self.qlabel_z = QLabel()
+        self.qlabel_z.setText("Z-axis: ")
         zcombo = QComboBox()
-        zcombo.addItem("Intensity")
-        zcombo.addItem("Pear")
-        zcombo.addItem("Lemon")
-        zcombo.activated[str].connect(self.onChanged)
-        hlayout.addWidget(self.qlabel)
+        zcombo.addItems(["Intensity", "Pear", "Lemon", "Apple"])
+        zcombo.setFixedSize(330, 20)
+        #zcombo.activated[str].connect(self.onChanged)
+        hlayout.addWidget(self.qlabel_z)
         hlayout.addWidget(zcombo)
         layout.addLayout(hlayout, 4, 0)
 
@@ -90,7 +86,6 @@ class Plotting(QWidget):
         label.setText("Fixed Parameters:")
         layout.addWidget(label, 5, 0)
         table = self.making_table()
-
 
         layout.addWidget(table, 6, 0)
         self.setLayout(layout)
@@ -142,7 +137,7 @@ class Exportation(QWidget):
         hlayout.addWidget(label)
 
         lineEdit = QLineEdit()
-        lineEdit.setFixedSize(100, 20)
+        lineEdit.setFixedSize(200, 20)
         hlayout.addWidget(lineEdit)
 
         btn = QPushButton()
@@ -158,11 +153,17 @@ class Exportation(QWidget):
 
         check_text = QCheckBox()
         check_text.setText("Text")
+        check_text.setChecked(False)
+        check_text.setStyleSheet("QCheckBox::indicator { width: 20px; height: 20px;}")
         hlayout.addWidget(check_text)
 
         check_image = QCheckBox()
         check_image.setText("Image")
+        check_text.setChecked(False)
+        check_image.setStyleSheet("QCheckBox::indicator { width: 20px; height: 20px;}")
         hlayout.addWidget(check_image)
+
+        #hlayout.setAlignment(QtCore.Qt.AlignLeft)
 
         layout.addLayout(hlayout, 2, 0)
 
@@ -172,7 +173,7 @@ class Exportation(QWidget):
         hlayout.addWidget(label)
 
         lineEdit = QLineEdit()
-        lineEdit.setFixedSize(100, 20)
+        lineEdit.setFixedSize(200, 20)
         hlayout.addWidget(lineEdit)
 
         btn = QPushButton()

@@ -13,17 +13,22 @@ class Elements_Structure(QWidget):
         grid = QGridLayout()
         connectButton = QPushButton('Add')
         connectButton.clicked.connect(self.onConnectButtonClicked)
-        connectButton.setFixedSize(300, 30)
+        connectButton.setFixedSize(200, 30)
 
         removeButton = QPushButton('Delete')
         removeButton.clicked.connect(self.onRemoveButtonClicked)
-        removeButton.setFixedSize(300, 30)
+        removeButton.setFixedSize(200, 30)
 
         es_table = self.init_es_table()
+        drawButton = QPushButton("Draw")
+        drawButton.clicked.connect(self.onDrawButtonClicked)
+        drawButton.setFixedSize(200, 30)
+
         el_table = Emission_Layer()
         emission_zone_setting = Emission_Zone_Setting()
         grid.addWidget(connectButton, 0, 0)
         grid.addWidget(removeButton, 0, 1)
+        grid.addWidget(drawButton, 0, 2)
 
         layout.addLayout(grid)
         layout.addWidget(es_table)
@@ -38,8 +43,8 @@ class Elements_Structure(QWidget):
         self.table = QTableWidget()
         self.table.setRowCount(6)
         self.table.setColumnCount(6)
-        cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness', 'Unit']
-        self.table.setHorizontalHeaderLabels(cols_element)
+        self.cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness', 'Unit']
+        self.table.setHorizontalHeaderLabels(self.cols_element)
 
         self.layer_name = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
         self.material = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
@@ -72,6 +77,16 @@ class Elements_Structure(QWidget):
         if button:
             row = self.table.indexAt(button.pos()).row()
             self.table.removeRow(row)
+
+    def onDrawButtonClicked(self):
+        self.cell = []
+        row = self.table.currentRow()
+        col = self.table.currentColumn()
+        self.cell.append(self.table.item(row, col).text())
+        print(self.cell)
+
+
+
 
 class Emission_Layer(QWidget):
     def __init__(self):

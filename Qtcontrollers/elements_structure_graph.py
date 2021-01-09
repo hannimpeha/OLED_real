@@ -60,7 +60,7 @@ class Elements_Structure_Graph(QWidget):
         self.ax.axes.get_xaxis().set_visible(False)
         self.ax.legend().remove()
 
-        self.fig.savefig(foo_file)
+        self.fig.savefig(foo_file, transparent=True)
 
     def draw(self):
         tps = self.write_graph().pivot_table(values=["Thickness"], columns="LayerName", aggfunc='sum')

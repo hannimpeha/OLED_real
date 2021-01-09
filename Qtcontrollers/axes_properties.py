@@ -34,7 +34,7 @@ class Axes_Properties(QWidget):
         self.remark = ["-","-","-"]
         self.tempList = [[self.axis, self.name, self.min, self.max, self.remark]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(610, 200)
+        self.table.setFixedSize(610, 110)
 
         for i in range(len(self.axis)):
             self.num_row = i
@@ -55,7 +55,7 @@ class Axes_Properties(QWidget):
     def contour_image(self):
         label = QLabel()
         pixmap = QPixmap(contour_image)
-        pixmap = pixmap.scaled(600, 600, QtCore.Qt.KeepAspectRatio)
+        pixmap = pixmap.scaled(600, 800, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         return label

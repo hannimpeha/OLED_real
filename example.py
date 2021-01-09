@@ -1,52 +1,63 @@
 import sys
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui  import *
+from PyQt5.QtCore import *
+
+class Example(QMainWindow):
+    def __init__(self, data):
+        super().__init__()
+        self.data = data
+        self.cols = len(self.data[0])
+        self.row, self.col = 0, 0
+        self.cell = []
+
+        centralWidget = QWidget()
+        self.setCentralWidget(centralWidget)
+
+        self.label = QLabel(alignment=Qt.AlignCenter)
+
+        self.tableWidget = QTableWidget(0, 4)
+        self.tableWidget.setHorizontalHeaderLabels(["Id", "Test name", "Owner", "Script source"])
+        self.tableWidget.cellClicked.connect(self.cellClick)
+        self.setTableWidget()
+
+        self.btnRun = QPushButton("btnRun")
+        self.btnRun.clicked.connect(self.run_selected_test)
+
+        lay = QGridLayout(centralWidget)
+        lay.addWidget(self.label, 0, 0)
+        lay.addWidget(self.tableWidget, 1, 0)
+        lay.addWidget(self.btnRun, 2, 0)
+
+    def run_selected_test(self):
+        self.cell = []
+        for col in range(self.cols):
+            self.cell.append(self.tableWidget.item(self.row, col).text())        # <---
+        self.label.setText("{}".format(" {}  ; "*self.cols).format(*self.cell))
+
+    def cellClick(self, row, col):
+        self.row = row
+        self.col = col
+
+    def setTableWidget(self):
+        for r, (_id, _name, _owner, _script) in enumerate(self.data):
+            it_id     = QTableWidgetItem(_id)
+            it_name   = QTableWidgetItem(_name)
+            it_owner  = QTableWidgetItem(_owner)
+            it_script = QTableWidgetItem(_script)
+
+            self.tableWidget.insertRow(self.tableWidget.rowCount())
+            for c, item in enumerate((it_id, it_name, it_owner, it_script)):
+                self.tableWidget.setItem(r, c, item)
 
 
-class Window(QWidget):
-    def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
-
-        self.setWindowTitle("Scrolling QTableWidget smoothly BY MOUSE WHEEL")
-
-        label = QLabel("singleStep:")
-        self.spinbox = QSpinBox()
-        self.spinbox.setValue(1)
-        self.spinbox.setMinimum(1)
-        self.spinbox.setMaximum(200)
-        self.spinbox.valueChanged.connect(self.on_value_changed)
-
-        self.widget = QTableWidget(100, 5)
-
-        for i in range(100):
-            for j in range(5):
-                self.widget.setItem(i, j, QTableWidgetItem(str(i + j)))
-
-        self.widget.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
-        # self.widget.verticalScrollBar().setSingleStep(1)
-        self.set_single_step()
-
-        spinbox_layout = QHBoxLayout()
-        spinbox_layout.addStretch()
-        spinbox_layout.addWidget(label)
-        spinbox_layout.addWidget(self.spinbox)
-
-        layout = QVBoxLayout()
-        layout.addLayout(spinbox_layout)
-        layout.addWidget(self.widget)
-        self.setLayout(layout)
-
-    def on_value_changed(self, step):
-        self.set_single_step()
-
-    def set_single_step(self):
-        self.widget.verticalScrollBar().setSingleStep(self.spinbox.value())
-
+data = [("1", "Login",       "1", "test_login_s"),
+        ("2", "Logout",      "1", "test_logout_s"),
+        ("3", "User > Edit", "1", "test_user_edit_s")]
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = Window()
-    window.resize(800, 600)
-    window.show()
-    sys.exit(app.exec())
+    ex = Example(data)
+    ex.setGeometry(300, 150, 450, 200)
+    ex.show()
+    sys.exit(app.exec_())
