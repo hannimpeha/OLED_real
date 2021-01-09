@@ -1,5 +1,4 @@
-import sys
-
+import math
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QWidget
@@ -7,11 +6,13 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from scipy import stats
 
 file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv'
 foo_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/foo.png'
-emission_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/EML_graph.png'
+em_figure = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/EML_graph.png'
 txt_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text.csv'
+em_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text_em.csv'
 
 class Elements_Structure_Graph(QWidget):
     def __init__(self):
@@ -24,7 +25,7 @@ class Elements_Structure_Graph(QWidget):
         self.thickness = np.asarray(df[4])
         self.unit = df[5]
         self.draw_fig()
-        graph = self.emission_layer_graph()
+        graph = Emission_Layer_Graph()
 
         label = QLabel()
         pixmap = QPixmap(foo_file)
@@ -73,10 +74,22 @@ class Elements_Structure_Graph(QWidget):
     def write_graph(self):
         return pd.read_csv(file, header=0)
 
-    def emission_layer_graph(self):
+class Emission_Layer_Graph(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
         label = QLabel()
-        pixmap = QPixmap(emission_image)
+        pixmap = QPixmap(em_figure)
         pixmap = pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
-        return label
+        layout.addWidget(label)
+        self.setLayout(layout)
+
+        mu = 0
+        variance = 1
+        sigma = math.sqrt(variance)
+        x = np.linspace(mu - 3 * sigma, mu + 3 * sigma, 100)
+        plt.plot(x, stats.norm.pdf(x, mu, sigma))
+        plt.suptitle("2pplAn_PL", fontsize=20)
+        plt.savefig(em_figure, transparent=True)

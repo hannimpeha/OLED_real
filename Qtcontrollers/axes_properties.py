@@ -1,8 +1,10 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QLabel, QWidget, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QLabel, QWidget, QTableWidget, QTableWidgetItem, QVBoxLayout
 
-contour_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/contour.png'
+from Qtcontrollers.plotting_param import Plotting
+
+image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Graph.png'
 
 class Axes_Properties(QWidget):
 
@@ -15,7 +17,7 @@ class Axes_Properties(QWidget):
         layout.addWidget(label)
 
         table = self.making_table()
-        image = self.contour_image()
+        image = self.making_image()
         layout.addWidget(table)
         layout.addWidget(image)
         self.setLayout(layout)
@@ -52,9 +54,9 @@ class Axes_Properties(QWidget):
         header.setSectionResizeMode(4, QtWidgets.QHeaderView.Stretch)
         return self.table
 
-    def contour_image(self):
+    def making_image(self):
         label = QLabel()
-        pixmap = QPixmap(contour_image)
+        pixmap = QPixmap(image)
         pixmap = pixmap.scaled(600, 800, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())

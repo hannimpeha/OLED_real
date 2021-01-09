@@ -2,8 +2,17 @@ from PyQt5 import QtCore, QtWidgets, QtGui, Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QComboBox, QTableWidget, QTableWidgetItem, QLineEdit, \
     QPushButton, QCheckBox, QHBoxLayout, QScrollBar, QTableView, QAbstractItemView
+import numpy as np
+import matplotlib.pyplot as plt
+from colour import MultiSpectralDistributions, write_image, read_image
+from colour.io import write_image_Imageio, write_image_OpenImageIO
+from colour.plotting import plot_chromaticity_diagram_CIE1931, plot_image
 
 logo_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Logo.png'
+data_path = "output/#3-2/CIE/output_CIE_bottom.txt"
+data_path2 = "output/#3-2/angular_intensity/output_angular_intensity_bottom.txt"
+graph = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Graph.png'
+
 
 class Plotting_Param(QWidget):
     def __init__(self):
@@ -88,7 +97,53 @@ class Plotting(QWidget):
         table = self.making_table()
 
         layout.addWidget(table, 6, 0)
+
+        hlayout = QHBoxLayout()
+        btn = QPushButton()
+        btn.setText("Plot")
+        btn.clicked.connect(self.onButtonClickedPlot)
+        hlayout.addWidget(btn)
+
+        btn = QPushButton()
+        btn.setText("Clear")
+        hlayout.addWidget(btn)
+        layout.addLayout(hlayout, 7, 0)
+
         self.setLayout(layout)
+
+    def onButtonClickedPlot(self):
+        # data = np.loadtxt(data_path, unpack=True)
+        # index = np.array(range(0, 100, 10))
+        # # labels = ('x', 'y', 'z')
+        # dic = {k: v for k, v in (zip(index, np.transpose(data)))}
+        #
+        # x_dic = {k: v[0] for k, v in dic.items()}
+        # y_dic = {k: v[1] for k, v in dic.items()}
+        # z_dic = {k: v[2] for k, v in dic.items()}
+        #
+        # ds = [x_dic, y_dic, z_dic]
+        # d = {}
+        # for k in x_dic.keys():
+        #     d[k] = tuple(d[k] for d in ds)
+        #
+        # sds = MultiSpectralDistributions(d)
+        # plot = plot_chromaticity_diagram_CIE1931()
+        # write_image(plot, graph)
+
+        data = np.genfromtxt(data_path2, unpack=True)
+        theta = np.linspace(0, np.pi / 2, 10)
+        r = np.cos(theta)
+        r_data = data
+        fig = plt.figure()
+        ax = fig.add_subplot(111, polar=True)
+        ax.set_thetamin(0)
+        ax.set_thetamax(90)
+
+        ax.scatter(theta, r)
+        ax.scatter(theta, r_data)
+
+        fig.savefig(graph, transparent=True)
+
 
     def onChanged(self, text):
         self.qlabel.setText(text)
@@ -106,7 +161,7 @@ class Plotting(QWidget):
         self.y = ["50", "50"]
         self.tempList = [[self.x, self.y]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(380, 600)
+        self.table.setFixedSize(380, 180)
 
         for i in range(len(self.x)):
             self.num_row = i

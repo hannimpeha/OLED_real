@@ -2,6 +2,8 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 
 file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text.csv'
+file_em = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text_em.csv'
+
 class Elements_Structure(QWidget):
     def __init__(self):
         super().__init__()
@@ -97,11 +99,6 @@ class Elements_Structure(QWidget):
         return self.cell
 
 
-
-
-
-
-
 class Emission_Layer(QWidget):
     def __init__(self):
         super().__init__()
@@ -115,14 +112,20 @@ class Emission_Layer(QWidget):
         grid = QGridLayout()
         connectButton = QPushButton('Add')
         connectButton.clicked.connect(self.onConnectButtonClicked)
-        connectButton.setFixedSize(300, 30)
+        connectButton.setFixedSize(200, 30)
 
         removeButton = QPushButton('Delete')
         removeButton.clicked.connect(self.onRemoveButtonClicked)
-        removeButton.setFixedSize(300, 30)
+        removeButton.setFixedSize(200, 30)
+
+        drawButton = QPushButton("Draw")
+        drawButton.clicked.connect(self.onDrawButtonClicked)
+        drawButton.setFixedSize(200, 30)
+
 
         grid.addWidget(connectButton, 0, 0)
         grid.addWidget(removeButton, 0, 1)
+        grid.addWidget(drawButton, 0, 2)
         layout.addLayout(grid)
         layout.addWidget(self.table)
         self.setLayout(layout)
@@ -169,6 +172,15 @@ class Emission_Layer(QWidget):
             row = self.table.indexAt(button.pos()).row()
             self.table.removeRow(row)
 
+    def onDrawButtonClicked(self):
+        self.cell = []
+        row = self.table.currentRow()
+        col = self.table.currentColumn()
+        self.cell.append(self.table.item(row, col).text())
+        with open(file_em, 'w') as out:
+            out.write(self.cell[0] + "\n")
+
+
 class Emission_Zone_Setting(QWidget):
     def __init__(self):
         super().__init__()
@@ -186,12 +198,12 @@ class Emission_Zone_Setting(QWidget):
         layout.addWidget(radiobutton, 1, 0)
 
         radiobutton = QRadioButton("Constant")
-        radiobutton.type = "x=a"
+        radiobutton.type = "x = a"
         radiobutton.toggled.connect(self.onClicked)
         layout.addWidget(radiobutton, 2, 0)
 
         radiobutton = QRadioButton("Linear")
-        radiobutton.type = "y=ax+b"
+        radiobutton.type = "y = ax+b"
         radiobutton.toggled.connect(self.onClicked)
         layout.addWidget(radiobutton, 3, 0)
 
