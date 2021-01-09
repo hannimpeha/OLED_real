@@ -153,11 +153,11 @@ class Emission_Layer(QWidget):
         self.exciton_prop = [1, 1]
         self.qy = [83, 83]
         self.pq = [94, 94]
-        self.em_zone = ["Sheet", "Linear"]
+        #self.em_zone = ["Sheet", "Linear"]
         self.tempList = [[self.em_materials, self.spectrum, self.exciton_prop,
-                          self.qy, self.pq, self.em_zone]]
+                          self.qy, self.pq]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(720, 300)
+        self.table.setFixedSize(610, 300)
 
         for i in range(len(self.em_materials)):
             self.num_row = i
@@ -167,7 +167,17 @@ class Emission_Layer(QWidget):
             self.table.setItem(self.num_row, 3, QTableWidgetItem(str(self.exciton_prop[i])))
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.qy[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(str(self.pq[i])))
-            self.table.setItem(self.num_row, 6, QTableWidgetItem(str(self.em_zone[i])))
+
+        i = 0
+        for j in self.em_materials:
+            self.table.setItem(i, 0, QtWidgets.QTableWidgetItem(j))
+            comboBox = QComboBox()
+            comboBox.addItem("Sheet")
+            comboBox.addItem("Constant")
+            comboBox.addItem("Linear")
+            comboBox.addItem("Gaussian")
+            self.table.setCellWidget(i, 6, comboBox)
+            i += 1
 
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
