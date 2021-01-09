@@ -1,55 +1,37 @@
-from PyQt5 import QtGui, QtCore
-from PyQt5.QtPrintSupport import QPrintDialog, QPrintPreviewDialog
-from PyQt5.QtWidgets import QWidget, QPushButton, QGridLayout, QTableView, QDialog, QApplication
+import sys
+from PyQt5 import QtWidgets, QtCore
+
+class Window(QtWidgets.QMainWindow):
+
+    def __init__(self):
+        super(Window, self).__init__()
+        self.setGeometry(50,50,500,500)
+        self.setWindowTitle('PyQt Tuts')
+        self.table()
 
 
-class Window(QWidget):
-    def __init__(self, rows, columns):
-        QWidget.__init__(self)
-        self.table = QTableView(self)
-        model =  QtGui.QStandardItemModel(rows, columns, self.table)
-        for row in range(rows):
-            for column in range(columns):
-                item = QtGui.QStandardItem('(%d, %d)' % (row, column))
-                item.setTextAlignment(QtCore.Qt.AlignCenter)
-                model.setItem(row, column, item)
-        self.table.setModel(model)
-        self.buttonPrint = QPushButton('Print', self)
-        self.buttonPrint.clicked.connect(self.handlePrint)
-        self.buttonPreview = QPushButton('Preview', self)
-        self.buttonPreview.clicked.connect(self.handlePreview)
-        layout = QGridLayout(self)
-        layout.addWidget(self.table, 0, 0, 1, 2)
-        layout.addWidget(self.buttonPrint, 1, 0)
-        layout.addWidget(self.buttonPreview, 1, 1)
+    def table(self):
 
-    def handlePrint(self):
-        dialog = QPrintDialog()
-        if dialog.exec_() == QDialog.Accepted:
-            self.handlePaintRequest(dialog.printer())
+        comboBox = QtWidgets.QComboBox()
 
-    def handlePreview(self):
-        dialog = QPrintPreviewDialog()
-        dialog.paintRequested.connect(self.handlePaintRequest)
-        dialog.exec_()
+        self.tableWidget = QtWidgets.QTableWidget()
+        self.tableWidget.setGeometry(QtCore.QRect(220, 100, 411, 392))
+        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setRowCount(5)
+        self.tableWidget.show()
 
-    def handlePaintRequest(self, printer):
-        document = QtGui.QTextDocument()
-        cursor = QtGui.QTextCursor(document)
-        model = self.table.model()
-        table = cursor.insertTable(
-            model.rowCount(), model.columnCount())
-        for row in range(table.rows()):
-            for column in range(table.columns()):
-                cursor.insertText(model.item(row, column).text())
-                cursor.movePosition(QtGui.QTextCursor.NextCell)
-        document.print_(printer)
+        attr = ['one', 'two', 'three', 'four', 'five']
+        i = 0
+        for j in attr:
+            self.tableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(j))
+            comboBox = QtWidgets.QComboBox()
+            self.tableWidget.setCellWidget(i, 1, comboBox)
+            i += 1
 
-if __name__ == '__main__':
 
-    import sys
-    app = QApplication(sys.argv)
-    window = Window(25, 2)
-    window.resize(300, 400)
-    window.show()
+def run():
+    app = QtWidgets.QApplication(sys.argv)
+    w = Window()
     sys.exit(app.exec_())
+
+run()

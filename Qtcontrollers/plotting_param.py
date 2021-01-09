@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QComboBox, QTableWidget, QTableWidgetItem, QLineEdit, \
-    QPushButton, QCheckBox, QHBoxLayout, QAbstractItemView
+    QPushButton, QCheckBox, QHBoxLayout, QAbstractItemView, QFileDialog
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -194,6 +194,7 @@ class Exportation(QWidget):
 
         btn = QPushButton()
         btn.setText("Browse")
+        btn.clicked.connect(self.talk)
         hlayout.addWidget(btn)
 
         layout.addLayout(hlayout, 1, 0)
@@ -234,3 +235,9 @@ class Exportation(QWidget):
 
         layout.addLayout(hlayout, 3, 0)
         self.setLayout(layout)
+
+    def talk(self):
+        self.dialog = QFileDialog()
+        options = QFileDialog.DontResolveSymlinks | QFileDialog.ShowDirsOnly
+        self.directory = QFileDialog.getExistingDirectory(self.dialog, "Open Folder", options=options)
+        self.dialog.show()

@@ -53,8 +53,9 @@ class Elements_Structure(QWidget):
         self.material = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
         self.refractive_index = ["Al.dat", "ETL.dat", "EML.dat", "HTL.dat", "HTL1.dat", "ITO.dat"]
         self.thickness = [100, 100.5, 20, 10, 100.5, 70]
-        self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
-        self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness, self.unit]]
+        #self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
+
+        self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness]]
         self.num_row = len(self.tempList)
         self.table.setFixedSize(610, 250)
 
@@ -65,7 +66,16 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 2, QTableWidgetItem(self.material[i]))
             self.table.setItem(self.num_row, 3, QTableWidgetItem(self.refractive_index[i]))
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.thickness[i])))
-            self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
+
+        i = 0
+        for j in self.layer_name:
+            self.table.setItem(i, 0, QtWidgets.QTableWidgetItem(j))
+            comboBox = QComboBox()
+            comboBox.addItem("nm")
+            comboBox.addItem("pm")
+            self.table.setCellWidget(i, 5, comboBox)
+            i += 1
+
         self.table.horizontalHeader().setStretchLastSection(True)
         #self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.setSelectionMode(QAbstractItemView.MultiSelection)

@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QAction, QTabWidget, QVBoxLayout, QApplication, QMenuBar, QGridLayout
+from PyQt5.QtWidgets import QWidget, QAction, QTabWidget, QVBoxLayout, QApplication, QMenuBar, QGridLayout, QFileDialog
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
 
@@ -30,6 +30,7 @@ class Real(QWidget):
         newAction.setShortcut('Ctrl+N')
 
         openAction = QAction(QIcon('open.png'), '&Open', self)
+        openAction.triggered.connect(self.talk)
         openAction.setShortcut('Ctrl+O')
 
         exitAction = QAction(QIcon('exit.png'), '&Exit', self)
@@ -68,6 +69,13 @@ class Real(QWidget):
         grid.addWidget(tabs)
 
         self.setLayout(grid)
+
+    def talk(self):
+        self.dialog = QFileDialog()
+        options = QFileDialog.DontResolveSymlinks | QFileDialog.ShowDirsOnly
+        self.directory = QFileDialog.getExistingDirectory(self.dialog, "Open Folder", options=options)
+        self.dialog.show()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
