@@ -59,6 +59,7 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.thickness[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
         self.table.horizontalHeader().setStretchLastSection(True)
+
         return self.table
 
     def onConnectButtonClicked(self):

@@ -1,66 +1,52 @@
-from PyQt5.QtWidgets import QVBoxLayout, QPushButton, QHBoxLayout, QApplication, QWidget, QTableWidget, QTableWidgetItem
 import sys
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 
 class Window(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        QWidget.__init__(self, parent)
 
-        self.title = "PyQt5 Tables"
-        self.top = 100
-        self.left = 100
-        self.width = 500
-        self.height = 400
+        self.setWindowTitle("Scrolling QTableWidget smoothly BY MOUSE WHEEL")
 
-        self.qtd_rows = 100
+        label = QLabel("singleStep:")
+        self.spinbox = QSpinBox()
+        self.spinbox.setValue(1)
+        self.spinbox.setMinimum(1)
+        self.spinbox.setMaximum(200)
+        self.spinbox.valueChanged.connect(self.on_value_changed)
 
-        self.table_widget = QTableWidget()
+        self.widget = QTableWidget(100, 5)
 
-        self.init_window()
+        for i in range(100):
+            for j in range(5):
+                self.widget.setItem(i, j, QTableWidgetItem(str(i + j)))
 
-    def init_window(self):
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.top, self.left, self.width, self.height)
-        self.creating_tables()
-        self.show()
+        self.widget.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        # self.widget.verticalScrollBar().setSingleStep(1)
+        self.set_single_step()
 
-    def creating_tables(self):
-        self.table_widget = QTableWidget()
-        self.table_widget.setAutoScroll(True)
-        self.table_widget.setRowCount(self.qtd_rows)
-        self.table_widget.setColumnCount(2)
+        spinbox_layout = QHBoxLayout()
+        spinbox_layout.addStretch()
+        spinbox_layout.addWidget(label)
+        spinbox_layout.addWidget(self.spinbox)
 
-        self.table_widget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.table_widget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        layout = QVBoxLayout()
+        layout.addLayout(spinbox_layout)
+        layout.addWidget(self.widget)
+        self.setLayout(layout)
 
-        vbox = QVBoxLayout()
+    def on_value_changed(self, step):
+        self.set_single_step()
 
-        for text, slot in (("PageUp", self.btn_page_up), ("PageDown", self.btn_page_down)):
-            button = QPushButton(text)
-            vbox.addWidget(button)
-            button.clicked.connect(slot)
-
-        for i in range(0, self.qtd_rows):
-            self.table_widget.setItem(i, 0, QTableWidgetItem("Name_" + str(i)))
-            self.table_widget.setItem(i, 1, QTableWidgetItem("Email"))
-
-        vBoxLayout = QVBoxLayout()
-        vBoxLayout.addWidget(self.table_widget)
-
-        hBox = QHBoxLayout()
-        hBox.addLayout(vBoxLayout)
-        hBox.addLayout(vbox)
-
-        self.setLayout(hBox)
-
-    def btn_page_up(self):
-        self.table_widget.scrollToTop()
-
-    def btn_page_down(self):
-        self.table_widget.scrollToBottom()
+    def set_single_step(self):
+        self.widget.verticalScrollBar().setSingleStep(self.spinbox.value())
 
 
-App = QApplication(sys.argv)
-window = Window()
-sys.exit(App.exec())
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = Window()
+    window.resize(800, 600)
+    window.show()
+    sys.exit(app.exec())

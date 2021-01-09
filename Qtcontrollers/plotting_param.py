@@ -1,7 +1,7 @@
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QComboBox, QTableWidget, QTableWidgetItem, QLineEdit, \
-    QPushButton, QCheckBox, QHBoxLayout, QScrollBar
+    QPushButton, QCheckBox, QHBoxLayout, QScrollBar, QTableView, QAbstractItemView
 
 logo_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Logo.png'
 
@@ -91,6 +91,7 @@ class Plotting(QWidget):
         layout.addWidget(label, 5, 0)
         table = self.making_table()
 
+
         layout.addWidget(table, 6, 0)
         self.setLayout(layout)
 
@@ -117,8 +118,8 @@ class Plotting(QWidget):
             self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
             self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
 
-        scroll_bar = QScrollBar()
-        self.table.setVerticalScrollBar(scroll_bar)
+        self.table.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
