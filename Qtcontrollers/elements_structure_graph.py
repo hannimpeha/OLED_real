@@ -4,22 +4,25 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QWidget
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/hannimpeha.csv'
 foo_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/foo.png'
 emission_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/EML_graph.png'
+txt_file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text.csv'
 
 class Elements_Structure_Graph(QWidget):
     def __init__(self):
         super().__init__()
-        self.layer_name = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
-        self.material = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
-        self.refractive_index = ["Al.dat", "ETL.dat", "EML.dat", "HTL.dat", "HTL1.dat", "ITO.dat"]
-        self.thickness = np.asarray([100, 100.5, 20, 10, 100.5, 70])
-        self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
+
+        df = pd.read_csv(txt_file, header=None)
+        self.layer_name = df[1]
+        self.material = df[2]
+        self.refractive_index = df[3]
+        self.thickness = np.asarray(df[4])
+        self.unit = df[5]
         self.draw_fig()
         graph = self.emission_layer_graph()
 

@@ -1,5 +1,4 @@
 import sys
-
 from PyQt5.QtWidgets import QWidget, QAction, QTabWidget, QVBoxLayout, QApplication, QMenuBar, QGridLayout
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon

@@ -1,6 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 
+file = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/text.csv'
 class Elements_Structure(QWidget):
     def __init__(self):
         super().__init__()
@@ -64,7 +65,8 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.thickness[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
         self.table.horizontalHeader().setStretchLastSection(True)
-
+        #self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table.setSelectionMode(QAbstractItemView.MultiSelection)
         return self.table
 
     def onConnectButtonClicked(self):
@@ -79,11 +81,23 @@ class Elements_Structure(QWidget):
             self.table.removeRow(row)
 
     def onDrawButtonClicked(self):
+        l = self.onDraw()
+        for k in range(int(len(l)/6) + 1):
+            with open(file, 'w') as out:
+                out.write(",".join(l[k * 6:(k + 1) * 6])+"\n")
+
+    def onDraw(self):
         self.cell = []
-        row = self.table.currentRow()
-        col = self.table.currentColumn()
-        self.cell.append(self.table.item(row, col).text())
-        print(self.cell)
+        # row = self.table.currentRow()
+        row = self.table.rowCount()
+        col = self.table.columnCount()
+        for i in range(row):
+            for j in range(col):
+                self.cell.append(self.table.item(i, j).text())
+        return self.cell
+
+
+
 
 
 
