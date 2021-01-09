@@ -80,7 +80,7 @@ class Execute(QWidget):
 
         DEFAULT_STYLE = """
         QProgressBar{
-            border: 2px solid grey;
+            border: 1px solid grey;
             border-radius: 5px;
             text-align: center
         }
@@ -92,11 +92,12 @@ class Execute(QWidget):
         }
         """
 
-        layout = QGridLayout()
+        layout = QVBoxLayout()
 
         label = QLabel()
         label.setText("Progress")
-        layout.addWidget(label, 0, 0)
+        label.setFixedSize(100, 20)
+        layout.addWidget(label)
 
         self.pbar = QProgressBar()
         self.pbar.setGeometry(30, 40, 200, 40)
@@ -109,8 +110,8 @@ class Execute(QWidget):
         self.timer = QBasicTimer()
         self.step = 0
 
-        layout.addWidget(self.pbar, 1, 0)
-        layout.addWidget(self.btn, 2, 0)
+        layout.addWidget(self.pbar)
+        layout.addWidget(self.btn)
         self.setLayout(layout)
 
     def timerEvent(self, e):

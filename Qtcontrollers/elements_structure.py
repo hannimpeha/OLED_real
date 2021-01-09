@@ -58,6 +58,7 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 3, QTableWidgetItem(self.refractive_index[i]))
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.thickness[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
+        self.table.horizontalHeader().setStretchLastSection(True)
         return self.table
 
     def onConnectButtonClicked(self):
@@ -124,7 +125,7 @@ class Emission_Layer(QWidget):
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.qy[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(str(self.pq[i])))
             self.table.setItem(self.num_row, 6, QTableWidgetItem(str(self.em_zone[i])))
-
+        self.table.horizontalHeader().setStretchLastSection(True)
         return self.table
 
     def onConnectButtonClicked(self):

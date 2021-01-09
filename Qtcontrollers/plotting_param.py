@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QComboBox, QTableWidget, QTableWidgetItem, QLineEdit, \
-    QPushButton, QCheckBox, QHBoxLayout
+    QPushButton, QCheckBox, QHBoxLayout, QScrollBar
 
 logo_image = '/Users/hannahlee/PycharmProjects/penProject/controllers/resources/Logo.png'
 
@@ -89,8 +89,8 @@ class Plotting(QWidget):
         label = QLabel()
         label.setText("Fixed Parameters:")
         layout.addWidget(label, 5, 0)
-
         table = self.making_table()
+
         layout.addWidget(table, 6, 0)
         self.setLayout(layout)
 
@@ -116,7 +116,12 @@ class Plotting(QWidget):
             self.num_row = i
             self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
             self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
+
+        scroll_bar = QScrollBar()
+        self.table.setVerticalScrollBar(scroll_bar)
+        self.table.horizontalHeader().setStretchLastSection(True)
         return self.table
+
 
 class Exportation(QWidget):
     def __init__(self):
