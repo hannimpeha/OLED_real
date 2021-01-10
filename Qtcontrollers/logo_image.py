@@ -1,7 +1,7 @@
 from datetime import datetime
 import socket
 from PyQt5 import QtCore
-from PyQt5.QtCore import QBasicTimer, pyqtSignal, QThread, QObject
+from PyQt5.QtCore import QThread, QObject
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 
@@ -89,7 +89,6 @@ class Execute(QWidget):
         self.thread = QThread()
         self.worker = SeleniumWorker()
         self.worker.moveToThread(self.thread)
-        self.thread.started.connect(self.worker.doWork)
 
         layout.addWidget(self.worker.pbar)
         layout.addWidget(self.worker.btn)
