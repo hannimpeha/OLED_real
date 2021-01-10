@@ -4,10 +4,11 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QThread, QObject
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
-
 from selenium import webdriver
+from ctypes import *
 
 logo_image = 'Qtcontrollers/resources/Logo.png'
+so_file = "c/hannimpeha.so"
 
 class Logo_Image(QWidget):
     def __init__(self):
@@ -124,6 +125,11 @@ class SeleniumWorker(QObject):
 
     def doWork(self):
         self.btn.setText("Stop")
+
+        my = CDLL(so_file)
+        print(type(my))
+
+        # subprocess.Popen([sys.executable, "longtask.py"])
         browser = webdriver.Chrome()
         links = ['http://naver.com/',
                  'http://daum.net',
