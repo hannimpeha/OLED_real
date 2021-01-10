@@ -1,9 +1,11 @@
 from datetime import datetime
 import socket
 from PyQt5 import QtCore
-from PyQt5.QtCore import QBasicTimer
+from PyQt5.QtCore import QBasicTimer, pyqtSignal, QThread, QObject
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
+
+from selenium import webdriver
 
 logo_image = 'Qtcontrollers/resources/Logo.png'
 
@@ -77,20 +79,6 @@ class Execute(QWidget):
     def __init__(self):
         super().__init__()
 
-        DEFAULT_STYLE = """
-        QProgressBar{
-            border: 1px solid grey;
-            border-radius: 5px;
-            text-align: center
-        }
-
-        QProgressBar::chunk {
-            background-color: lightblue;
-            width: 10px;
-            margin: 1px;
-        }
-        """
-
         layout = QVBoxLayout()
 
         label = QLabel()
@@ -98,37 +86,56 @@ class Execute(QWidget):
         label.setFixedSize(100, 20)
         layout.addWidget(label)
 
-        self.pbar = QProgressBar()
-        self.pbar.setGeometry(30, 40, 200, 40)
-        self.setStyleSheet(DEFAULT_STYLE)
+        self.thread = QThread()
+        self.worker = SeleniumWorker()
+        self.worker.moveToThread(self.thread)
+        self.thread.started.connect(self.worker.doWork)
 
-        self.btn = QPushButton('GPU Calc')
-        self.btn.move(40, 80)
-        self.btn.clicked.connect(self.doAction)
-
-        self.timer = QBasicTimer()
-        self.step = 0
-
-        layout.addWidget(self.pbar)
-        layout.addWidget(self.btn)
+        layout.addWidget(self.worker.pbar)
+        layout.addWidget(self.worker.btn)
         self.setLayout(layout)
 
-    def timerEvent(self, e):
-        if self.step >= 100:
-            self.timer.stop()
-            self.btn.setText('Finished')
-            return
+class SeleniumWorker(QObject):
+    def __init__(self):
+        super().__init__()
+        self.step = 0
+        self.btn = QPushButton('GPU Calc')
+        self.btn.move(40, 80)
+        self.btn.clicked.connect(self.doWork)
 
-        self.step = self.step + 1
-        self.pbar.setValue(self.step)
+        DEFAULT_STYLE = """
+                            QProgressBar{
+                                border: 1px solid grey;
+                                border-radius: 5px;
+                                text-align: center
+                            }
 
-    def doAction(self):
-        if self.timer.isActive():
-            self.timer.stop()
-            self.btn.setText('GPU Calc')
-        else:
-            self.timer.start(100, self)
-            self.btn.setText('Stop')
+                            QProgressBar::chunk {
+                                background-color: lightblue;
+                                width: 10px;
+                                margin: 1px;
+                            }
+                        """
+
+        self.pbar = QProgressBar()
+        self.pbar.setGeometry(30, 40, 200, 40)
+        self.pbar.setStyleSheet(DEFAULT_STYLE)
+        self.pbar.setRange(0, 100)
+
+    def doWork(self):
+        self.btn.setText("Stop")
+        browser = webdriver.Chrome()
+        links = ['https://naver.com/',
+                 'http://daum.net',
+                 'http://google.com']
+        for link in links:
+            browser.get(link)
+            self.step += 100 / len(links)
+            self.pbar.setValue(self.step)
+            if self.step >= 100:
+                self.btn.setText('Finished')
+                return
+        browser.close()
 
 
 class Project_Info(QWidget):
