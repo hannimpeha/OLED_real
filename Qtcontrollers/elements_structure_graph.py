@@ -1,7 +1,7 @@
 import math
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QVBoxLayout, QLabel, QGridLayout, QWidget, QTabWidget
+from PyQt5.QtWidgets import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np
 import matplotlib.pyplot as plt

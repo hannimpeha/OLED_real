@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QLabel, QWidget, QTableWidget, QTableWidgetItem, QVBoxLayout
+from PyQt5.QtWidgets import *
 
 image = 'Qtcontrollers/resources/Graph.png'
 
@@ -55,7 +55,7 @@ class Axes_Properties(QWidget):
     def making_image(self):
         label = QLabel()
         pixmap = QPixmap(image)
-        pixmap = pixmap.scaled(600, 800, QtCore.Qt.KeepAspectRatio)
+        pixmap = pixmap.scaled(610, 610, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         return label

@@ -1,7 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QComboBox, QTableWidget, QTableWidgetItem, QLineEdit, \
-    QPushButton, QCheckBox, QHBoxLayout, QAbstractItemView, QFileDialog
+from PyQt5.QtWidgets import *
 import numpy as np
 import matplotlib.pyplot as plt
 

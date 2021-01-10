@@ -3,7 +3,7 @@ import socket
 from PyQt5 import QtCore
 from PyQt5.QtCore import QBasicTimer
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QPushButton, QProgressBar, QVBoxLayout, QCheckBox, QLineEdit
+from PyQt5.QtWidgets import *
 
 logo_image = 'Qtcontrollers/resources/Logo.png'
 
@@ -130,63 +130,68 @@ class Execute(QWidget):
             self.timer.start(100, self)
             self.btn.setText('Stop')
 
+
 class Project_Info(QWidget):
     def __init__(self):
         super().__init__()
-        layout = QGridLayout()
+        layout = QHBoxLayout()
 
+        layout1 = QGridLayout()
         label = QLabel()
         label.setText("Project Info")
-        layout.addWidget(label, 0, 0)
+        layout1.addWidget(label, 0, 0)
 
-        label = QLabel()
-        label.setText("Name")
-        layout.addWidget(label, 1, 0)
+        label_name = QLabel()
+        label_name.setText("Name")
+        layout1.addWidget(label_name)
 
         label = QLabel()
         label.setText("Designer")
-        layout.addWidget(label, 2, 0)
+        layout1.addWidget(label, 2, 0)
 
         label = QLabel()
         label.setText("Analyzer")
-        layout.addWidget(label, 3, 0)
+        layout1.addWidget(label, 3, 0)
 
         label = QLabel()
         label.setText("Creation Date")
-        layout.addWidget(label, 4, 0)
+        layout1.addWidget(label, 4, 0)
 
         label = QLabel()
         label.setText("Modified Date")
-        layout.addWidget(label, 5, 0)
+        layout1.addWidget(label, 5, 0)
 
         label = QLabel()
         label.setText("IP Address")
-        layout.addWidget(label, 6, 0)
+        layout1.addWidget(label, 6, 0)
 
+        layout2 = QGridLayout()
         name_label = QLabel()
         name_label.setText("2PPlAn_33PYMPM")
-        layout.addWidget(name_label, 1, 1)
+        layout2.addWidget(name_label, 1, 0)
 
         label = QLabel()
         label.setText("Hannah Lee")
-        layout.addWidget(label, 2, 1)
+        layout2.addWidget(label, 2, 0)
 
         label = QLabel()
         label.setText("Hannah Lee")
-        layout.addWidget(label, 3, 1)
-
-
-        c_date = QLabel()
-        c_date.setText(datetime.today().strftime('%Y-%m-%d'))
-        layout.addWidget(c_date, 4, 1)
+        layout2.addWidget(label, 3, 0)
 
         c_date = QLabel()
         c_date.setText(datetime.today().strftime('%Y-%m-%d'))
-        layout.addWidget(c_date, 5, 1)
+        layout2.addWidget(c_date, 4, 0)
+
+        c_date = QLabel()
+        c_date.setText(datetime.today().strftime('%Y-%m-%d'))
+        layout2.addWidget(c_date, 5, 0)
 
         qlabel = QLabel()
         qlabel.setText(self.get_ip())
-        layout.addWidget(qlabel, 6, 1)
+        layout2.addWidget(qlabel, 6, 0)
+
+        layout.addLayout(layout1)
+        layout.addLayout(layout2)
 
         self.setLayout(layout)
 

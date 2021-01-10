@@ -1,37 +1,80 @@
-import sys
-from PyQt5 import QtWidgets, QtCore
-
-class Window(QtWidgets.QMainWindow):
-
-    def __init__(self):
-        super(Window, self).__init__()
-        self.setGeometry(50,50,500,500)
-        self.setWindowTitle('PyQt Tuts')
-        self.table()
+import math, sys
+from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QWidget, QMainWindow, QTextEdit, QGridLayout, QPushButton, QApplication
 
 
-    def table(self):
+class Overlay(QWidget):
 
-        comboBox = QtWidgets.QComboBox()
+    def __init__(self, parent = None):
 
-        self.tableWidget = QtWidgets.QTableWidget()
-        self.tableWidget.setGeometry(QtCore.QRect(220, 100, 411, 392))
-        self.tableWidget.setColumnCount(2)
-        self.tableWidget.setRowCount(5)
-        self.tableWidget.show()
+        QWidget.__init__(self, parent)
+        palette = QPalette(self.palette())
+        palette.setColor(palette.Background, Qt.transparent)
+        self.setPalette(palette)
 
-        attr = ['one', 'two', 'three', 'four', 'five']
-        i = 0
-        for j in attr:
-            self.tableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(j))
-            comboBox = QtWidgets.QComboBox()
-            self.tableWidget.setCellWidget(i, 1, comboBox)
-            i += 1
+    def paintEvent(self, event):
+
+        painter = QPainter()
+        painter.begin(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+        painter.fillRect(event.rect(), QBrush(QColor(255, 255, 255, 127)))
+        painter.setPen(QPen(Qt.NoPen))
+
+        for i in range(6):
+            if (self.counter / 5) % 6 == i:
+                painter.setBrush(QBrush(QColor(127 + (self.counter % 5)*32, 127, 127)))
+            else:
+                painter.setBrush(QBrush(QColor(127, 127, 127)))
+            painter.drawEllipse(
+                self.width()/2 + 30 * math.cos(2 * math.pi * i / 6.0) - 10,
+                self.height()/2 + 30 * math.sin(2 * math.pi * i / 6.0) - 10,
+                20, 20)
+
+        painter.end()
+
+    def showEvent(self, event):
+
+        self.timer = self.startTimer(50)
+        self.counter = 0
+
+    def timerEvent(self, event):
+
+        self.counter += 1
+        self.update()
+        if self.counter == 60:
+            self.killTimer(self.timer)
+            self.hide()
 
 
-def run():
-    app = QtWidgets.QApplication(sys.argv)
-    w = Window()
+class MainWindow(QMainWindow):
+
+    def __init__(self, parent = None):
+
+        QMainWindow.__init__(self, parent)
+
+        widget = QWidget(self)
+        self.editor = QTextEdit()
+        self.editor.setPlainText("0123456789"*100)
+        layout = QGridLayout(widget)
+        layout.addWidget(self.editor, 0, 0, 1, 3)
+        button = QPushButton("Wait")
+        layout.addWidget(button, 1, 1, 1, 1)
+
+        self.setCentralWidget(widget)
+        self.overlay = Overlay(self.centralWidget())
+        self.overlay.hide()
+        button.clicked.connect(self.overlay.show)
+
+    def resizeEvent(self, event):
+
+        self.overlay.resize(event.size())
+        event.accept()
+
+
+if __name__ == "__main__":
+
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
     sys.exit(app.exec_())
-
-run()
