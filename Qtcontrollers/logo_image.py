@@ -121,10 +121,11 @@ class SeleniumWorker(QObject):
         self.pbar.setStyleSheet(DEFAULT_STYLE)
         self.pbar.setRange(0, 100)
 
+
     def doWork(self):
         self.btn.setText("Stop")
         browser = webdriver.Chrome()
-        links = ['https://naver.com/',
+        links = ['http://naver.com/',
                  'http://daum.net',
                  'http://google.com']
         for link in links:
