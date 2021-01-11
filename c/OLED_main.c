@@ -181,8 +181,6 @@ int main(void)
         free(*token);
     }
 
-    printf("\n");
-
     FILE* emission = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_em.csv", "r");
 
     int no_EML = 0;	// the number of EML
@@ -1220,7 +1218,7 @@ int main(void)
 	FILE* es = fopen("data\\eyesense.dat", "rt");
 	if (es == NULL)
 	{
-		printf("���� �ε� ����");
+		printf("There is no data");
 		return false;
 	}
 	char temp[20];
@@ -1284,7 +1282,7 @@ int main(void)
 	free(WL);
 	end = clock(); double r_1;
 	r_1=t_result = ((double)end - (double)start) / CLOCKS_PER_SEC;
-	printf("%lf �� ���\n���ϻ��� ����\n", t_result);
+	printf("%lf is the t_result", t_result);
 	//���� ����
 	int folder = mkdir(strFolderPath, 0700);
 	char strFolderPathCPA[100] = { 0 };
@@ -1365,6 +1363,6 @@ int main(void)
 	free2d(output_CIE_bottom);	free2d(output_CIE_top);	free2d(output_CIE_sub);
 	end = clock();
 	t_result = ((double)end - (double)start) / CLOCKS_PER_SEC;
-	printf("%lf �� ��� \n���ϻ��� �Ϸ�\n��: %lf�� ���\n���α׷� ����", t_result-r_1,t_result);
+	printf("%lf is the t_result-r_1: %lf is the t_result", t_result-r_1,t_result);
 	return 0;
 }
