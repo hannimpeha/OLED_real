@@ -126,14 +126,11 @@ class SeleniumWorker(QObject):
     def doWork(self):
         self.btn.setText("Stop")
 
-        my = CDLL(so_file)
-        print(type(my))
+        my = cdll.LoadLibrary("/Users/hannahlee/PycharmProjects/penProject/c/hannimpeha.so")
+        my.main()
 
-        # subprocess.Popen([sys.executable, "longtask.py"])
         browser = webdriver.Chrome()
-        links = ['http://naver.com/',
-                 'http://daum.net',
-                 'http://google.com']
+        links = ['http://google.com']
         for link in links:
             browser.get(link)
             self.step += 100 / len(links)

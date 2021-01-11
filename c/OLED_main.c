@@ -160,71 +160,63 @@ int main(void)
     int no_l = 0;	// the number of layers
 
     char line[1024];
-    while (fgets(line, 1024, stream))
+    while (fgets(line, sizeof line, stream))
     {
-        char* tmp = strdup(line);
-        //printf("Field name would be %s\n", getfield(tmp, 2));
-        structure[no_l++] = *structure;
-        //printf("number of layer is %d\n", no_l);
-        free(tmp);
+        char *tmp = strchr(line, '\n');
+        if (tmp) *tmp = '\n';   // remove the '\n'
+        tmp = strdup(line);
+        #define MAXCOLUMNS  6
+        char *token[MAXCOLUMNS];
+        int c = 0;
+        while (tmp)
+        {
+            if (c == MAXCOLUMNS) puts("too many columns"), exit(1);
+            structure[no_l++] = *structure;
+            token[c++] = strsep(&tmp, ",");
+        }
+
+        strcpy(structure[atoi(token[0])].name, token[1]);
+        structure[atoi(token[0])].thick = atoi(token[4]);
+
+        free(*token);
     }
 
-    char* tmp = strdup(line);
-    strcpy(structure[atoi(getfield(tmp,1))].name, getfield(tmp,2));
-//	strcpy(structure[0].name, "Al");
-//	strcpy(structure[1].name, "TPBi");
-//	strcpy(structure[2].name, "TPBi");
-//	strcpy(structure[3].name, "mCBP");
-//	strcpy(structure[4].name, "mCBP");
-//	strcpy(structure[5].name, "TCTA_B3PYMPM");
-//	strcpy(structure[6].name, "TCTA");
-//	strcpy(structure[7].name, "NPB");
-//	strcpy(structure[8].name, "NPB");
-//	strcpy(structure[9].name, "TAPC");
-//	strcpy(structure[10].name, "ITO_Geomatec");
-//	strcpy(structure[11].name, "glass_Eagle2000");
+    printf("\n");
 
-    structure[atoi(getfield(tmp,1))].thick = atoi(getfield(tmp,5));
-//	structure[0].thick = 100;
-//	structure[1].thick = 30;
-//	structure[2].thick = 10;
-//	structure[3].thick = 20;
-//	structure[4].thick = 20;
-//	structure[5].thick = 20;
-//	structure[6].thick = 20;
-//	structure[7].thick = 30;
-//	structure[8].thick = 20;
-//	structure[9].thick = 50;
-//	structure[10].thick = 70;
-//	structure[11].thick = 0;
+    FILE* emission = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_em.csv", "r");
 
+    int no_EML = 0;	// the number of EML
 
+    while (fgets(line, sizeof line, emission))
+    {
+        char *tmp = strchr(line, '\n');
+        if (tmp) *tmp = '\n';   // remove the '\n'
+        tmp = strdup(line);
+        #define MAXIMUMCOLUMNS  7
+        char *token[MAXIMUMCOLUMNS];
+        int c = 0;
+        while (tmp)
+        {
+            if (c == MAXIMUMCOLUMNS) puts("too many columns"), exit(1);
+            EML[no_EML++] = *EML;
+            token[c++] = strsep(&tmp, ",");
+        }
 
-	//EML info input
-	EML[0].number = 4;
-	strcpy(EML[0].spectrum_name, "FCNIr");
-	strcpy(EML[0].EMZ_name, "constant");
-	EML[0].QY = 0.9;
-	EML[0].HDR = 0.75;
-	EML[0].Exciton_prop = 2;
-	
-	EML[1].number = 6;
-	strcpy(EML[1].spectrum_name, "Irppy2tmd");
-	strcpy(EML[1].EMZ_name, "linear_pos");
-	EML[1].QY = 0.96;
-	EML[1].HDR = 0.75;
-	EML[1].Exciton_prop = 1;
-	
-	EML[2].number = 8;
-	strcpy(EML[2].spectrum_name, "Irmphmq2tmd");
-	strcpy(EML[2].EMZ_name, "delta_50");
-	EML[2].QY = 0.96;
-	EML[2].HDR = 0.78;
-	EML[2].Exciton_prop = 1;
-	
-	int no_EML = 3; // the number of EML
+        EML[atoi(token[0])].number = atoi(token[1]);
+        strcpy(EML[atoi(token[0])].spectrum_name, token[2]);
+        strcpy(EML[atoi(token[0])].EMZ_name, token[6]);
+        EML[atoi(token[0])].QY = atoi(token[4]);
+        EML[atoi(token[0])].HDR = atoi(token[5]);
+        EML[atoi(token[0])].Exciton_prop = atoi(token[3]);
+
+        // ONLY if the line's tokens are no longer needed:
+        free(*token);
+    }
+
 	int no_EMZ = 31; // the number of EMZ
 	//input parameter end
+
+
 
 	//Input organization and preallocations
 	double* WL = linspace(WL_init, WL_final, ((int)WL_final - (int)WL_init) / (int)WL_step + 1);//

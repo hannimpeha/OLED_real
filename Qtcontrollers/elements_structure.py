@@ -53,9 +53,9 @@ class Elements_Structure(QWidget):
         self.material = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
         self.refractive_index = ["Al.dat", "ETL.dat", "EML.dat", "HTL.dat", "HTL1.dat", "ITO.dat"]
         self.thickness = [100, 100.5, 20, 10, 100.5, 70]
-        #self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
+        self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
 
-        self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness]]
+        self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness, self.unit]]
         self.num_row = len(self.tempList)
         self.table.setFixedSize(610, 250)
 
@@ -66,18 +66,18 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 2, QTableWidgetItem(self.material[i]))
             self.table.setItem(self.num_row, 3, QTableWidgetItem(self.refractive_index[i]))
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.thickness[i])))
+            self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
 
-        i = 0
-        for j in self.layer_name:
-            self.table.setItem(i, 0, QtWidgets.QTableWidgetItem(j))
-            comboBox = QComboBox()
-            comboBox.addItem("nm")
-            comboBox.addItem("pm")
-            self.table.setCellWidget(i, 5, comboBox)
-            i += 1
+        # i = 0
+        # for j in range(len(self.layer_name)):
+        #     self.table.setItem(i, 5, QtWidgets.QTableWidgetItem(j))
+        #     comboBox = QComboBox()
+        #     comboBox.addItem("nm")
+        #     comboBox.addItem("pm")
+        #     self.table.setCellWidget(i, 5, comboBox)
+        #     i += 1
 
         self.table.horizontalHeader().setStretchLastSection(True)
-        #self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.setSelectionMode(QAbstractItemView.MultiSelection)
         return self.table
 
@@ -113,7 +113,7 @@ class Emission_Layer(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout()
-        self.initUI()
+        self.init_em_table()
 
         label = QLabel()
         label.setText("Emission Layer")
@@ -140,22 +140,22 @@ class Emission_Layer(QWidget):
         layout.addWidget(self.table)
         self.setLayout(layout)
 
-    def initUI(self):
+    def init_em_table(self):
         self.table = QTableWidget()
-        self.table.setRowCount(2)
+        self.table.setRowCount(4)
         self.table.setColumnCount(7)
 
         cols_element = ['L#', 'EMMaterials', 'Spectrum', 'ExcitonProp', 'QY', 'PQ', 'EMZone']
         self.table.setHorizontalHeaderLabels(cols_element)
 
-        self.em_materials = ["None", "None"]
-        self.spectrum = ["2pplAn_PL", "hannimpeha"]
-        self.exciton_prop = [1, 1]
-        self.qy = [83, 83]
-        self.pq = [94, 94]
-        #self.em_zone = ["Sheet", "Linear"]
+        self.em_materials = ["None", "None", "None", "None"]
+        self.spectrum = ["2pplAn_PL", "FCNlr", "Irppy2tmd", "Irmphmq2tmd"]
+        self.exciton_prop = [1, 2, 1, 1]
+        self.qy = [83, 90, 96, 96]
+        self.pq = [94, 75, 75, 78]
+        self.em_zone = ["Sheet", "Linear", "Sheet", "Delta"]
         self.tempList = [[self.em_materials, self.spectrum, self.exciton_prop,
-                          self.qy, self.pq]]
+                          self.qy, self.pq, self.em_zone]]
         self.num_row = len(self.tempList)
         self.table.setFixedSize(610, 300)
 
@@ -167,17 +167,18 @@ class Emission_Layer(QWidget):
             self.table.setItem(self.num_row, 3, QTableWidgetItem(str(self.exciton_prop[i])))
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.qy[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(str(self.pq[i])))
+            self.table.setItem(self.num_row, 6, QTableWidgetItem(str(self.em_zone[i])))
 
-        i = 0
-        for j in self.em_materials:
-            self.table.setItem(i, 0, QtWidgets.QTableWidgetItem(j))
-            comboBox = QComboBox()
-            comboBox.addItem("Sheet")
-            comboBox.addItem("Constant")
-            comboBox.addItem("Linear")
-            comboBox.addItem("Gaussian")
-            self.table.setCellWidget(i, 6, comboBox)
-            i += 1
+        # i = 0
+        # for j in range(len(self.em_materials)):
+        #     self.table.setItem(i, 6, QtWidgets.QTableWidgetItem(j))
+        #     comboBox = QComboBox()
+        #     comboBox.addItem("Sheet")
+        #     comboBox.addItem("Constant")
+        #     comboBox.addItem("Linear")
+        #     comboBox.addItem("Gaussian")
+        #     self.table.setCellWidget(i, 6, comboBox)
+        #     i += 1
 
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
@@ -200,13 +201,29 @@ class Emission_Layer(QWidget):
             row = self.table.indexAt(button.pos()).row()
             self.table.removeRow(row)
 
+    # def onDrawButtonClicked(self):
+    #     self.cell = []
+    #     row = self.table.currentRow()
+    #     col = self.table.currentColumn()
+    #     self.cell.append(self.table.item(row, col).text())
+    #     with open(file_em, 'w') as out:
+    #         out.write(self.cell[0] + "\n")
+
     def onDrawButtonClicked(self):
+        l = self.onDraw()
+        for k in range(int(len(l)/7) + 1):
+            with open(file_em, 'a') as out:
+                out.write(",".join(l[k * 7:(k + 1) * 7])+"\n")
+
+    def onDraw(self):
         self.cell = []
-        row = self.table.currentRow()
-        col = self.table.currentColumn()
-        self.cell.append(self.table.item(row, col).text())
-        with open(file_em, 'w') as out:
-            out.write(self.cell[0] + "\n")
+        # row = self.table.currentRow()
+        row = self.table.rowCount()
+        col = self.table.columnCount()
+        for i in range(row):
+            for j in range(col):
+                self.cell.append(self.table.item(i,j).text())
+        return self.cell
 
 
 class Emission_Zone_Setting(QWidget):
