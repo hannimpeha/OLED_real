@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <sys/stat.h>
 #define PI 3.141592
+#define SIZE 35
 
 double* linspace(double i, double f, int num);
 double* arrjoin(double* a, double* b, int lenga, int lengb);
@@ -97,7 +98,7 @@ int main(void)
 	printf("Welcome To My World \n");
 	clock_t start, end;	//
 	start = clock();	//
-	double t_result;	// 
+	double t_result;	//
 
 	int i, j, k, l;
 	//index and abbreviation
@@ -114,25 +115,19 @@ int main(void)
 
 		% SUBS: substrate guided, NR: non-radiative*/
 
-		// administrator options
+	// administrator options
 	int maximum_layer_number = 16;
 	int maximum_EML_number = 4;
 
 	Save* structure = (Save*)malloc(sizeof(Save) * maximum_layer_number);//
-	if (structure == NULL)
-		return false;
 	Save* structure_temp = (Save*)malloc(sizeof(Save) * maximum_layer_number);//
-	if (structure_temp == NULL)
-		return false;
 	emil* EML = (emil*)malloc(sizeof(emil) * maximum_EML_number);//
-	if (EML == NULL)
-		return false;
 	// administrator options end
 
-//calculation condition
+    //calculation condition
 	int v_number = 1000;	//	the number of in-plane vector
 	int multiple = 25;		//	end of the in-planevector
-	double* inpva = linspace(0, 1.49, v_number);		   // 
+	double* inpva = linspace(0, 1.49, v_number);		   //
 	double* inpvb = linspace(1.49 + 0.0001, multiple, 100);//	normalized in-plane wavevector
 	double* inpv = arrjoin(inpva, inpvb, v_number, 100);   //
 	free(inpva), free(inpvb);
@@ -152,9 +147,8 @@ int main(void)
 
 	//input parameter
 	//structure inputinplane_vector_ext_TM
-	char strFolderPath[] = { "output\\#3-2" };
+	//char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
 	char* External_Env = "air";
-
 
     FILE* stream = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text.csv", "r");
     int no_l = 0;	// the number of layers
@@ -176,7 +170,7 @@ int main(void)
         }
 
         strcpy(structure[atoi(token[0])].name, token[1]);
-        structure[atoi(token[0])].thick = atoi(token[4]);
+        structure[atoi(token[0])].thick = atof(token[4]);
 
         free(*token);
     }
@@ -203,9 +197,9 @@ int main(void)
         EML[atoi(token[0])].number = atoi(token[1]);
         strcpy(EML[atoi(token[0])].spectrum_name, token[2]);
         strcpy(EML[atoi(token[0])].EMZ_name, token[6]);
-        EML[atoi(token[0])].QY = atoi(token[4]);
-        EML[atoi(token[0])].HDR = atoi(token[5]);
-        EML[atoi(token[0])].Exciton_prop = atoi(token[3]);
+        EML[atoi(token[0])].QY = atof(token[4]);
+        EML[atoi(token[0])].HDR = atof(token[5]);
+        EML[atoi(token[0])].Exciton_prop = atof(token[3]);
 
         // ONLY if the line's tokens are no longer needed:
         free(*token);
@@ -219,10 +213,10 @@ int main(void)
 	//Input organization and preallocations
 	double* WL = linspace(WL_init, WL_final, ((int)WL_final - (int)WL_init) / (int)WL_step + 1);//
 	double* angle = linspace(angle_init, angle_final, ((int)angle_final - (int)angle_init) / (int)angle_step + 1);//
-	
+
 	double** Temp = zeros2(w_lgth, v_lgth);	//
 
-	double*** index = zeros3(no_l + 1, 5, w_lgth);	//	
+	double*** index = zeros3(no_l + 1, 5, w_lgth);	//
 	double**** index_up = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);	//
 	double**** index_low = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);	//
 	double** thick_up = zeros2(no_l + 1, maximum_EML_number);	//
@@ -267,8 +261,8 @@ int main(void)
 	double d;
 
 	double thick_EML;
-	//	���̴°��� �����ϴ�. double** EMZ_position = zeros2(no_EMZ, no_EMZ); 
-	double*** EMZ = zeros3(no_EMZ, 2, no_EML);	//	
+	//	���̴°��� �����ϴ�. double** EMZ_position = zeros2(no_EMZ, no_EMZ);
+	double*** EMZ = zeros3(no_EMZ, 2, no_EML);	//
 
 	Complex** r_12_TE = comparr2(v_lgth, w_lgth); // TE = s - polarization
 	Complex** t_12_TE = comparr2(v_lgth, w_lgth); // TM = p - polarization
@@ -280,7 +274,7 @@ int main(void)
 	Complex** r_13_TM = comparr2(v_lgth, w_lgth);//
 	Complex** t_13_TM = comparr2(v_lgth, w_lgth);//
 
-	Complex** T_12_TM = comparr2(v_lgth, w_lgth);	//	
+	Complex** T_12_TM = comparr2(v_lgth, w_lgth);	//
 	Complex** T_13_TM = comparr2(v_lgth, w_lgth);	//
 	Complex** T_12_TE = comparr2(v_lgth, w_lgth);	//
 	Complex** T_13_TE = comparr2(v_lgth, w_lgth);	//
@@ -289,14 +283,14 @@ int main(void)
 	Complex* prefactor_h_TM = comparr(w_lgth);	//
 	Complex* prefactor_h_TE = comparr(w_lgth);	//
 
-	Complex** R_12_TE = comparr2(v_lgth, w_lgth);	//	
+	Complex** R_12_TE = comparr2(v_lgth, w_lgth);	//
 	Complex** R_13_TE = comparr2(v_lgth, w_lgth);	//
 	Complex** R_1213_TE = comparr2(v_lgth, w_lgth);//
 	Complex** R_12_TM = comparr2(v_lgth, w_lgth);	//
 	Complex** R_13_TM = comparr2(v_lgth, w_lgth);	//
 	Complex** R_1213_TM = comparr2(v_lgth, w_lgth);//
 
-	double** p_v_TM = zeros2(v_lgth, w_lgth);	//	
+	double** p_v_TM = zeros2(v_lgth, w_lgth);	//
 	double** p_h_TM = zeros2(v_lgth, w_lgth);	//
 	double** p_h_TE = zeros2(v_lgth, w_lgth);	//
 
@@ -331,9 +325,9 @@ int main(void)
 	double* inpv_cut_sub_TE = zeros(w_lgth);	//
 
 	Complex** inpv_ext_TM = comparr2(w_lgth, a_lgth);	//	������ ���Ǹ� ���� wavelength�� ���̵ǵ��� ����
-	Complex** inpv_ext_TE = comparr2(w_lgth, a_lgth);	//	
-	Complex** inpv_sub_TM = comparr2(w_lgth, a_lgth);	//	
-	Complex** inpv_sub_TE = comparr2(w_lgth, a_lgth);	//	
+	Complex** inpv_ext_TE = comparr2(w_lgth, a_lgth);	//
+	Complex** inpv_sub_TM = comparr2(w_lgth, a_lgth);	//
+	Complex** inpv_sub_TE = comparr2(w_lgth, a_lgth);	//
 
 	Complex** L_1_ext_TM = comparr2(a_lgth, w_lgth);	//
 	Complex** L_1_ext_TE = comparr2(a_lgth, w_lgth);	//
@@ -349,8 +343,8 @@ int main(void)
 	Complex** L_3_ext_TE = comparr2(a_lgth, w_lgth);	//
 
 	Complex** inpv_sub_ext_TM = comparr2(w_lgth, a_lgth);	//	������ ���Ǹ� ���� wavelength�� ���̵ǵ��� ����
-	Complex** inpv_sub_ext_TE = comparr2(w_lgth, a_lgth);	//	
-	
+	Complex** inpv_sub_ext_TE = comparr2(w_lgth, a_lgth);	//
+
 	double**** index_sub_ext = zeros4(2, 5, w_lgth, no_EML);	//
 
 	Complex** L_1_sub_ext_TM = comparr2(a_lgth, w_lgth);	//
@@ -437,10 +431,10 @@ int main(void)
 	double** p_out_13_h_ext_TE = zeros2(a_lgth, w_lgth);		//
 	double** p_out_12_h_sub_TE = zeros2(a_lgth, w_lgth);		//
 
-	double**** p_out_12_ext_TM_EMZ = zeros4(no_EML, no_EMZ, w_lgth, a_lgth);	//	
+	double**** p_out_12_ext_TM_EMZ = zeros4(no_EML, no_EMZ, w_lgth, a_lgth);	//
 	double**** p_out_12_ext_TE_EMZ = zeros4(no_EML, no_EMZ, w_lgth, a_lgth);	//
 	double**** p_out_12_ext_EMZ = zeros4(no_EML, no_EMZ, w_lgth, a_lgth);		//
-	double**** p_out_13_ext_TM_EMZ = zeros4(no_EML, no_EMZ, w_lgth, a_lgth);	//	
+	double**** p_out_13_ext_TM_EMZ = zeros4(no_EML, no_EMZ, w_lgth, a_lgth);	//
 	double**** p_out_13_ext_TE_EMZ = zeros4(no_EML, no_EMZ, w_lgth, a_lgth);	//
 	double**** p_out_13_ext_EMZ = zeros4(no_EML, no_EMZ, w_lgth, a_lgth);		//
 	double**** p_out_12_sub_TM_EMZ = zeros4(no_EML, no_EMZ, w_lgth, a_lgth);	//
@@ -567,7 +561,7 @@ int main(void)
 	//loading refractive index & thickness
 	for (i = 0; i < new_no_l; i++)
 	{
-		sprintf(structure_temp[i].file_location, "data\\Refractive_index\\%s.ri", structure_temp[i].name);
+		sprintf(structure_temp[i].file_location, "data/Refractive_index/%s.ri", structure_temp[i].name);
 		double** index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
 		for (k = 0; k < 5; k++)
 		{
@@ -626,7 +620,7 @@ int main(void)
 			index_low[0][2][j][i] = 0;	//	no imaginary part
 			index_low[0][4][j][i] = 0;	//	no imaginary part
 		}
-		sprintf(EML[i].spectrum_file_location, "data\\spectrum\\%s.spec", EML[i].spectrum_name);
+		sprintf(EML[i].spectrum_file_location, "data/spectrum/%s.spec", EML[i].spectrum_name);
 		double** spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
 		for (j = 0; j < w_lgth; j++)
 		{
@@ -634,7 +628,7 @@ int main(void)
 			spectrum[j][1][i] = spectrum_temp[j][1];
 		}
 		free2d(spectrum_temp);
-		sprintf(EML[i].EMZ_file_location, "data\\Emission_zone\\%s.emz", EML[i].EMZ_name);
+		sprintf(EML[i].EMZ_file_location, "data/Emission_zone/%s.emz", EML[i].EMZ_name);
 		double** EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
 		for (j = 0; j < no_EMZ; j++)
 		{
@@ -679,7 +673,7 @@ int main(void)
 			n_ordi[j].B = index_up[0][2][j][i];
 			n_extra[j].A = index_up[0][3][j][i];
 			n_extra[j].B = index_up[0][4][j][i];
-			
+
 			//	2: low direction, 3: up direction
 			n_2[j].A = index_low[no_low_layer[i] - 1][1][j][i];
 			n_2[j].B = index_low[no_low_layer[i] - 1][2][j][i];
@@ -718,7 +712,7 @@ int main(void)
 
 		}
 		//	reflection and transmission coeffs for eq (8-10) end
-		
+
 		//	transmittance for eq (16-18)
 		multiply_1(t_12_TM, n_extra, L_2_TM, n_ordi, L_1, v_lgth, w_lgth, T_12_TM);
 		multiply_1(t_13_TM, n_extra, L_3_TM, n_ordi, L_1, v_lgth, w_lgth, T_13_TM);
@@ -732,9 +726,9 @@ int main(void)
 			*(prefactor_h_TM + j) = comprod(comprod(comxreal(compow2(n_ordi[j]), 3), inversecom(comsum(comxreal(compow2(n_ordi[j]), 3), compow2(n_extra[j])))), comprod(compow2(n_extra[j]), inversecom(compow2(n_ordi[j]))));
 			*(prefactor_h_TE + j) = comprod(comxreal(compow2(n_ordi[j]), 3), inversecom(comsum(comxreal(compow2(n_ordi[j]), 3), compow2(n_extra[j]))));
 		}
-		//	prefactors for eq (8-10, 16-18) end		
+		//	prefactors for eq (8-10, 16-18) end
 		//	mode analysis end
-	
+
 		//	for far_field emission, re-determining the inplane wavevector and do the same process
 		for (j = 0; j < w_lgth; j++)
 		{
@@ -855,9 +849,9 @@ int main(void)
 			//	multiply: function
 			//	eq (8)
 			multiply_p_1(prefactor_v_TM, R_12_TM, R_13_TM, R_1213_TM, inpv, L_1, v_lgth, w_lgth, p_v_TM);
-			//	eq (9)     
+			//	eq (9)
 			multiply_p_2(prefactor_h_TM, R_12_TM, R_13_TM, R_1213_TM, inpv, L_1, v_lgth, w_lgth, p_h_TM);
-			//	eq (10)			
+			//	eq (10)
 			multiply_p_3(prefactor_h_TE, R_12_TE, R_13_TE, R_1213_TE, inpv, L_1, v_lgth, w_lgth, p_h_TE);
 			//	for eq (16-18)
 			for (k = 0; k < v_lgth; k++)
@@ -881,7 +875,7 @@ int main(void)
 			//	eq(18)
 			multiply_3_3(prefactor_h_TE, Abs_R_h_TE_12, T_12_TE, inpv, L_1, v_lgth, w_lgth, p_out_12_h_TE);
 			multiply_3_3(prefactor_h_TE, Abs_R_h_TE_13, T_13_TE, inpv, L_1, v_lgth, w_lgth, p_out_13_h_TE);
-	
+
 			//	eq(7)
 			multiply_4_1(p_v_TM, P0_v, 1 - EML[i].HDR, v_lgth, w_lgth, p_total_TM[i][j]);
 			multiply_4_1(p_h_TM, P0_v, EML[i].HDR, v_lgth, w_lgth, Temp);
@@ -988,7 +982,7 @@ int main(void)
 			multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_12_ext, T_12_ext_TM, inpv_ext_TM, L_1_ext_TM, n_2, L_2_ext_TM, n_extra, a_lgth, w_lgth, p_out_12_h_ext_TM);
 			multiply_5_2(p_out_12_h_ext_TM, T_sub_ext_TM, n_3, L_2_sub_ext_TM, n_2, L_1_sub_ext_TM, a_lgth, w_lgth, p_out_12_h_ext_TM_intf);
 			multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_13_ext, T_13_ext_TM, inpv_ext_TM, L_1_ext_TM, n_3, L_3_ext_TM, n_extra, a_lgth, w_lgth, p_out_13_h_ext_TM);
-			multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_12_sub, T_12_sub_TM, inpv_sub_TM, L_1_sub_TM, n_2, L_2_sub_TM, n_extra, a_lgth, w_lgth, p_out_12_h_sub_TM);	
+			multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_12_sub, T_12_sub_TM, inpv_sub_TM, L_1_sub_TM, n_2, L_2_sub_TM, n_extra, a_lgth, w_lgth, p_out_12_h_sub_TM);
 
 			//	eq (26)
 			multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_12_ext, T_12_ext_TE, L_1_ext_TE, n_2, L_2_ext_TE, n_extra, a_lgth, w_lgth, p_out_12_h_ext_TE);
@@ -1058,7 +1052,7 @@ int main(void)
 		WG_eff_integrated[i] *= EXC_prop[i];
 		SPPs_eff_integrated[i] *= EXC_prop[i];
 		//	mode analysis end
-		
+
 		//	for far-field emission
 		for (j = 0; j < no_EMZ; j++)
 		{
@@ -1139,7 +1133,7 @@ int main(void)
 	free2d(P_EML); free2d(OC_EML); free2d(OC_back_EML); free2d(ABS_EML);
 	free2d(SUBS_EML); free2d(WG_EML); free2d(SPPs_EML);
 /*	free2d(OC_EML_spec); free2d(OC_back_EML_spec); free2d(ABS_EML_spec);	����
-	free2d(SUBS_EML_spec); free2d(WG_EML_spec); free2d(SPPs_EML_spec);*/	
+	free2d(SUBS_EML_spec); free2d(WG_EML_spec); free2d(SPPs_EML_spec);*/
 	free4d(p_out_12_ext_TM_spec); free4d(p_out_12_ext_TE_spec); free4d(p_out_12_ext_spec);
 	free4d(p_out_13_ext_TM_spec); free4d(p_out_13_ext_TE_spec); free4d(p_out_13_ext_spec);
 	free4d(p_out_12_sub_TM_spec); free4d(p_out_12_sub_TE_spec); free4d(p_out_12_sub_spec);
@@ -1150,7 +1144,7 @@ int main(void)
 	free4d(p_out_13_ext_TM_EMZ); free4d(p_out_13_ext_TE_EMZ); free4d(p_out_13_ext_EMZ);
 	free4d(p_out_12_sub_TM_EMZ); free4d(p_out_12_sub_TE_EMZ); free4d(p_out_12_sub_EMZ);
 	//	free end
-	
+
 	//	printing output
 	//	for mode analysis
 	double OC_eff_final = sum(OC_eff_integrated, no_EML);
@@ -1215,7 +1209,7 @@ int main(void)
 	double output_mode[7] = { OC_eff_final, OC_back_eff_final, ABS_eff_final, SUBS_eff_final, WG_eff_final, SPPs_eff_final, NR_loss_final };
 
 	//	Candela per ampere part
-	FILE* es = fopen("data\\eyesense.dat", "rt");
+	FILE* es = fopen("data/eyesense.dat", "rt");
 	if (es == NULL)
 	{
 		printf("There is no data");
@@ -1283,30 +1277,51 @@ int main(void)
 	end = clock(); double r_1;
 	r_1=t_result = ((double)end - (double)start) / CLOCKS_PER_SEC;
 	printf("%lf is the t_result", t_result);
-	//���� ����
-	int folder = mkdir(strFolderPath, 0700);
-	char strFolderPathCPA[100] = { 0 };
-	char strFolderPathEL[100] = { 0 };
-	char strFolderPathAI[100] = { 0 };
-	char strFolderPathCIE[100] = { 0 };
-	char strFolderPathEFF[100] = { 0 };
-	char strFolderPathDS[100] = { 0 };
-	//���ϻ���
 
+    //char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
+
+
+//	char strFolderPathCPA[100]={0};
+//	char strFolderPathEL[100]={0};
+//	char strFolderPathAI[100]={0};
+//	char strFolderPathCIE[100]={0};
+//	char strFolderPathEFF[100]={0};
+//	char strFolderPathDS[100]={0};
+
+    char *strFolderPath;
+    char *strFolderPathCPA;
+    char *strFolderPathEL;
+    char *strFolderPathAI;
+    char *strFolderPathCIE;
+    char *strFolderPathEFF;
+    char *strFolderPathDS;
+
+    strFolderPath = malloc(SIZE*sizeof(char));
+    strFolderPathCPA = malloc(SIZE*sizeof(char));
+    strFolderPathEL = malloc(SIZE*sizeof(char));
+    strFolderPathAI = malloc(SIZE*sizeof(char));
+    strFolderPathCIE = malloc(SIZE*sizeof(char));
+    strFolderPathEFF = malloc(SIZE*sizeof(char));
+    strFolderPathDS = malloc(SIZE*sizeof(char));
+
+
+    strcpy(strFolderPath, "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1");
+    mkdir(strFolderPath, 0700);
 	// 7 columns
 	output1(strFolderPath, "output_mode", output_mode, 7);
 
 	//Candela per ampere
-	sprintf(strFolderPathCPA, "%s\\Candela_per_ampere", strFolderPath);
-	folder = mkdir(strFolderPathCPA, 0700);
+	sprintf(strFolderPathCPA, "%s/Candela_per_ampere", strFolderPath);
+	mkdir(strFolderPathCPA, 0700);
 	output(strFolderPathCPA, "output_Watt_per_mA_sr_bottom", output_Watt_per_mA_sr_bottom);
 	output(strFolderPathCPA, "output_Watt_per_mA_sr_top", output_Watt_per_mA_sr_top);
 	output(strFolderPathCPA, "output_Cd_per_A_bottom", output_Cd_per_A_bottom);
 	output(strFolderPathCPA, "output_Cd_per_A_top", output_Cd_per_A_top);
 
+
 	//ELspectrum	% wavelegnth* angle
-	sprintf(strFolderPathEL, "%s\\ELspectrum", strFolderPath);
-	folder = mkdir(strFolderPathEL, 0700);
+	sprintf(strFolderPathEL, "%s/ELspectrum", strFolderPath);
+	mkdir(strFolderPathEL, 0700);
 	outputEL(strFolderPathEL, "output_ELspectrum_bottom", p_out_12_ext_final, w_lgth, a_lgth);
 	outputEL(strFolderPathEL, "output_ELspectrum_top", p_out_13_ext_final, w_lgth, a_lgth);
 	outputEL(strFolderPathEL, "output_ELspectrum_sub", p_out_12_sub_final, w_lgth, a_lgth);
@@ -1317,9 +1332,9 @@ int main(void)
 	outputEL(strFolderPathEL, "output_ELspectrum_top_TE", p_out_13_ext_TE_final, w_lgth, a_lgth);
 	outputEL(strFolderPathEL, "output_ELspectrum_sub_TE", p_out_12_sub_TE_final, w_lgth, a_lgth);
 
-	//angular_intensity		% angle * 1 
-	sprintf(strFolderPathAI, "%s\\angular_intensity", strFolderPath);
-	folder = mkdir(strFolderPathAI, 0700);
+	//angular_intensity		% angle * 1
+	sprintf(strFolderPathAI, "%s/angular_intensity", strFolderPath);
+	mkdir(strFolderPathAI, 0700);
 	output1(strFolderPathAI, "output_angular_intensity_bottom", output_angular_intensity_bottom, a_lgth);
 	output1(strFolderPathAI, "output_angular_intensity_top", output_angular_intensity_top, a_lgth);
 	output1(strFolderPathAI, "output_angular_intensity_sub", output_angular_intensity_sub, a_lgth);
@@ -1329,29 +1344,29 @@ int main(void)
 	output1(strFolderPathAI, "output_angular_intensity_bottom_TE", output_angular_intensity_bottom_TE, a_lgth);
 	output1(strFolderPathAI, "output_angular_intensity_top_TE", output_angular_intensity_top_TE, a_lgth);
 	output1(strFolderPathAI, "output_angular_intensity_sub_TE", output_angular_intensity_sub_TE, a_lgth);
-	
+
 	//CIE			% angle * 3
-	sprintf(strFolderPathCIE, "%s\\CIE", strFolderPath);
-	folder = mkdir(strFolderPathCIE, 0700);
+	sprintf(strFolderPathCIE, "%s/CIE", strFolderPath);
+	mkdir(strFolderPathCIE, 0700);
 	output2(strFolderPathCIE, "output_CIE_bottom", output_CIE_bottom, a_lgth, 3);
 	output2(strFolderPathCIE, "output_CIE_top", output_CIE_top, a_lgth, 3);
 	output2(strFolderPathCIE, "output_CIE_sub", output_CIE_sub, a_lgth, 3);
 
 	//eff			% wavelegnth * EML * EMZ
-	sprintf(strFolderPathEFF, "%s\\EFF", strFolderPath);
-	folder = mkdir(strFolderPathEFF, 0700);
+	sprintf(strFolderPathEFF, "%s/EFF", strFolderPath);
+	mkdir(strFolderPathEFF, 0700);
 	output3(strFolderPathEFF, "output_OC_eff", OC_eff, w_lgth, no_EML, no_EMZ);
 	output3(strFolderPathEFF, "output_OC_top_eff", OC_back_eff, w_lgth, no_EML, no_EMZ);
 	output3(strFolderPathEFF, "output_Purcell", Purcell, w_lgth, no_EML, no_EMZ);
 	output3(strFolderPathEFF, "output_effective_QY", q_eff, w_lgth, no_EML, no_EMZ);
 
 	//dissipation	% inplane_wavevector * wavelength * EML * EMZ
-	sprintf(strFolderPathDS, "%s\\dissipation", strFolderPath);
-	folder = mkdir(strFolderPathDS, 0700);
+	sprintf(strFolderPathDS, "%s/dissipation", strFolderPath);
+	mkdir(strFolderPathDS, 0700);
 	outputDS(strFolderPathDS, "output_power_dissipation", p_total, v_lgth, w_lgth, no_EML, no_EMZ);
 	outputDS(strFolderPathDS, "output_power_dissipation_TM", p_total_TM, v_lgth, w_lgth, no_EML, no_EMZ);
 	outputDS(strFolderPathDS, "output_power_dissipation_TE", p_total_TE, v_lgth, w_lgth, no_EML, no_EMZ);
-	
+
 	free4d(p_total);	free4d(p_total_TM);	free4d(p_total_TE);
 	free2d(p_out_12_ext_final);	free2d(p_out_13_ext_final); free2d(p_out_12_sub_final);
 	free2d(p_out_12_ext_TM_final);	free2d(p_out_13_ext_TM_final); free2d(p_out_12_sub_TM_final);

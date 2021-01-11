@@ -19,7 +19,7 @@ typedef struct
 #define COM
 typedef struct
 {
-	double A;	//	실수부
-	double B;	//	허수부
+	double A;	//	real
+	double B;	//	imagine
 }Complex;
 #endif
