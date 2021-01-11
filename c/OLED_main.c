@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <sys/stat.h>
 #define PI 3.141592
+
 double* linspace(double i, double f, int num);
 double* arrjoin(double* a, double* b, int lenga, int lengb);
 void arrsum(double** a, double** b, int x, int y);
@@ -78,11 +79,24 @@ void outputDS(char* directory, char* name, double**** output, int x, int y, int 
 //OLED Optical Simulation Main Program
 static Complex ONE = { 1 , 0 };
 
+const char* getfield(char* line, int num)
+{
+    const char* tok;
+    for (tok = strtok(line, ",");
+         tok && *tok;
+         tok = strtok(NULL, ",\n"))
+    {
+        if (!--num)
+            return tok;
+    }
+    return NULL;
+}
+
 int main(void)
 {
-	printf("���α׷� ���� \n");
+	printf("Welcome To My World \n");
 	clock_t start, end;	//
-	start = clock();	// �ð��� �����ϴ� �Լ�!
+	start = clock();	//
 	double t_result;	// 
 
 	int i, j, k, l;
@@ -141,33 +155,50 @@ int main(void)
 	char strFolderPath[] = { "output\\#3-2" };
 	char* External_Env = "air";
 
-	strcpy(structure[0].name, "Al");
-	strcpy(structure[1].name, "TPBi");
-	strcpy(structure[2].name, "TPBi");
-	strcpy(structure[3].name, "mCBP");
-	strcpy(structure[4].name, "mCBP");
-	strcpy(structure[5].name, "TCTA_B3PYMPM");
-	strcpy(structure[6].name, "TCTA");
-	strcpy(structure[7].name, "NPB");
-	strcpy(structure[8].name, "NPB");
-	strcpy(structure[9].name, "TAPC");
-	strcpy(structure[10].name, "ITO_Geomatec");
-	strcpy(structure[11].name, "glass_Eagle2000");
 
-	structure[0].thick = 100;
-	structure[1].thick = 30;
-	structure[2].thick = 10;
-	structure[3].thick = 20;
-	structure[4].thick = 20;
-	structure[5].thick = 20;
-	structure[6].thick = 20;
-	structure[7].thick = 30;
-	structure[8].thick = 20;
-	structure[9].thick = 50;
-	structure[10].thick = 70;
-	structure[11].thick = 0;
+    FILE* stream = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text.csv", "r");
+    int no_l = 0;	// the number of layers
 
-	int no_l = 12;	// the number of layers
+    char line[1024];
+    while (fgets(line, 1024, stream))
+    {
+        char* tmp = strdup(line);
+        //printf("Field name would be %s\n", getfield(tmp, 2));
+        structure[no_l++] = *structure;
+        //printf("number of layer is %d\n", no_l);
+        free(tmp);
+    }
+
+    char* tmp = strdup(line);
+    strcpy(structure[atoi(getfield(tmp,1))].name, getfield(tmp,2));
+//	strcpy(structure[0].name, "Al");
+//	strcpy(structure[1].name, "TPBi");
+//	strcpy(structure[2].name, "TPBi");
+//	strcpy(structure[3].name, "mCBP");
+//	strcpy(structure[4].name, "mCBP");
+//	strcpy(structure[5].name, "TCTA_B3PYMPM");
+//	strcpy(structure[6].name, "TCTA");
+//	strcpy(structure[7].name, "NPB");
+//	strcpy(structure[8].name, "NPB");
+//	strcpy(structure[9].name, "TAPC");
+//	strcpy(structure[10].name, "ITO_Geomatec");
+//	strcpy(structure[11].name, "glass_Eagle2000");
+
+    structure[atoi(getfield(tmp,1))].thick = atoi(getfield(tmp,5));
+//	structure[0].thick = 100;
+//	structure[1].thick = 30;
+//	structure[2].thick = 10;
+//	structure[3].thick = 20;
+//	structure[4].thick = 20;
+//	structure[5].thick = 20;
+//	structure[6].thick = 20;
+//	structure[7].thick = 30;
+//	structure[8].thick = 20;
+//	structure[9].thick = 50;
+//	structure[10].thick = 70;
+//	structure[11].thick = 0;
+
+
 
 	//EML info input
 	EML[0].number = 4;
