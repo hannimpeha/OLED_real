@@ -78,7 +78,76 @@ void output3(char* directory, char* name, double*** output, int x, int y, int z)
 void outputDS(char* directory, char* name, double**** output, int x, int y, int z, int w);
 //Copyright:
 //OLED Optical Simulation Main Program
+
 static Complex ONE = { 1 , 0 };
+#define ROWS 32
+#define COLS 32
+#define MAXC 256
+
+void *xrealloc_dp (void **p, size_t *n)
+{
+    void *tmp = realloc (p, 2 * *n * sizeof tmp);
+#ifdef DEBUG
+    printf ("\n  reallocating %zu to %zu\n", *n, *n * 2);
+#endif
+    if (!tmp) {
+        fprintf (stderr, "%s() error: virtual memory exhausted.\n", __func__);
+        exit (EXIT_FAILURE);
+    }
+    p = tmp;
+    memset (p + *n, 0, *n * sizeof tmp); /* set new pointers NULL */
+    *n *= 2;
+
+    return p;
+}
+void *xrealloc_sp (void *p, size_t sz, size_t *n)
+{
+    void *tmp = realloc (p, 2 * *n * sz);
+#ifdef DEBUG
+    printf ("\n  reallocating '%zu' to '%zu', size '%zu'\n", *n, *n * 2, sz);
+#endif
+    if (!tmp) {
+        fprintf (stderr, "%s() error: virtual memory exhausted.\n", __func__);
+        exit (EXIT_FAILURE);
+    }
+    p = tmp;
+    memset (p + *n * sz, 0, *n * sz); /* zero new memory */
+    *n *= 2;
+
+    return p;
+}
+void *xcalloc (size_t n, size_t s)
+{
+    register void *memptr = calloc (n, s);
+    if (memptr == 0)
+    {
+        fprintf (stderr, "%s() error: virtual memory exhausted.\n", __func__);
+        exit (EXIT_FAILURE);
+    }
+
+    return memptr;
+}
+#include <errno.h>
+double xstrtod (char *str, char **ep)
+{
+    errno = 0;
+
+    double val = strtod (str, ep);
+
+    /* Check for various possible errors */
+    if ((errno == ERANGE && (val == HUGE_VAL || val == HUGE_VALL)) ||
+        (errno != 0 && val == 0)) {
+        perror ("strtod");
+        exit (EXIT_FAILURE);
+    }
+
+    if (*ep == str) {
+        fprintf (stderr, "No digits were found\n");
+        exit (EXIT_FAILURE);
+    }
+
+    return val;
+}
 
 const char* getfield(char* line, int num)
 {
@@ -124,6 +193,7 @@ int main(void)
 	emil* EML = (emil*)malloc(sizeof(emil) * maximum_EML_number);//
 	// administrator options end
 
+
     //calculation condition
 	int v_number = 1000;	//	the number of in-plane vector
 	int multiple = 25;		//	end of the in-planevector
@@ -150,60 +220,77 @@ int main(void)
 	//char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
 	char* External_Env = "air";
 
+
     FILE* stream = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text.csv", "r");
-    int no_l = 0;	// the number of layers
+    int no_l = 6;	// the number of layers
+    char line[1024] = {0};
+    char *p, *ep;
+    //double **structure = structure->thick;
+    size_t row = 0, col = 0, nrows = 0;
+    size_t rmax = ROWS, cmax = COLS;
 
-    char line[1024];
-    while (fgets(line, sizeof line, stream))
-    {
-        char *tmp = strchr(line, '\n');
-        if (tmp) *tmp = '\n';   // remove the '\n'
-        tmp = strdup(line);
-        #define MAXCOLUMNS  6
-        char *token[MAXCOLUMNS];
-        int c = 0;
-        while (tmp)
-        {
-            if (c == MAXCOLUMNS) puts("too many columns"), exit(1);
-            structure[no_l++] = *structure;
-            token[c++] = strsep(&tmp, ",");
+    while(fgets(line, sizeof line, stream)){
+        p = ep = line;
+        col = 1;
+        while (errno == 0) {
+            structure[row].thick= xstrtod(p, &ep);
+            while (*ep && *ep != '-' && (*ep < '0' || *ep > '9')) ep++;
+            if (*ep)
+                p = ep;
+            else  /* break if end of string */
+                break;
         }
+        if (row == rmax) structure = xrealloc_dp ((void **)structure, &rmax);
 
-        strcpy(structure[atoi(token[0])].name, token[1]);
-        structure[atoi(token[0])].thick = atof(token[4]);
+        char *tmp = strchr(line, '\n');
+        if (tmp) *tmp = '\t';   // remove the '\n'
+        tmp = strdup(line);
 
-        free(*token);
+        strcpy(structure->name, getfield(tmp,2));
+
+//        printf("%s\n", structure->name);
+//        printf("%f\n", structure->thick);
+
     }
+    nrows = row;
+
+    free (structure);
+    fclose(stream);
 
     FILE* emission = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_em.csv", "r");
 
-    int no_EML = 0;	// the number of EML
+    int no_EML = 4;	// the number of EML
+    EML = xcalloc (ROWS, sizeof *EML);
 
-    while (fgets(line, sizeof line, emission))
+    while(fgets(line, sizeof line, emission))
     {
-        char *tmp = strchr(line, '\n');
-        if (tmp) *tmp = '\n';   // remove the '\n'
-        tmp = strdup(line);
-        #define MAXIMUMCOLUMNS  7
-        char *token[MAXIMUMCOLUMNS];
-        int c = 0;
-        while (tmp)
-        {
-            if (c == MAXIMUMCOLUMNS) puts("too many columns"), exit(1);
-            EML[no_EML++] = *EML;
-            token[c++] = strsep(&tmp, ",");
+        p = ep = line;
+        col = 1;
+        //EML[row] = xcalloc (COLS, sizeof **array);
+        while (errno == 0) {
+            EML[row].HDR= xstrtod(p, &ep);
+
+            while (*ep && *ep != '-' && (*ep < '0' || *ep > '9')) ep++;
+            if (*ep)
+                p = ep;
+            else  /* break if end of string */
+                break;
         }
+        if (row == rmax) EML = xrealloc_dp ((void **)EML, &rmax);
 
-        EML[atoi(token[0])].number = atoi(token[1]);
-        strcpy(EML[atoi(token[0])].spectrum_name, token[2]);
-        strcpy(EML[atoi(token[0])].EMZ_name, token[6]);
-        EML[atoi(token[0])].QY = atof(token[4]);
-        EML[atoi(token[0])].HDR = atof(token[5]);
-        EML[atoi(token[0])].Exciton_prop = atof(token[3]);
+        char *tmp = strchr(line, '\n');
+        if (tmp) *tmp = '\t';   // remove the '\n'
+        tmp = strdup(line);
 
-        // ONLY if the line's tokens are no longer needed:
-        free(*token);
+        printf("%f\n", EML->HDR);
+        strcpy(EML->spectrum_name, getfield(tmp,3));
+        //strcpy(EML->EMZ_name, getfield(tmp,7));
+        printf("%s\n", EML->spectrum_name);
+        //printf("s\n", EML->EMZ_name);
     }
+    nrows = row;
+    fclose(emission);
+    free(EML);
 
 	int no_EMZ = 31; // the number of EMZ
 	//input parameter end

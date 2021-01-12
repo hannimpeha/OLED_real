@@ -14,49 +14,7 @@
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/c/OLED_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/c/OLED_main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/CIE/output_CIE_bottom.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/CIE/output_CIE_sub.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/CIE/output_CIE_top.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/Candela_per_ampere/output_Cd_per_A_top.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/EFF/output_OC_eff.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/EFF/output_OC_top_eff.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/EFF/output_Purcell.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/EFF/output_effective_QY.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/ELspectrum/output_ELspectrum_bottom.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/ELspectrum/output_ELspectrum_bottom_TE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/ELspectrum/output_ELspectrum_bottom_TM.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/ELspectrum/output_ELspectrum_sub.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/ELspectrum/output_ELspectrum_sub_TE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/ELspectrum/output_ELspectrum_sub_TM.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/ELspectrum/output_ELspectrum_top.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/ELspectrum/output_ELspectrum_top_TE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/ELspectrum/output_ELspectrum_top_TM.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/dissipation/output_power_dissipation.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/dissipation/output_power_dissipation_TE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/dissipation/output_power_dissipation_TM.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#3-2/output_mode.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/CIE/output_CIE_bottom.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/CIE/output_CIE_sub.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/CIE/output_CIE_top.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/Candela_per_ampere/output_Cd_per_A_top.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/EFF/output_OC_eff.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/EFF/output_OC_top_eff.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/EFF/output_Purcell.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/EFF/output_effective_QY.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/ELspectrum/output_ELspectrum_bottom.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/ELspectrum/output_ELspectrum_bottom_TE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/ELspectrum/output_ELspectrum_bottom_TM.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/ELspectrum/output_ELspectrum_sub.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/ELspectrum/output_ELspectrum_sub_TE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/ELspectrum/output_ELspectrum_sub_TM.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/ELspectrum/output_ELspectrum_top.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/ELspectrum/output_ELspectrum_top_TE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/ELspectrum/output_ELspectrum_top_TM.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/dissipation/output_power_dissipation.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/dissipation/output_power_dissipation_TE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/dissipation/output_power_dissipation_TM.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/output/#4-4/output_mode.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/struct.h" beforeDir="false" afterPath="$PROJECT_DIR$/c/struct.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/C.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/penProject" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/penProject" afterDir="false" />
@@ -125,11 +83,6 @@
     <configuration name="penProject" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="penProject" TARGET_NAME="penProject" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="penProject" RUN_TARGET_NAME="penProject">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Makefile" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
@@ -341,6 +294,10 @@
       <workItem from="1610360601040" duration="194000" />
       <workItem from="1610360815431" duration="530000" />
       <workItem from="1610364364527" duration="180000" />
+      <workItem from="1610372433472" duration="161000" />
+      <workItem from="1610372649783" duration="58000" />
+      <workItem from="1610423018417" duration="47000" />
+      <workItem from="1610423287664" duration="26822000" />
     </task>
     <servers />
   </component>

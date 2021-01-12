@@ -23,6 +23,8 @@ stdbool.h
 -
 sys/stat.h
 -
+errno.h
+-
 
 /Users/hannahlee/PycharmProjects/penProject/c/struct.h
 
