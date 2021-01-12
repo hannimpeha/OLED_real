@@ -266,22 +266,28 @@ int main(void)
     {
         p = ep = line;
         col = 1;
-        //EML[row] = xcalloc (COLS, sizeof **array);
-        while (errno == 0) {
-            EML[row].HDR= xstrtod(p, &ep);
+        //EML[row] = xcalloc (COLS, sizeof **EML);
 
+        while (errno==0) {
+            EML[row].HDR = xstrtod(p, &ep);
             while (*ep && *ep != '-' && (*ep < '0' || *ep > '9')) ep++;
-            if (*ep)
-                p = ep;
-            else  /* break if end of string */
-                break;
+                if (*ep)
+                    p = ep;
+                else  /* break if end of string */
+                    break;
+            ep++;
         }
+
         if (row == rmax) EML = xrealloc_dp ((void **)EML, &rmax);
 
+        //EML[row].HDR= xstrtod(p, &ep);
         char *tmp = strchr(line, '\n');
         if (tmp) *tmp = '\t';   // remove the '\n'
         tmp = strdup(line);
 
+        //printf("%f\n", EML->number);
+        printf("%f\n", EML->Exciton_prop);
+        printf("%f\n", EML->QY);
         printf("%f\n", EML->HDR);
         strcpy(EML->spectrum_name, getfield(tmp,3));
         //strcpy(EML->EMZ_name, getfield(tmp,7));
