@@ -6,9 +6,16 @@
 #include <time.h>
 #include <stdbool.h>
 #include <sys/stat.h>
+#include <assert.h>
+#include <err.h>
+#include <sys/types.h>
+#include <regex.h>
+
 #define PI 3.141592
 #define SIZE 35
-
+#define MAXC  1024      /* if you need a constant, #define one (or more) */
+#define DELIM ","
+void getData(char *buff);
 double* linspace(double i, double f, int num);
 double* arrjoin(double* a, double* b, int lenga, int lengb);
 void arrsum(double** a, double** b, int x, int y);
@@ -84,6 +91,15 @@ static Complex ONE = { 1 , 0 };
 #define COLS 32
 #define MAXC 256
 
+void getData(char *buff){
+    char *token = strtok(buff, ",");
+
+    while (token != NULL)   {
+        printf("First value:  %s\n", token);
+        token = strtok(NULL, ",");
+    }
+}
+
 void *xrealloc_dp (void **p, size_t *n)
 {
     void *tmp = realloc (p, 2 * *n * sizeof tmp);
@@ -128,6 +144,7 @@ void *xcalloc (size_t n, size_t s)
     return memptr;
 }
 #include <errno.h>
+
 double xstrtod (char *str, char **ep)
 {
     errno = 0;
@@ -253,50 +270,171 @@ int main(void)
 
     }
     nrows = row;
-
-    free (structure);
     fclose(stream);
 
-    FILE* emission = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_em.csv", "r");
-
     int no_EML = 4;	// the number of EML
-    EML = xcalloc (ROWS, sizeof *EML);
 
-    while(fgets(line, sizeof line, emission))
-    {
-        p = ep = line;
-        col = 1;
-        //EML[row] = xcalloc (COLS, sizeof **EML);
+    FILE *fstream = fopen("/Users/hannahlee/HANNIMPEHA/OLED/example/text_em.csv", "r");
+    //char buffer[1024];
+    char *buffer = NULL;
+    char *record,*buff;
+    int h=0, u=0;
+    char mat[100][100];
+    char **array = NULL;
+    char *ptr = NULL;
 
-        while (errno==0) {
-            EML[row].HDR = xstrtod(p, &ep);
-            while (*ep && *ep != '-' && (*ep < '0' || *ep > '9')) ep++;
-                if (*ep)
-                    p = ep;
-                else  /* break if end of string */
-                    break;
-            ep++;
+    int number;
+    char none;
+    char spectrum_name;
+    double exciton_prop;
+    double qy;
+    double hdr;
+    char emz_zone;
+    size_t numero = 0, lines, nflds;
+    char *buf, *fields, *pt; /* must use 2 pointers for strsep */
+
+    int nr = 4;
+    int nf;
+    int nfield = 7;
+    int erc;
+    regex_t reg;
+    const char fmt[] = "([^,\n]*)[,\n]";
+    char *regex = calloc( nfield, 1 + strlen(fmt) );
+    for( u=0;  u< nfield; u++ ) {
+        strcat(regex, fmt);
+    }
+
+    int cflags = REG_EXTENDED;
+    char errbuf[128];
+    size_t len = sizeof(errbuf);
+    const char *truncated = "";
+
+    if( (erc = regcomp(&reg, regex, cflags)) != 0 ) {
+        if( (len = regerror(erc, &reg, errbuf, len)) > sizeof(errbuf) )
+            truncated = "(truncated)";
+        errx(EXIT_FAILURE, "%s %s", errbuf, truncated);
+    }
+
+    for (h=0; h < nr && NULL != fgets(line, sizeof(line), fstream); h++) {
+
+        regmatch_t matches[1 + nfield];
+        const int eflags = 0;
+
+        printf("%s", line);
+        if( (erc = regexec(&reg, line, 1 + nfield, matches, eflags)) != 0 ) {
+            if( (len = regerror(erc, &reg, errbuf, len)) > sizeof(errbuf) )
+                truncated = "(truncated)";
+            errx(EXIT_FAILURE, "regex error: %s %s", errbuf, truncated);
         }
 
-        if (row == rmax) EML = xrealloc_dp ((void **)EML, &rmax);
+        for( nf=1; nf < nfield + 1 && matches[nf].rm_so != -1; nf++ ) {
+            assert(matches[nf].rm_so <= matches[nf].rm_eo);
+            printf( "%4d: '%.*s'\n",
+                    nf,
+                    (int)(matches[nf].rm_eo - matches[nf].rm_so),
+                    line + matches[nf].rm_so );
+        }
 
-        //EML[row].HDR= xstrtod(p, &ep);
-        char *tmp = strchr(line, '\n');
-        if (tmp) *tmp = '\t';   // remove the '\n'
-        tmp = strdup(line);
-
-        //printf("%f\n", EML->number);
-        printf("%f\n", EML->Exciton_prop);
-        printf("%f\n", EML->QY);
-        printf("%f\n", EML->HDR);
-        strcpy(EML->spectrum_name, getfield(tmp,3));
-        //strcpy(EML->EMZ_name, getfield(tmp,7));
-        printf("%s\n", EML->spectrum_name);
-        //printf("s\n", EML->EMZ_name);
+        //printf("%s", &buffer[0]);
+        //array[h] = malloc (sizeof (array));
+//        pt = fields = buffer;
+//        record = strtok(&buffer[0], ",");
+//        while(record != NULL){
+//            //printf("%s", record);
+//            while(pt[strcspn(fields, ",")]==0) {
+//                //array[h][u++] = *record;
+//                printf("%s", record);
+//                record = strtok(NULL, ",");
+//            }
+//        }
+//        while ((pt = strsep (&fields, DELIM))) {     /* call strsep */
+//
+//            pt[strcspn(pt, "\n")] = 0;    /* trim '\n' (last) */
+//            printf("%zu, %zu: %s\n", numero, len++, pt); /* output field */
+//
+//        }
+//        numero++;
     }
-    nrows = row;
-    fclose(emission);
-    free(EML);
+    free(buffer);
+
+
+    /* use filename provided as 1st argument (stdin by default) */
+
+//    if (!fstream) {  /* validate file open for reading */
+//        perror ("file open failed");
+//        return 1;
+//    }
+//
+//    if (!(buf = malloc (MAXC))) {   /* allocate storage for buffer */
+//        perror ("malloc-buf");      /* cannot be array with strsep */
+//        return 1;
+//    }
+//
+//    if (!fgets (buf, MAXC, fstream)) {   /* read/validate 1st line */
+//        fputs ("error: insufficient input line 1.\n", stderr);
+//        return 1;
+//    }   /* convert to lines and no. of fields (lines not needed) */
+//    if (sscanf (buf, "%zu,%zu", &lines, &nflds) != 2) {
+//        fputs ("error: invalid format line 1.\n", stderr);
+//        return 1;
+//    }
+
+//    while (getline(&buffer, &numero, fstream)!= -1) { /* read each line in file */
+//        //size_t i = 0;       /* counter */
+//        pt = fields = buffer;   /* initialize pointers to use with strsep */
+//        //printf ("\nline %2zu:\n", n++ + 1); /* output heading */
+//        numero++;
+//        while ((pt = strsep (&fields, DELIM))) {     /* call strsep */
+//            pt[strcspn(pt, "\n")] = 0;    /* trim '\n' (last) */
+//            printf("field %zu, %2zu: '%s'\n", numero, len++, pt); /* output field */
+//        }
+//    }
+//    free (buffer);  /* free allocated memory */
+
+
+
+//    int conversionCount = fscanf(fstream, "%d,%s,%s,%lf,%lf,%lf,%s\n",
+//                                 &number, &none, &spectrum_name, &exciton_prop,
+//                                 &qy, &hdr, &emz_zone);
+
+
+//    while((buff=fgets(buffer,sizeof(buffer),fstream))!=NULL)
+//    {
+//        record = strtok(buff,"\n");
+//        array[h] = malloc (sizeof (array));
+//
+////        while(record !=NULL) {
+////            printf("%s\n", record);
+////            //array[h][u++] = *strtok(record, ",");
+////            record = strtok(NULL,",");
+////        }
+////        h++;
+//
+//        for (u = 0, ptr = buff; u < 6; u++, ptr++)
+//            //array [idx][j] = (int)strtol(ptr, &ptr, 10);
+//            array [h][u] = xstrtod(ptr, &ptr);
+//        h++;
+//    }
+    fclose(fstream);
+
+
+//        while (token != NULL)   {
+//            int n = atoi(token);
+//            strcpy(EML->spectrum_name, token);
+//            //printf("First value:  %s\n", &token[0]);
+//            token = strtok(NULL, ",");
+//
+//            printf("%s\n", EML->spectrum_name);
+//        }
+//    }
+
+//        printf("%s\n", EML->spectrum_name);
+//        printf("%f\n", EML->Exciton_prop);
+//        printf("%f\n", EML->QY);
+//        printf("%f\n", EML->HDR);
+        //strcpy(EML->spectrum_name, getfield(tmp,3));
+        //strcpy(EML->EMZ_name, getfield(tmp,7));
+        //printf("s\n", EML->EMZ_name);
 
 	int no_EMZ = 31; // the number of EMZ
 	//input parameter end
