@@ -91,14 +91,6 @@ static Complex ONE = { 1 , 0 };
 #define COLS 32
 #define MAXC 256
 
-void getData(char *buff){
-    char *token = strtok(buff, ",");
-
-    while (token != NULL)   {
-        printf("First value:  %s\n", token);
-        token = strtok(NULL, ",");
-    }
-}
 
 void *xrealloc_dp (void **p, size_t *n)
 {
@@ -250,7 +242,7 @@ int main(void) {
 
     //input parameter
     //structure inputinplane_vector_ext_TM
-    //char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
+    char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
     char *External_Env = "air";
 
 
@@ -291,7 +283,6 @@ int main(void) {
     int no_EML = 4;    // the number of EML
 
     FILE *fstream = fopen("/Users/hannahlee/HANNIMPEHA/OLED/example/text_em.csv", "r");
-    //char buffer[1024];
     char *buffer = NULL;
     int h = 0, u = 0;
     int nr = 4;
@@ -345,12 +336,12 @@ int main(void) {
 //                   (int) (matches[nf].rm_eo - matches[nf].rm_so),
 //                   line + matches[nf].rm_so);
 //        }
-        printf("%d\n", EML[h].number);
-        printf("%s\n", EML[h].spectrum_name);
-        printf("%lf\n", EML[h].Exciton_prop);
-        printf("%lf\n", EML[h].QY);
-        printf("%lf\n", EML[h].HDR);
-        printf("%s\n", EML[h].EMZ_name);
+//        printf("%d\n", EML[h].number);
+//        printf("%s\n", EML[h].spectrum_name);
+//        printf("%lf\n", EML[h].Exciton_prop);
+//        printf("%lf\n", EML[h].QY);
+//        printf("%lf\n", EML[h].HDR);
+//        printf("%s\n", EML[h].EMZ_name);
     }
     fclose(fstream);
 
@@ -706,7 +697,7 @@ int main(void) {
 
     //loading refractive index & thickness
     for (i = 0; i < new_no_l; i++) {
-        sprintf(structure_temp[i].file_location, "data/Refractive_index/%s.ri", structure_temp[i].name);
+        sprintf(structure_temp[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
         double **index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
         for (k = 0; k < 5; k++) {
             for (j = 0; j < w_lgth; j++) {
@@ -754,14 +745,14 @@ int main(void) {
             index_low[0][2][j][i] = 0;    //	no imaginary part
             index_low[0][4][j][i] = 0;    //	no imaginary part
         }
-        sprintf(EML[i].spectrum_file_location, "data/spectrum/%s.spec", EML[i].spectrum_name);
+        sprintf(EML[i].spectrum_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/spectrum/%s.spec", EML[i].spectrum_name);
         double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
         for (j = 0; j < w_lgth; j++) {
             spectrum[j][0][i] = spectrum_temp[j][0];
             spectrum[j][1][i] = spectrum_temp[j][1];
         }
         free2d(spectrum_temp);
-        sprintf(EML[i].EMZ_file_location, "data/Emission_zone/%s.emz", EML[i].EMZ_name);
+        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
         double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
         for (j = 0; j < no_EMZ; j++) {
             EMZ[j][0][i] = EMZ_temp[j][0];
@@ -1541,7 +1532,7 @@ int main(void) {
                              SPPs_eff_final, NR_loss_final};
 
     //	Candela per ampere part
-    FILE *es = fopen("data/eyesense.dat", "rt");
+    FILE *es = fopen("/Users/hannahlee/PycharmProjects/penProject/c/data/eyesense.dat", "rt");
     if (es == NULL) {
         printf("There is no data");
         return false;
@@ -1617,7 +1608,7 @@ int main(void) {
 //	char strFolderPathEFF[100]={0};
 //	char strFolderPathDS[100]={0};
 
-    char *strFolderPath;
+    //char *strFolderPath;
     char *strFolderPathCPA;
     char *strFolderPathEL;
     char *strFolderPathAI;
@@ -1625,7 +1616,7 @@ int main(void) {
     char *strFolderPathEFF;
     char *strFolderPathDS;
 
-    strFolderPath = malloc(SIZE * sizeof(char));
+    //strFolderPath = malloc(SIZE * sizeof(char));
     strFolderPathCPA = malloc(SIZE * sizeof(char));
     strFolderPathEL = malloc(SIZE * sizeof(char));
     strFolderPathAI = malloc(SIZE * sizeof(char));
