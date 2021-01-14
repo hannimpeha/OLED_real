@@ -56,7 +56,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/c" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -80,11 +80,6 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.penProject">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="penProject" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="penProject" TARGET_NAME="penProject" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="penProject" RUN_TARGET_NAME="penProject">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -311,7 +306,8 @@
       <workItem from="1610454874784" duration="813000" />
       <workItem from="1610510141098" duration="12312000" />
       <workItem from="1610538143124" duration="775000" />
-      <workItem from="1610594476852" duration="21979000" />
+      <workItem from="1610594476852" duration="23190000" />
+      <workItem from="1610618673069" duration="813000" />
     </task>
     <servers />
   </component>

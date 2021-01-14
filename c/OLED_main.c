@@ -179,6 +179,24 @@ const char* getfield(char* line, int num)
     return NULL;
 }
 
+char *getfield2 (char *buf, size_t field)
+{
+    size_t len = strlen(buf);       /* size of input string */
+    char *cpy = malloc (len + 1),   /* allocate for copy */
+    *p,                         /* pointer to use with strsep */
+    *tok = NULL;                /* token for requested field */
+
+    if (!cpy)                       /* validate allocation */
+        return NULL;
+
+    memcpy (cpy, buf, len + 1);     /* copy buf to cpy */
+    p = cpy;                        /* pointer to cpy, preserves cpy address */
+
+    while (field-- && (tok = strsep (&p, ","))) {}  /* get field field */
+
+    /* copy tok to cpy and return cpy on success or NULL on failure */
+    return tok ? memmove (cpy, tok, strlen(tok) + 1) : NULL;
+}
 int main(void) {
     printf("Welcome To My World \n");
     clock_t start, end;    //
@@ -288,8 +306,9 @@ int main(void) {
     int nfield = 7;
     int erc;
     regex_t reg;
-    const char fmt[] = "([^,\n]*)[,\n]";
+    const char fmt[] = "([^,]*)[,\n]";
     char *regex = calloc(nfield, 1 + strlen(fmt));
+
     for (u = 0; u < nfield; u++) {
         strcat(regex, fmt);
     }
@@ -305,33 +324,49 @@ int main(void) {
         errx(EXIT_FAILURE, "%s %s", errbuf, truncated);
     }
 
-    for (h = 0; h < nr && NULL != fgets(line, sizeof(line), fstream); h++) {
+    for (h = 0; h < nr && NULL!= fgets(line, sizeof(line), fstream); h++) {
 
         regmatch_t matches[1 + nfield];
         const int eflags = 0;
 
-        printf("%s", line);
+        //printf("%s", line);
+        EML[h].number = atoi(getfield2(line,1));
+        strcpy(EML[h].spectrum_name, getfield2(line,3));
+        EML[h].Exciton_prop = atof(getfield2(line, 4));
+        EML[h].QY = atof(getfield2(line, 5));
+        EML[h].HDR = atof(getfield2(line,6));
+        strcpy(EML[h].EMZ_name, getfield2(line, 7));
+        //printf("%s\n", getfield2(line, 3));
 
-        if ((erc = regexec(&reg, line, 1 + nfield, matches, eflags)) != 0) {
-            if ((len = regerror(erc, &reg, errbuf, len)) > sizeof(errbuf))
-                truncated = "(truncated)";
-            errx(EXIT_FAILURE, "regex error: %s %s", errbuf, truncated);
-        }
-
-        for (nf = 1; nf < nfield + 1 && matches[nf].rm_so != -1; nf++) {
-            assert(matches[nf].rm_so <= matches[nf].rm_eo);
-            strcpy(&mat[h][nf],((int) (matches[nf].rm_eo - matches[nf].rm_so),
-                    line + matches[nf].rm_so));
-            printf("%4d: %.*s\n",
-                   nf,
-                   (int) (matches[nf].rm_eo - matches[nf].rm_so),
-                   line + matches[nf].rm_so);
-        }
-
+//        if ((erc = regexec(&reg, line, 1 + nfield, matches, eflags)) != 0) {
+//            if ((len = regerror(erc, &reg, errbuf, len)) > sizeof(errbuf))
+//                truncated = "(truncated)";
+//            errx(EXIT_FAILURE, "regex error: %s %s", errbuf, truncated);
+//        }
+//
+//        for (nf = 1; nf < nfield + 1 && matches[nf].rm_so != -1; nf++) {
+//            assert(matches[nf].rm_so <= matches[nf].rm_eo);
+//            strcpy(&mat[h][nf],line + matches[nf].rm_so);
+//            printf("%4d: %.*s\n",
+//                   nf,
+//                   (int) (matches[nf].rm_eo - matches[nf].rm_so),
+//                   line + matches[nf].rm_so);
+//        }
+        printf("%d\n", EML[h].number);
+        printf("%lf\n", EML[h].Exciton_prop);
+        printf("%s\n", EML[h].spectrum_name);
+        printf("%lf\n", EML[h].Exciton_prop);
+        printf("%lf\n", EML[h].QY);
+        printf("%lf\n", EML[h].HDR);
+        printf("%s\n", EML[h].EMZ_name);
     }
+
     free(buffer);
 
-    printf("%s", &mat[3][3]);
+
+
+
+    //printf("%s", &mat[3][1]);
     int no_EMZ = 31; // the number of EMZ
     //input parameter end
 
