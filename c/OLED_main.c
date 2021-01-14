@@ -293,14 +293,7 @@ int main(void) {
     FILE *fstream = fopen("/Users/hannahlee/HANNIMPEHA/OLED/example/text_em.csv", "r");
     //char buffer[1024];
     char *buffer = NULL;
-    char *record, *buff;
     int h = 0, u = 0;
-    char mat[100][100];
-    char **array = NULL;
-    char *ptr = NULL;
-    size_t numero = 0, lines, nflds;
-    char *buf, *fields, *pt; /* must use 2 pointers for strsep */
-
     int nr = 4;
     int nf;
     int nfield = 7;
@@ -353,24 +346,16 @@ int main(void) {
 //                   line + matches[nf].rm_so);
 //        }
         printf("%d\n", EML[h].number);
-        printf("%lf\n", EML[h].Exciton_prop);
         printf("%s\n", EML[h].spectrum_name);
         printf("%lf\n", EML[h].Exciton_prop);
         printf("%lf\n", EML[h].QY);
         printf("%lf\n", EML[h].HDR);
         printf("%s\n", EML[h].EMZ_name);
     }
+    fclose(fstream);
 
-    free(buffer);
-
-
-
-
-    //printf("%s", &mat[3][1]);
     int no_EMZ = 31; // the number of EMZ
     //input parameter end
-
-
 
     //Input organization and preallocations
     double *WL = linspace(WL_init, WL_final, ((int) WL_final - (int) WL_init) / (int) WL_step + 1);//
