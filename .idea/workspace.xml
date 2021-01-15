@@ -14,9 +14,9 @@
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/c/OLED_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/c/OLED_main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/penProject" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/penProject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/OLED_main.o" beforeDir="false" afterPath="$PROJECT_DIR$/c/OLED_main.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/hannimpeha.so" beforeDir="false" afterPath="$PROJECT_DIR$/c/hannimpeha.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/spectrum_load.o" beforeDir="false" afterPath="$PROJECT_DIR$/c/spectrum_load.o" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +26,6 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -79,7 +78,7 @@
       <recent name="$PROJECT_DIR$/controllers/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.penProject">
+  <component name="RunManager" selected="Python.main">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -89,6 +88,12 @@
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="Makefile" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/c/Makefile" target="" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
     </configuration>
     <configuration name="make" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile">
       <makefile filename="$PROJECT_DIR$/CMakeLists.txt" target="" workingDirectory="" arguments="">
@@ -145,10 +150,12 @@
       <item itemvalue="Makefile.make" />
       <item itemvalue="Python.CIE" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Makefile.Makefile" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Makefile.Makefile" />
       </list>
     </recent_temporary>
   </component>
@@ -231,7 +238,7 @@
       <workItem from="1610619709604" duration="1968000" />
       <workItem from="1610621825675" duration="42000" />
       <workItem from="1610680829531" duration="22716000" />
-      <workItem from="1610704125270" duration="7740000" />
+      <workItem from="1610704125270" duration="7878000" />
     </task>
     <servers />
   </component>

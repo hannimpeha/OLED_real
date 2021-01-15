@@ -1392,20 +1392,20 @@ int main(void) {
 
 
 
-//        for (j = 0; j < w_lgth; j++) {
-//            OC_eff_integrated[i] +=
-//                    (spectrum[j][1][i] * EML[i].QY * OC_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
-//            OC_back_eff_integrated[i] +=
-//                    (spectrum[j][1][i] * EML[i].QY * OC_back_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
-//            ABS_eff_integrated[i] +=
-//                    (spectrum[j][1][i] * EML[i].QY * ABS_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
-//            SUBS_eff_integrated[i] +=
-//                    (spectrum[j][1][i] * EML[i].QY * SUBS_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
-//            WG_eff_integrated[i] +=
-//                    (spectrum[j][1][i] * EML[i].QY * WG_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
-//            SPPs_eff_integrated[i] +=
-//                    (spectrum[j][1][i] * EML[i].QY * SPPs_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
-//        }
+        for (j = 0; j < w_lgth; j++) {
+            OC_eff_integrated[i] +=
+                    (spectrum[j][1][i] * EML[i].QY * OC_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
+            OC_back_eff_integrated[i] +=
+                    (spectrum[j][1][i] * EML[i].QY * OC_back_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
+            ABS_eff_integrated[i] +=
+                    (spectrum[j][1][i] * EML[i].QY * ABS_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
+            SUBS_eff_integrated[i] +=
+                    (spectrum[j][1][i] * EML[i].QY * SUBS_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
+            WG_eff_integrated[i] +=
+                    (spectrum[j][1][i] * EML[i].QY * WG_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
+            SPPs_eff_integrated[i] +=
+                    (spectrum[j][1][i] * EML[i].QY * SPPs_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
+        }
 
 
 
