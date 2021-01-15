@@ -1622,24 +1622,24 @@ int main(void) {
     double output_Cd_per_A_top = Cd_top / Ampere;
 
 
-//    //	angle * 1
-//    for (i = 0; i < a_lgth; i++) {
-//        output_angular_intensity_bottom[i] = sum(p_out_12_ext_final[i], w_lgth);
-//        output_angular_intensity_top[i] = sum(p_out_13_ext_final[i], w_lgth);
-//        output_angular_intensity_sub[i] = sum(p_out_12_sub_final[i], w_lgth);        //	matlab �ڵ� �̻�!
-//        output_angular_intensity_bottom_TM[i] = sum(p_out_12_ext_TM_final[i], w_lgth);
-//        output_angular_intensity_top_TM[i] = sum(p_out_13_ext_TM_final[i], w_lgth);
-//        output_angular_intensity_sub_TM[i] = sum(p_out_12_sub_TM_final[i], w_lgth);
-//        output_angular_intensity_bottom_TE[i] = sum(p_out_12_ext_TE_final[i], w_lgth);
-//        output_angular_intensity_top_TE[i] = sum(p_out_13_ext_TE_final[i], w_lgth);
-//        output_angular_intensity_sub_TE[i] = sum(p_out_12_sub_TE_final[i], w_lgth);
-//    }
-//    //	angle * 3
-//    output_CIE_bottom = CIE(p_out_12_ext_final, angle, a_lgth, WL, WL_step, w_lgth);
-//    output_CIE_top = CIE(p_out_13_ext_final, angle, a_lgth, WL, WL_step, w_lgth);
-//    output_CIE_sub = CIE(p_out_12_sub_final, angle, a_lgth, WL, WL_step, w_lgth);
-//    free(angle);
-//    free(WL);
+    //	angle * 1
+    for (i = 0; i < a_lgth; i++) {
+        output_angular_intensity_bottom[i] = sum(p_out_12_ext_final[i], w_lgth);
+        output_angular_intensity_top[i] = sum(p_out_13_ext_final[i], w_lgth);
+        output_angular_intensity_sub[i] = sum(p_out_12_sub_final[i], w_lgth);        //	matlab �ڵ� �̻�!
+        output_angular_intensity_bottom_TM[i] = sum(p_out_12_ext_TM_final[i], w_lgth);
+        output_angular_intensity_top_TM[i] = sum(p_out_13_ext_TM_final[i], w_lgth);
+        output_angular_intensity_sub_TM[i] = sum(p_out_12_sub_TM_final[i], w_lgth);
+        output_angular_intensity_bottom_TE[i] = sum(p_out_12_ext_TE_final[i], w_lgth);
+        output_angular_intensity_top_TE[i] = sum(p_out_13_ext_TE_final[i], w_lgth);
+        output_angular_intensity_sub_TE[i] = sum(p_out_12_sub_TE_final[i], w_lgth);
+    }
+    //	angle * 3
+    output_CIE_bottom = CIE(p_out_12_ext_final, angle, a_lgth, WL, WL_step, w_lgth);
+    output_CIE_top = CIE(p_out_13_ext_final, angle, a_lgth, WL, WL_step, w_lgth);
+    output_CIE_sub = CIE(p_out_12_sub_final, angle, a_lgth, WL, WL_step, w_lgth);
+    free(angle);
+    free(WL);
 
 
     end = clock();
@@ -1679,87 +1679,86 @@ int main(void) {
      //7 columns
     output1(strFolderPath, "output_mode", output_mode, 7);
 
-//    //Candela per ampere
-//    sprintf(strFolderPathCPA, "%s/Candela_per_ampere", strFolderPath);
+    //Candela per ampere
+    sprintf(strFolderPathCPA, "%s/Candela_per_ampere", strFolderPath);
 //    //mkdir(strFolderPathCPA, 0700);
-//    output(strFolderPathCPA, "output_Watt_per_mA_sr_bottom", output_Watt_per_mA_sr_bottom);
-//    output(strFolderPathCPA, "output_Watt_per_mA_sr_top", output_Watt_per_mA_sr_top);
-//    output(strFolderPathCPA, "output_Cd_per_A_bottom", output_Cd_per_A_bottom);
-//    output(strFolderPathCPA, "output_Cd_per_A_top", output_Cd_per_A_top);
+    output(strFolderPathCPA, "output_Watt_per_mA_sr_bottom", output_Watt_per_mA_sr_bottom);
+    output(strFolderPathCPA, "output_Watt_per_mA_sr_top", output_Watt_per_mA_sr_top);
+    output(strFolderPathCPA, "output_Cd_per_A_bottom", output_Cd_per_A_bottom);
+    output(strFolderPathCPA, "output_Cd_per_A_top", output_Cd_per_A_top);
 
 
 
 
-//    //ELspectrum	% wavelegnth* angle
-//    sprintf(strFolderPathEL, "%s/ELspectrum", strFolderPath);
-//    //mkdir(strFolderPathEL, 0700);
-//    outputEL(strFolderPathEL, "output_ELspectrum_bottom", p_out_12_ext_final, w_lgth, a_lgth);
-//    outputEL(strFolderPathEL, "output_ELspectrum_top", p_out_13_ext_final, w_lgth, a_lgth);
-//    outputEL(strFolderPathEL, "output_ELspectrum_sub", p_out_12_sub_final, w_lgth, a_lgth);
-//    outputEL(strFolderPathEL, "output_ELspectrum_bottom_TM", p_out_12_ext_TM_final, w_lgth, a_lgth);
-//    outputEL(strFolderPathEL, "output_ELspectrum_top_TM", p_out_13_ext_TM_final, w_lgth, a_lgth);
-//    outputEL(strFolderPathEL, "output_ELspectrum_sub_TM", p_out_12_sub_TM_final, w_lgth, a_lgth);
-//    outputEL(strFolderPathEL, "output_ELspectrum_bottom_TE", p_out_12_ext_TE_final, w_lgth, a_lgth);
-//    outputEL(strFolderPathEL, "output_ELspectrum_top_TE", p_out_13_ext_TE_final, w_lgth, a_lgth);
-//    outputEL(strFolderPathEL, "output_ELspectrum_sub_TE", p_out_12_sub_TE_final, w_lgth, a_lgth);
+    //ELspectrum	% wavelegnth* angle
+    sprintf(strFolderPathEL, "%s/ELspectrum", strFolderPath);
+    //mkdir(strFolderPathEL, 0700);
+    outputEL(strFolderPathEL, "output_ELspectrum_bottom", p_out_12_ext_final, w_lgth, a_lgth);
+    outputEL(strFolderPathEL, "output_ELspectrum_top", p_out_13_ext_final, w_lgth, a_lgth);
+    outputEL(strFolderPathEL, "output_ELspectrum_sub", p_out_12_sub_final, w_lgth, a_lgth);
+    outputEL(strFolderPathEL, "output_ELspectrum_bottom_TM", p_out_12_ext_TM_final, w_lgth, a_lgth);
+    outputEL(strFolderPathEL, "output_ELspectrum_top_TM", p_out_13_ext_TM_final, w_lgth, a_lgth);
+    outputEL(strFolderPathEL, "output_ELspectrum_sub_TM", p_out_12_sub_TM_final, w_lgth, a_lgth);
+    outputEL(strFolderPathEL, "output_ELspectrum_bottom_TE", p_out_12_ext_TE_final, w_lgth, a_lgth);
+    outputEL(strFolderPathEL, "output_ELspectrum_top_TE", p_out_13_ext_TE_final, w_lgth, a_lgth);
+    outputEL(strFolderPathEL, "output_ELspectrum_sub_TE", p_out_12_sub_TE_final, w_lgth, a_lgth);
 
 
 
 
-//    //angular_intensity		% angle * 1
-//    sprintf(strFolderPathAI, "%s/angular_intensity", strFolderPath);
-//    mkdir(strFolderPathAI, 0700);
-//    output1(strFolderPathAI, "output_angular_intensity_bottom", output_angular_intensity_bottom, a_lgth);
-//    output1(strFolderPathAI, "output_angular_intensity_top", output_angular_intensity_top, a_lgth);
-//    output1(strFolderPathAI, "output_angular_intensity_sub", output_angular_intensity_sub, a_lgth);
-//    output1(strFolderPathAI, "output_angular_intensity_bottom_TM", output_angular_intensity_bottom_TM, a_lgth);
-//    output1(strFolderPathAI, "output_angular_intensity_top_TM", output_angular_intensity_top_TM, a_lgth);
-//    output1(strFolderPathAI, "output_angular_intensity_sub_TM", output_angular_intensity_sub_TM, a_lgth);
-//    output1(strFolderPathAI, "output_angular_intensity_bottom_TE", output_angular_intensity_bottom_TE, a_lgth);
-//    output1(strFolderPathAI, "output_angular_intensity_top_TE", output_angular_intensity_top_TE, a_lgth);
-//    output1(strFolderPathAI, "output_angular_intensity_sub_TE", output_angular_intensity_sub_TE, a_lgth);
+    //angular_intensity		% angle * 1
+    sprintf(strFolderPathAI, "%s/angular_intensity", strFolderPath);
+    //mkdir(strFolderPathAI, 0700);
+    output1(strFolderPathAI, "output_angular_intensity_bottom", output_angular_intensity_bottom, a_lgth);
+    output1(strFolderPathAI, "output_angular_intensity_top", output_angular_intensity_top, a_lgth);
+    output1(strFolderPathAI, "output_angular_intensity_sub", output_angular_intensity_sub, a_lgth);
+    output1(strFolderPathAI, "output_angular_intensity_bottom_TM", output_angular_intensity_bottom_TM, a_lgth);
+    output1(strFolderPathAI, "output_angular_intensity_top_TM", output_angular_intensity_top_TM, a_lgth);
+    output1(strFolderPathAI, "output_angular_intensity_sub_TM", output_angular_intensity_sub_TM, a_lgth);
+    output1(strFolderPathAI, "output_angular_intensity_bottom_TE", output_angular_intensity_bottom_TE, a_lgth);
+    output1(strFolderPathAI, "output_angular_intensity_top_TE", output_angular_intensity_top_TE, a_lgth);
+    output1(strFolderPathAI, "output_angular_intensity_sub_TE", output_angular_intensity_sub_TE, a_lgth);
 
 
 
 
-//    //CIE			% angle * 3
-//    sprintf(strFolderPathCIE, "%s/CIE", strFolderPath);
-//    mkdir(strFolderPathCIE, 0700);
-//    output2(strFolderPathCIE, "output_CIE_bottom", output_CIE_bottom, a_lgth, 3);
-//    output2(strFolderPathCIE, "output_CIE_top", output_CIE_top, a_lgth, 3);
-//    output2(strFolderPathCIE, "output_CIE_sub", output_CIE_sub, a_lgth, 3);
+    //CIE			% angle * 3
+    sprintf(strFolderPathCIE, "%s/CIE", strFolderPath);
+    //mkdir(strFolderPathCIE, 0700);
+    output2(strFolderPathCIE, "output_CIE_bottom", output_CIE_bottom, a_lgth, 3);
+    output2(strFolderPathCIE, "output_CIE_top", output_CIE_top, a_lgth, 3);
+    output2(strFolderPathCIE, "output_CIE_sub", output_CIE_sub, a_lgth, 3);
 
 
 
 
-//    //eff			% wavelegnth * EML * EMZ
-//    sprintf(strFolderPathEFF, "%s/EFF", strFolderPath);
-//    mkdir(strFolderPathEFF, 0700);
-//    output3(strFolderPathEFF, "output_OC_eff", OC_eff, w_lgth, no_EML, no_EMZ);
-//    output3(strFolderPathEFF, "output_OC_top_eff", OC_back_eff, w_lgth, no_EML, no_EMZ);
-//    output3(strFolderPathEFF, "output_Purcell", Purcell, w_lgth, no_EML, no_EMZ);
-//    output3(strFolderPathEFF, "output_effective_QY", q_eff, w_lgth, no_EML, no_EMZ);
+    //eff			% wavelegnth * EML * EMZ
+    sprintf(strFolderPathEFF, "%s/EFF", strFolderPath);
+    //mkdir(strFolderPathEFF, 0700);
+    output3(strFolderPathEFF, "output_OC_eff", OC_eff, w_lgth, no_EML, no_EMZ);
+    output3(strFolderPathEFF, "output_OC_top_eff", OC_back_eff, w_lgth, no_EML, no_EMZ);
+    output3(strFolderPathEFF, "output_Purcell", Purcell, w_lgth, no_EML, no_EMZ);
+    output3(strFolderPathEFF, "output_effective_QY", q_eff, w_lgth, no_EML, no_EMZ);
 
 
 
 
-//    //dissipation	% inplane_wavevector * wavelength * EML * EMZ
-//    sprintf(strFolderPathDS, "%s/dissipation", strFolderPath);
-//    mkdir(strFolderPathDS, 0700);
-//    outputDS(strFolderPathDS, "output_power_dissipation", p_total, v_lgth, w_lgth, no_EML, no_EMZ);
-//    outputDS(strFolderPathDS, "output_power_dissipation_TM", p_total_TM, v_lgth, w_lgth, no_EML, no_EMZ);
-//    outputDS(strFolderPathDS, "output_power_dissipation_TE", p_total_TE, v_lgth, w_lgth, no_EML, no_EMZ);
+    //dissipation	% inplane_wavevector * wavelength * EML * EMZ
+    sprintf(strFolderPathDS, "%s/dissipation", strFolderPath);
+    //mkdir(strFolderPathDS, 0700);
+    outputDS(strFolderPathDS, "output_power_dissipation", p_total, v_lgth, w_lgth, no_EML, no_EMZ);
+    outputDS(strFolderPathDS, "output_power_dissipation_TM", p_total_TM, v_lgth, w_lgth, no_EML, no_EMZ);
+    outputDS(strFolderPathDS, "output_power_dissipation_TE", p_total_TE, v_lgth, w_lgth, no_EML, no_EMZ);
 
 
 
-
-//    free4d(p_total); free4d(p_total_TM);free4d(p_total_TE);free2d(p_out_12_ext_final);
-//    free2d(p_out_13_ext_final);free2d(p_out_12_sub_final);free2d(p_out_12_ext_TM_final);free2d(p_out_13_ext_TM_final);
-//    free2d(p_out_12_sub_TM_final);free2d(p_out_12_ext_TE_final);free2d(p_out_13_ext_TE_final);free2d(p_out_12_sub_TE_final);
-//    free3d(OC_eff);free3d(OC_back_eff);free3d(Purcell);free3d(q_eff);
-//    free(output_angular_intensity_sub_TE);free(output_angular_intensity_top_TE);free(output_angular_intensity_bottom_TE);free(output_angular_intensity_sub_TM);
-//    free(output_angular_intensity_top_TM);free(output_angular_intensity_bottom_TM);free(output_angular_intensity_sub);free(output_angular_intensity_top);
-//    free(output_angular_intensity_bottom);free2d(output_CIE_bottom);free2d(output_CIE_top);free2d(output_CIE_sub);
+    free4d(p_total); free4d(p_total_TM);free4d(p_total_TE);free2d(p_out_12_ext_final);
+    free2d(p_out_13_ext_final);free2d(p_out_12_sub_final);free2d(p_out_12_ext_TM_final);free2d(p_out_13_ext_TM_final);
+    free2d(p_out_12_sub_TM_final);free2d(p_out_12_ext_TE_final);free2d(p_out_13_ext_TE_final);free2d(p_out_12_sub_TE_final);
+    free3d(OC_eff);free3d(OC_back_eff);free3d(Purcell);free3d(q_eff);
+    free(output_angular_intensity_sub_TE);free(output_angular_intensity_top_TE);free(output_angular_intensity_bottom_TE);free(output_angular_intensity_sub_TM);
+    free(output_angular_intensity_top_TM);free(output_angular_intensity_bottom_TM);free(output_angular_intensity_sub);free(output_angular_intensity_top);
+    free(output_angular_intensity_bottom);free2d(output_CIE_bottom);free2d(output_CIE_top);free2d(output_CIE_sub);
 
     end = clock();
     t_result = ((double) end - (double) start) / CLOCKS_PER_SEC;
