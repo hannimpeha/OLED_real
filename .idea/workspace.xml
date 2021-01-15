@@ -13,12 +13,13 @@
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qtcontrollers/resources/text_em.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/resources/text_em.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/EMZ_load.c" beforeDir="false" afterPath="$PROJECT_DIR$/c/EMZ_load.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/EMZ_load.o" beforeDir="false" afterPath="$PROJECT_DIR$/c/EMZ_load.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/c/OLED_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/c/OLED_main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/data/spectrum/TowpplAn_PL.spec" beforeDir="false" afterPath="$PROJECT_DIR$/c/data/spectrum/TwopplAn_PL.spec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/OLED_main.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/RI_load.o" beforeDir="false" afterPath="$PROJECT_DIR$/c/RI_load.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/hannimpeha.so" beforeDir="false" afterPath="$PROJECT_DIR$/c/hannimpeha.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/spectrum_load.o" beforeDir="false" afterPath="$PROJECT_DIR$/c/spectrum_load.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/C.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/EMZ_load.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/EMZ_load.c.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/penProject" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/penProject" afterDir="false" />
@@ -213,9 +214,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Makefile.Makefile" />
         <item itemvalue="Python.main" />
         <item itemvalue="Makefile.Makefile (1)" />
-        <item itemvalue="Makefile.Makefile" />
         <item itemvalue="Makefile.Makefile" />
         <item itemvalue="Makefile.Makefile" />
       </list>
@@ -299,7 +300,7 @@
       <workItem from="1610618673069" duration="886000" />
       <workItem from="1610619709604" duration="1968000" />
       <workItem from="1610621825675" duration="42000" />
-      <workItem from="1610680829531" duration="15691000" />
+      <workItem from="1610680829531" duration="16409000" />
     </task>
     <servers />
   </component>

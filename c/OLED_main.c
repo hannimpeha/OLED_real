@@ -860,99 +860,108 @@ int main(void) {
 //        free2d(EMZ_temp);
     }
 
-//    free3d(index);
-//    free(structure_temp);
-//    free(thick);
-//    double sum_EXC = 0;
-//    for (i = 0; i < no_EML; i++) {
-//        sum_EXC += EXC[i];
-//    }
-//    for (i = 0; i < no_EML; i++) {
-//        EXC_prop[i] = EXC[i] / sum_EXC;
-//    }
-//    //	EML processing end
-//    free(EXC);
-//    //	Transfer matrix
-//    for (i = 0; i < no_EML; i++) {
-//        //	TMM_anisotropy_coeffs : function
-//        //	row1: r_TE, row2: t_TE, row3: r_TM, row4: t_TM
-//        *(rt_up + i) = TMM_anisotropy_coeffs(index_up, i, thick_up, inpv, v_lgth, no_up_layer[i], WL, w_lgth);
-//        *(rt_low + i) = TMM_anisotropy_coeffs(index_low, i, thick_low, inpv, v_lgth, no_low_layer[i], WL, w_lgth);
-//    }
-//    //	Transfer matrix end
-//    //	pre-processes end
-//
-//    //	main calculations
-//    double Const = 1;    //	Complex** arrsum_new(Complex** a, Complex** b, int x, int y)
-//    for (i = 0; i < no_EML; i++) {
-//        for (j = 0; j < w_lgth; j++) {
-//            //	common process
-//            n_ordi[j].A = index_up[0][1][j][i];
-//            n_ordi[j].B = index_up[0][2][j][i];
-//            n_extra[j].A = index_up[0][3][j][i];
-//            n_extra[j].B = index_up[0][4][j][i];
-//
-//            //	2: low direction, 3: up direction
-//            n_2[j].A = index_low[no_low_layer[i] - 1][1][j][i];
-//            n_2[j].B = index_low[no_low_layer[i] - 1][2][j][i];
-//            n_3[j].A = index_up[no_up_layer[i] - 1][1][j][i];
-//            n_3[j].B = index_up[no_up_layer[i] - 1][2][j][i];
-//
-//            thick_EML = thick_up[0][i];
-//            //	common process end
-//
-//            //	for mode analysis 	reflection and transmission coeffs for eq(8-10)
-//            for (k = 0; k < v_lgth; k++) {
-//                L_1[k][j] = comsqrt(comp(1 - pow(inpv[k], 2)));
-//                L_2_TM[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_extra[j]))), comp(pow(inpv[k], 2))));
-//                L_2_TE[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_ordi[j]))), comp(pow(inpv[k], 2))));
-//                L_3_TM[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_extra[j]))), comp(pow(inpv[k], 2))));
-//                L_3_TE[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_ordi[j]))), comp(pow(inpv[k], 2))));
-//
-//                r_12_TM[k][j] = rt_low[i][2][k][j];
-//                t_12_TM[k][j] = rt_low[i][3][k][j];
-//                r_12_TE[k][j] = rt_low[i][0][k][j];
-//                t_12_TE[k][j] = rt_low[i][1][k][j];
-//
-//                r_13_TM[k][j] = rt_up[i][2][k][j];
-//                t_13_TM[k][j] = rt_up[i][3][k][j];
-//                r_13_TE[k][j] = rt_up[i][0][k][j];
-//                t_13_TE[k][j] = rt_up[i][1][k][j];
-//            }
-//
-//            //	eq(1)
-//            P0_v[j] = comxreal(n_extra[j], Const);
-//            //	eq(2)
-//            P0_h[j] = comxreal(comprod(n_ordi[j], comprod(comsum(comxreal(compow2(n_ordi[j]), 3), compow2(n_extra[j])),
-//                                                          inversecom(comxreal(compow2(n_ordi[j]), 4)))), Const);
-//            //	eq(3)
-//            P0[j] = comsum(comxreal(P0_v[j], 1 - EML[i].HDR), comxreal(P0_h[j], EML[i].HDR));
-//
-//        }
-//        //	reflection and transmission coeffs for eq (8-10) end
-//
-//        //	transmittance for eq (16-18)
-//        multiply_1(t_12_TM, n_extra, L_2_TM, n_ordi, L_1, v_lgth, w_lgth, T_12_TM);
-//        multiply_1(t_13_TM, n_extra, L_3_TM, n_ordi, L_1, v_lgth, w_lgth, T_13_TM);
-//        multiply_2(t_12_TE, L_2_TE, L_1, v_lgth, w_lgth, T_12_TE);
-//        multiply_2(t_13_TE, L_3_TE, L_1, v_lgth, w_lgth, T_13_TE);
-//        //	transmittance for eq(16-18) end
-//        for (j = 0; j < w_lgth; j++) {
-//            //	prefactors for eq (8-10, 16-18)
-//            *(prefactor_v_TM + j) = comxreal(comprod(n_extra[j], inversecom(n_ordi[j])), (double) 3 / 2);
-//            *(prefactor_h_TM + j) = comprod(comprod(comxreal(compow2(n_ordi[j]), 3), inversecom(
-//                    comsum(comxreal(compow2(n_ordi[j]), 3), compow2(n_extra[j])))),
-//                                            comprod(compow2(n_extra[j]), inversecom(compow2(n_ordi[j]))));
-//            *(prefactor_h_TE + j) = comprod(comxreal(compow2(n_ordi[j]), 3),
-//                                            inversecom(comsum(comxreal(compow2(n_ordi[j]), 3), compow2(n_extra[j]))));
-//        }
-//        //	prefactors for eq (8-10, 16-18) end
-//        //	mode analysis end
-//
+    free4d(index);
+    free(structure_temp);
+    free(thick);
+
+    double sum_EXC = 0;
+    for (i = 0; i < no_EML; i++) {
+        sum_EXC += EXC[i];
+    }
+    for (i = 0; i < no_EML; i++) {
+        EXC_prop[i] = EXC[i] / sum_EXC;
+    }
+    //	EML processing end
+    free(EXC);
+    //	Transfer matrix
+    for (i = 0; i < no_EML; i++) {
+        //	TMM_anisotropy_coeffs : function
+        //	row1: r_TE, row2: t_TE, row3: r_TM, row4: t_TM
+        *(rt_up + i) = TMM_anisotropy_coeffs(index_up, i, thick_up, inpv, v_lgth, no_up_layer[i], WL, w_lgth);
+        *(rt_low + i) = TMM_anisotropy_coeffs(index_low, i, thick_low, inpv, v_lgth, no_low_layer[i], WL, w_lgth);
+    }
+    //	Transfer matrix end
+    //	pre-processes end
+
+
+
+    //	main calculations
+    double Const = 1;    //	Complex** arrsum_new(Complex** a, Complex** b, int x, int y)
+    for (i = 0; i < no_EML; i++) {
+        for (j = 0; j < w_lgth; j++) {
+            //	common process
+            n_ordi[j].A = index_up[0][1][j][i];
+            n_ordi[j].B = index_up[0][2][j][i];
+            n_extra[j].A = index_up[0][3][j][i];
+            n_extra[j].B = index_up[0][4][j][i];
+
+            //	2: low direction, 3: up direction
+            n_2[j].A = index_low[no_low_layer[i] - 1][1][j][i];
+            n_2[j].B = index_low[no_low_layer[i] - 1][2][j][i];
+            n_3[j].A = index_up[no_up_layer[i] - 1][1][j][i];
+            n_3[j].B = index_up[no_up_layer[i] - 1][2][j][i];
+
+            thick_EML = thick_up[0][i];
+            //	common process end
+
+            //	for mode analysis 	reflection and transmission coeffs for eq(8-10)
+            for (k = 0; k < v_lgth; k++) {
+                L_1[k][j] = comsqrt(comp(1 - pow(inpv[k], 2)));
+                L_2_TM[k][j] = comsqrt(
+                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_extra[j]))), comp(pow(inpv[k], 2))));
+                L_2_TE[k][j] = comsqrt(
+                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_ordi[j]))), comp(pow(inpv[k], 2))));
+                L_3_TM[k][j] = comsqrt(
+                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_extra[j]))), comp(pow(inpv[k], 2))));
+                L_3_TE[k][j] = comsqrt(
+                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_ordi[j]))), comp(pow(inpv[k], 2))));
+
+                r_12_TM[k][j] = rt_low[i][2][k][j];
+                t_12_TM[k][j] = rt_low[i][3][k][j];
+                r_12_TE[k][j] = rt_low[i][0][k][j];
+                t_12_TE[k][j] = rt_low[i][1][k][j];
+
+                r_13_TM[k][j] = rt_up[i][2][k][j];
+                t_13_TM[k][j] = rt_up[i][3][k][j];
+                r_13_TE[k][j] = rt_up[i][0][k][j];
+                t_13_TE[k][j] = rt_up[i][1][k][j];
+            }
+
+            //	eq(1)
+            P0_v[j] = comxreal(n_extra[j], Const);
+            //	eq(2)
+            P0_h[j] = comxreal(comprod(n_ordi[j], comprod(comsum(comxreal(compow2(n_ordi[j]), 3), compow2(n_extra[j])),
+                                                          inversecom(comxreal(compow2(n_ordi[j]), 4)))), Const);
+            //	eq(3)
+            P0[j] = comsum(comxreal(P0_v[j], 1 - EML[i].HDR), comxreal(P0_h[j], EML[i].HDR));
+
+        }
+        //	reflection and transmission coeffs for eq (8-10) end
+
+        //	transmittance for eq (16-18)
+        multiply_1(t_12_TM, n_extra, L_2_TM, n_ordi, L_1, v_lgth, w_lgth, T_12_TM);
+        multiply_1(t_13_TM, n_extra, L_3_TM, n_ordi, L_1, v_lgth, w_lgth, T_13_TM);
+        multiply_2(t_12_TE, L_2_TE, L_1, v_lgth, w_lgth, T_12_TE);
+        multiply_2(t_13_TE, L_3_TE, L_1, v_lgth, w_lgth, T_13_TE);
+        //	transmittance for eq(16-18) end
+        for (j = 0; j < w_lgth; j++) {
+            //	prefactors for eq (8-10, 16-18)
+            *(prefactor_v_TM + j) = comxreal(comprod(n_extra[j], inversecom(n_ordi[j])), (double) 3 / 2);
+            *(prefactor_h_TM + j) = comprod(comprod(comxreal(compow2(n_ordi[j]), 3), inversecom(
+                    comsum(comxreal(compow2(n_ordi[j]), 3), compow2(n_extra[j])))),
+                                            comprod(compow2(n_extra[j]), inversecom(compow2(n_ordi[j]))));
+            *(prefactor_h_TE + j) = comprod(comxreal(compow2(n_ordi[j]), 3),
+                                            inversecom(comsum(comxreal(compow2(n_ordi[j]), 3), compow2(n_extra[j]))));
+        }
+        //	prefactors for eq (8-10, 16-18) end
+        //	mode analysis end
+
+
+
+
+
+
+
 //        //	for far_field emission, re-determining the inplane wavevector and do the same process
 //        for (j = 0; j < w_lgth; j++) {
 //            for (k = 0; k < a_lgth; k++) {
@@ -1024,7 +1033,14 @@ int main(void) {
 //                                                                    *(inpv_sub_ext_TE + j), a_lgth, no_of_layer_sub_ext,
 //                                                                    WL[j], j);
 //        }    //	wavelength�� loop
-//        //	reflection & transmission coeffs
+
+
+
+
+
+
+
+        //	reflection & transmission coeffs
 //        for (j = 0; j < w_lgth; j++) {
 //            for (k = 0; k < a_lgth; k++) {
 //                r_12_ext_TM[k][j] = rt_low_ext_TM[j][2][k];
@@ -1049,8 +1065,12 @@ int main(void) {
 //                t_sub_ext_TE[k][j] = rt_sub_ext_TE[j][1][k];
 //            }
 //        }    //	reflection and transmission coeffs end
-//
-//        //	transmittance
+
+
+
+
+
+        //	transmittance
 //        multiply_1(t_12_ext_TM, n_extra, L_2_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_12_ext_TM);
 //        multiply_1(t_13_ext_TM, n_extra, L_3_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_13_ext_TM);
 //        multiply_1(t_12_sub_TM, n_extra, L_2_sub_TM, n_ordi, L_1_sub_TM, a_lgth, w_lgth, T_12_sub_TM);
@@ -1061,9 +1081,12 @@ int main(void) {
 //
 //        multiply_2(t_sub_ext_TM, L_2_sub_ext_TM, L_1_sub_ext_TM, a_lgth, w_lgth, T_sub_ext_TM);
 //        multiply_2(t_sub_ext_TE, L_2_sub_ext_TE, L_1_sub_ext_TE, a_lgth, w_lgth, T_sub_ext_TE);
-//        //	transmittance end
-//        //	far_field emission end
-//
+        //	transmittance end
+        //	far_field emission end
+
+
+
+
 //        //	determination of the boarder
 //        for (k = 0; k < w_lgth; k++) {
 //            inpv_cut_ext_TM[k] = comprod(n_3[k], inversecom(n_extra[k])).A;
@@ -1071,6 +1094,11 @@ int main(void) {
 //            inpv_cut_sub_TM[k] = comprod(n_2[k], inversecom(n_extra[k])).A;
 //            inpv_cut_sub_TE[k] = comprod(n_2[k], inversecom(n_ordi[k])).A;
 //        }
+
+
+
+
+
 //        for (j = 0; j < no_EMZ; j++) {    //	common process
 //            //for eq (8-10)
 //            d = EMZ[j][0][i];
@@ -1292,6 +1320,11 @@ int main(void) {
 //            arrsum_new(p_out_12_sub_TM_spec[i][j], p_out_12_sub_TE_spec[i][j], w_lgth, a_lgth, p_out_12_sub_spec[i][j]);
 //            //	far_field emission end
 //        }
+
+
+
+
+
 //        for (j = 0; j < no_EMZ; j++) {
 //            for (k = 0; k < w_lgth; k++) {
 //                P_EML[k][i] += P_EMZ[i][j][k];
@@ -1305,6 +1338,11 @@ int main(void) {
 //                Purcell[k][i][j] = P[i][j][k] / P0[k].A;
 //            }
 //        }    //	EMZ loop
+
+
+
+
+
 //        for (j = 0; j < w_lgth; j++) {
 //            OC_eff_integrated[i] +=
 //                    (spectrum[j][1][i] * EML[i].QY * OC_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
@@ -1326,7 +1364,12 @@ int main(void) {
 //        WG_eff_integrated[i] *= EXC_prop[i];
 //        SPPs_eff_integrated[i] *= EXC_prop[i];
 //        //	mode analysis end
-//
+
+
+
+
+
+
 //        //	for far-field emission
 //        for (j = 0; j < no_EMZ; j++) {
 //            for (k = 0; k < a_lgth; k++) {
@@ -1345,8 +1388,11 @@ int main(void) {
 //                }
 //            }
 //        }    //	no_EMZ loop
-//        //	far-field emission end
-//    }    // no_EML loop
+//             //	far-field emission end
+
+
+
+    }    // no_EML loop
 //    //	main calculations end
 //    free(ext_number_TM);
 //    free(ext_number_TE);
