@@ -1109,130 +1109,127 @@ int main(void) {
 
             double d = EMZ[j][0][i];
             double s = thick_EML - EMZ[j][0][i];
-//
-//            //	common process end
-//            //	for mode analyesis
-//            //	Reflec: function
-//
-//            Reflec(d, r_12_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TM);
-//            Reflec(s, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TM);
-//            Reflec_2(thick_EML, r_12_TM, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TM);
-//            Reflec(d, r_12_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TE);
-//            Reflec(s, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TE);
-//            Reflec_2(thick_EML, r_12_TE, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TE);
+
+            //	common process end
+            //	for mode analyesis
+            //	Reflec: function
+
+            Reflec(d, r_12_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TM);
+            Reflec(s, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TM);
+            Reflec_2(thick_EML, r_12_TM, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TM);
+            Reflec(d, r_12_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TE);
+            Reflec(s, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TE);
+            Reflec_2(thick_EML, r_12_TE, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TE);
 
 
-//            //	multiply: function
-//            //	eq (8)
-//            multiply_p_1(prefactor_v_TM, R_12_TM, R_13_TM, R_1213_TM, inpv, L_1, v_lgth, w_lgth, p_v_TM);
-//            //	eq (9)
-//            multiply_p_2(prefactor_h_TM, R_12_TM, R_13_TM, R_1213_TM, inpv, L_1, v_lgth, w_lgth, p_h_TM);
-//            //	eq (10)
-//            multiply_p_3(prefactor_h_TE, R_12_TE, R_13_TE, R_1213_TE, inpv, L_1, v_lgth, w_lgth, p_h_TE);
+            //	multiply: function
+            //	eq (8)
+            multiply_p_1(prefactor_v_TM, R_12_TM, R_13_TM, R_1213_TM, inpv, L_1, v_lgth, w_lgth, p_v_TM);
+            //	eq (9)
+            multiply_p_2(prefactor_h_TM, R_12_TM, R_13_TM, R_1213_TM, inpv, L_1, v_lgth, w_lgth, p_h_TM);
+            //	eq (10)
+            multiply_p_3(prefactor_h_TE, R_12_TE, R_13_TE, R_1213_TE, inpv, L_1, v_lgth, w_lgth, p_h_TE);
 
 
 
-//            //	for eq (16-18)
-//            for (k = 0; k < v_lgth; k++) {
-//                for (l = 0; l < w_lgth; l++) {
-//                    Abs_R_v_TM_12[k][l] = compabs2(comdiv(commin(ONE, R_13_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
-//                    Abs_R_v_TM_13[k][l] = compabs2(comdiv(commin(ONE, R_12_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
-//                    Abs_R_h_TM_12[k][l] = compabs2(comdiv(comsum(ONE, R_13_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
-//                    Abs_R_h_TM_13[k][l] = compabs2(comdiv(comsum(ONE, R_12_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
-//                    Abs_R_h_TE_12[k][l] = compabs2(comdiv(comsum(ONE, R_13_TE[k][l]), commin(ONE, R_1213_TE[k][l]))).A;
-//                    Abs_R_h_TE_13[k][l] = compabs2(comdiv(comsum(ONE, R_12_TE[k][l]), commin(ONE, R_1213_TE[k][l]))).A;
-//                }
-//            }
-//
-//
-//            //	eq (16)
-//            multiply_3_1(prefactor_v_TM, Abs_R_v_TM_12, T_12_TM, inpv, L_1, v_lgth, w_lgth, p_out_12_v_TM);
-//            multiply_3_1(prefactor_v_TM, Abs_R_v_TM_13, T_13_TM, inpv, L_1, v_lgth, w_lgth, p_out_13_v_TM);
-//
-//            //	eq (17)
-//            multiply_3_2(prefactor_h_TM, Abs_R_h_TM_12, T_12_TM, inpv, L_1, v_lgth, w_lgth, p_out_12_h_TM);
-//            multiply_3_2(prefactor_h_TM, Abs_R_h_TM_13, T_13_TM, inpv, L_1, v_lgth, w_lgth, p_out_13_h_TM);
-//
-//            //	eq(18)
-//            multiply_3_3(prefactor_h_TE, Abs_R_h_TE_12, T_12_TE, inpv, L_1, v_lgth, w_lgth, p_out_12_h_TE);
-//            multiply_3_3(prefactor_h_TE, Abs_R_h_TE_13, T_13_TE, inpv, L_1, v_lgth, w_lgth, p_out_13_h_TE);
-//
-//            //	eq(7)
-//            multiply_4_1(p_v_TM, P0_v, 1 - EML[i].HDR, v_lgth, w_lgth, p_total_TM[i][j]);
-//            multiply_4_1(p_h_TM, P0_v, EML[i].HDR, v_lgth, w_lgth, Temp);
-//            arrsum(p_total_TM[i][j], Temp, w_lgth, v_lgth);
-//            multiply_4_1(p_h_TE, P0_v, EML[i].HDR, v_lgth, w_lgth, p_total_TE[i][j]);
-//            arrsum_new(p_total_TM[i][j], p_total_TE[i][j], w_lgth, v_lgth, p_total[i][j]);
-//
-//            //	eq(19)
-//            multiply_4_1(p_out_12_v_TM, P0_v, 1 - EML[i].HDR, v_lgth, w_lgth, p_total_out_12_TM);
-//            multiply_4_1(p_out_12_h_TM, P0_v, EML[i].HDR, v_lgth, w_lgth, Temp);
-//            arrsum(p_total_out_12_TM, Temp, w_lgth, v_lgth);
-//            multiply_4_1(p_out_12_h_TE, P0_v, EML[i].HDR, v_lgth, w_lgth, p_total_out_12_TE);
-//            arrsum_new(p_total_out_12_TM, p_total_out_12_TE, w_lgth, v_lgth, p_total_out_12);
-//
-//            //	eq(19) opposite direction
-//            multiply_4_1(p_out_13_v_TM, P0_v, 1 - EML[i].HDR, v_lgth, w_lgth, p_total_out_13_TM);
-//            multiply_4_1(p_out_13_h_TM, P0_v, EML[i].HDR, v_lgth, w_lgth, Temp);
-//            arrsum(p_total_out_13_TM, Temp, w_lgth, v_lgth);
-//            multiply_4_1(p_out_13_h_TE, P0_v, EML[i].HDR, v_lgth, w_lgth, p_total_out_13_TE);
-//            arrsum_new(p_total_out_13_TM, p_total_out_13_TE, w_lgth, v_lgth, p_total_out_13);
-//
-//
-//
-//
-//            for (k = 0; k < w_lgth; k++) {
-//                if (j == 0) {
-//                    //	dviding optical modes
-//                    ext_number_TM[k] = find(inpv, inpv_cut_ext_TM[k], v_lgth);
-//                    ext_number_TE[k] = find(inpv, inpv_cut_ext_TE[k], v_lgth);
-//                    subs_number_TM[k] = find(inpv, inpv_cut_sub_TM[k], v_lgth);
-//                    subs_number_TE[k] = find(inpv, inpv_cut_sub_TE[k], v_lgth);
-//                    WG_number_TM[k] = find(inpv, 1, v_lgth);
-//                    WG_number_TE[k] = find(inpv, 1, v_lgth);
-//                }
-//
-//
-//
-//                for (l = 0; l < ext_number_TM[k]; l++) {
-//                    p_abs_TM_tailored[k][l] =
-//                            p_total_TM[i][j][k][l] - p_total_out_12_TM[k][l] - p_total_out_13_TM[k][l];
-//                    p_abs_TE_tailored[k][l] =
-//                            p_total_TE[i][j][k][l] - p_total_out_12_TE[k][l] - p_total_out_13_TE[k][l];
-//                }
-//
-//
-//                //	integration in eq (7)
-//                P[i][j][k] = trapz(inpv, p_total[i][j][k], 1, v_lgth);
-//                OC[i][j][k] = trapz(inpv, p_total_out_12_TM[k], 1, ext_number_TM[k]) +
-//                              trapz(inpv, p_total_out_12_TE[k], 1, ext_number_TE[k]);
-//                OC_back[i][j][k] = trapz(inpv, p_total_out_13_TM[k], 1, ext_number_TM[k]) +
-//                                   trapz(inpv, p_total_out_13_TE[k], 1, ext_number_TE[k]);
-//                ABS[i][j][k] = trapz(inpv, p_abs_TM_tailored[k], 1, ext_number_TM[k]) +
-//                               trapz(inpv, p_abs_TE_tailored[k], 1, ext_number_TE[k]);
-//                SUBS[i][j][k] = trapz(inpv, p_total_TM[i][j][k], ext_number_TM[k], subs_number_TM[k]) +
-//                                trapz(inpv, p_total_TE[i][j][k], ext_number_TE[k], subs_number_TE[k]);
-//                WG[i][j][k] = trapz(inpv, p_total_TM[i][j][k], subs_number_TM[k], WG_number_TM[k]) +
-//                              trapz(inpv, p_total_TE[i][j][k], subs_number_TE[k], WG_number_TE[k]);
-//                SPPs[i][j][k] = trapz(inpv, p_total_TM[i][j][k], WG_number_TM[k], v_lgth) +
-//                                trapz(inpv, p_total_TE[i][j][k], WG_number_TE[k], v_lgth);
-//
-//                //	eq (21) WL, EMzone, EML matrix
-//                q_eff[k][i][j] = EML[i].QY * P[i][j][k] / (1 - EML[i].QY + EML[i].QY * P[i][j][k]);
-//
-//                //	eq (22)
-//                OC_eff[k][i][j] = OC[i][j][k] / P[i][j][k];
-//                OC_back_eff[k][i][j] = OC_back[i][j][k] / P[i][j][k];
-//
-//                P_EMZ[i][j][k] = P[i][j][k] * EMZ[j][1][i];
-//                OC_EMZ[i][j][k] = OC[i][j][k] * EMZ[j][1][i];
-//                OC_back_EMZ[i][j][k] = OC_back[i][j][k] * EMZ[j][1][i];
-//                ABS_EMZ[i][j][k] = ABS[i][j][k] * EMZ[j][1][i];
-//                SUBS_EMZ[i][j][k] = SUBS[i][j][k] * EMZ[j][1][i];
-//                WG_EMZ[i][j][k] = WG[i][j][k] * EMZ[j][1][i];
-//                SPPs_EMZ[i][j][k] = SPPs[i][j][k] * EMZ[j][1][i];
-//            }    //	w_lgth loop
-            //	mode anlysis end
+            //	for eq (16-18)
+            for (k = 0; k < v_lgth; k++) {
+                for (l = 0; l < w_lgth; l++) {
+                    Abs_R_v_TM_12[k][l] = compabs2(comdiv(commin(ONE, R_13_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
+                    Abs_R_v_TM_13[k][l] = compabs2(comdiv(commin(ONE, R_12_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
+                    Abs_R_h_TM_12[k][l] = compabs2(comdiv(comsum(ONE, R_13_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
+                    Abs_R_h_TM_13[k][l] = compabs2(comdiv(comsum(ONE, R_12_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
+                    Abs_R_h_TE_12[k][l] = compabs2(comdiv(comsum(ONE, R_13_TE[k][l]), commin(ONE, R_1213_TE[k][l]))).A;
+                    Abs_R_h_TE_13[k][l] = compabs2(comdiv(comsum(ONE, R_12_TE[k][l]), commin(ONE, R_1213_TE[k][l]))).A;
+                }
+            }
+
+
+            //eq(16)
+            multiply_3_1(prefactor_v_TM, Abs_R_v_TM_12, T_12_TM, inpv, L_1, v_lgth, w_lgth, p_out_12_v_TM);
+            multiply_3_1(prefactor_v_TM, Abs_R_v_TM_13, T_13_TM, inpv, L_1, v_lgth, w_lgth, p_out_13_v_TM);
+
+            //	eq (17)
+            multiply_3_2(prefactor_h_TM, Abs_R_h_TM_12, T_12_TM, inpv, L_1, v_lgth, w_lgth, p_out_12_h_TM);
+            multiply_3_2(prefactor_h_TM, Abs_R_h_TM_13, T_13_TM, inpv, L_1, v_lgth, w_lgth, p_out_13_h_TM);
+
+            //	eq(18)
+            multiply_3_3(prefactor_h_TE, Abs_R_h_TE_12, T_12_TE, inpv, L_1, v_lgth, w_lgth, p_out_12_h_TE);
+            multiply_3_3(prefactor_h_TE, Abs_R_h_TE_13, T_13_TE, inpv, L_1, v_lgth, w_lgth, p_out_13_h_TE);
+
+            //	eq(7)
+            multiply_4_1(p_v_TM, P0_v, 1 - EML[i].HDR, v_lgth, w_lgth, p_total_TM[i][j]);
+            multiply_4_1(p_h_TM, P0_v, EML[i].HDR, v_lgth, w_lgth, Temp);
+            arrsum(p_total_TM[i][j], Temp, w_lgth, v_lgth);
+            multiply_4_1(p_h_TE, P0_v, EML[i].HDR, v_lgth, w_lgth, p_total_TE[i][j]);
+            arrsum_new(p_total_TM[i][j], p_total_TE[i][j], w_lgth, v_lgth, p_total[i][j]);
+
+            //	eq(19)
+            multiply_4_1(p_out_12_v_TM, P0_v, 1 - EML[i].HDR, v_lgth, w_lgth, p_total_out_12_TM);
+            multiply_4_1(p_out_12_h_TM, P0_v, EML[i].HDR, v_lgth, w_lgth, Temp);
+            arrsum(p_total_out_12_TM, Temp, w_lgth, v_lgth);
+            multiply_4_1(p_out_12_h_TE, P0_v, EML[i].HDR, v_lgth, w_lgth, p_total_out_12_TE);
+            arrsum_new(p_total_out_12_TM, p_total_out_12_TE, w_lgth, v_lgth, p_total_out_12);
+
+            //	eq(19) opposite direction
+            multiply_4_1(p_out_13_v_TM, P0_v, 1 - EML[i].HDR, v_lgth, w_lgth, p_total_out_13_TM);
+            multiply_4_1(p_out_13_h_TM, P0_v, EML[i].HDR, v_lgth, w_lgth, Temp);
+            arrsum(p_total_out_13_TM, Temp, w_lgth, v_lgth);
+            multiply_4_1(p_out_13_h_TE, P0_v, EML[i].HDR, v_lgth, w_lgth, p_total_out_13_TE);
+            arrsum_new(p_total_out_13_TM, p_total_out_13_TE, w_lgth, v_lgth, p_total_out_13);
+
+
+            for (k = 0; k < w_lgth; k++) {
+                if (j == 0) {
+                    //	dviding optical modes
+                    ext_number_TM[k] = find(inpv, inpv_cut_ext_TM[k], v_lgth);
+                    ext_number_TE[k] = find(inpv, inpv_cut_ext_TE[k], v_lgth);
+                    subs_number_TM[k] = find(inpv, inpv_cut_sub_TM[k], v_lgth);
+                    subs_number_TE[k] = find(inpv, inpv_cut_sub_TE[k], v_lgth);
+                    WG_number_TM[k] = find(inpv, 1, v_lgth);
+                    WG_number_TE[k] = find(inpv, 1, v_lgth);
+                }
+
+
+                for (l = 0; l < ext_number_TM[k]; l++) {
+                    p_abs_TM_tailored[k][l] =
+                            p_total_TM[i][j][k][l] - p_total_out_12_TM[k][l] - p_total_out_13_TM[k][l];
+                    p_abs_TE_tailored[k][l] =
+                            p_total_TE[i][j][k][l] - p_total_out_12_TE[k][l] - p_total_out_13_TE[k][l];
+                }
+
+
+                //	integration in eq (7)
+                P[i][j][k] = trapz(inpv, p_total[i][j][k], 1, v_lgth);
+                OC[i][j][k] = trapz(inpv, p_total_out_12_TM[k], 1, ext_number_TM[k]) +
+                              trapz(inpv, p_total_out_12_TE[k], 1, ext_number_TE[k]);
+                OC_back[i][j][k] = trapz(inpv, p_total_out_13_TM[k], 1, ext_number_TM[k]) +
+                                   trapz(inpv, p_total_out_13_TE[k], 1, ext_number_TE[k]);
+                ABS[i][j][k] = trapz(inpv, p_abs_TM_tailored[k], 1, ext_number_TM[k]) +
+                               trapz(inpv, p_abs_TE_tailored[k], 1, ext_number_TE[k]);
+                SUBS[i][j][k] = trapz(inpv, p_total_TM[i][j][k], ext_number_TM[k], subs_number_TM[k]) +
+                                trapz(inpv, p_total_TE[i][j][k], ext_number_TE[k], subs_number_TE[k]);
+                WG[i][j][k] = trapz(inpv, p_total_TM[i][j][k], subs_number_TM[k], WG_number_TM[k]) +
+                              trapz(inpv, p_total_TE[i][j][k], subs_number_TE[k], WG_number_TE[k]);
+                SPPs[i][j][k] = trapz(inpv, p_total_TM[i][j][k], WG_number_TM[k], v_lgth) +
+                                trapz(inpv, p_total_TE[i][j][k], WG_number_TE[k], v_lgth);
+
+                //	eq (21) WL, EMzone, EML matrix
+                q_eff[k][i][j] = EML[i].QY * P[i][j][k] / (1 - EML[i].QY + EML[i].QY * P[i][j][k]);
+
+                //	eq (22)
+                OC_eff[k][i][j] = OC[i][j][k] / P[i][j][k];
+                OC_back_eff[k][i][j] = OC_back[i][j][k] / P[i][j][k];
+
+                P_EMZ[i][j][k] = P[i][j][k] * EMZ[j][1][i];
+                OC_EMZ[i][j][k] = OC[i][j][k] * EMZ[j][1][i];
+                OC_back_EMZ[i][j][k] = OC_back[i][j][k] * EMZ[j][1][i];
+                ABS_EMZ[i][j][k] = ABS[i][j][k] * EMZ[j][1][i];
+                SUBS_EMZ[i][j][k] = SUBS[i][j][k] * EMZ[j][1][i];
+                WG_EMZ[i][j][k] = WG[i][j][k] * EMZ[j][1][i];
+                SPPs_EMZ[i][j][k] = SPPs[i][j][k] * EMZ[j][1][i];
+            }    //	w_lgth loop
+            	// mode anlysis end
 
 
             /*------------------------------------------------------------------------------------*/
@@ -1314,32 +1311,29 @@ int main(void) {
                            w_lgth, p_out_13_h_ext_TE);
             multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_12_sub, T_12_sub_TE, L_1_sub_TE, n_2, L_2_sub_TE, n_extra, a_lgth,
                            w_lgth, p_out_12_h_sub_TE);
+            multiply_4_1(p_out_12_v_ext_TM_intf, P0_v, EML[i].QY * (1 - EML[i].HDR), a_lgth, w_lgth,
+                         p_out_12_ext_TM_EMZ[i][j]);
+            multiply_4_1(p_out_12_h_ext_TM_intf, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, Temp);
+            arrsum(p_out_12_ext_TM_EMZ[i][j], Temp, w_lgth, a_lgth);
+            multiply_4_1(p_out_12_h_ext_TE_intf, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth,
+                         p_out_12_ext_TE_EMZ[i][j]);
+            arrsum_new(p_out_12_ext_TM_EMZ[i][j], p_out_12_ext_TE_EMZ[i][j], w_lgth, a_lgth, p_out_12_ext_EMZ[i][j]);
+            multiply_4_1(p_out_13_v_ext_TM, P0_v, EML[i].QY * (1 - EML[i].HDR), a_lgth, w_lgth,
+                         p_out_13_ext_TM_EMZ[i][j]);
+            multiply_4_1(p_out_13_h_ext_TM, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, Temp);
+            arrsum(p_out_13_ext_TM_EMZ[i][j], Temp, w_lgth, a_lgth);
+            multiply_4_1(p_out_13_h_ext_TE, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, p_out_13_ext_TE_EMZ[i][j]);
+            arrsum_new(p_out_13_ext_TM_EMZ[i][j], p_out_13_ext_TE_EMZ[i][j], w_lgth, a_lgth, p_out_13_ext_EMZ[i][j]);
+
+            multiply_4_1(p_out_12_v_sub_TM, P0_v, EML[i].QY * (1 - EML[i].HDR), a_lgth, w_lgth,
+                         p_out_12_sub_TM_EMZ[i][j]);
+            multiply_4_1(p_out_12_h_sub_TM, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, Temp);
+            arrsum(p_out_12_sub_TM_EMZ[i][j], Temp, w_lgth, a_lgth);
+            multiply_4_1(p_out_12_h_sub_TE, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, p_out_12_sub_TE_EMZ[i][j]);
+            arrsum_new(p_out_12_sub_TM_EMZ[i][j], p_out_12_sub_TE_EMZ[i][j], w_lgth, a_lgth, p_out_12_sub_EMZ[i][j]);
 
 
 
-//            multiply_4_1(p_out_12_v_ext_TM_intf, P0_v, EML[i].QY * (1 - EML[i].HDR), a_lgth, w_lgth,
-//                         p_out_12_ext_TM_EMZ[i][j]);
-//            multiply_4_1(p_out_12_h_ext_TM_intf, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, Temp);
-//            arrsum(p_out_12_ext_TM_EMZ[i][j], Temp, w_lgth, a_lgth);
-//            multiply_4_1(p_out_12_h_ext_TE_intf, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth,
-//                         p_out_12_ext_TE_EMZ[i][j]);
-//            arrsum_new(p_out_12_ext_TM_EMZ[i][j], p_out_12_ext_TE_EMZ[i][j], w_lgth, a_lgth, p_out_12_ext_EMZ[i][j]);
-//            multiply_4_1(p_out_13_v_ext_TM, P0_v, EML[i].QY * (1 - EML[i].HDR), a_lgth, w_lgth,
-//                         p_out_13_ext_TM_EMZ[i][j]);
-//            multiply_4_1(p_out_13_h_ext_TM, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, Temp);
-//            arrsum(p_out_13_ext_TM_EMZ[i][j], Temp, w_lgth, a_lgth);
-//            multiply_4_1(p_out_13_h_ext_TE, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, p_out_13_ext_TE_EMZ[i][j]);
-//            arrsum_new(p_out_13_ext_TM_EMZ[i][j], p_out_13_ext_TE_EMZ[i][j], w_lgth, a_lgth, p_out_13_ext_EMZ[i][j]);
-//
-//            multiply_4_1(p_out_12_v_sub_TM, P0_v, EML[i].QY * (1 - EML[i].HDR), a_lgth, w_lgth,
-//                         p_out_12_sub_TM_EMZ[i][j]);
-//            multiply_4_1(p_out_12_h_sub_TM, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, Temp);
-//            arrsum(p_out_12_sub_TM_EMZ[i][j], Temp, w_lgth, a_lgth);
-//            multiply_4_1(p_out_12_h_sub_TE, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, p_out_12_sub_TE_EMZ[i][j]);
-//            arrsum_new(p_out_12_sub_TM_EMZ[i][j], p_out_12_sub_TE_EMZ[i][j], w_lgth, a_lgth, p_out_12_sub_EMZ[i][j]);
-//
-//
-//
 //             //	eq (27)
 //            multiply_4_2(p_out_12_ext_TM_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
 //                         p_out_12_ext_TM_spec[i][j]);
