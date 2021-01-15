@@ -782,7 +782,6 @@ int main(void) {
     for (i = 0; i < new_no_l; i++) {
         sprintf(structure_temp[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
         index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
-
         index[i] = alloc_3d(index_temp, no_l+1, 5, 7);
         print_3d(index[i], 7, 5, 7);
 //        for (k = 0; k < 5; k++) {
@@ -839,10 +838,11 @@ int main(void) {
         //printf("%s\n", EML[i].spectrum_name);
 
         double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
-        for (j = 0; j < w_lgth; j++) {
-            spectrum[j][0][i] = spectrum_temp[j][0];
-            spectrum[j][1][i] = spectrum_temp[j][1];
-        }
+
+//        for (j = 0; j < w_lgth; j++) {
+//            spectrum[j][0][i] = spectrum_temp[j][0];
+//            spectrum[j][1][i] = spectrum_temp[j][1];
+//        }
 
 //        free2d(spectrum_temp);
 //        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
