@@ -439,7 +439,7 @@ int main(void) {
     double **index_temp;
     double **spectrum_temp;
     double **EMZ_temp;
-    double ****index = zeros4(index_temp, no_l + 1, 5, w_lgth);    //
+    double ***index = zeros3(no_l + 1, 5, w_lgth);    //
     double ****index_up = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
     double ****index_low = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
     double **thick_up = zeros2(no_l + 1, maximum_EML_number);    //
@@ -784,8 +784,8 @@ int main(void) {
     for (i = 0; i < new_no_l; i++) {
         sprintf(structure_temp[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
         index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
-        index[i] = alloc_3d(index_temp, no_l+1, 5, 7);
-        print_3d(index[i], 7, 5, 7);
+        index = alloc_3d(index_temp, no_l+1, 5, 7);
+        print_3d(index, 7, 5, 7);
 //        for (k = 0; k < 5; k++) {
 //            for (j = 0; j < w_lgth; j++) {
                 //printf("\t%lf\n", index_temp[j][k]);
@@ -813,7 +813,7 @@ int main(void) {
             for (k = 0; k < 5; k++) {
                 for (l = 0; l < w_lgth; l++) {
                     //printf("%f\n", index[i][EML[i].number + 1 - j - 1][k][l]);
-                    index_up[j][k][l][i] = index[i][EML[i].number + 1 - j - 1][k][l];
+                    index_up[j][k][l][i] = index[EML[i].number + 1 - j - 1][k][l];
                 }
             }
             thick_up[j][i] = thick[EML[i].number + 1 - j - 1];
@@ -827,7 +827,7 @@ int main(void) {
         for (j = 0; j < no_low_layer[i]; j++) {
             for (k = 0; k < 5; k++) {
                 for (l = 0; l < w_lgth; l++) {
-                    index_low[j][k][l][i] = index[i][EML[i].number - 1 + j + 1][k][l];
+                    index_low[j][k][l][i] = index[EML[i].number - 1 + j + 1][k][l];
                 }
             }
             thick_low[j][i] = thick[EML[i].number - 1 + j + 1];
@@ -860,7 +860,7 @@ int main(void) {
 //        free2d(EMZ_temp);
     }
 
-    free4d(index);
+    free3d(index);
     free(structure_temp);
     free(thick);
 
@@ -967,9 +967,9 @@ int main(void) {
         //	mode analysis end
 
 
-        /*------------------------------------------------------------------------------------*/
-        /*                               Far Field Emission                                   */
-        /*------------------------------------------------------------------------------------*/
+                /*------------------------------------------------------------------------------------*/
+                /*                               Far Field Emission                                   */
+                /*------------------------------------------------------------------------------------*/
 
         //	for far_field emission, re-determining the inplane wavevector and do the same process
         for (j = 0; j < w_lgth; j++) {
@@ -1044,10 +1044,8 @@ int main(void) {
         }    //	wavelength�� loop
 
 
+        /*-------------------------Reflection & Transmission Coeff----------------------------*/
 
-        /*------------------------------------------------------------------------------------*/
-        /*                         Reflection & Transmission Coeff                            */
-        /*------------------------------------------------------------------------------------*/
 
         //	reflection & transmission coeffs
         for (j = 0; j < w_lgth; j++) {
@@ -1075,52 +1073,50 @@ int main(void) {
             }
         }    //	reflection and transmission coeffs end
 
-
-
+        /*---------------------------------Transmittance------------------------------------*/
 
         //	transmittance
-//        multiply_1(t_12_ext_TM, n_extra, L_2_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_12_ext_TM);
-//        multiply_1(t_13_ext_TM, n_extra, L_3_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_13_ext_TM);
-//        multiply_1(t_12_sub_TM, n_extra, L_2_sub_TM, n_ordi, L_1_sub_TM, a_lgth, w_lgth, T_12_sub_TM);
-//
-//        multiply_2(t_12_ext_TE, L_2_ext_TE, L_1_ext_TE, a_lgth, w_lgth, T_12_ext_TE);
-//        multiply_2(t_13_ext_TE, L_3_ext_TE, L_1_ext_TE, a_lgth, w_lgth, T_13_ext_TE);
-//        multiply_2(t_12_sub_TE, L_2_sub_TE, L_1_sub_TE, a_lgth, w_lgth, T_12_sub_TE);
-//
-//        multiply_2(t_sub_ext_TM, L_2_sub_ext_TM, L_1_sub_ext_TM, a_lgth, w_lgth, T_sub_ext_TM);
-//        multiply_2(t_sub_ext_TE, L_2_sub_ext_TE, L_1_sub_ext_TE, a_lgth, w_lgth, T_sub_ext_TE);
-        //	transmittance end
-        //	far_field emission end
+        multiply_1(t_12_ext_TM, n_extra, L_2_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_12_ext_TM);
+        multiply_1(t_13_ext_TM, n_extra, L_3_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_13_ext_TM);
+        multiply_1(t_12_sub_TM, n_extra, L_2_sub_TM, n_ordi, L_1_sub_TM, a_lgth, w_lgth, T_12_sub_TM);
+
+        multiply_2(t_12_ext_TE, L_2_ext_TE, L_1_ext_TE, a_lgth, w_lgth, T_12_ext_TE);
+        multiply_2(t_13_ext_TE, L_3_ext_TE, L_1_ext_TE, a_lgth, w_lgth, T_13_ext_TE);
+        multiply_2(t_12_sub_TE, L_2_sub_TE, L_1_sub_TE, a_lgth, w_lgth, T_12_sub_TE);
+
+        multiply_2(t_sub_ext_TM, L_2_sub_ext_TM, L_1_sub_ext_TM, a_lgth, w_lgth, T_sub_ext_TM);
+        multiply_2(t_sub_ext_TE, L_2_sub_ext_TE, L_1_sub_ext_TE, a_lgth, w_lgth, T_sub_ext_TE);
+        	//transmittance end
+        	//far_field emission end
 
 
+        //	determination of the boarder
+        for (k = 0; k < w_lgth; k++) {
+            inpv_cut_ext_TM[k] = comprod(n_3[k], inversecom(n_extra[k])).A;
+            inpv_cut_ext_TE[k] = comprod(n_3[k], inversecom(n_ordi[k])).A;
+            inpv_cut_sub_TM[k] = comprod(n_2[k], inversecom(n_extra[k])).A;
+            inpv_cut_sub_TE[k] = comprod(n_2[k], inversecom(n_ordi[k])).A;
+        }
 
+        /*------------------------------------------------------------------------------------*/
+        /*                                 Mode Analysis                                      */
+        /*------------------------------------------------------------------------------------*/
 
-//        //	determination of the boarder
-//        for (k = 0; k < w_lgth; k++) {
-//            inpv_cut_ext_TM[k] = comprod(n_3[k], inversecom(n_extra[k])).A;
-//            inpv_cut_ext_TE[k] = comprod(n_3[k], inversecom(n_ordi[k])).A;
-//            inpv_cut_sub_TM[k] = comprod(n_2[k], inversecom(n_extra[k])).A;
-//            inpv_cut_sub_TE[k] = comprod(n_2[k], inversecom(n_ordi[k])).A;
-//        }
+        for (j = 0; j < no_EMZ; j++) {    //	common process
+            //for eq (8-10)
+            d = EMZ[j][0][i];
+            s = thick_EML - EMZ[j][0][i];
+            //	common process end
+            //	for mode analyesis
+            //	Reflec: function
+            Reflec(d, r_12_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TM);
+            Reflec(s, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TM);
+            Reflec_2(thick_EML, r_12_TM, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TM);
+            Reflec(d, r_12_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TE);
+            Reflec(s, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TE);
+            Reflec_2(thick_EML, r_12_TE, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TE);
+        }
 
-
-
-
-
-//        for (j = 0; j < no_EMZ; j++) {    //	common process
-//            //for eq (8-10)
-//            d = EMZ[j][0][i];
-//            s = thick_EML - EMZ[j][0][i];
-//            //	common process end
-//            //	for mode analyesis
-//            //	Reflec: function
-//            Reflec(d, r_12_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TM);
-//            Reflec(s, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TM);
-//            Reflec_2(thick_EML, r_12_TM, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TM);
-//            Reflec(d, r_12_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TE);
-//            Reflec(s, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TE);
-//            Reflec_2(thick_EML, r_12_TE, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TE);
-//
 //            //	multiply: function
 //            //	eq (8)
 //            multiply_p_1(prefactor_v_TM, R_12_TM, R_13_TM, R_1213_TM, inpv, L_1, v_lgth, w_lgth, p_v_TM);
@@ -1128,7 +1124,10 @@ int main(void) {
 //            multiply_p_2(prefactor_h_TM, R_12_TM, R_13_TM, R_1213_TM, inpv, L_1, v_lgth, w_lgth, p_h_TM);
 //            //	eq (10)
 //            multiply_p_3(prefactor_h_TE, R_12_TE, R_13_TE, R_1213_TE, inpv, L_1, v_lgth, w_lgth, p_h_TE);
-//            //	for eq (16-18)
+
+
+
+            //	for eq (16-18)
 //            for (k = 0; k < v_lgth; k++) {
 //                for (l = 0; l < w_lgth; l++) {
 //                    Abs_R_v_TM_12[k][l] = compabs2(comdiv(commin(ONE, R_13_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
@@ -1139,6 +1138,9 @@ int main(void) {
 //                    Abs_R_h_TE_13[k][l] = compabs2(comdiv(comsum(ONE, R_12_TE[k][l]), commin(ONE, R_1213_TE[k][l]))).A;
 //                }
 //            }
+
+
+
 //            //	eq (16)
 //            multiply_3_1(prefactor_v_TM, Abs_R_v_TM_12, T_12_TM, inpv, L_1, v_lgth, w_lgth, p_out_12_v_TM);
 //            multiply_3_1(prefactor_v_TM, Abs_R_v_TM_13, T_13_TM, inpv, L_1, v_lgth, w_lgth, p_out_13_v_TM);
@@ -1148,7 +1150,6 @@ int main(void) {
 //            //	eq(18)
 //            multiply_3_3(prefactor_h_TE, Abs_R_h_TE_12, T_12_TE, inpv, L_1, v_lgth, w_lgth, p_out_12_h_TE);
 //            multiply_3_3(prefactor_h_TE, Abs_R_h_TE_13, T_13_TE, inpv, L_1, v_lgth, w_lgth, p_out_13_h_TE);
-//
 //            //	eq(7)
 //            multiply_4_1(p_v_TM, P0_v, 1 - EML[i].HDR, v_lgth, w_lgth, p_total_TM[i][j]);
 //            multiply_4_1(p_h_TM, P0_v, EML[i].HDR, v_lgth, w_lgth, Temp);
@@ -1170,6 +1171,9 @@ int main(void) {
 //            multiply_4_1(p_out_13_h_TE, P0_v, EML[i].HDR, v_lgth, w_lgth, p_total_out_13_TE);
 //            arrsum_new(p_total_out_13_TM, p_total_out_13_TE, w_lgth, v_lgth, p_total_out_13);
 //
+
+
+
 //            for (k = 0; k < w_lgth; k++) {
 //                if (j == 0) {
 //                    //	dviding optical modes
@@ -1217,6 +1221,11 @@ int main(void) {
 //            }    //	w_lgth loop
 //
 //            //	mode anlysis end
+
+
+//            /*------------------------------------------------------------------------------------*/
+//            /*                               Far Field Emission                                   */
+//            /*------------------------------------------------------------------------------------*/
 //
 //            //	for far-field emission
 //            for (k = 0; k < w_lgth; k++) {
@@ -1326,8 +1335,9 @@ int main(void) {
 //            multiply_4_2(p_out_12_sub_TE_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
 //                         p_out_12_sub_TE_spec[i][j]);
 //            arrsum_new(p_out_12_sub_TM_spec[i][j], p_out_12_sub_TE_spec[i][j], w_lgth, a_lgth, p_out_12_sub_spec[i][j]);
-//            //	far_field emission end
+            //	far_field emission end
 //        }
+
 
 
 
@@ -1401,6 +1411,7 @@ int main(void) {
 
 
     }    // no_EML loop
+
 //    //	main calculations end
 //    free(ext_number_TM);
 //    free(ext_number_TE);
