@@ -876,7 +876,6 @@ int main(void) {
 
 
 
-
     //	Transfer matrix
     for (i = 0; i < no_EML; i++) {
         //	TMM_anisotropy_coeffs : function
@@ -1101,21 +1100,24 @@ int main(void) {
         /*------------------------------------------------------------------------------------*/
         /*                                 Mode Analysis                                      */
         /*------------------------------------------------------------------------------------*/
-
-        for (j = 0; j < no_EMZ; j++) {    //	common process
+        printf("%d\n", no_EMZ);
+//        for (j = 0; j < no_EMZ; j++) {    //	common process
             //for eq (8-10)
-            d = EMZ[j][0][i];
-            s = thick_EML - EMZ[j][0][i];
+
+//            d = EMZ[j][0][i];
+//            s = thick_EML - EMZ[j][0][i];
+
             //	common process end
             //	for mode analyesis
             //	Reflec: function
-            Reflec(d, r_12_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TM);
-            Reflec(s, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TM);
-            Reflec_2(thick_EML, r_12_TM, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TM);
-            Reflec(d, r_12_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TE);
-            Reflec(s, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TE);
-            Reflec_2(thick_EML, r_12_TE, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TE);
-        }
+
+//            Reflec(d, r_12_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TM);
+//            Reflec(s, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TM);
+//            Reflec_2(thick_EML, r_12_TM, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TM);
+//            Reflec(d, r_12_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TE);
+//            Reflec(s, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TE);
+//            Reflec_2(thick_EML, r_12_TE, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TE);
+//        }
 
 //            //	multiply: function
 //            //	eq (8)
