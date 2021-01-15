@@ -435,10 +435,20 @@ int main(void) {
     double *WL = linspace(WL_init, WL_final, ((int) WL_final - (int) WL_init) / (int) WL_step + 1);//
     double *angle = linspace(angle_init, angle_final, ((int) angle_final - (int) angle_init) / (int) angle_step + 1);//
 
+
+
+
+    /*-----------------------------*/
+    /* geundeurilgoti maneun bubun */
+    /*-----------------------------*/
+
+
+
+
     double **Temp = zeros2(w_lgth, v_lgth);    //
     double **index_temp;
     double **spectrum_temp;
-    double **EMZ_temp;
+
     double ***index = zeros3(no_l + 1, 5, w_lgth);    //
     double ****index_up = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
     double ****index_low = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
@@ -480,8 +490,8 @@ int main(void) {
     Complex *P0_h = comparr(w_lgth);    //
     Complex *P0 = comparr(w_lgth);        //
 
-    double s;
-    double d;
+    double s = *(double*) malloc(sizeof(double));
+    double d = *(double*) malloc(sizeof(double));
 
     double thick_EML;
     //	���̴°��� �����ϴ�. double** EMZ_position = zeros2(no_EMZ, no_EMZ);
@@ -851,12 +861,14 @@ int main(void) {
 //        free2d(spectrum_temp);
         sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
         //double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-        EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-        EMZ[i] = EMZ_temp;
-//        for (j = 0; j < no_EMZ; j++) {
-//            EMZ[j][0][i] = EMZ_temp[j][0];
-//            EMZ[j][1][i] = EMZ_temp[j][1];
-//        }
+        //EMZ_temp[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+
+        //EMZ[i] = EMZ_temp;
+       for (j = 0; j < no_EMZ; j++) {
+            EMZ[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+            //EMZ[j][0][i] = EMZ_temp[j][0];
+            //EMZ[j][1][i] = EMZ_temp[j][1];
+        }
 //        free2d(EMZ_temp);
     }
 
@@ -1100,24 +1112,25 @@ int main(void) {
         /*------------------------------------------------------------------------------------*/
         /*                                 Mode Analysis                                      */
         /*------------------------------------------------------------------------------------*/
-        printf("%d\n", no_EMZ);
-//        for (j = 0; j < no_EMZ; j++) {    //	common process
-            //for eq (8-10)
+        //printf("%d\n", no_EMZ);
 
+//        for (j = 0; j < no_EMZ; j++) {    //	common process
+//            //for eq (8-10)
+//
 //            d = EMZ[j][0][i];
 //            s = thick_EML - EMZ[j][0][i];
-
-            //	common process end
-            //	for mode analyesis
-            //	Reflec: function
-
+//
+//            //	common process end
+//            //	for mode analyesis
+//            //	Reflec: function
+//
 //            Reflec(d, r_12_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TM);
 //            Reflec(s, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TM);
 //            Reflec_2(thick_EML, r_12_TM, r_13_TM, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TM);
 //            Reflec(d, r_12_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_12_TE);
 //            Reflec(s, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_13_TE);
 //            Reflec_2(thick_EML, r_12_TE, r_13_TE, n_ordi, L_1, inpv, v_lgth, WL, w_lgth, R_1213_TE);
-//        }
+
 
 //            //	multiply: function
 //            //	eq (8)
@@ -1415,215 +1428,66 @@ int main(void) {
     }    // no_EML loop
 
 //    //	main calculations end
-//    free(ext_number_TM);
-//    free(ext_number_TE);
-//    free(subs_number_TM);
-//    free(subs_number_TE);
-//    free(WG_number_TM);
-//    free(WG_number_TE);
-//    free2d(p_abs_TM_tailored);
-//    free2d(p_abs_TE_tailored);
-//    free2d(Temp);
-//    free(EML);
-//    free(EXC_prop);
-//    free(n_ordi);
-//    free(n_extra);
-//    free(n_2);
-//    free(n_3);
-//    free(P0_v);
-//    free(P0_h);
-//    free2d(thick_up);
-//    free2d(thick_low);
-//    free2d(thick_sub_ext);
-//    free2c(L_1);
-//    free2c(L_2_TE);
-//    free2c(L_2_TM);
-//    free2c(L_3_TE);
-//    free2c(L_3_TM);
-//    free4c(rt_up);
-//    free4c(rt_low);
-//    free4d(index_up);
-//    free4d(index_low);
-//    free(no_up_layer);
-//    free(no_low_layer);
-//    free3d(EMZ);
-//    free2c(r_12_TE);
-//    free2c(t_12_TE);
-//    free2c(r_13_TE);
-//    free2c(t_13_TE);
-//    free2c(r_12_TM);
-//    free2c(t_12_TM);
-//    free2c(r_13_TM);
-//    free2c(t_13_TM);
-//    free(prefactor_h_TE);
-//    free(prefactor_h_TM);
-//    free(prefactor_v_TM);
-//    free2d(Abs_R_v_TM_12);
-//    free2d(Abs_R_h_TM_12);
-//    free2d(Abs_R_h_TE_12);
-//    free2d(Abs_R_v_TM_13);
-//    free2d(Abs_R_h_TM_13);
-//    free2d(Abs_R_h_TE_13);
-//    free2c(T_12_TM);
-//    free2c(T_13_TM);
-//    free2c(T_12_TE);
-//    free2c(T_13_TE);
-//    free2c(R_12_TM);
-//    free2c(R_13_TM);
-//    free2c(R_1213_TM);
-//    free2c(R_12_TE);
-//    free2c(R_13_TE);
-//    free2c(R_1213_TE);
-//    free2d(p_v_TM);
-//    free2d(p_h_TM);
-//    free2d(p_h_TE);
-//    free2d(p_out_12_v_TM);
-//    free2d(p_out_12_h_TM);
-//    free2d(p_out_12_h_TE);
-//    free2d(p_out_13_v_TM);
-//    free2d(p_out_13_h_TM);
-//    free2d(p_out_13_h_TE);
-//    free2d(p_total_out_12_TM);
-//    free2d(p_total_out_12_TE);
-//    free2d(p_total_out_12);
-//    free2d(p_total_out_13_TM);
-//    free2d(p_total_out_13_TE);
-//    free2d(p_total_out_13);
-//    free(inpv_cut_ext_TM);
-//    free(inpv_cut_sub_TM);
-//    free(inpv_cut_ext_TE);
-//    free(inpv_cut_sub_TE);
-//    free2c(inpv_ext_TM);
-//    free2c(inpv_ext_TE);
-//    free2c(inpv_sub_TM);
-//    free2c(inpv_sub_TE);
-//    free2c(L_1_ext_TM);
-//    free2c(L_1_ext_TE);
-//    free2c(L_1_sub_TM);
-//    free2c(L_1_sub_TE);
-//    free2c(L_2_ext_TM);
-//    free2c(L_2_ext_TE);
-//    free2c(L_2_sub_TM);
-//    free2c(L_2_sub_TE);
-//    free2c(L_3_ext_TM);
-//    free2c(L_3_ext_TE);
-//    free2c(inpv_sub_ext_TM);
-//    free2c(inpv_sub_ext_TE);
-//    free4d(index_sub_ext);
-//    free2c(L_1_sub_ext_TM);
-//    free2c(L_1_sub_ext_TE);
-//    free2c(L_2_sub_ext_TM);
-//    free2c(L_2_sub_ext_TE);
-//    free3c(rt_up_ext_TM);
-//    free3c(rt_up_ext_TE);
-//    free3c(rt_up_sub_TM);
-//    free3c(rt_up_sub_TE);
-//    free3c(rt_low_ext_TM);
-//    free3c(rt_low_ext_TE);
-//    free3c(rt_low_sub_TM);
-//    free3c(rt_low_sub_TE);
-//    free3c(rt_sub_ext_TM);
-//    free3c(rt_sub_ext_TE);
-//    free2c(r_12_ext_TM);
-//    free2c(t_12_ext_TM);
-//    free2c(r_12_sub_TM);
-//    free2c(t_12_sub_TM);
-//    free2c(r_12_ext_TE);
-//    free2c(t_12_ext_TE);
-//    free2c(r_12_sub_TE);
-//    free2c(t_12_sub_TE);
-//    free2c(r_13_ext_TM);
-//    free2c(t_13_ext_TM);
-//    free2c(r_13_ext_TE);
-//    free2c(t_13_ext_TE);
-//    free2c(r_13_sub_TM);
-//    free2c(r_13_sub_TE);
-//    free2c(t_sub_ext_TM);
-//    free2c(t_sub_ext_TE);
-//    free2c(T_12_ext_TM);
-//    free2c(T_13_ext_TM);
-//    free2c(T_12_sub_TM);
-//    free2c(T_sub_ext_TM);
-//    free2c(T_12_ext_TE);
-//    free2c(T_13_ext_TE);
-//    free2c(T_12_sub_TE);
-//    free2c(T_sub_ext_TE);
-//    free2c(R_12_ext_TM);
-//    free2c(R_13_ext_TM);
-//    free2c(R_1213_ext_TM);
-//    free2c(R_13_sub_TM);
-//    free2c(R_1213_sub_TM);
-//    free2c(R_12_ext_TE);
-//    free2c(R_13_ext_TE);
-//    free2c(R_1213_ext_TE);
-//    free2c(R_13_sub_TE);
-//    free2c(R_1213_sub_TE);
-//    free2d(Abs_R_v_TM_12_ext);
-//    free2d(Abs_R_v_TM_13_ext);
-//    free2d(Abs_R_v_TM_12_sub);
-//    free2d(Abs_R_h_TM_12_ext);
-//    free2d(Abs_R_h_TM_13_ext);
-//    free2d(Abs_R_h_TM_12_sub);
-//    free2d(Abs_R_h_TE_12_ext);
-//    free2d(Abs_R_h_TE_13_ext);
-//    free2d(Abs_R_h_TE_12_sub);
-//    free2d(p_out_12_v_ext_TM);
-//    free2d(p_out_12_v_ext_TM_intf);
-//    free2d(p_out_13_v_ext_TM);
-//    free2d(p_out_12_v_sub_TM);
-//    free2d(p_out_12_h_ext_TE);
-//    free2d(p_out_12_h_ext_TE_intf);
-//    free2d(p_out_13_h_ext_TE);
-//    free2d(p_out_12_h_sub_TE);
-//    free2d(p_out_12_h_ext_TM);
-//    free2d(p_out_12_h_ext_TM_intf);
-//    free2d(p_out_13_h_ext_TM);
-//    free2d(p_out_12_h_sub_TM);
-//    free3d(OC);
-//    free3d(OC_back);
-//    free3d(ABS);
-//    free3d(SUBS);
-//    free3d(WG);
-//    free3d(SPPs);
-//    free2d(P_EML);
-//    free2d(OC_EML);
-//    free2d(OC_back_EML);
-//    free2d(ABS_EML);
-//    free2d(SUBS_EML);
-//    free2d(WG_EML);
-//    free2d(SPPs_EML);
-///*	free2d(OC_EML_spec); free2d(OC_back_EML_spec); free2d(ABS_EML_spec);	����
+
+
+
+
+
+//    free(ext_number_TM); free(ext_number_TE); free(subs_number_TM); free(subs_number_TE);
+//    free(WG_number_TM); free(WG_number_TE); free2d(p_abs_TM_tailored); free2d(p_abs_TE_tailored);
+//    free2d(Temp); free(EML); free(EXC_prop); free(n_ordi); free(n_extra); free(n_2); free(n_3);
+//    free(P0_v); free(P0_h); free2d(thick_up); free2d(thick_low); free2d(thick_sub_ext); free2c(L_1);
+//    free2c(L_2_TE); free2c(L_2_TM); free2c(L_3_TE); free2c(L_3_TM); free4c(rt_up); free4c(rt_low);
+//    free4d(index_up); free4d(index_low); free(no_up_layer); free(no_low_layer); free3d(EMZ);
+//    free2c(r_12_TE); free2c(t_12_TE); free2c(r_13_TE); free2c(t_13_TE); free2c(r_12_TM);
+//    free2c(t_12_TM); free2c(r_13_TM); free2c(t_13_TM); free(prefactor_h_TE);
+//    free(prefactor_h_TM); free(prefactor_v_TM); free2d(Abs_R_v_TM_12); free2d(Abs_R_h_TM_12);
+//    free2d(Abs_R_h_TE_12); free2d(Abs_R_v_TM_13); free2d(Abs_R_h_TM_13); free2d(Abs_R_h_TE_13);
+//    free2c(T_12_TM); free2c(T_13_TM); free2c(T_12_TE); free2c(T_13_TE); free2c(R_12_TM);
+//    free2c(R_13_TM); free2c(R_1213_TM); free2c(R_12_TE); free2c(R_13_TE); free2c(R_1213_TE);
+//    free2d(p_v_TM); free2d(p_h_TM); free2d(p_h_TE); free2d(p_out_12_v_TM); free2d(p_out_12_h_TM);
+//    free2d(p_out_12_h_TE); free2d(p_out_13_v_TM); free2d(p_out_13_h_TM); free2d(p_out_13_h_TE);
+//    free2d(p_total_out_12_TM); free2d(p_total_out_12_TE); free2d(p_total_out_12); free2d(p_total_out_13_TM);
+//    free2d(p_total_out_13_TE); free2d(p_total_out_13); free(inpv_cut_ext_TM); free(inpv_cut_sub_TM);
+//    free(inpv_cut_ext_TE); free(inpv_cut_sub_TE); free2c(inpv_ext_TM); free2c(inpv_ext_TE);
+//    free2c(inpv_sub_TM); free2c(inpv_sub_TE); free2c(L_1_ext_TM); free2c(L_1_ext_TE); free2c(L_1_sub_TM);
+//    free2c(L_1_sub_TE); free2c(L_2_ext_TM); free2c(L_2_ext_TE); free2c(L_2_sub_TM); free2c(L_2_sub_TE);
+//    free2c(L_3_ext_TM); free2c(L_3_ext_TE); free2c(inpv_sub_ext_TM); free2c(inpv_sub_ext_TE);
+//    free4d(index_sub_ext); free2c(L_1_sub_ext_TM); free2c(L_1_sub_ext_TE); free2c(L_2_sub_ext_TM);
+//    free2c(L_2_sub_ext_TE); free3c(rt_up_ext_TM); free3c(rt_up_ext_TE); free3c(rt_up_sub_TM);
+//    free3c(rt_up_sub_TE); free3c(rt_low_ext_TM); free3c(rt_low_ext_TE); free3c(rt_low_sub_TM);
+//    free3c(rt_low_sub_TE); free3c(rt_sub_ext_TM); free3c(rt_sub_ext_TE); free2c(r_12_ext_TM);
+//    free2c(t_12_ext_TM); free2c(r_12_sub_TM); free2c(t_12_sub_TM); free2c(r_12_ext_TE);
+//    free2c(t_12_ext_TE); free2c(r_12_sub_TE); free2c(t_12_sub_TE); free2c(r_13_ext_TM);
+//    free2c(t_13_ext_TM); free2c(r_13_ext_TE); free2c(t_13_ext_TE); free2c(r_13_sub_TM);
+//    free2c(r_13_sub_TE); free2c(t_sub_ext_TM); free2c(t_sub_ext_TE); free2c(T_12_ext_TM);
+//    free2c(T_13_ext_TM); free2c(T_12_sub_TM); free2c(T_sub_ext_TM); free2c(T_12_ext_TE);
+//    free2c(T_13_ext_TE); free2c(T_12_sub_TE); free2c(T_sub_ext_TE); free2c(R_12_ext_TM);
+//    free2c(R_13_ext_TM); free2c(R_1213_ext_TM); free2c(R_13_sub_TM);  free2c(R_1213_sub_TM);
+//    free2c(R_12_ext_TE); free2c(R_13_ext_TE); free2c(R_1213_ext_TE); free2c(R_13_sub_TE);
+//    free2c(R_1213_sub_TE); free2d(Abs_R_v_TM_12_ext); free2d(Abs_R_v_TM_13_ext); free2d(Abs_R_v_TM_12_sub);
+//    free2d(Abs_R_h_TM_12_ext); free2d(Abs_R_h_TM_13_ext); free2d(Abs_R_h_TM_12_sub); free2d(Abs_R_h_TE_12_ext);
+//    free2d(Abs_R_h_TE_13_ext); free2d(Abs_R_h_TE_12_sub); free2d(p_out_12_v_ext_TM); free2d(p_out_12_v_ext_TM_intf);
+//    free2d(p_out_13_v_ext_TM); free2d(p_out_12_v_sub_TM); free2d(p_out_12_h_ext_TE); free2d(p_out_12_h_ext_TE_intf); free2d(p_out_13_h_ext_TE);
+//    free2d(p_out_12_h_sub_TE);free2d(p_out_12_h_ext_TM);free2d(p_out_12_h_ext_TM_intf);free2d(p_out_13_h_ext_TM);
+//    free2d(p_out_12_h_sub_TM);free3d(OC);free3d(OC_back);free3d(ABS);
+//    free3d(SUBS);free3d(WG);free3d(SPPs);free2d(P_EML);free2d(OC_EML);free2d(OC_back_EML);
+//    free2d(ABS_EML);free2d(SUBS_EML);free2d(WG_EML);free2d(SPPs_EML);
+///*	free2d(OC_EML_spec); free2d(OC_back_EML_spec); free2d(ABS_EML_spec);
 //	free2d(SUBS_EML_spec); free2d(WG_EML_spec); free2d(SPPs_EML_spec);*/
-//    free4d(p_out_12_ext_TM_spec);
-//    free4d(p_out_12_ext_TE_spec);
-//    free4d(p_out_12_ext_spec);
-//    free4d(p_out_13_ext_TM_spec);
-//    free4d(p_out_13_ext_TE_spec);
-//    free4d(p_out_13_ext_spec);
-//    free4d(p_out_12_sub_TM_spec);
-//    free4d(p_out_12_sub_TE_spec);
-//    free4d(p_out_12_sub_spec);
-//    free3d(P_EMZ);
-//    free3d(OC_EMZ);
-//    free3d(OC_back_EMZ);
-//    free3d(ABS_EMZ);
-//    free3d(SUBS_EMZ);
-//    free3d(WG_EMZ);
-//    free3d(SPPs_EMZ);
-//    free3d(P);
-//    free(P0);
-//    free3d(spectrum);
-//    free4d(p_out_12_ext_TM_EMZ);
-//    free4d(p_out_12_ext_TE_EMZ);
-//    free4d(p_out_12_ext_EMZ);
-//    free4d(p_out_13_ext_TM_EMZ);
-//    free4d(p_out_13_ext_TE_EMZ);
-//    free4d(p_out_13_ext_EMZ);
-//    free4d(p_out_12_sub_TM_EMZ);
-//    free4d(p_out_12_sub_TE_EMZ);
-//    free4d(p_out_12_sub_EMZ);
+//    free4d(p_out_12_ext_TM_spec);free4d(p_out_12_ext_TE_spec);free4d(p_out_12_ext_spec);free4d(p_out_13_ext_TM_spec);
+//    free4d(p_out_13_ext_TE_spec);free4d(p_out_13_ext_spec);free4d(p_out_12_sub_TM_spec);free4d(p_out_12_sub_TE_spec);
+//    free4d(p_out_12_sub_spec);free3d(P_EMZ);free3d(OC_EMZ);free3d(OC_back_EMZ);
+//    free3d(ABS_EMZ);free3d(SUBS_EMZ);free3d(WG_EMZ);free3d(SPPs_EMZ);
+//    free3d(P);free(P0);free3d(spectrum);free4d(p_out_12_ext_TM_EMZ);free4d(p_out_12_ext_TE_EMZ);
+//    free4d(p_out_12_ext_EMZ);free4d(p_out_13_ext_TM_EMZ);free4d(p_out_13_ext_TE_EMZ);free4d(p_out_13_ext_EMZ);
+//    free4d(p_out_12_sub_TM_EMZ);free4d(p_out_12_sub_TE_EMZ);free4d(p_out_12_sub_EMZ);
 //    //	free end
-//
+
+
+
+
+
 //    //	printing output
 //    //	for mode analysis
 //    double OC_eff_final = sum(OC_eff_integrated, no_EML);
@@ -1634,10 +1498,15 @@ int main(void) {
 //    double SPPs_eff_final = sum(SPPs_eff_integrated, no_EML);
 //    double NR_loss_final =
 //            1 - (OC_eff_final + OC_back_eff_final + ABS_eff_final + SUBS_eff_final + WG_eff_final + SPPs_eff_final);
+//
+//
 //    printf("OC:%g, OC_back:%g, Subs:%g, WG:%g, SPPs:%g,  Abs:%g, NR_loss:%g \n", OC_eff_final, OC_back_eff_final,
 //           SUBS_eff_final, WG_eff_final, SPPs_eff_final, ABS_eff_final,
 //           NR_loss_final);        //  NR_loss�� ABS��ġ �ٲ�Ͱ���	NR loss	�� 0??...
 //    //	mode analysis end
+
+
+
 //    free(OC_eff_integrated);
 //    free(OC_back_eff_integrated);
 //    free(ABS_eff_integrated);
@@ -1645,6 +1514,10 @@ int main(void) {
 //    free(WG_eff_integrated);
 //    free(SPPs_eff_integrated);
 //    //for far_field emission
+
+
+
+
 //    for (i = 0; i < no_EML; i++) {
 //        for (j = 0; j < a_lgth; j++) {
 //            for (k = 0; k < w_lgth; k++) {
@@ -1662,6 +1535,10 @@ int main(void) {
 //            }
 //        }
 //    }//	EML loop
+
+
+
+
 //    free3d(p_out_12_ext_TM_spec_EML);
 //    free3d(p_out_12_ext_TE_spec_EML);
 //    free3d(p_out_12_ext_spec_EML);
@@ -1672,7 +1549,11 @@ int main(void) {
 //    free3d(p_out_12_sub_TE_spec_EML);
 //    free3d(p_out_12_sub_spec_EML);
 //    //far-field emission end
-//
+
+
+
+
+
 //    //	output processing for n loops
 //    //	output: MOde, spectrum, PUrcell, qeff, CIE, Luminace
 //
@@ -1687,13 +1568,16 @@ int main(void) {
 //    double *output_angular_intensity_bottom_TE = zeros(a_lgth);    //
 //    double *output_angular_intensity_top_TE = zeros(a_lgth);    //
 //    double *output_angular_intensity_sub_TE = zeros(a_lgth);    //
-//
+
+
+
 //    //	angle * 3
 //    double **output_CIE_bottom;    //
 //    double **output_CIE_top;    //
 //    double **output_CIE_sub;    //
-//
-//
+
+
+
 //    //	7 columns
 //    double output_mode[7] = {OC_eff_final, OC_back_eff_final, ABS_eff_final, SUBS_eff_final, WG_eff_final,
 //                             SPPs_eff_final, NR_loss_final};
@@ -1760,14 +1644,14 @@ int main(void) {
 //    output_CIE_sub = CIE(p_out_12_sub_final, angle, a_lgth, WL, WL_step, w_lgth);
 //    free(angle);
 //    free(WL);
-//    end = clock();
-//    double r_1;
-//    r_1 = t_result = ((double) end - (double) start) / CLOCKS_PER_SEC;
-//    printf("%lf is the t_result", t_result);
-//
-//    //char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
-//
-//
+    end = clock();
+    double r_1;
+    r_1 = t_result = ((double) end - (double) start) / CLOCKS_PER_SEC;
+    printf("%lf is the t_result", t_result);
+
+    //char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
+
+
 //	char strFolderPathCPA[100]={0};
 //	char strFolderPathEL[100]={0};
 //	char strFolderPathAI[100]={0};
