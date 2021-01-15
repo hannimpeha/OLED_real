@@ -149,7 +149,7 @@ class Emission_Layer(QWidget):
         self.table.setHorizontalHeaderLabels(cols_element)
 
         self.em_materials = ["None", "None", "None", "None"]
-        self.spectrum = ["2pplAn_PL", "FCNlr", "Irppy2tmd", "Irmphmq2tmd"]
+        self.spectrum = ["Firpic", "FCNlr", "Irppy2tmd", "Irmphmq2tmd"]
         self.exciton_prop = [1, 2, 1, 1]
         self.qy = [83, 90, 96, 96]
         self.pq = [94, 75, 75, 78]

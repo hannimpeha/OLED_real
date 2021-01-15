@@ -1374,8 +1374,6 @@ int main(void) {
 
 
 
-
-
         for (j = 0; j < no_EMZ; j++) {
             for (k = 0; k < w_lgth; k++) {
                 P_EML[k][i] += P_EMZ[i][j][k];
@@ -1651,8 +1649,6 @@ int main(void) {
     r_1 = t_result = ((double) end - (double) start) / CLOCKS_PER_SEC;
     printf("%lf is the Calculation Time\n", t_result);
 
-    //char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
-
 
 	char strFolderPathCPA[100]={0};
 	char strFolderPathEL[100]={0};
@@ -1660,22 +1656,6 @@ int main(void) {
 	char strFolderPathCIE[100]={0};
 	char strFolderPathEFF[100]={0};
 	char strFolderPathDS[100]={0};
-
-    //char *strFolderPath;
-//    char *strFolderPathCPA;
-//    char *strFolderPathEL;
-//    char *strFolderPathAI;
-//    char *strFolderPathCIE;
-//    char *strFolderPathEFF;
-//    char *strFolderPathDS;
-
-    //strFolderPath = malloc(SIZE * sizeof(char));
-//    strFolderPathCPA = malloc(SIZE * sizeof(char));
-//    strFolderPathEL = malloc(SIZE * sizeof(char));
-//    strFolderPathAI = malloc(SIZE * sizeof(char));
-//    strFolderPathCIE = malloc(SIZE * sizeof(char));
-//    strFolderPathEFF = malloc(SIZE * sizeof(char));
-//    strFolderPathDS = malloc(SIZE * sizeof(char));
 
 
     strcpy(strFolderPath, "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1");
