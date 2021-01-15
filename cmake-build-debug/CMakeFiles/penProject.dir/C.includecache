@@ -28,5 +28,17 @@ regex.h
 errno.h
 -
 
+/Users/hannahlee/PycharmProjects/penProject/c/spectrum_load.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+stdbool.h
+-
+struct.h
+/Users/hannahlee/PycharmProjects/penProject/c/struct.h
+
 /Users/hannahlee/PycharmProjects/penProject/c/struct.h
 

@@ -9,7 +9,7 @@ double** intp4(double** Z, double li, double lf, double ls);
 double** spectrum_load(emil* EML, double lambda_init, double lambda_final, double lambda_step, int EML_number)
 {
 	int i = 0, j, col = 0;
-	char temp[20];
+	char temp[100];
 	char* temp1 = temp;
 	char* temp2;
 	double result;
@@ -17,7 +17,7 @@ double** spectrum_load(emil* EML, double lambda_init, double lambda_final, doubl
 	FILE* road = fopen(EML[EML_number].spectrum_file_location, "rt");
 	if (road == NULL)
 	{
-		printf("파일 로드 오류");
+		printf("Welcome To Spectrum Load\n");
 		return false;
 	}
 	while (1)
@@ -25,7 +25,7 @@ double** spectrum_load(emil* EML, double lambda_init, double lambda_final, doubl
 		j = 0;
 		if (feof(road))
 			break;
-		temp1 = fgets(temp1, 20, road);
+		temp1 = fgets(temp1, 100, road);
 		temp2 = strtok(temp1, "	");
 		while (temp2 != NULL)
 		{

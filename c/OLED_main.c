@@ -793,7 +793,7 @@ int main(void) {
 //            }
 //        }
 
-        free2d(index_temp);
+//        free2d(index_temp);
         *(thick + i) = structure_temp[i].thick;
     }
     //	loading refractive index & thickness end
@@ -811,8 +811,8 @@ int main(void) {
         for (j = 0; j < no_up_layer[i]; j++) {
             for (k = 0; k < 5; k++) {
                 for (l = 0; l < w_lgth; l++) {
-                    printf("%f", index[i][EML[i].number + 1 - j - 1][k][l]);
-                    //index_up[j][k][l][i] = index[j][EML[i].number + 1 - j - 1][k][l];
+                    //printf("%f\n", index[i][EML[i].number + 1 - j - 1][k][l]);
+                    index_up[j][k][l][i] = index[i][EML[i].number + 1 - j - 1][k][l];
                 }
             }
             thick_up[j][i] = thick[EML[i].number + 1 - j - 1];
@@ -826,7 +826,7 @@ int main(void) {
         for (j = 0; j < no_low_layer[i]; j++) {
             for (k = 0; k < 5; k++) {
                 for (l = 0; l < w_lgth; l++) {
-                    //index_low[j][k][l][i] = index[j][EML[i].number - 1 + j + 1][k][l];
+                    index_low[j][k][l][i] = index[i][EML[i].number - 1 + j + 1][k][l];
                 }
             }
             thick_low[j][i] = thick[EML[i].number - 1 + j + 1];
@@ -836,20 +836,25 @@ int main(void) {
             index_low[0][4][j][i] = 0;    //	no imaginary part
         }
         sprintf(EML[i].spectrum_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/spectrum/%s.spec", EML[i].spectrum_name);
+        //printf("%s\n", EML[i].spectrum_name);
+
         double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
         for (j = 0; j < w_lgth; j++) {
             spectrum[j][0][i] = spectrum_temp[j][0];
             spectrum[j][1][i] = spectrum_temp[j][1];
         }
-        free2d(spectrum_temp);
-        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
-        double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-        for (j = 0; j < no_EMZ; j++) {
-            EMZ[j][0][i] = EMZ_temp[j][0];
-            EMZ[j][1][i] = EMZ_temp[j][1];
-        }
-        free2d(EMZ_temp);
+
+//        free2d(spectrum_temp);
+//        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
+//        double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+//        for (j = 0; j < no_EMZ; j++) {
+//            EMZ[j][0][i] = EMZ_temp[j][0];
+//            EMZ[j][1][i] = EMZ_temp[j][1];
+//        }
+//        free2d(EMZ_temp);
     }
+
+
 
 
 
