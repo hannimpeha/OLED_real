@@ -870,9 +870,13 @@ int main(void) {
     }
     for (i = 0; i < no_EML; i++) {
         EXC_prop[i] = EXC[i] / sum_EXC;
-    }
-    //	EML processing end
+    }//EML processing end
     free(EXC);
+
+
+
+
+
     //	Transfer matrix
     for (i = 0; i < no_EML; i++) {
         //	TMM_anisotropy_coeffs : function
@@ -884,7 +888,9 @@ int main(void) {
     //	pre-processes end
 
 
-
+    /*------------------------------------------------------------------------------------*/
+    /*                              Main Cacluations                                      */
+    /*------------------------------------------------------------------------------------*/
     //	main calculations
     double Const = 1;    //	Complex** arrsum_new(Complex** a, Complex** b, int x, int y)
     for (i = 0; i < no_EML; i++) {
@@ -896,14 +902,18 @@ int main(void) {
             n_extra[j].B = index_up[0][4][j][i];
 
             //	2: low direction, 3: up direction
-            n_2[j].A = index_low[no_low_layer[i] - 1][1][j][i];
-            n_2[j].B = index_low[no_low_layer[i] - 1][2][j][i];
-            n_3[j].A = index_up[no_up_layer[i] - 1][1][j][i];
-            n_3[j].B = index_up[no_up_layer[i] - 1][2][j][i];
+            n_2[j].A = index_low[no_low_layer[i]-1][1][j][i];
+            n_2[j].B = index_low[no_low_layer[i]-1][2][j][i];
+            n_3[j].A = index_up[no_up_layer[i]-1][1][j][i];
+            n_3[j].B = index_up[no_up_layer[i]-1][2][j][i];
 
             thick_EML = thick_up[0][i];
             //	common process end
 
+
+            /*------------------------------------------------------------------------------------*/
+            /*                                 Mode Analysis                                      */
+            /*------------------------------------------------------------------------------------*/
             //	for mode analysis 	reflection and transmission coeffs for eq(8-10)
             for (k = 0; k < v_lgth; k++) {
                 L_1[k][j] = comsqrt(comp(1 - pow(inpv[k], 2)));
@@ -957,115 +967,113 @@ int main(void) {
         //	mode analysis end
 
 
+        /*------------------------------------------------------------------------------------*/
+        /*                               Far Field Emission                                   */
+        /*------------------------------------------------------------------------------------*/
+
+        //	for far_field emission, re-determining the inplane wavevector and do the same process
+        for (j = 0; j < w_lgth; j++) {
+            for (k = 0; k < a_lgth; k++) {
+                inpv_ext_TM[j][k] = comxreal(comprod(n_3[j], inversecom(n_extra[j])),
+                                             sin(angle[k] * PI / (double) 180));
+                inpv_ext_TE[j][k] = comxreal(comprod(n_3[j], inversecom(n_ordi[j])), sin(angle[k] * PI / (double) 180));
+
+                inpv_sub_TM[j][k] = comxreal(comprod(n_2[j], inversecom(n_extra[j])),
+                                             sin(angle[k] * PI / (double) 180));
+                inpv_sub_TE[j][k] = comxreal(comprod(n_2[j], inversecom(n_ordi[j])), sin(angle[k] * PI / (double) 180));
+
+                L_1_ext_TM[k][j] = comsqrt(commin(ONE, compow2(inpv_ext_TM[j][k])));
+                L_1_ext_TE[k][j] = comsqrt(commin(ONE, compow2(inpv_ext_TE[j][k])));
+                L_1_sub_TM[k][j] = comsqrt(commin(ONE, compow2(inpv_sub_TM[j][k])));
+                L_1_sub_TE[k][j] = comsqrt(commin(ONE, compow2(inpv_sub_TE[j][k])));
+
+                L_2_ext_TM[k][j] = comsqrt(
+                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_extra[j]))), compow2(inpv_ext_TM[j][k])));
+                L_2_ext_TE[k][j] = comsqrt(
+                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_ordi[j]))), compow2(inpv_ext_TE[j][k])));
+
+                L_2_sub_TM[k][j] = comsqrt(
+                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_extra[j]))), compow2(inpv_sub_TM[j][k])));
+                L_2_sub_TE[k][j] = comsqrt(
+                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_ordi[j]))), compow2(inpv_sub_TE[j][k])));
+
+                L_3_ext_TM[k][j] = comsqrt(
+                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_extra[j]))), compow2(inpv_ext_TM[j][k])));
+                L_3_ext_TE[k][j] = comsqrt(
+                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_ordi[j]))), compow2(inpv_ext_TE[j][k])));
+
+                for (l = 0; l < 5; l++) {
+                    index_sub_ext[0][l][j][i] = index_low[no_low_layer[i] - 1][l][j][i];
+                    index_sub_ext[1][l][j][i] = index_up[no_up_layer[i] - 1][l][j][i];
+                }
+
+                inpv_sub_ext_TM[j][k] = comprod(comprod(inpv_ext_TM[j][k], n_extra[j]), inversecom(n_2[j]));
+                inpv_sub_ext_TE[j][k] = comprod(comprod(inpv_ext_TE[j][k], n_ordi[j]), inversecom(n_2[j]));
+                L_1_sub_ext_TM[k][j] = comsqrt(commin(ONE, compow2(inpv_sub_ext_TM[j][k])));
+                L_1_sub_ext_TE[k][j] = comsqrt(commin(ONE, compow2(inpv_sub_ext_TE[j][k])));
+
+                L_2_sub_ext_TM[k][j] = comsqrt(
+                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_2[j]))), compow2(inpv_sub_ext_TM[j][k])));
+                L_2_sub_ext_TE[k][j] = comsqrt(
+                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_2[j]))), compow2(inpv_sub_ext_TE[j][k])));
+            }
+            *(rt_up_ext_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_up, i, thick_up, *(inpv_ext_TM + j), a_lgth,
+                                                                   no_up_layer[i], WL[j], j);
+            *(rt_up_ext_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_up, i, thick_up, *(inpv_ext_TE + j), a_lgth,
+                                                                   no_up_layer[i], WL[j], j);
+            *(rt_up_sub_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_up, i, thick_up, *(inpv_sub_TM + j), a_lgth,
+                                                                   no_up_layer[i], WL[j], j);
+            *(rt_up_sub_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_up, i, thick_up, *(inpv_sub_TE + j), a_lgth,
+                                                                   no_up_layer[i], WL[j], j);
+
+            *(rt_low_ext_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_low, i, thick_low, *(inpv_ext_TM + j), a_lgth,
+                                                                    no_low_layer[i], WL[j], j);
+            *(rt_low_ext_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_low, i, thick_low, *(inpv_ext_TE + j), a_lgth,
+                                                                    no_low_layer[i], WL[j], j);
+            *(rt_low_sub_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_low, i, thick_low, *(inpv_sub_TM + j), a_lgth,
+                                                                    no_low_layer[i], WL[j], j);
+            *(rt_low_sub_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_low, i, thick_low, *(inpv_sub_TE + j), a_lgth,
+                                                                    no_low_layer[i], WL[j], j);
+
+            *(rt_sub_ext_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_sub_ext, i, thick_sub_ext,
+                                                                    *(inpv_sub_ext_TM + j), a_lgth, no_of_layer_sub_ext,
+                                                                    WL[j], j);
+            *(rt_sub_ext_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_sub_ext, i, thick_sub_ext,
+                                                                    *(inpv_sub_ext_TE + j), a_lgth, no_of_layer_sub_ext,
+                                                                    WL[j], j);
+        }    //	wavelength�� loop
 
 
 
-
-
-//        //	for far_field emission, re-determining the inplane wavevector and do the same process
-//        for (j = 0; j < w_lgth; j++) {
-//            for (k = 0; k < a_lgth; k++) {
-//                inpv_ext_TM[j][k] = comxreal(comprod(n_3[j], inversecom(n_extra[j])),
-//                                             sin(angle[k] * PI / (double) 180));
-//                inpv_ext_TE[j][k] = comxreal(comprod(n_3[j], inversecom(n_ordi[j])), sin(angle[k] * PI / (double) 180));
-//
-//                inpv_sub_TM[j][k] = comxreal(comprod(n_2[j], inversecom(n_extra[j])),
-//                                             sin(angle[k] * PI / (double) 180));
-//                inpv_sub_TE[j][k] = comxreal(comprod(n_2[j], inversecom(n_ordi[j])), sin(angle[k] * PI / (double) 180));
-//
-//                L_1_ext_TM[k][j] = comsqrt(commin(ONE, compow2(inpv_ext_TM[j][k])));
-//                L_1_ext_TE[k][j] = comsqrt(commin(ONE, compow2(inpv_ext_TE[j][k])));
-//                L_1_sub_TM[k][j] = comsqrt(commin(ONE, compow2(inpv_sub_TM[j][k])));
-//                L_1_sub_TE[k][j] = comsqrt(commin(ONE, compow2(inpv_sub_TE[j][k])));
-//
-//                L_2_ext_TM[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_extra[j]))), compow2(inpv_ext_TM[j][k])));
-//                L_2_ext_TE[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_ordi[j]))), compow2(inpv_ext_TE[j][k])));
-//
-//                L_2_sub_TM[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_extra[j]))), compow2(inpv_sub_TM[j][k])));
-//                L_2_sub_TE[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_2[j]), inversecom(compow2(n_ordi[j]))), compow2(inpv_sub_TE[j][k])));
-//
-//                L_3_ext_TM[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_extra[j]))), compow2(inpv_ext_TM[j][k])));
-//                L_3_ext_TE[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_ordi[j]))), compow2(inpv_ext_TE[j][k])));
-//
-//                for (l = 0; l < 5; l++) {
-//                    index_sub_ext[0][l][j][i] = index_low[no_low_layer[i] - 1][l][j][i];
-//                    index_sub_ext[1][l][j][i] = index_up[no_up_layer[i] - 1][l][j][i];
-//                }
-//
-//                inpv_sub_ext_TM[j][k] = comprod(comprod(inpv_ext_TM[j][k], n_extra[j]), inversecom(n_2[j]));
-//                inpv_sub_ext_TE[j][k] = comprod(comprod(inpv_ext_TE[j][k], n_ordi[j]), inversecom(n_2[j]));
-//                L_1_sub_ext_TM[k][j] = comsqrt(commin(ONE, compow2(inpv_sub_ext_TM[j][k])));
-//                L_1_sub_ext_TE[k][j] = comsqrt(commin(ONE, compow2(inpv_sub_ext_TE[j][k])));
-//
-//                L_2_sub_ext_TM[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_2[j]))), compow2(inpv_sub_ext_TM[j][k])));
-//                L_2_sub_ext_TE[k][j] = comsqrt(
-//                        commin(comprod(compow2(n_3[j]), inversecom(compow2(n_2[j]))), compow2(inpv_sub_ext_TE[j][k])));
-//            }
-//            *(rt_up_ext_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_up, i, thick_up, *(inpv_ext_TM + j), a_lgth,
-//                                                                   no_up_layer[i], WL[j], j);
-//            *(rt_up_ext_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_up, i, thick_up, *(inpv_ext_TE + j), a_lgth,
-//                                                                   no_up_layer[i], WL[j], j);
-//            *(rt_up_sub_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_up, i, thick_up, *(inpv_sub_TM + j), a_lgth,
-//                                                                   no_up_layer[i], WL[j], j);
-//            *(rt_up_sub_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_up, i, thick_up, *(inpv_sub_TE + j), a_lgth,
-//                                                                   no_up_layer[i], WL[j], j);
-//
-//            *(rt_low_ext_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_low, i, thick_low, *(inpv_ext_TM + j), a_lgth,
-//                                                                    no_low_layer[i], WL[j], j);
-//            *(rt_low_ext_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_low, i, thick_low, *(inpv_ext_TE + j), a_lgth,
-//                                                                    no_low_layer[i], WL[j], j);
-//            *(rt_low_sub_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_low, i, thick_low, *(inpv_sub_TM + j), a_lgth,
-//                                                                    no_low_layer[i], WL[j], j);
-//            *(rt_low_sub_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_low, i, thick_low, *(inpv_sub_TE + j), a_lgth,
-//                                                                    no_low_layer[i], WL[j], j);
-//
-//            *(rt_sub_ext_TM + j) = TMM_anisotropy_coeffs_compinpv_w(index_sub_ext, i, thick_sub_ext,
-//                                                                    *(inpv_sub_ext_TM + j), a_lgth, no_of_layer_sub_ext,
-//                                                                    WL[j], j);
-//            *(rt_sub_ext_TE + j) = TMM_anisotropy_coeffs_compinpv_w(index_sub_ext, i, thick_sub_ext,
-//                                                                    *(inpv_sub_ext_TE + j), a_lgth, no_of_layer_sub_ext,
-//                                                                    WL[j], j);
-//        }    //	wavelength�� loop
-
-
-
-
-
-
+        /*------------------------------------------------------------------------------------*/
+        /*                         Reflection & Transmission Coeff                            */
+        /*------------------------------------------------------------------------------------*/
 
         //	reflection & transmission coeffs
-//        for (j = 0; j < w_lgth; j++) {
-//            for (k = 0; k < a_lgth; k++) {
-//                r_12_ext_TM[k][j] = rt_low_ext_TM[j][2][k];
-//                t_12_ext_TM[k][j] = rt_low_ext_TM[j][3][k];
-//                r_12_ext_TE[k][j] = rt_low_ext_TE[j][0][k];
-//                t_12_ext_TE[k][j] = rt_low_ext_TE[j][1][k];
-//
-//                r_12_sub_TM[k][j] = rt_low_sub_TM[j][2][k];
-//                t_12_sub_TM[k][j] = rt_low_sub_TM[j][3][k];
-//                r_12_sub_TE[k][j] = rt_low_sub_TE[j][0][k];
-//                t_12_sub_TE[k][j] = rt_low_sub_TE[j][1][k];
-//
-//                r_13_ext_TM[k][j] = rt_up_ext_TM[j][2][k];
-//                t_13_ext_TM[k][j] = rt_up_ext_TM[j][3][k];
-//                r_13_ext_TE[k][j] = rt_up_ext_TE[j][0][k];
-//                t_13_ext_TE[k][j] = rt_up_ext_TE[j][1][k];
-//
-//                r_13_sub_TM[k][j] = rt_up_sub_TM[j][2][k];
-//                r_13_sub_TE[k][j] = rt_up_sub_TE[j][0][k];
-//
-//                t_sub_ext_TM[k][j] = rt_sub_ext_TM[j][3][k];
-//                t_sub_ext_TE[k][j] = rt_sub_ext_TE[j][1][k];
-//            }
-//        }    //	reflection and transmission coeffs end
+        for (j = 0; j < w_lgth; j++) {
+            for (k = 0; k < a_lgth; k++) {
+                r_12_ext_TM[k][j] = rt_low_ext_TM[j][2][k];
+                t_12_ext_TM[k][j] = rt_low_ext_TM[j][3][k];
+                r_12_ext_TE[k][j] = rt_low_ext_TE[j][0][k];
+                t_12_ext_TE[k][j] = rt_low_ext_TE[j][1][k];
 
+                r_12_sub_TM[k][j] = rt_low_sub_TM[j][2][k];
+                t_12_sub_TM[k][j] = rt_low_sub_TM[j][3][k];
+                r_12_sub_TE[k][j] = rt_low_sub_TE[j][0][k];
+                t_12_sub_TE[k][j] = rt_low_sub_TE[j][1][k];
+
+                r_13_ext_TM[k][j] = rt_up_ext_TM[j][2][k];
+                t_13_ext_TM[k][j] = rt_up_ext_TM[j][3][k];
+                r_13_ext_TE[k][j] = rt_up_ext_TE[j][0][k];
+                t_13_ext_TE[k][j] = rt_up_ext_TE[j][1][k];
+
+                r_13_sub_TM[k][j] = rt_up_sub_TM[j][2][k];
+                r_13_sub_TE[k][j] = rt_up_sub_TE[j][0][k];
+
+                t_sub_ext_TM[k][j] = rt_sub_ext_TM[j][3][k];
+                t_sub_ext_TE[k][j] = rt_sub_ext_TE[j][1][k];
+            }
+        }    //	reflection and transmission coeffs end
 
 
 
