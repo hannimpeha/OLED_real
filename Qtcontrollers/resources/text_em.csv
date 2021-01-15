@@ -1,5 +1,5 @@
-0,None,Firpic,1,83,94,Sheet
-1,None,FCNlr,2,90,75,Linear
-2,None,Irppy2tmd,1,96,75,Sheet
-3,None,Irmphmq2tmd,1,96,78,Delta
+0,None,Firpic,1,83,94,constant
+1,None,FCNlr,2,90,75,constant
+2,None,Irppy2tmd,1,96,75,constant
+3,None,Irmphmq2tmd,1,96,78,constant
 

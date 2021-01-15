@@ -797,10 +797,14 @@ int main(void) {
 //        free2d(index_temp);
         *(thick + i) = structure_temp[i].thick;
     }
-    //	loading refractive index & thickness end
 
+
+    //	loading refractive index & thickness end
     double *EXC = zeros(no_EML);        //
     double *EXC_prop = zeros(no_EML);    //
+
+
+
 
     //	EML processing
     for (i = 0; i < no_EML; i++) {
@@ -837,7 +841,7 @@ int main(void) {
             index_low[0][4][j][i] = 0;    //	no imaginary part
         }
         sprintf(EML[i].spectrum_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/spectrum/%s.spec", EML[i].spectrum_name);
-        //printf("%s\n", EML[i].spectrum_name);
+        printf("%s\n", EML[i].spectrum_file_location);
 
         //double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
         spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
@@ -849,10 +853,12 @@ int main(void) {
 //        }
 
 //        free2d(spectrum_temp);
-        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
+
+
+        //sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
+        strcpy(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/constant.emz");
+        printf("%s\n", EML[i].EMZ_file_location);
         //double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-
-
 
 
         // THIS IS THE TROUBLESOME PART //
@@ -863,10 +869,7 @@ int main(void) {
 ////            EMZ[j][0][i] = EMZ_temp[j][0];
 ////            EMZ[j][1][i] = EMZ_temp[j][1];
 //        }
-        //free2d(EMZ_temp);
-
-
-
+// free2d(EMZ_temp);
 
 
     }
@@ -904,6 +907,10 @@ int main(void) {
     /*------------------------------------------------------------------------------------*/
     //	main calculations
     double Const = 1;    //	Complex** arrsum_new(Complex** a, Complex** b, int x, int y)
+
+
+
+
     for (i = 0; i < no_EML; i++) {
         for (j = 0; j < w_lgth; j++) {
             //	common process
@@ -913,10 +920,10 @@ int main(void) {
             n_extra[j].B = index_up[0][4][j][i];
 
             //	2: low direction, 3: up direction
-            n_2[j].A = index_low[no_low_layer[i]-1][1][j][i];
-            n_2[j].B = index_low[no_low_layer[i]-1][2][j][i];
-            n_3[j].A = index_up[no_up_layer[i]-1][1][j][i];
-            n_3[j].B = index_up[no_up_layer[i]-1][2][j][i];
+            n_2[j].A = index_low[no_low_layer[i] - 1][1][j][i];
+            n_2[j].B = index_low[no_low_layer[i] - 1][2][j][i];
+            n_3[j].A = index_up[no_up_layer[i] - 1][1][j][i];
+            n_3[j].B = index_up[no_up_layer[i] - 1][2][j][i];
 
             thick_EML = thick_up[0][i];
             //	common process end
@@ -959,6 +966,11 @@ int main(void) {
         }
         //	reflection and transmission coeffs for eq (8-10) end
 
+    }
+
+
+
+    for (i = 0; i < no_EML; i++) {
         //	transmittance for eq (16-18)
         multiply_1(t_12_TM, n_extra, L_2_TM, n_ordi, L_1, v_lgth, w_lgth, T_12_TM);
         multiply_1(t_13_TM, n_extra, L_3_TM, n_ordi, L_1, v_lgth, w_lgth, T_13_TM);
@@ -976,12 +988,14 @@ int main(void) {
         }
         //	prefactors for eq (8-10, 16-18) end
         //	mode analysis end
+    }
+
+    /*------------------------------------------------------------------------------------*/
+    /*                               Far Field Emission                                   */
+    /*------------------------------------------------------------------------------------*/
 
 
-                /*------------------------------------------------------------------------------------*/
-                /*                               Far Field Emission                                   */
-                /*------------------------------------------------------------------------------------*/
-
+    for (i = 0; i < no_EML; i++) {
         //	for far_field emission, re-determining the inplane wavevector and do the same process
         for (j = 0; j < w_lgth; j++) {
             for (k = 0; k < a_lgth; k++) {
@@ -1053,11 +1067,14 @@ int main(void) {
                                                                     *(inpv_sub_ext_TE + j), a_lgth, no_of_layer_sub_ext,
                                                                     WL[j], j);
         }    //	wavelength�� loop
+    }
+
+
 
 
         /*-------------------------Reflection & Transmission Coeff----------------------------*/
 
-
+    for (i = 0; i < no_EML; i++) {
         //	reflection & transmission coeffs
         for (j = 0; j < w_lgth; j++) {
             for (k = 0; k < a_lgth; k++) {
@@ -1083,9 +1100,12 @@ int main(void) {
                 t_sub_ext_TE[k][j] = rt_sub_ext_TE[j][1][k];
             }
         }    //	reflection and transmission coeffs end
+    }
+
+
 
         /*---------------------------------Transmittance------------------------------------*/
-
+    for (i = 0; i < no_EML; i++) {
         //	transmittance
         multiply_1(t_12_ext_TM, n_extra, L_2_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_12_ext_TM);
         multiply_1(t_13_ext_TM, n_extra, L_3_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_13_ext_TM);
@@ -1097,8 +1117,8 @@ int main(void) {
 
         multiply_2(t_sub_ext_TM, L_2_sub_ext_TM, L_1_sub_ext_TM, a_lgth, w_lgth, T_sub_ext_TM);
         multiply_2(t_sub_ext_TE, L_2_sub_ext_TE, L_1_sub_ext_TE, a_lgth, w_lgth, T_sub_ext_TE);
-        	//transmittance end
-        	//far_field emission end
+        //transmittance end
+        //far_field emission end
 
 
         //	determination of the boarder
@@ -1108,24 +1128,28 @@ int main(void) {
             inpv_cut_sub_TM[k] = comprod(n_2[k], inversecom(n_extra[k])).A;
             inpv_cut_sub_TE[k] = comprod(n_2[k], inversecom(n_ordi[k])).A;
         }
+    }
+
+
+    double d;
+    double g;
+    double s;
 
         /*------------------------------------------------------------------------------------*/
         /*                                 Mode Analysis                                      */
         /*------------------------------------------------------------------------------------*/
-
+    for (i = 0; i < no_EML; i++) {
         for (j = 0; j < no_EMZ; j++) {    //	common process
             //for eq (8-10)
 
             //double d = EMZ_load(EML, thick_up[0][i], no_EMZ, i)[j][i];
 
-            double d = EMZ_load(EML, thick_EML, no_EMZ, i)[j][0];
-            double g = EMZ_load(EML, thick_EML, no_EMZ, i)[j][1];
-            double s = thick_EML - d;
+            d = EMZ_load(EML, thick_EML, no_EMZ, i)[j][0];
+            g = EMZ_load(EML, thick_EML, no_EMZ, i)[j][1];
+            s = thick_EML - d;
 
 //            double d = EMZ[j][0][i];
 //            double s = thick_EML - EMZ[j][0][i];
-
-
 
             //	common process end
             //	for mode analyesis
@@ -1246,12 +1270,23 @@ int main(void) {
                 WG_EMZ[i][j][k] = WG[i][j][k] * g;
                 SPPs_EMZ[i][j][k] = SPPs[i][j][k] * g;
             }    //	w_lgth loop
-            	// mode anlysis end
+            // mode anlysis end
+        }
+    }
+
+
 
 
             /*------------------------------------------------------------------------------------*/
             /*                               Far Field Emission                                   */
             /*------------------------------------------------------------------------------------*/
+    for (i = 0; i < no_EML; i++) {
+        for (j = 0; j < no_EMZ; j++) {
+
+            d = EMZ_load(EML, thick_EML, no_EMZ, i)[j][0];
+            g = EMZ_load(EML, thick_EML, no_EMZ, i)[j][1];
+            s = thick_EML - d;
+
 
             //	for far-field emission
             for (k = 0; k < w_lgth; k++) {
@@ -1351,7 +1386,7 @@ int main(void) {
 
 
 
-             //	eq (27)
+            //	eq (27)
             multiply_4_2(p_out_12_ext_TM_EMZ[i][j], spectrum, i, g, a_lgth, w_lgth,
                          p_out_12_ext_TM_spec[i][j]);
             multiply_4_2(p_out_12_ext_TE_EMZ[i][j], spectrum, i, g, a_lgth, w_lgth,
@@ -1371,9 +1406,12 @@ int main(void) {
             arrsum_new(p_out_12_sub_TM_spec[i][j], p_out_12_sub_TE_spec[i][j], w_lgth, a_lgth, p_out_12_sub_spec[i][j]);
 
         } //far_field emission end
+    }
 
 
 
+
+    for (i = 0; i < no_EML; i++) {
         for (j = 0; j < no_EMZ; j++) {
             for (k = 0; k < w_lgth; k++) {
                 P_EML[k][i] += P_EMZ[i][j][k];
@@ -1387,9 +1425,11 @@ int main(void) {
                 Purcell[k][i][j] = P[i][j][k] / P0[k].A;
             }
         }    //	EMZ loop
+    }
 
 
 
+    for (i = 0; i < no_EML; i++) {
         for (j = 0; j < w_lgth; j++) {
             OC_eff_integrated[i] +=
                     (spectrum[j][1][i] * EML[i].QY * OC_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
@@ -1405,8 +1445,6 @@ int main(void) {
                     (spectrum[j][1][i] * EML[i].QY * SPPs_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
         }
 
-
-
         OC_eff_integrated[i] *= EXC_prop[i];
         OC_back_eff_integrated[i] *= EXC_prop[i];
         ABS_eff_integrated[i] *= EXC_prop[i];
@@ -1414,10 +1452,10 @@ int main(void) {
         WG_eff_integrated[i] *= EXC_prop[i];
         SPPs_eff_integrated[i] *= EXC_prop[i];
         //	mode analysis end
+    }
 
 
-
-
+    for (i = 0; i < no_EML; i++) {
         //	for far-field emission
         for (j = 0; j < no_EMZ; j++) {
             for (k = 0; k < a_lgth; k++) {
@@ -1436,7 +1474,6 @@ int main(void) {
                 }
             }
         }    //	no_EMZ loop //	far-field emission end
-
     }    // no_EML loop  //	main calculations end
 
 

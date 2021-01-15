@@ -19,12 +19,14 @@ double** EMZ_load(emil* structure, double thick_EML, int no_of_EMzone, int EML_n
 	double** arr = zeros2_0(105, 6);
 	double** EMZ = zeros2_0(no_of_EMzone, 2);
 	double delta_EMZ = (double)1 / (double)((double)no_of_EMzone - (double)1);
-	FILE* road = fopen(structure[EML_number].EMZ_file_location, "rt");
+	FILE* road = fopen(structure[EML_number].EMZ_file_location, "r");
+
 	if (road == NULL)
 	{
 		printf("Welcome To EMZ Load\n");
 		return false;
 	}
+
 	while (1)
 	{
 		if (feof(road))
