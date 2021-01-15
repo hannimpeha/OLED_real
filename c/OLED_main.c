@@ -853,16 +853,25 @@ int main(void) {
         //double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
 
 
+
+
         // THIS IS THE TROUBLESOME PART //
 //        for (j = 0; j < no_EMZ; j++) {
 //            //printf("%lf\n", thick_up[1][i]);
 //            //EMZ[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-//            EMZ[j][0][i] = **EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+//            EMZ[j][0][i] = EMZ_temp[j][0];
 ////            EMZ[j][0][i] = EMZ_temp[j][0];
 ////            EMZ[j][1][i] = EMZ_temp[j][1];
 //        }
         //free2d(EMZ_temp);
+
+
+
+
+
     }
+
+
 
     free3d(index);
     free(structure_temp);
@@ -1107,8 +1116,15 @@ int main(void) {
         for (j = 0; j < no_EMZ; j++) {    //	common process
             //for eq (8-10)
 
-            double d = EMZ[j][0][i];
-            double s = thick_EML - EMZ[j][0][i];
+            //double d = EMZ_load(EML, thick_up[0][i], no_EMZ, i)[j][i];
+
+            double d = EMZ_load(EML, thick_EML, no_EMZ, i)[j][0];
+            double s = thick_EML - d;
+
+//            double d = EMZ[j][0][i];
+//            double s = thick_EML - EMZ[j][0][i];
+
+
 
             //	common process end
             //	for mode analyesis
@@ -1375,10 +1391,6 @@ int main(void) {
 
 
 
-
-
-
-
 //        for (j = 0; j < w_lgth; j++) {
 //            OC_eff_integrated[i] +=
 //                    (spectrum[j][1][i] * EML[i].QY * OC_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
@@ -1407,8 +1419,6 @@ int main(void) {
 
 
 
-
-
         //	for far-field emission
         for (j = 0; j < no_EMZ; j++) {
             for (k = 0; k < a_lgth; k++) {
@@ -1427,8 +1437,6 @@ int main(void) {
                 }
             }
         }    //	no_EMZ loop //	far-field emission end
-
-
 
     }    // no_EML loop  //	main calculations end
 
