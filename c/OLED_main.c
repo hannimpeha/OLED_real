@@ -5,10 +5,7 @@
 #include "struct.h"
 #include <time.h>
 #include <stdbool.h>
-#include <sys/stat.h>
-#include <assert.h>
 #include <err.h>
-#include <sys/types.h>
 #include <regex.h>
 
 #define PI 3.141592
@@ -89,6 +86,64 @@ void outputDS(char* directory, char* name, double**** output, int x, int y, int 
 static Complex ONE = { 1 , 0 };
 #define ROWS 32
 #define COLS 32
+#define ZALLOC(item, n, type) if ((item = (type *)calloc((n), sizeof(type))) == NULL) \
+                                  fatalx("Unable to allocate %d unit(s) for item\n", n)
+
+static void fatalx(const char *str, size_t n)
+{
+    fprintf(stderr, "%s: %zu\n", str, n);
+    exit(1);
+}
+
+static double ***alloc_3d(double **data, int levels, int rows, int cols)
+{
+    int count = 0;
+    double ***array_3d;
+    ZALLOC(array_3d, levels, double **);
+    for (int i = 0; i < levels; i++)
+    {
+        //int **data;
+        ZALLOC(data, rows, double *);
+        array_3d[i] = data;
+        for (int j = 0; j < rows; j++)
+        {
+            double *entries;
+            ZALLOC(entries, cols, double);
+            array_3d[i][j] = entries;
+            for (int k = 0; k < cols; k++)
+            {
+                array_3d[i][j][k] = count++;
+            }
+        }
+    }
+    return array_3d;
+}
+
+static void print_3d(double ***a3d, int levels, int rows, int cols)
+{
+    for (int i = 0; i < levels; i++)
+    {
+        printf("%d:\n", i);
+        for (int j = 0; j < rows; j++)
+        {
+            printf("   %d:  ", j);
+            for (int k = 0; k < cols; k++)
+                printf(" %3lf", a3d[i][j][k]);
+            putchar('\n');
+        }
+    }
+}
+
+static void free_3d(int ***a3d, int levels, int rows)
+{
+    for (int i = 0; i < levels; i++)
+    {
+        for (int j = 0; j < rows; j++)
+            free(a3d[i][j]);
+        free(a3d[i]);
+    }
+    free(a3d);
+}
 
 
 #define ALLOC(p, n) do {                                \
@@ -118,19 +173,6 @@ void *reshape_2d_3d(size_t id1, size_t id2, int iar[][id2],
     }
 
     return oar;
-}
-
-void print_3d(size_t levels, size_t rows, size_t cols, int ar[][rows][cols]) {
-    for (int i = 0; i < levels; i++) {
-        printf("%d:\n", i);
-        for (int j = 0; j < rows; j++) {
-            printf("   %d:  ", j);
-            for (int k = 0; k < cols; k++) {
-                printf(" %3d", ar[i][j][k]);
-            }
-            putchar('\n');
-        }
-    }
 }
 
 void *xrealloc_dp (void **p, size_t *n)
@@ -395,7 +437,7 @@ int main(void) {
 
     double **Temp = zeros2(w_lgth, v_lgth);    //
 
-    double ***index = zeros3(no_l + 1, 5, w_lgth);    //
+    //double ***index = zeros3(no_l + 1, 5, w_lgth);    //
     double ****index_up = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
     double ****index_low = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
     double **thick_up = zeros2(no_l + 1, maximum_EML_number);    //
@@ -742,17 +784,19 @@ int main(void) {
         //sprintf(structure[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
         double **index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
 
-        for (k = 0; k < 5; k++) {
-            for (j = 0; j < w_lgth; j++) {
-                //printf("%f\n", index_temp[j][k]);
-                //index[i][k][j] = index_temp[j][k];
 
-            }
-        }
-        //int (*a3d)[d2][d3] = reshape_2d_3d(w_lgth, 5, index_temp, d1, d2, d3);
-        //print_3d(d1, d2, d3, a3d);
-        free2d(index_temp);
-        *(thick + i) = structure_temp[i].thick;
+        double ***index = alloc_3d(index_temp, no_l+1, 5, 7);
+        print_3d(index, 7, 5, 7);
+//        for (k = 0; k < 5; k++) {
+//            for (j = 0; j < w_lgth; j++) {
+                //printf("\t%lf\n", index_temp[j][k]);
+                //printf("%d", new_no_l);
+                //index[i][k][j] = index_temp[j][k];
+//            }
+//        }
+
+//        free2d(index_temp);
+//        *(thick + i) = structure_temp[i].thick;
     }
     //	loading refractive index & thickness end
 

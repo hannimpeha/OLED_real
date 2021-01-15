@@ -21,13 +21,7 @@ time.h
 -
 stdbool.h
 -
-sys/stat.h
--
-assert.h
--
 err.h
--
-sys/types.h
 -
 regex.h
 -
