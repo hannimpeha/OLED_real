@@ -254,7 +254,7 @@ const char* getfield(char* line, int num)
     return NULL;
 }
 
-char *getfield2 (char *buf, size_t field)
+const char *getfield2 (char *buf, size_t field)
 {
     size_t len = strlen(buf);       /* size of input string */
     char *cpy = malloc (len + 1),   /* allocate for copy */
@@ -356,8 +356,8 @@ int main(void) {
 
         strcpy(structure->name, getfield(tmp, 2));
 
-//        printf("%s\n", structure->name);
-//        printf("%f\n", structure->thick);
+        printf("%s\n", structure->name);
+        printf("%f\n\n", structure->thick);
 
     }
     nrows = row;
@@ -419,12 +419,12 @@ int main(void) {
 //                   (int) (matches[nf].rm_eo - matches[nf].rm_so),
 //                   line + matches[nf].rm_so);
 //        }
-//        printf("%d\n", EML[h].number);
-//        printf("%s\n", EML[h].spectrum_name);
-//        printf("%lf\n", EML[h].Exciton_prop);
-//        printf("%lf\n", EML[h].QY);
-//        printf("%lf\n", EML[h].HDR);
-//        printf("%s\n", EML[h].EMZ_name);
+        printf("%d\n", EML[h].number);
+        printf("%s\n", EML[h].spectrum_name);
+        printf("%lf\n", EML[h].Exciton_prop);
+        printf("%lf\n", EML[h].QY);
+        printf("%lf\n", EML[h].HDR);
+        printf("%s\n", EML[h].EMZ_name);
     }
     fclose(fstream);
 
@@ -436,8 +436,8 @@ int main(void) {
     double *angle = linspace(angle_init, angle_final, ((int) angle_final - (int) angle_init) / (int) angle_step + 1);//
 
     double **Temp = zeros2(w_lgth, v_lgth);    //
-
-    //double ***index = zeros3(no_l + 1, 5, w_lgth);    //
+    double **index_temp;
+    double ****index = zeros3(no_l + 1, 5, w_lgth);    //
     double ****index_up = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
     double ****index_low = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
     double **thick_up = zeros2(no_l + 1, maximum_EML_number);    //
@@ -781,12 +781,10 @@ int main(void) {
     //loading refractive index & thickness
     for (i = 0; i < new_no_l; i++) {
         sprintf(structure_temp[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
-        //sprintf(structure[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
-        double **index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
+        index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
 
-
-        double ***index = alloc_3d(index_temp, no_l+1, 5, 7);
-        print_3d(index, 7, 5, 7);
+        index[i] = alloc_3d(index_temp, no_l+1, 5, 7);
+        print_3d(index[i], 7, 5, 7);
 //        for (k = 0; k < 5; k++) {
 //            for (j = 0; j < w_lgth; j++) {
                 //printf("\t%lf\n", index_temp[j][k]);
@@ -795,62 +793,66 @@ int main(void) {
 //            }
 //        }
 
-//        free2d(index_temp);
-//        *(thick + i) = structure_temp[i].thick;
+        free2d(index_temp);
+        *(thick + i) = structure_temp[i].thick;
     }
     //	loading refractive index & thickness end
 
-//    double *EXC = zeros(no_EML);        //
-//    double *EXC_prop = zeros(no_EML);    //
-//
-//    //	EML processing
-//    for (i = 0; i < no_EML; i++) {
-//        EXC[i] = EML[i].Exciton_prop;
-//
-//        no_up_layer[i] = EML[i].number + 1;
-//        no_low_layer[i] = no_l + 1 - no_up_layer[i] + 1;
-//
-//        for (j = 0; j < no_up_layer[i]; j++) {
-//            for (k = 0; k < 5; k++) {
-//                for (l = 0; l < w_lgth; l++) {
-//                    index_up[j][k][l][i] = index[EML[i].number + 1 - j - 1][k][l];
-//                }
-//            }
-//            thick_up[j][i] = thick[EML[i].number + 1 - j - 1];
-//        }
-//        //	SECTION TITLE
-//        //	DESCRIPTIVE TEXT
-//        for (j = 0; j < w_lgth; j++) {
-//            index_up[0][2][j][i] = 0;    //	no imaginary part
-//            index_up[0][4][j][i] = 0;    //	no imaginary part
-//        }
-//        for (j = 0; j < no_low_layer[i]; j++) {
-//            for (k = 0; k < 5; k++) {
-//                for (l = 0; l < w_lgth; l++) {
-//                    index_low[j][k][l][i] = index[EML[i].number - 1 + j + 1][k][l];
-//                }
-//            }
-//            thick_low[j][i] = thick[EML[i].number - 1 + j + 1];
-//        }
-//        for (j = 0; j < w_lgth; j++) {
-//            index_low[0][2][j][i] = 0;    //	no imaginary part
-//            index_low[0][4][j][i] = 0;    //	no imaginary part
-//        }
-//        sprintf(EML[i].spectrum_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/spectrum/%s.spec", EML[i].spectrum_name);
-//        double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
-//        for (j = 0; j < w_lgth; j++) {
-//            spectrum[j][0][i] = spectrum_temp[j][0];
-//            spectrum[j][1][i] = spectrum_temp[j][1];
-//        }
-//        free2d(spectrum_temp);
-//        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
-//        double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-//        for (j = 0; j < no_EMZ; j++) {
-//            EMZ[j][0][i] = EMZ_temp[j][0];
-//            EMZ[j][1][i] = EMZ_temp[j][1];
-//        }
-//        free2d(EMZ_temp);
-//    }
+    double *EXC = zeros(no_EML);        //
+    double *EXC_prop = zeros(no_EML);    //
+
+    //	EML processing
+    for (i = 0; i < no_EML; i++) {
+        EXC[i] = EML[i].Exciton_prop;
+
+        no_up_layer[i] = EML[i].number + 1;
+        no_low_layer[i] = no_l + 1 - no_up_layer[i] + 1;
+
+        for (j = 0; j < no_up_layer[i]; j++) {
+            for (k = 0; k < 5; k++) {
+                for (l = 0; l < w_lgth; l++) {
+                    printf("%f", index[i][EML[i].number + 1 - j - 1][k][l]);
+                    //index_up[j][k][l][i] = index[j][EML[i].number + 1 - j - 1][k][l];
+                }
+            }
+            thick_up[j][i] = thick[EML[i].number + 1 - j - 1];
+        }
+        //	SECTION TITLE
+        //	DESCRIPTIVE TEXT
+        for (j = 0; j < w_lgth; j++) {
+            index_up[0][2][j][i] = 0;    //	no imaginary part
+            index_up[0][4][j][i] = 0;    //	no imaginary part
+        }
+        for (j = 0; j < no_low_layer[i]; j++) {
+            for (k = 0; k < 5; k++) {
+                for (l = 0; l < w_lgth; l++) {
+                    //index_low[j][k][l][i] = index[j][EML[i].number - 1 + j + 1][k][l];
+                }
+            }
+            thick_low[j][i] = thick[EML[i].number - 1 + j + 1];
+        }
+        for (j = 0; j < w_lgth; j++) {
+            index_low[0][2][j][i] = 0;    //	no imaginary part
+            index_low[0][4][j][i] = 0;    //	no imaginary part
+        }
+        sprintf(EML[i].spectrum_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/spectrum/%s.spec", EML[i].spectrum_name);
+        double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
+        for (j = 0; j < w_lgth; j++) {
+            spectrum[j][0][i] = spectrum_temp[j][0];
+            spectrum[j][1][i] = spectrum_temp[j][1];
+        }
+        free2d(spectrum_temp);
+        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
+        double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+        for (j = 0; j < no_EMZ; j++) {
+            EMZ[j][0][i] = EMZ_temp[j][0];
+            EMZ[j][1][i] = EMZ_temp[j][1];
+        }
+        free2d(EMZ_temp);
+    }
+
+
+
 //    free3d(index);
 //    free(structure_temp);
 //    free(thick);
