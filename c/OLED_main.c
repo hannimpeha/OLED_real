@@ -90,6 +90,49 @@ static Complex ONE = { 1 , 0 };
 #define ROWS 32
 #define COLS 32
 
+
+#define ALLOC(p, n) do {                                \
+    if (!((p) = calloc((n), sizeof(*(p))))) {           \
+        fprintf(stderr, "Memory allocation failure\n"); \
+        exit(1);                                        \
+    }                                                   \
+} while (0)
+
+void *reshape_2d_3d(size_t id1, size_t id2, int iar[][id2],
+                    size_t od1, size_t od2, size_t od3) {
+    // oar is a pointer to a multidimensional array; in this case, it will
+    // point to the first element of an array of arrays (of arrays).
+    int (*oar)[od2][od3];
+    size_t size1 = id1 * id2;
+    size_t size2 = od1 * od2 * od3;
+    size_t min_size = (size1 <= size2) ? size1 : size2;
+
+    ALLOC(oar, od1);
+
+    // A loop nest could be used here, too, but I find this simpler for
+    // tracking the correspondence of array elements.  It also better
+    // accommodates the case where the reshaped result has different overall
+    // size from the original.
+    for (size_t i = 0; i < min_size; i++) {
+        oar[i / (od2 * od3)][(i / od3) % od2][i % od3] = iar[i / id2][i % id2];
+    }
+
+    return oar;
+}
+
+void print_3d(size_t levels, size_t rows, size_t cols, int ar[][rows][cols]) {
+    for (int i = 0; i < levels; i++) {
+        printf("%d:\n", i);
+        for (int j = 0; j < rows; j++) {
+            printf("   %d:  ", j);
+            for (int k = 0; k < cols; k++) {
+                printf(" %3d", ar[i][j][k]);
+            }
+            putchar('\n');
+        }
+    }
+}
+
 void *xrealloc_dp (void **p, size_t *n)
 {
     void *tmp = realloc (p, 2 * *n * sizeof tmp);
@@ -690,18 +733,24 @@ int main(void) {
         structure_temp[i + 1].thick = structure[i].thick;
     }
     free(structure);
+
     int new_no_l = no_l + 1;
     //inserting external layers end
-
     //loading refractive index & thickness
     for (i = 0; i < new_no_l; i++) {
         sprintf(structure_temp[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
+        //sprintf(structure[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
         double **index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
+
         for (k = 0; k < 5; k++) {
             for (j = 0; j < w_lgth; j++) {
-                index[i][k][j] = index_temp[j][k];
+                //printf("%f\n", index_temp[j][k]);
+                //index[i][k][j] = index_temp[j][k];
+
             }
         }
+        //int (*a3d)[d2][d3] = reshape_2d_3d(w_lgth, 5, index_temp, d1, d2, d3);
+        //print_3d(d1, d2, d3, a3d);
         free2d(index_temp);
         *(thick + i) = structure_temp[i].thick;
     }

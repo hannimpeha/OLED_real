@@ -7,8 +7,8 @@ int findx(double** Z);
 void free2d(double** a);
 double** zeros2_0(int x, int y);
 double** intp4(double** Z, double li, double lf, double ls);
-double** RI_load(Save* structure, double lambda_init, double lambda_final, double lambda_step, int layer_num)
-//	ÁÖ¾îÁø ±¸Á¶Ã¼·Î ÁÖ¾îÁø Refractive Index ÆÄÀÏÀ» ÀÐ¾î¼­ ±Ô°Ý¿¡ ¸Â´Â ¹è¿­·Î ¿Å±ä ÈÄ intp4ÇÔ¼ö¸¦ ÀÌ¿ëÇÏ¿© ¿øÇÏ´Â ÇüÅÂ·Î ÀÌÂ÷¹è¿­À» Àç»ý¼ºÇÏ´Â ÇÔ¼ö
+double** RI_load(Save* structure_temp, double lambda_init, double lambda_final, double lambda_step, int layer_num)
+//	ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ Refractive Index ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾î¼­ ï¿½Ô°Ý¿ï¿½ ï¿½Â´ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Å±ï¿½ ï¿½ï¿½ intp4ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	int i = 0, j;
 	int w_lgth = (int)((lambda_final - lambda_init) / lambda_step)+1;
@@ -17,10 +17,10 @@ double** RI_load(Save* structure, double lambda_init, double lambda_final, doubl
 	char* temp2;
 	double result;
 	double** arr = zeros2_0(2000, 6);
-	FILE* road = fopen(structure[layer_num].file_location, "rt");
+	FILE* road = fopen(structure_temp[layer_num].file_location, "rt");
 	if (road == NULL)
 	{
-		printf("ÆÄÀÏ ·Îµå ¿À·ù");
+		printf("Welcome To RI Load\n");
 		return false;
 	}
 	while (1)
