@@ -80,6 +80,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.penProject">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="penProject" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="penProject" TARGET_NAME="penProject" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="penProject" RUN_TARGET_NAME="penProject">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -226,7 +231,7 @@
       <workItem from="1610619709604" duration="1968000" />
       <workItem from="1610621825675" duration="42000" />
       <workItem from="1610680829531" duration="22716000" />
-      <workItem from="1610704125270" duration="3949000" />
+      <workItem from="1610704125270" duration="4656000" />
     </task>
     <servers />
   </component>

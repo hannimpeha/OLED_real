@@ -1305,15 +1305,15 @@ int main(void) {
 
 
 
-//            //	eq (26)
-//            multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_12_ext, T_12_ext_TE, L_1_ext_TE, n_2, L_2_ext_TE, n_extra, a_lgth,
-//                           w_lgth, p_out_12_h_ext_TE);
-//            multiply_5_2(p_out_12_h_ext_TE, T_sub_ext_TE, n_3, L_2_sub_ext_TE, n_2, L_1_sub_ext_TE, a_lgth, w_lgth,
-//                         p_out_12_h_ext_TE_intf);
-//            multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_13_ext, T_13_ext_TE, L_1_ext_TE, n_3, L_3_ext_TE, n_extra, a_lgth,
-//                           w_lgth, p_out_13_h_ext_TE);
-//            multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_12_sub, T_12_sub_TE, L_1_sub_TE, n_2, L_2_sub_TE, n_extra, a_lgth,
-//                           w_lgth, p_out_12_h_sub_TE);
+            //	eq (26)
+            multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_12_ext, T_12_ext_TE, L_1_ext_TE, n_2, L_2_ext_TE, n_extra, a_lgth,
+                           w_lgth, p_out_12_h_ext_TE);
+            multiply_5_2(p_out_12_h_ext_TE, T_sub_ext_TE, n_3, L_2_sub_ext_TE, n_2, L_1_sub_ext_TE, a_lgth, w_lgth,
+                         p_out_12_h_ext_TE_intf);
+            multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_13_ext, T_13_ext_TE, L_1_ext_TE, n_3, L_3_ext_TE, n_extra, a_lgth,
+                           w_lgth, p_out_13_h_ext_TE);
+            multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_12_sub, T_12_sub_TE, L_1_sub_TE, n_2, L_2_sub_TE, n_extra, a_lgth,
+                           w_lgth, p_out_12_h_sub_TE);
 
 
 
@@ -1366,17 +1366,17 @@ int main(void) {
 //
 //
 //        for (j = 0; j < no_EMZ; j++) {
-//            for (k = 0; k < w_lgth; k++) {
-//                P_EML[k][i] += P_EMZ[i][j][k];
-//                OC_EML[k][i] += OC_EMZ[i][j][k];
-//                OC_back_EML[k][i] += OC_back_EMZ[i][j][k];
-//                ABS_EML[k][i] += ABS_EMZ[i][j][k];
-//                SUBS_EML[k][i] += SUBS_EMZ[i][j][k];
-//                WG_EML[k][i] += WG_EMZ[i][j][k];
-//                SPPs_EML[k][i] += SPPs_EMZ[i][j][k];
-//
-//                Purcell[k][i][j] = P[i][j][k] / P0[k].A;
-//            }
+            for (k = 0; k < w_lgth; k++) {
+                P_EML[k][i] += P_EMZ[i][j][k];
+                OC_EML[k][i] += OC_EMZ[i][j][k];
+                OC_back_EML[k][i] += OC_back_EMZ[i][j][k];
+                ABS_EML[k][i] += ABS_EMZ[i][j][k];
+                SUBS_EML[k][i] += SUBS_EMZ[i][j][k];
+                WG_EML[k][i] += WG_EMZ[i][j][k];
+                SPPs_EML[k][i] += SPPs_EMZ[i][j][k];
+
+                Purcell[k][i][j] = P[i][j][k] / P0[k].A;
+            }
 //        }    //	EMZ loop
 //
 //
@@ -1401,43 +1401,41 @@ int main(void) {
 //        }
 //
 //
-//        OC_eff_integrated[i] *= EXC_prop[i];
-//        OC_back_eff_integrated[i] *= EXC_prop[i];
-//        ABS_eff_integrated[i] *= EXC_prop[i];
-//        SUBS_eff_integrated[i] *= EXC_prop[i];
-//        WG_eff_integrated[i] *= EXC_prop[i];
-//        SPPs_eff_integrated[i] *= EXC_prop[i];
-//        //	mode analysis end
-//
-//
-//
-//
-//
-//
-//        //	for far-field emission
+        OC_eff_integrated[i] *= EXC_prop[i];
+        OC_back_eff_integrated[i] *= EXC_prop[i];
+        ABS_eff_integrated[i] *= EXC_prop[i];
+        SUBS_eff_integrated[i] *= EXC_prop[i];
+        WG_eff_integrated[i] *= EXC_prop[i];
+        SPPs_eff_integrated[i] *= EXC_prop[i];
+        //	mode analysis end
+
+
+
+
+
+
+        //	for far-field emission
 //        for (j = 0; j < no_EMZ; j++) {
-//            for (k = 0; k < a_lgth; k++) {
-//                for (l = 0; l < w_lgth; l++) {
-//                    p_out_12_ext_TM_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_ext_TM_spec[i][j][l][k];
-//                    p_out_12_ext_TE_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_ext_TE_spec[i][j][l][k];
-//                    p_out_12_ext_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_ext_spec[i][j][l][k];
-//
-//                    p_out_13_ext_TM_spec_EML[k][l][i] += EXC_prop[i] * p_out_13_ext_TM_spec[i][j][l][k];
-//                    p_out_13_ext_TE_spec_EML[k][l][i] += EXC_prop[i] * p_out_13_ext_TE_spec[i][j][l][k];
-//                    p_out_13_ext_spec_EML[k][l][i] += EXC_prop[i] * p_out_13_ext_spec[i][j][l][k];
-//
-//                    p_out_12_sub_TM_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_sub_TM_spec[i][j][l][k];
-//                    p_out_12_sub_TE_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_sub_TE_spec[i][j][l][k];
-//                    p_out_12_sub_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_sub_spec[i][j][l][k];
-//                }
-//            }
+            for (k = 0; k < a_lgth; k++) {
+                for (l = 0; l < w_lgth; l++) {
+                    p_out_12_ext_TM_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_ext_TM_spec[i][j][l][k];
+                    p_out_12_ext_TE_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_ext_TE_spec[i][j][l][k];
+                    p_out_12_ext_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_ext_spec[i][j][l][k];
+
+                    p_out_13_ext_TM_spec_EML[k][l][i] += EXC_prop[i] * p_out_13_ext_TM_spec[i][j][l][k];
+                    p_out_13_ext_TE_spec_EML[k][l][i] += EXC_prop[i] * p_out_13_ext_TE_spec[i][j][l][k];
+                    p_out_13_ext_spec_EML[k][l][i] += EXC_prop[i] * p_out_13_ext_spec[i][j][l][k];
+
+                    p_out_12_sub_TM_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_sub_TM_spec[i][j][l][k];
+                    p_out_12_sub_TE_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_sub_TE_spec[i][j][l][k];
+                    p_out_12_sub_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_sub_spec[i][j][l][k];
+                }
+            }
         }    //	no_EMZ loop //	far-field emission end
 
 
 
-    }    // no_EML loop
-
-//    //	main calculations end
+    }    // no_EML loop  //	main calculations end
 
 
 
