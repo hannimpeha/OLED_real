@@ -435,16 +435,6 @@ int main(void) {
     double *WL = linspace(WL_init, WL_final, ((int) WL_final - (int) WL_init) / (int) WL_step + 1);//
     double *angle = linspace(angle_init, angle_final, ((int) angle_final - (int) angle_init) / (int) angle_step + 1);//
 
-
-
-
-    /*-----------------------------*/
-    /* geundeurilgoti maneun bubun */
-    /*-----------------------------*/
-
-
-
-
     double **Temp = zeros2(w_lgth, v_lgth);    //
     double **index_temp;
     double **spectrum_temp;
@@ -490,8 +480,8 @@ int main(void) {
     Complex *P0_h = comparr(w_lgth);    //
     Complex *P0 = comparr(w_lgth);        //
 
-    double s = *(double*) malloc(sizeof(double));
-    double d = *(double*) malloc(sizeof(double));
+    //double s;
+    //double d;
 
     double thick_EML;
     //	���̴°��� �����ϴ�. double** EMZ_position = zeros2(no_EMZ, no_EMZ);
@@ -861,15 +851,17 @@ int main(void) {
 //        free2d(spectrum_temp);
         sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
         //double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-        //EMZ_temp[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
 
-        //EMZ[i] = EMZ_temp;
-       for (j = 0; j < no_EMZ; j++) {
-            EMZ[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-            //EMZ[j][0][i] = EMZ_temp[j][0];
-            //EMZ[j][1][i] = EMZ_temp[j][1];
-        }
-//        free2d(EMZ_temp);
+
+        // THIS IS THE TROUBLESOME PART //
+//        for (j = 0; j < no_EMZ; j++) {
+//            //printf("%lf\n", thick_up[1][i]);
+//            //EMZ[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+//            EMZ[j][0][i] = **EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+////            EMZ[j][0][i] = EMZ_temp[j][0];
+////            EMZ[j][1][i] = EMZ_temp[j][1];
+//        }
+        //free2d(EMZ_temp);
     }
 
     free3d(index);
@@ -884,7 +876,6 @@ int main(void) {
         EXC_prop[i] = EXC[i] / sum_EXC;
     }//EML processing end
     free(EXC);
-
 
 
 
@@ -1112,13 +1103,12 @@ int main(void) {
         /*------------------------------------------------------------------------------------*/
         /*                                 Mode Analysis                                      */
         /*------------------------------------------------------------------------------------*/
-        //printf("%d\n", no_EMZ);
 
-//        for (j = 0; j < no_EMZ; j++) {    //	common process
-//            //for eq (8-10)
-//
-//            d = EMZ[j][0][i];
-//            s = thick_EML - EMZ[j][0][i];
+        for (j = 0; j < no_EMZ; j++) {    //	common process
+            //for eq (8-10)
+
+            double d = EMZ[j][0][i];
+            double s = thick_EML - EMZ[j][0][i];
 //
 //            //	common process end
 //            //	for mode analyesis
@@ -1142,7 +1132,7 @@ int main(void) {
 
 
 
-            //	for eq (16-18)
+//            //	for eq (16-18)
 //            for (k = 0; k < v_lgth; k++) {
 //                for (l = 0; l < w_lgth; l++) {
 //                    Abs_R_v_TM_12[k][l] = compabs2(comdiv(commin(ONE, R_13_TM[k][l]), commin(ONE, R_1213_TM[k][l]))).A;
@@ -1153,18 +1143,20 @@ int main(void) {
 //                    Abs_R_h_TE_13[k][l] = compabs2(comdiv(comsum(ONE, R_12_TE[k][l]), commin(ONE, R_1213_TE[k][l]))).A;
 //                }
 //            }
-
-
-
+//
+//
 //            //	eq (16)
 //            multiply_3_1(prefactor_v_TM, Abs_R_v_TM_12, T_12_TM, inpv, L_1, v_lgth, w_lgth, p_out_12_v_TM);
 //            multiply_3_1(prefactor_v_TM, Abs_R_v_TM_13, T_13_TM, inpv, L_1, v_lgth, w_lgth, p_out_13_v_TM);
+//
 //            //	eq (17)
 //            multiply_3_2(prefactor_h_TM, Abs_R_h_TM_12, T_12_TM, inpv, L_1, v_lgth, w_lgth, p_out_12_h_TM);
 //            multiply_3_2(prefactor_h_TM, Abs_R_h_TM_13, T_13_TM, inpv, L_1, v_lgth, w_lgth, p_out_13_h_TM);
+//
 //            //	eq(18)
 //            multiply_3_3(prefactor_h_TE, Abs_R_h_TE_12, T_12_TE, inpv, L_1, v_lgth, w_lgth, p_out_12_h_TE);
 //            multiply_3_3(prefactor_h_TE, Abs_R_h_TE_13, T_13_TE, inpv, L_1, v_lgth, w_lgth, p_out_13_h_TE);
+//
 //            //	eq(7)
 //            multiply_4_1(p_v_TM, P0_v, 1 - EML[i].HDR, v_lgth, w_lgth, p_total_TM[i][j]);
 //            multiply_4_1(p_h_TM, P0_v, EML[i].HDR, v_lgth, w_lgth, Temp);
@@ -1186,9 +1178,9 @@ int main(void) {
 //            multiply_4_1(p_out_13_h_TE, P0_v, EML[i].HDR, v_lgth, w_lgth, p_total_out_13_TE);
 //            arrsum_new(p_total_out_13_TM, p_total_out_13_TE, w_lgth, v_lgth, p_total_out_13);
 //
-
-
-
+//
+//
+//
 //            for (k = 0; k < w_lgth; k++) {
 //                if (j == 0) {
 //                    //	dviding optical modes
@@ -1199,12 +1191,16 @@ int main(void) {
 //                    WG_number_TM[k] = find(inpv, 1, v_lgth);
 //                    WG_number_TE[k] = find(inpv, 1, v_lgth);
 //                }
+//
+//
+//
 //                for (l = 0; l < ext_number_TM[k]; l++) {
 //                    p_abs_TM_tailored[k][l] =
 //                            p_total_TM[i][j][k][l] - p_total_out_12_TM[k][l] - p_total_out_13_TM[k][l];
 //                    p_abs_TE_tailored[k][l] =
 //                            p_total_TE[i][j][k][l] - p_total_out_12_TE[k][l] - p_total_out_13_TE[k][l];
 //                }
+//
 //
 //                //	integration in eq (7)
 //                P[i][j][k] = trapz(inpv, p_total[i][j][k], 1, v_lgth);
@@ -1220,8 +1216,10 @@ int main(void) {
 //                              trapz(inpv, p_total_TE[i][j][k], subs_number_TE[k], WG_number_TE[k]);
 //                SPPs[i][j][k] = trapz(inpv, p_total_TM[i][j][k], WG_number_TM[k], v_lgth) +
 //                                trapz(inpv, p_total_TE[i][j][k], WG_number_TE[k], v_lgth);
+//
 //                //	eq (21) WL, EMzone, EML matrix
 //                q_eff[k][i][j] = EML[i].QY * P[i][j][k] / (1 - EML[i].QY + EML[i].QY * P[i][j][k]);
+//
 //                //	eq (22)
 //                OC_eff[k][i][j] = OC[i][j][k] / P[i][j][k];
 //                OC_back_eff[k][i][j] = OC_back[i][j][k] / P[i][j][k];
@@ -1234,73 +1232,79 @@ int main(void) {
 //                WG_EMZ[i][j][k] = WG[i][j][k] * EMZ[j][1][i];
 //                SPPs_EMZ[i][j][k] = SPPs[i][j][k] * EMZ[j][1][i];
 //            }    //	w_lgth loop
-//
-//            //	mode anlysis end
+            //	mode anlysis end
 
 
-//            /*------------------------------------------------------------------------------------*/
-//            /*                               Far Field Emission                                   */
-//            /*------------------------------------------------------------------------------------*/
-//
-//            //	for far-field emission
-//            for (k = 0; k < w_lgth; k++) {
-//                Reflec_w(d, r_12_ext_TM, n_ordi, L_1_ext_TM, a_lgth, WL[k], k, R_12_ext_TM[k]);
-//                Reflec_w(d, r_13_ext_TM, n_ordi, L_1_ext_TM, a_lgth, WL[k], k, R_13_ext_TM[k]);
-//                Reflec_2_w(thick_EML, r_12_ext_TM, r_13_ext_TM, n_ordi, L_1_ext_TM, a_lgth, WL[k], k, R_1213_ext_TM[k]);
-//
-//                Reflec_w(d, r_12_ext_TE, n_ordi, L_1_ext_TE, a_lgth, WL[k], k, R_12_ext_TE[k]);
-//                Reflec_w(d, r_13_ext_TE, n_ordi, L_1_ext_TE, a_lgth, WL[k], k, R_13_ext_TE[k]);
-//                Reflec_2_w(thick_EML, r_12_ext_TE, r_13_ext_TE, n_ordi, L_1_ext_TE, a_lgth, WL[k], k, R_1213_ext_TE[k]);
-//
-//                Reflec_w(d, r_13_sub_TM, n_ordi, L_1_sub_TM, a_lgth, WL[k], k, R_13_sub_TM[k]);
-//                Reflec_2_w(thick_EML, r_12_sub_TM, r_13_sub_TM, n_ordi, L_1_sub_TM, a_lgth, WL[k], k, R_1213_sub_TM[k]);
-//
-//                Reflec_w(d, r_13_sub_TE, n_ordi, L_1_sub_TM, a_lgth, WL[k], k, R_13_sub_TE[k]);
-//                Reflec_2_w(thick_EML, r_12_sub_TE, r_13_sub_TE, n_ordi, L_1_sub_TE, a_lgth, WL[k], k, R_1213_sub_TE[k]);
-//            }
-//            for (k = 0; k < w_lgth; k++) {
-//                for (l = 0; l < a_lgth; l++) {
-//                    Abs_R_v_TM_12_ext[l][k] = compabs2(
-//                            comprod(commin(ONE, R_13_ext_TM[k][l]), inversecom(commin(ONE, R_1213_ext_TM[k][l])))).A;
-//                    Abs_R_v_TM_13_ext[l][k] = compabs2(
-//                            comprod(commin(ONE, R_12_ext_TM[k][l]), inversecom(commin(ONE, R_1213_ext_TM[k][l])))).A;
-//                    Abs_R_v_TM_12_sub[l][k] = compabs2(
-//                            comprod(commin(ONE, R_13_sub_TM[k][l]), inversecom(commin(ONE, R_1213_sub_TM[k][l])))).A;
-//
-//                    Abs_R_h_TM_12_ext[l][k] = compabs2(
-//                            comprod(comsum(ONE, R_13_ext_TM[k][l]), inversecom(commin(ONE, R_1213_ext_TM[k][l])))).A;
-//                    Abs_R_h_TM_13_ext[l][k] = compabs2(
-//                            comprod(comsum(ONE, R_12_ext_TM[k][l]), inversecom(commin(ONE, R_1213_ext_TM[k][l])))).A;
-//                    Abs_R_h_TM_12_sub[l][k] = compabs2(
-//                            comprod(comsum(ONE, R_13_sub_TM[k][l]), inversecom(commin(ONE, R_1213_sub_TM[k][l])))).A;
-//
-//                    Abs_R_h_TE_12_ext[l][k] = compabs2(
-//                            comprod(comsum(ONE, R_13_ext_TE[k][l]), inversecom(commin(ONE, R_1213_ext_TE[k][l])))).A;
-//                    Abs_R_h_TE_13_ext[l][k] = compabs2(
-//                            comprod(comsum(ONE, R_12_ext_TE[k][l]), inversecom(commin(ONE, R_1213_ext_TE[k][l])))).A;
-//                    Abs_R_h_TE_12_sub[l][k] = compabs2(
-//                            comprod(comsum(ONE, R_13_sub_TE[k][l]), inversecom(commin(ONE, R_1213_sub_TE[k][l])))).A;
-//                }
-//            }
-//            //	eq (25)
-//            multiply_5_1_1(prefactor_v_TM, Abs_R_v_TM_12_ext, T_12_ext_TM, inpv_ext_TM, L_1_ext_TM, n_2, L_2_ext_TM,
-//                           n_extra, a_lgth, w_lgth, p_out_12_v_ext_TM);
-//            multiply_5_2(p_out_12_v_ext_TM, T_sub_ext_TM, n_3, L_2_sub_ext_TM, n_2, L_1_sub_ext_TM, a_lgth, w_lgth,
-//                         p_out_12_v_ext_TM_intf);
-//            multiply_5_1_1(prefactor_v_TM, Abs_R_v_TM_13_ext, T_13_ext_TM, inpv_ext_TM, L_1_ext_TM, n_3, L_3_ext_TM,
-//                           n_extra, a_lgth, w_lgth, p_out_13_v_ext_TM);
-//            multiply_5_1_1(prefactor_v_TM, Abs_R_v_TM_12_sub, T_12_sub_TM, inpv_sub_TM, L_1_sub_TM, n_2, L_2_sub_TM,
-//                           n_extra, a_lgth, w_lgth, p_out_12_v_sub_TM);
-//
-//            multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_12_ext, T_12_ext_TM, inpv_ext_TM, L_1_ext_TM, n_2, L_2_ext_TM,
-//                           n_extra, a_lgth, w_lgth, p_out_12_h_ext_TM);
-//            multiply_5_2(p_out_12_h_ext_TM, T_sub_ext_TM, n_3, L_2_sub_ext_TM, n_2, L_1_sub_ext_TM, a_lgth, w_lgth,
-//                         p_out_12_h_ext_TM_intf);
-//            multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_13_ext, T_13_ext_TM, inpv_ext_TM, L_1_ext_TM, n_3, L_3_ext_TM,
-//                           n_extra, a_lgth, w_lgth, p_out_13_h_ext_TM);
-//            multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_12_sub, T_12_sub_TM, inpv_sub_TM, L_1_sub_TM, n_2, L_2_sub_TM,
-//                           n_extra, a_lgth, w_lgth, p_out_12_h_sub_TM);
-//
+            /*------------------------------------------------------------------------------------*/
+            /*                               Far Field Emission                                   */
+            /*------------------------------------------------------------------------------------*/
+
+            //	for far-field emission
+            for (k = 0; k < w_lgth; k++) {
+                Reflec_w(d, r_12_ext_TM, n_ordi, L_1_ext_TM, a_lgth, WL[k], k, R_12_ext_TM[k]);
+                Reflec_w(d, r_13_ext_TM, n_ordi, L_1_ext_TM, a_lgth, WL[k], k, R_13_ext_TM[k]);
+                Reflec_2_w(thick_EML, r_12_ext_TM, r_13_ext_TM, n_ordi, L_1_ext_TM, a_lgth, WL[k], k, R_1213_ext_TM[k]);
+
+                Reflec_w(d, r_12_ext_TE, n_ordi, L_1_ext_TE, a_lgth, WL[k], k, R_12_ext_TE[k]);
+                Reflec_w(d, r_13_ext_TE, n_ordi, L_1_ext_TE, a_lgth, WL[k], k, R_13_ext_TE[k]);
+                Reflec_2_w(thick_EML, r_12_ext_TE, r_13_ext_TE, n_ordi, L_1_ext_TE, a_lgth, WL[k], k, R_1213_ext_TE[k]);
+
+                Reflec_w(d, r_13_sub_TM, n_ordi, L_1_sub_TM, a_lgth, WL[k], k, R_13_sub_TM[k]);
+                Reflec_2_w(thick_EML, r_12_sub_TM, r_13_sub_TM, n_ordi, L_1_sub_TM, a_lgth, WL[k], k, R_1213_sub_TM[k]);
+
+                Reflec_w(d, r_13_sub_TE, n_ordi, L_1_sub_TM, a_lgth, WL[k], k, R_13_sub_TE[k]);
+                Reflec_2_w(thick_EML, r_12_sub_TE, r_13_sub_TE, n_ordi, L_1_sub_TE, a_lgth, WL[k], k, R_1213_sub_TE[k]);
+            }
+
+
+            for (k = 0; k < w_lgth; k++) {
+                for (l = 0; l < a_lgth; l++) {
+                    Abs_R_v_TM_12_ext[l][k] = compabs2(
+                            comprod(commin(ONE, R_13_ext_TM[k][l]), inversecom(commin(ONE, R_1213_ext_TM[k][l])))).A;
+                    Abs_R_v_TM_13_ext[l][k] = compabs2(
+                            comprod(commin(ONE, R_12_ext_TM[k][l]), inversecom(commin(ONE, R_1213_ext_TM[k][l])))).A;
+                    Abs_R_v_TM_12_sub[l][k] = compabs2(
+                            comprod(commin(ONE, R_13_sub_TM[k][l]), inversecom(commin(ONE, R_1213_sub_TM[k][l])))).A;
+
+                    Abs_R_h_TM_12_ext[l][k] = compabs2(
+                            comprod(comsum(ONE, R_13_ext_TM[k][l]), inversecom(commin(ONE, R_1213_ext_TM[k][l])))).A;
+                    Abs_R_h_TM_13_ext[l][k] = compabs2(
+                            comprod(comsum(ONE, R_12_ext_TM[k][l]), inversecom(commin(ONE, R_1213_ext_TM[k][l])))).A;
+                    Abs_R_h_TM_12_sub[l][k] = compabs2(
+                            comprod(comsum(ONE, R_13_sub_TM[k][l]), inversecom(commin(ONE, R_1213_sub_TM[k][l])))).A;
+                    Abs_R_h_TE_12_ext[l][k] = compabs2(
+                            comprod(comsum(ONE, R_13_ext_TE[k][l]), inversecom(commin(ONE, R_1213_ext_TE[k][l])))).A;
+                    Abs_R_h_TE_13_ext[l][k] = compabs2(
+                            comprod(comsum(ONE, R_12_ext_TE[k][l]), inversecom(commin(ONE, R_1213_ext_TE[k][l])))).A;
+                    Abs_R_h_TE_12_sub[l][k] = compabs2(
+                            comprod(comsum(ONE, R_13_sub_TE[k][l]), inversecom(commin(ONE, R_1213_sub_TE[k][l])))).A;
+                }
+            }
+
+
+
+
+            //	eq (25)
+            multiply_5_1_1(prefactor_v_TM, Abs_R_v_TM_12_ext, T_12_ext_TM, inpv_ext_TM, L_1_ext_TM, n_2, L_2_ext_TM,
+                           n_extra, a_lgth, w_lgth, p_out_12_v_ext_TM);
+            multiply_5_2(p_out_12_v_ext_TM, T_sub_ext_TM, n_3, L_2_sub_ext_TM, n_2, L_1_sub_ext_TM, a_lgth, w_lgth,
+                         p_out_12_v_ext_TM_intf);
+            multiply_5_1_1(prefactor_v_TM, Abs_R_v_TM_13_ext, T_13_ext_TM, inpv_ext_TM, L_1_ext_TM, n_3, L_3_ext_TM,
+                           n_extra, a_lgth, w_lgth, p_out_13_v_ext_TM);
+            multiply_5_1_1(prefactor_v_TM, Abs_R_v_TM_12_sub, T_12_sub_TM, inpv_sub_TM, L_1_sub_TM, n_2, L_2_sub_TM,
+                           n_extra, a_lgth, w_lgth, p_out_12_v_sub_TM);
+
+            multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_12_ext, T_12_ext_TM, inpv_ext_TM, L_1_ext_TM, n_2, L_2_ext_TM,
+                           n_extra, a_lgth, w_lgth, p_out_12_h_ext_TM);
+            multiply_5_2(p_out_12_h_ext_TM, T_sub_ext_TM, n_3, L_2_sub_ext_TM, n_2, L_1_sub_ext_TM, a_lgth, w_lgth,
+                         p_out_12_h_ext_TM_intf);
+            multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_13_ext, T_13_ext_TM, inpv_ext_TM, L_1_ext_TM, n_3, L_3_ext_TM,
+                           n_extra, a_lgth, w_lgth, p_out_13_h_ext_TM);
+            multiply_5_1_2(prefactor_h_TM, Abs_R_h_TM_12_sub, T_12_sub_TM, inpv_sub_TM, L_1_sub_TM, n_2, L_2_sub_TM,
+                           n_extra, a_lgth, w_lgth, p_out_12_h_sub_TM);
+
+
+
 //            //	eq (26)
 //            multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_12_ext, T_12_ext_TE, L_1_ext_TE, n_2, L_2_ext_TE, n_extra, a_lgth,
 //                           w_lgth, p_out_12_h_ext_TE);
@@ -1310,7 +1314,9 @@ int main(void) {
 //                           w_lgth, p_out_13_h_ext_TE);
 //            multiply_5_1_3(prefactor_h_TE, Abs_R_h_TE_12_sub, T_12_sub_TE, L_1_sub_TE, n_2, L_2_sub_TE, n_extra, a_lgth,
 //                           w_lgth, p_out_12_h_sub_TE);
-//
+
+
+
 //            multiply_4_1(p_out_12_v_ext_TM_intf, P0_v, EML[i].QY * (1 - EML[i].HDR), a_lgth, w_lgth,
 //                         p_out_12_ext_TM_EMZ[i][j]);
 //            multiply_4_1(p_out_12_h_ext_TM_intf, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, Temp);
@@ -1318,7 +1324,6 @@ int main(void) {
 //            multiply_4_1(p_out_12_h_ext_TE_intf, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth,
 //                         p_out_12_ext_TE_EMZ[i][j]);
 //            arrsum_new(p_out_12_ext_TM_EMZ[i][j], p_out_12_ext_TE_EMZ[i][j], w_lgth, a_lgth, p_out_12_ext_EMZ[i][j]);
-//
 //            multiply_4_1(p_out_13_v_ext_TM, P0_v, EML[i].QY * (1 - EML[i].HDR), a_lgth, w_lgth,
 //                         p_out_13_ext_TM_EMZ[i][j]);
 //            multiply_4_1(p_out_13_h_ext_TM, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, Temp);
@@ -1332,7 +1337,10 @@ int main(void) {
 //            arrsum(p_out_12_sub_TM_EMZ[i][j], Temp, w_lgth, a_lgth);
 //            multiply_4_1(p_out_12_h_sub_TE, P0_v, EML[i].QY * EML[i].HDR, a_lgth, w_lgth, p_out_12_sub_TE_EMZ[i][j]);
 //            arrsum_new(p_out_12_sub_TM_EMZ[i][j], p_out_12_sub_TE_EMZ[i][j], w_lgth, a_lgth, p_out_12_sub_EMZ[i][j]);
-//            //	eq (27)
+//
+//
+//
+//             //	eq (27)
 //            multiply_4_2(p_out_12_ext_TM_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
 //                         p_out_12_ext_TM_spec[i][j]);
 //            multiply_4_2(p_out_12_ext_TE_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
@@ -1350,14 +1358,13 @@ int main(void) {
 //            multiply_4_2(p_out_12_sub_TE_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
 //                         p_out_12_sub_TE_spec[i][j]);
 //            arrsum_new(p_out_12_sub_TM_spec[i][j], p_out_12_sub_TE_spec[i][j], w_lgth, a_lgth, p_out_12_sub_spec[i][j]);
-            //	far_field emission end
+//             //far_field emission end
 //        }
-
-
-
-
-
-
+//
+//
+//
+//
+//
 //        for (j = 0; j < no_EMZ; j++) {
 //            for (k = 0; k < w_lgth; k++) {
 //                P_EML[k][i] += P_EMZ[i][j][k];
@@ -1371,11 +1378,13 @@ int main(void) {
 //                Purcell[k][i][j] = P[i][j][k] / P0[k].A;
 //            }
 //        }    //	EMZ loop
-
-
-
-
-
+//
+//
+//
+//
+//
+//
+//
 //        for (j = 0; j < w_lgth; j++) {
 //            OC_eff_integrated[i] +=
 //                    (spectrum[j][1][i] * EML[i].QY * OC_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
@@ -1390,6 +1399,8 @@ int main(void) {
 //            SPPs_eff_integrated[i] +=
 //                    (spectrum[j][1][i] * EML[i].QY * SPPs_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
 //        }
+//
+//
 //        OC_eff_integrated[i] *= EXC_prop[i];
 //        OC_back_eff_integrated[i] *= EXC_prop[i];
 //        ABS_eff_integrated[i] *= EXC_prop[i];
@@ -1397,12 +1408,12 @@ int main(void) {
 //        WG_eff_integrated[i] *= EXC_prop[i];
 //        SPPs_eff_integrated[i] *= EXC_prop[i];
 //        //	mode analysis end
-
-
-
-
-
-
+//
+//
+//
+//
+//
+//
 //        //	for far-field emission
 //        for (j = 0; j < no_EMZ; j++) {
 //            for (k = 0; k < a_lgth; k++) {
@@ -1420,8 +1431,7 @@ int main(void) {
 //                    p_out_12_sub_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_sub_spec[i][j][l][k];
 //                }
 //            }
-//        }    //	no_EMZ loop
-//             //	far-field emission end
+        }    //	no_EMZ loop //	far-field emission end
 
 
 
@@ -1431,59 +1441,56 @@ int main(void) {
 
 
 
-
-
-//    free(ext_number_TM); free(ext_number_TE); free(subs_number_TM); free(subs_number_TE);
-//    free(WG_number_TM); free(WG_number_TE); free2d(p_abs_TM_tailored); free2d(p_abs_TE_tailored);
-//    free2d(Temp); free(EML); free(EXC_prop); free(n_ordi); free(n_extra); free(n_2); free(n_3);
-//    free(P0_v); free(P0_h); free2d(thick_up); free2d(thick_low); free2d(thick_sub_ext); free2c(L_1);
-//    free2c(L_2_TE); free2c(L_2_TM); free2c(L_3_TE); free2c(L_3_TM); free4c(rt_up); free4c(rt_low);
-//    free4d(index_up); free4d(index_low); free(no_up_layer); free(no_low_layer); free3d(EMZ);
-//    free2c(r_12_TE); free2c(t_12_TE); free2c(r_13_TE); free2c(t_13_TE); free2c(r_12_TM);
-//    free2c(t_12_TM); free2c(r_13_TM); free2c(t_13_TM); free(prefactor_h_TE);
-//    free(prefactor_h_TM); free(prefactor_v_TM); free2d(Abs_R_v_TM_12); free2d(Abs_R_h_TM_12);
-//    free2d(Abs_R_h_TE_12); free2d(Abs_R_v_TM_13); free2d(Abs_R_h_TM_13); free2d(Abs_R_h_TE_13);
-//    free2c(T_12_TM); free2c(T_13_TM); free2c(T_12_TE); free2c(T_13_TE); free2c(R_12_TM);
-//    free2c(R_13_TM); free2c(R_1213_TM); free2c(R_12_TE); free2c(R_13_TE); free2c(R_1213_TE);
-//    free2d(p_v_TM); free2d(p_h_TM); free2d(p_h_TE); free2d(p_out_12_v_TM); free2d(p_out_12_h_TM);
-//    free2d(p_out_12_h_TE); free2d(p_out_13_v_TM); free2d(p_out_13_h_TM); free2d(p_out_13_h_TE);
-//    free2d(p_total_out_12_TM); free2d(p_total_out_12_TE); free2d(p_total_out_12); free2d(p_total_out_13_TM);
-//    free2d(p_total_out_13_TE); free2d(p_total_out_13); free(inpv_cut_ext_TM); free(inpv_cut_sub_TM);
-//    free(inpv_cut_ext_TE); free(inpv_cut_sub_TE); free2c(inpv_ext_TM); free2c(inpv_ext_TE);
-//    free2c(inpv_sub_TM); free2c(inpv_sub_TE); free2c(L_1_ext_TM); free2c(L_1_ext_TE); free2c(L_1_sub_TM);
-//    free2c(L_1_sub_TE); free2c(L_2_ext_TM); free2c(L_2_ext_TE); free2c(L_2_sub_TM); free2c(L_2_sub_TE);
-//    free2c(L_3_ext_TM); free2c(L_3_ext_TE); free2c(inpv_sub_ext_TM); free2c(inpv_sub_ext_TE);
-//    free4d(index_sub_ext); free2c(L_1_sub_ext_TM); free2c(L_1_sub_ext_TE); free2c(L_2_sub_ext_TM);
-//    free2c(L_2_sub_ext_TE); free3c(rt_up_ext_TM); free3c(rt_up_ext_TE); free3c(rt_up_sub_TM);
-//    free3c(rt_up_sub_TE); free3c(rt_low_ext_TM); free3c(rt_low_ext_TE); free3c(rt_low_sub_TM);
-//    free3c(rt_low_sub_TE); free3c(rt_sub_ext_TM); free3c(rt_sub_ext_TE); free2c(r_12_ext_TM);
-//    free2c(t_12_ext_TM); free2c(r_12_sub_TM); free2c(t_12_sub_TM); free2c(r_12_ext_TE);
-//    free2c(t_12_ext_TE); free2c(r_12_sub_TE); free2c(t_12_sub_TE); free2c(r_13_ext_TM);
-//    free2c(t_13_ext_TM); free2c(r_13_ext_TE); free2c(t_13_ext_TE); free2c(r_13_sub_TM);
-//    free2c(r_13_sub_TE); free2c(t_sub_ext_TM); free2c(t_sub_ext_TE); free2c(T_12_ext_TM);
-//    free2c(T_13_ext_TM); free2c(T_12_sub_TM); free2c(T_sub_ext_TM); free2c(T_12_ext_TE);
-//    free2c(T_13_ext_TE); free2c(T_12_sub_TE); free2c(T_sub_ext_TE); free2c(R_12_ext_TM);
-//    free2c(R_13_ext_TM); free2c(R_1213_ext_TM); free2c(R_13_sub_TM);  free2c(R_1213_sub_TM);
-//    free2c(R_12_ext_TE); free2c(R_13_ext_TE); free2c(R_1213_ext_TE); free2c(R_13_sub_TE);
-//    free2c(R_1213_sub_TE); free2d(Abs_R_v_TM_12_ext); free2d(Abs_R_v_TM_13_ext); free2d(Abs_R_v_TM_12_sub);
-//    free2d(Abs_R_h_TM_12_ext); free2d(Abs_R_h_TM_13_ext); free2d(Abs_R_h_TM_12_sub); free2d(Abs_R_h_TE_12_ext);
-//    free2d(Abs_R_h_TE_13_ext); free2d(Abs_R_h_TE_12_sub); free2d(p_out_12_v_ext_TM); free2d(p_out_12_v_ext_TM_intf);
-//    free2d(p_out_13_v_ext_TM); free2d(p_out_12_v_sub_TM); free2d(p_out_12_h_ext_TE); free2d(p_out_12_h_ext_TE_intf); free2d(p_out_13_h_ext_TE);
-//    free2d(p_out_12_h_sub_TE);free2d(p_out_12_h_ext_TM);free2d(p_out_12_h_ext_TM_intf);free2d(p_out_13_h_ext_TM);
-//    free2d(p_out_12_h_sub_TM);free3d(OC);free3d(OC_back);free3d(ABS);
-//    free3d(SUBS);free3d(WG);free3d(SPPs);free2d(P_EML);free2d(OC_EML);free2d(OC_back_EML);
-//    free2d(ABS_EML);free2d(SUBS_EML);free2d(WG_EML);free2d(SPPs_EML);
-///*	free2d(OC_EML_spec); free2d(OC_back_EML_spec); free2d(ABS_EML_spec);
-//	free2d(SUBS_EML_spec); free2d(WG_EML_spec); free2d(SPPs_EML_spec);*/
-//    free4d(p_out_12_ext_TM_spec);free4d(p_out_12_ext_TE_spec);free4d(p_out_12_ext_spec);free4d(p_out_13_ext_TM_spec);
-//    free4d(p_out_13_ext_TE_spec);free4d(p_out_13_ext_spec);free4d(p_out_12_sub_TM_spec);free4d(p_out_12_sub_TE_spec);
-//    free4d(p_out_12_sub_spec);free3d(P_EMZ);free3d(OC_EMZ);free3d(OC_back_EMZ);
-//    free3d(ABS_EMZ);free3d(SUBS_EMZ);free3d(WG_EMZ);free3d(SPPs_EMZ);
-//    free3d(P);free(P0);free3d(spectrum);free4d(p_out_12_ext_TM_EMZ);free4d(p_out_12_ext_TE_EMZ);
-//    free4d(p_out_12_ext_EMZ);free4d(p_out_13_ext_TM_EMZ);free4d(p_out_13_ext_TE_EMZ);free4d(p_out_13_ext_EMZ);
-//    free4d(p_out_12_sub_TM_EMZ);free4d(p_out_12_sub_TE_EMZ);free4d(p_out_12_sub_EMZ);
-//    //	free end
-
+    free(ext_number_TM); free(ext_number_TE); free(subs_number_TM); free(subs_number_TE);
+    free(WG_number_TM); free(WG_number_TE); free2d(p_abs_TM_tailored); free2d(p_abs_TE_tailored);
+    free2d(Temp); free(EML); free(EXC_prop); free(n_ordi); free(n_extra); free(n_2); free(n_3);
+    free(P0_v); free(P0_h); free2d(thick_up); free2d(thick_low); free2d(thick_sub_ext); free2c(L_1);
+    free2c(L_2_TE); free2c(L_2_TM); free2c(L_3_TE); free2c(L_3_TM); free4c(rt_up); free4c(rt_low);
+    free4d(index_up); free4d(index_low); free(no_up_layer); free(no_low_layer); free3d(EMZ);
+    free2c(r_12_TE); free2c(t_12_TE); free2c(r_13_TE); free2c(t_13_TE); free2c(r_12_TM);
+    free2c(t_12_TM); free2c(r_13_TM); free2c(t_13_TM); free(prefactor_h_TE);
+    free(prefactor_h_TM); free(prefactor_v_TM); free2d(Abs_R_v_TM_12); free2d(Abs_R_h_TM_12);
+    free2d(Abs_R_h_TE_12); free2d(Abs_R_v_TM_13); free2d(Abs_R_h_TM_13); free2d(Abs_R_h_TE_13);
+    free2c(T_12_TM); free2c(T_13_TM); free2c(T_12_TE); free2c(T_13_TE); free2c(R_12_TM);
+    free2c(R_13_TM); free2c(R_1213_TM); free2c(R_12_TE); free2c(R_13_TE); free2c(R_1213_TE);
+    free2d(p_v_TM); free2d(p_h_TM); free2d(p_h_TE); free2d(p_out_12_v_TM); free2d(p_out_12_h_TM);
+    free2d(p_out_12_h_TE); free2d(p_out_13_v_TM); free2d(p_out_13_h_TM); free2d(p_out_13_h_TE);
+    free2d(p_total_out_12_TM); free2d(p_total_out_12_TE); free2d(p_total_out_12); free2d(p_total_out_13_TM);
+    free2d(p_total_out_13_TE); free2d(p_total_out_13); free(inpv_cut_ext_TM); free(inpv_cut_sub_TM);
+    free(inpv_cut_ext_TE); free(inpv_cut_sub_TE); free2c(inpv_ext_TM); free2c(inpv_ext_TE);
+    free2c(inpv_sub_TM); free2c(inpv_sub_TE); free2c(L_1_ext_TM); free2c(L_1_ext_TE); free2c(L_1_sub_TM);
+    free2c(L_1_sub_TE); free2c(L_2_ext_TM); free2c(L_2_ext_TE); free2c(L_2_sub_TM); free2c(L_2_sub_TE);
+    free2c(L_3_ext_TM); free2c(L_3_ext_TE); free2c(inpv_sub_ext_TM); free2c(inpv_sub_ext_TE);
+    free4d(index_sub_ext); free2c(L_1_sub_ext_TM); free2c(L_1_sub_ext_TE); free2c(L_2_sub_ext_TM);
+    free2c(L_2_sub_ext_TE); free3c(rt_up_ext_TM); free3c(rt_up_ext_TE); free3c(rt_up_sub_TM);
+    free3c(rt_up_sub_TE); free3c(rt_low_ext_TM); free3c(rt_low_ext_TE); free3c(rt_low_sub_TM);
+    free3c(rt_low_sub_TE); free3c(rt_sub_ext_TM); free3c(rt_sub_ext_TE); free2c(r_12_ext_TM);
+    free2c(t_12_ext_TM); free2c(r_12_sub_TM); free2c(t_12_sub_TM); free2c(r_12_ext_TE);
+    free2c(t_12_ext_TE); free2c(r_12_sub_TE); free2c(t_12_sub_TE); free2c(r_13_ext_TM);
+    free2c(t_13_ext_TM); free2c(r_13_ext_TE); free2c(t_13_ext_TE); free2c(r_13_sub_TM);
+    free2c(r_13_sub_TE); free2c(t_sub_ext_TM); free2c(t_sub_ext_TE); free2c(T_12_ext_TM);
+    free2c(T_13_ext_TM); free2c(T_12_sub_TM); free2c(T_sub_ext_TM); free2c(T_12_ext_TE);
+    free2c(T_13_ext_TE); free2c(T_12_sub_TE); free2c(T_sub_ext_TE); free2c(R_12_ext_TM);
+    free2c(R_13_ext_TM); free2c(R_1213_ext_TM); free2c(R_13_sub_TM);  free2c(R_1213_sub_TM);
+    free2c(R_12_ext_TE); free2c(R_13_ext_TE); free2c(R_1213_ext_TE); free2c(R_13_sub_TE);
+    free2c(R_1213_sub_TE); free2d(Abs_R_v_TM_12_ext); free2d(Abs_R_v_TM_13_ext); free2d(Abs_R_v_TM_12_sub);
+    free2d(Abs_R_h_TM_12_ext); free2d(Abs_R_h_TM_13_ext); free2d(Abs_R_h_TM_12_sub); free2d(Abs_R_h_TE_12_ext);
+    free2d(Abs_R_h_TE_13_ext); free2d(Abs_R_h_TE_12_sub); free2d(p_out_12_v_ext_TM); free2d(p_out_12_v_ext_TM_intf);
+    free2d(p_out_13_v_ext_TM); free2d(p_out_12_v_sub_TM); free2d(p_out_12_h_ext_TE); free2d(p_out_12_h_ext_TE_intf); free2d(p_out_13_h_ext_TE);
+    free2d(p_out_12_h_sub_TE);free2d(p_out_12_h_ext_TM);free2d(p_out_12_h_ext_TM_intf);free2d(p_out_13_h_ext_TM);
+    free2d(p_out_12_h_sub_TM);free3d(OC);free3d(OC_back);free3d(ABS);
+    free3d(SUBS);free3d(WG);free3d(SPPs);free2d(P_EML);free2d(OC_EML);free2d(OC_back_EML);
+    free2d(ABS_EML);free2d(SUBS_EML);free2d(WG_EML);free2d(SPPs_EML);
+/*	free2d(OC_EML_spec); free2d(OC_back_EML_spec); free2d(ABS_EML_spec);
+	free2d(SUBS_EML_spec); free2d(WG_EML_spec); free2d(SPPs_EML_spec);*/
+    free4d(p_out_12_ext_TM_spec);free4d(p_out_12_ext_TE_spec);free4d(p_out_12_ext_spec);free4d(p_out_13_ext_TM_spec);
+    free4d(p_out_13_ext_TE_spec);free4d(p_out_13_ext_spec);free4d(p_out_12_sub_TM_spec);free4d(p_out_12_sub_TE_spec);
+    free4d(p_out_12_sub_spec);free3d(P_EMZ);free3d(OC_EMZ);free3d(OC_back_EMZ);
+    free3d(ABS_EMZ);free3d(SUBS_EMZ);free3d(WG_EMZ);free3d(SPPs_EMZ);
+    free3d(P);free(P0);free3d(spectrum);free4d(p_out_12_ext_TM_EMZ);free4d(p_out_12_ext_TE_EMZ);
+    free4d(p_out_12_ext_EMZ);free4d(p_out_13_ext_TM_EMZ);free4d(p_out_13_ext_TE_EMZ);free4d(p_out_13_ext_EMZ);
+    free4d(p_out_12_sub_TM_EMZ);free4d(p_out_12_sub_TE_EMZ);free4d(p_out_12_sub_EMZ);
+    //	free end
 
 
 
@@ -1608,7 +1615,10 @@ int main(void) {
 //        i++;
 //    }
 //    fclose(es);
-//
+
+
+
+
 //    double *Temp2 = zeros_0(w_lgth);
 //    for (i = 0; i < w_lgth; i++)
 //        Temp2[i] = p_out_12_ext_final[0][i] * eyesense[(int) WL_init - 299 + (int) WL_step * i][1];
@@ -1644,6 +1654,8 @@ int main(void) {
 //    output_CIE_sub = CIE(p_out_12_sub_final, angle, a_lgth, WL, WL_step, w_lgth);
 //    free(angle);
 //    free(WL);
+
+
     end = clock();
     double r_1;
     r_1 = t_result = ((double) end - (double) start) / CLOCKS_PER_SEC;
