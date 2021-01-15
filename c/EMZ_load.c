@@ -9,7 +9,7 @@ void free2d(double** a);
 double** intp4(double** Z, double li, double lf, double ls);
 double** zeros2_0(int x, int y);
 double** EMZ_load(emil* structure, double thick_EML, int no_of_EMzone, int EML_number)
-//	ÁÖ¾îÁø ±¸Á¶Ã¼·Î ÁÖ¾îÁø EMZ fileÀ» ÀÐ¾î¼­ 2 x EMZ_lengthÀÇ ¹è¿­·Î ¿Å±ä ÈÄ Ãâ·ÂÇÑ´Ù.
+//	ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ EMZ fileï¿½ï¿½ ï¿½Ð¾î¼­ 2 x EMZ_lengthï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Å±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 {
 	int i = 0, j, col, max_number, delta_number;
 	char temp[100];
@@ -22,7 +22,7 @@ double** EMZ_load(emil* structure, double thick_EML, int no_of_EMzone, int EML_n
 	FILE* road = fopen(structure[EML_number].EMZ_file_location, "rt");
 	if (road == NULL)
 	{
-		printf("ÆÄÀÏ ·Îµå ¿À·ù");
+		printf("Welcome To EMZ Load\n");
 		return false;
 	}
 	while (1)

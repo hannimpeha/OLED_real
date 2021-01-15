@@ -365,7 +365,7 @@ int main(void) {
 
     int no_EML = 4;    // the number of EML
 
-    FILE *fstream = fopen("/Users/hannahlee/HANNIMPEHA/OLED/example/text_em.csv", "r");
+    FILE *fstream = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_em.csv", "r");
     char *buffer = NULL;
     int h = 0, u = 0;
     int nr = 4;
@@ -437,7 +437,9 @@ int main(void) {
 
     double **Temp = zeros2(w_lgth, v_lgth);    //
     double **index_temp;
-    double ****index = zeros3(no_l + 1, 5, w_lgth);    //
+    double **spectrum_temp;
+    double **EMZ_temp;
+    double ****index = zeros4(index_temp, no_l + 1, 5, w_lgth);    //
     double ****index_up = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
     double ****index_low = zeros4(no_l + 1, 5, w_lgth, maximum_EML_number);    //
     double **thick_up = zeros2(no_l + 1, maximum_EML_number);    //
@@ -837,26 +839,26 @@ int main(void) {
         sprintf(EML[i].spectrum_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/spectrum/%s.spec", EML[i].spectrum_name);
         //printf("%s\n", EML[i].spectrum_name);
 
-        double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
+        //double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
+        spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
+        spectrum[i] = spectrum_temp;
 
 //        for (j = 0; j < w_lgth; j++) {
-//            spectrum[j][0][i] = spectrum_temp[j][0];
-//            spectrum[j][1][i] = spectrum_temp[j][1];
+//            //spectrum[j][0][i] = spectrum_temp[j][0];
+//            //spectrum[j][1][i] = spectrum_temp[j][1];
 //        }
 
 //        free2d(spectrum_temp);
-//        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
-//        double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
+        //double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+        EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+        EMZ[i] = EMZ_temp;
 //        for (j = 0; j < no_EMZ; j++) {
 //            EMZ[j][0][i] = EMZ_temp[j][0];
 //            EMZ[j][1][i] = EMZ_temp[j][1];
 //        }
 //        free2d(EMZ_temp);
     }
-
-
-
-
 
 //    free3d(index);
 //    free(structure_temp);

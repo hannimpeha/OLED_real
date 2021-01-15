@@ -6,26 +6,16 @@
 
 #IncludeRegexTransform: 
 
-/Users/hannahlee/PycharmProjects/penProject/c/OLED_main.c
+/Users/hannahlee/PycharmProjects/penProject/c/EMZ_load.c
 stdio.h
 -
 stdlib.h
 -
 string.h
 -
-math.h
--
 struct.h
 /Users/hannahlee/PycharmProjects/penProject/c/struct.h
-time.h
--
 stdbool.h
--
-err.h
--
-regex.h
--
-errno.h
 -
 
 /Users/hannahlee/PycharmProjects/penProject/c/struct.h
