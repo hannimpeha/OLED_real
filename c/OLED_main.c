@@ -1647,40 +1647,40 @@ int main(void) {
     end = clock();
     double r_1;
     r_1 = t_result = ((double) end - (double) start) / CLOCKS_PER_SEC;
-    printf("%lf is the t_result", t_result);
+    printf("%lf is the Calculation Time\n", t_result);
 
     //char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
 
 
-//	char strFolderPathCPA[100]={0};
-//	char strFolderPathEL[100]={0};
-//	char strFolderPathAI[100]={0};
-//	char strFolderPathCIE[100]={0};
-//	char strFolderPathEFF[100]={0};
-//	char strFolderPathDS[100]={0};
-//
-//    //char *strFolderPath;
-////    char *strFolderPathCPA;
-////    char *strFolderPathEL;
-////    char *strFolderPathAI;
-////    char *strFolderPathCIE;
-////    char *strFolderPathEFF;
-////    char *strFolderPathDS;
-//
-//    //strFolderPath = malloc(SIZE * sizeof(char));
-////    strFolderPathCPA = malloc(SIZE * sizeof(char));
-////    strFolderPathEL = malloc(SIZE * sizeof(char));
-////    strFolderPathAI = malloc(SIZE * sizeof(char));
-////    strFolderPathCIE = malloc(SIZE * sizeof(char));
-////    strFolderPathEFF = malloc(SIZE * sizeof(char));
-////    strFolderPathDS = malloc(SIZE * sizeof(char));
-//
-//
-//    strcpy(strFolderPath, "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1");
-//    mkdir(strFolderPath, 0700);
-//    // 7 columns
+	char strFolderPathCPA[100]={0};
+	char strFolderPathEL[100]={0};
+	char strFolderPathAI[100]={0};
+	char strFolderPathCIE[100]={0};
+	char strFolderPathEFF[100]={0};
+	char strFolderPathDS[100]={0};
+
+    //char *strFolderPath;
+//    char *strFolderPathCPA;
+//    char *strFolderPathEL;
+//    char *strFolderPathAI;
+//    char *strFolderPathCIE;
+//    char *strFolderPathEFF;
+//    char *strFolderPathDS;
+
+    //strFolderPath = malloc(SIZE * sizeof(char));
+//    strFolderPathCPA = malloc(SIZE * sizeof(char));
+//    strFolderPathEL = malloc(SIZE * sizeof(char));
+//    strFolderPathAI = malloc(SIZE * sizeof(char));
+//    strFolderPathCIE = malloc(SIZE * sizeof(char));
+//    strFolderPathEFF = malloc(SIZE * sizeof(char));
+//    strFolderPathDS = malloc(SIZE * sizeof(char));
+
+
+    strcpy(strFolderPath, "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1");
+    //mkdir(strFolderPath, 0700);
+    // 7 columns
 //    output1(strFolderPath, "output_mode", output_mode, 7);
-//
+
 //    //Candela per ampere
 //    sprintf(strFolderPathCPA, "%s/Candela_per_ampere", strFolderPath);
 //    mkdir(strFolderPathCPA, 0700);
@@ -1688,8 +1688,10 @@ int main(void) {
 //    output(strFolderPathCPA, "output_Watt_per_mA_sr_top", output_Watt_per_mA_sr_top);
 //    output(strFolderPathCPA, "output_Cd_per_A_bottom", output_Cd_per_A_bottom);
 //    output(strFolderPathCPA, "output_Cd_per_A_top", output_Cd_per_A_top);
-//
-//
+
+
+
+
 //    //ELspectrum	% wavelegnth* angle
 //    sprintf(strFolderPathEL, "%s/ELspectrum", strFolderPath);
 //    mkdir(strFolderPathEL, 0700);
@@ -1702,7 +1704,10 @@ int main(void) {
 //    outputEL(strFolderPathEL, "output_ELspectrum_bottom_TE", p_out_12_ext_TE_final, w_lgth, a_lgth);
 //    outputEL(strFolderPathEL, "output_ELspectrum_top_TE", p_out_13_ext_TE_final, w_lgth, a_lgth);
 //    outputEL(strFolderPathEL, "output_ELspectrum_sub_TE", p_out_12_sub_TE_final, w_lgth, a_lgth);
-//
+
+
+
+
 //    //angular_intensity		% angle * 1
 //    sprintf(strFolderPathAI, "%s/angular_intensity", strFolderPath);
 //    mkdir(strFolderPathAI, 0700);
@@ -1715,14 +1720,20 @@ int main(void) {
 //    output1(strFolderPathAI, "output_angular_intensity_bottom_TE", output_angular_intensity_bottom_TE, a_lgth);
 //    output1(strFolderPathAI, "output_angular_intensity_top_TE", output_angular_intensity_top_TE, a_lgth);
 //    output1(strFolderPathAI, "output_angular_intensity_sub_TE", output_angular_intensity_sub_TE, a_lgth);
-//
+
+
+
+
 //    //CIE			% angle * 3
 //    sprintf(strFolderPathCIE, "%s/CIE", strFolderPath);
 //    mkdir(strFolderPathCIE, 0700);
 //    output2(strFolderPathCIE, "output_CIE_bottom", output_CIE_bottom, a_lgth, 3);
 //    output2(strFolderPathCIE, "output_CIE_top", output_CIE_top, a_lgth, 3);
 //    output2(strFolderPathCIE, "output_CIE_sub", output_CIE_sub, a_lgth, 3);
-//
+
+
+
+
 //    //eff			% wavelegnth * EML * EMZ
 //    sprintf(strFolderPathEFF, "%s/EFF", strFolderPath);
 //    mkdir(strFolderPathEFF, 0700);
@@ -1730,44 +1741,31 @@ int main(void) {
 //    output3(strFolderPathEFF, "output_OC_top_eff", OC_back_eff, w_lgth, no_EML, no_EMZ);
 //    output3(strFolderPathEFF, "output_Purcell", Purcell, w_lgth, no_EML, no_EMZ);
 //    output3(strFolderPathEFF, "output_effective_QY", q_eff, w_lgth, no_EML, no_EMZ);
-//
+
+
+
+
 //    //dissipation	% inplane_wavevector * wavelength * EML * EMZ
 //    sprintf(strFolderPathDS, "%s/dissipation", strFolderPath);
 //    mkdir(strFolderPathDS, 0700);
 //    outputDS(strFolderPathDS, "output_power_dissipation", p_total, v_lgth, w_lgth, no_EML, no_EMZ);
 //    outputDS(strFolderPathDS, "output_power_dissipation_TM", p_total_TM, v_lgth, w_lgth, no_EML, no_EMZ);
 //    outputDS(strFolderPathDS, "output_power_dissipation_TE", p_total_TE, v_lgth, w_lgth, no_EML, no_EMZ);
-//
-//    free4d(p_total);
-//    free4d(p_total_TM);
-//    free4d(p_total_TE);
-//    free2d(p_out_12_ext_final);
-//    free2d(p_out_13_ext_final);
-//    free2d(p_out_12_sub_final);
-//    free2d(p_out_12_ext_TM_final);
-//    free2d(p_out_13_ext_TM_final);
-//    free2d(p_out_12_sub_TM_final);
-//    free2d(p_out_12_ext_TE_final);
-//    free2d(p_out_13_ext_TE_final);
-//    free2d(p_out_12_sub_TE_final);
-//    free3d(OC_eff);
-//    free3d(OC_back_eff);
-//    free3d(Purcell);
-//    free3d(q_eff);
-//    free(output_angular_intensity_sub_TE);
-//    free(output_angular_intensity_top_TE);
-//    free(output_angular_intensity_bottom_TE);
-//    free(output_angular_intensity_sub_TM);
-//    free(output_angular_intensity_top_TM);
-//    free(output_angular_intensity_bottom_TM);
-//    free(output_angular_intensity_sub);
-//    free(output_angular_intensity_top);
-//    free(output_angular_intensity_bottom);
-//    free2d(output_CIE_bottom);
-//    free2d(output_CIE_top);
-//    free2d(output_CIE_sub);
-//    end = clock();
-//    t_result = ((double) end - (double) start) / CLOCKS_PER_SEC;
-//    printf("%lf is the t_result-r_1: %lf is the t_result", t_result - r_1, t_result);
+
+
+
+
+//    free4d(p_total); free4d(p_total_TM);free4d(p_total_TE);free2d(p_out_12_ext_final);
+//    free2d(p_out_13_ext_final);free2d(p_out_12_sub_final);free2d(p_out_12_ext_TM_final);free2d(p_out_13_ext_TM_final);
+//    free2d(p_out_12_sub_TM_final);free2d(p_out_12_ext_TE_final);free2d(p_out_13_ext_TE_final);free2d(p_out_12_sub_TE_final);
+//    free3d(OC_eff);free3d(OC_back_eff);free3d(Purcell);free3d(q_eff);
+//    free(output_angular_intensity_sub_TE);free(output_angular_intensity_top_TE);free(output_angular_intensity_bottom_TE);free(output_angular_intensity_sub_TM);
+//    free(output_angular_intensity_top_TM);free(output_angular_intensity_bottom_TM);free(output_angular_intensity_sub);free(output_angular_intensity_top);
+//    free(output_angular_intensity_bottom);free2d(output_CIE_bottom);free2d(output_CIE_top);free2d(output_CIE_sub);
+
+    end = clock();
+    t_result = ((double) end - (double) start) / CLOCKS_PER_SEC;
+    printf("%lf is the Writing Time\n", t_result - r_1);
+
     return 0;
 }
