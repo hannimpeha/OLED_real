@@ -1493,147 +1493,135 @@ int main(void) {
 
 
 
-//    //	printing output
-//    //	for mode analysis
-//    double OC_eff_final = sum(OC_eff_integrated, no_EML);
-//    double OC_back_eff_final = sum(OC_back_eff_integrated, no_EML);
-//    double ABS_eff_final = sum(ABS_eff_integrated, no_EML);
-//    double SUBS_eff_final = sum(SUBS_eff_integrated, no_EML);
-//    double WG_eff_final = sum(WG_eff_integrated, no_EML);
-//    double SPPs_eff_final = sum(SPPs_eff_integrated, no_EML);
-//    double NR_loss_final =
-//            1 - (OC_eff_final + OC_back_eff_final + ABS_eff_final + SUBS_eff_final + WG_eff_final + SPPs_eff_final);
-//
-//
-//    printf("OC:%g, OC_back:%g, Subs:%g, WG:%g, SPPs:%g,  Abs:%g, NR_loss:%g \n", OC_eff_final, OC_back_eff_final,
-//           SUBS_eff_final, WG_eff_final, SPPs_eff_final, ABS_eff_final,
-//           NR_loss_final);        //  NR_loss�� ABS��ġ �ٲ�Ͱ���	NR loss	�� 0??...
-//    //	mode analysis end
+    //	printing output
+    //	for mode analysis
+    double OC_eff_final = sum(OC_eff_integrated, no_EML);
+    double OC_back_eff_final = sum(OC_back_eff_integrated, no_EML);
+    double ABS_eff_final = sum(ABS_eff_integrated, no_EML);
+    double SUBS_eff_final = sum(SUBS_eff_integrated, no_EML);
+    double WG_eff_final = sum(WG_eff_integrated, no_EML);
+    double SPPs_eff_final = sum(SPPs_eff_integrated, no_EML);
+    double NR_loss_final =
+            1 - (OC_eff_final + OC_back_eff_final + ABS_eff_final + SUBS_eff_final + WG_eff_final + SPPs_eff_final);
+
+
+    printf("OC:%g, OC_back:%g, Subs:%g, WG:%g, SPPs:%g,  Abs:%g, NR_loss:%g \n", OC_eff_final, OC_back_eff_final,
+           SUBS_eff_final, WG_eff_final, SPPs_eff_final, ABS_eff_final,
+           NR_loss_final);        //  NR_loss�� ABS��ġ �ٲ�Ͱ���	NR loss	�� 0??...
+    //	mode analysis end
 
 
 
-//    free(OC_eff_integrated);
-//    free(OC_back_eff_integrated);
-//    free(ABS_eff_integrated);
-//    free(SUBS_eff_integrated);
-//    free(WG_eff_integrated);
-//    free(SPPs_eff_integrated);
-//    //for far_field emission
+    free(OC_eff_integrated);free(OC_back_eff_integrated);
+    free(ABS_eff_integrated);free(SUBS_eff_integrated);
+    free(WG_eff_integrated);free(SPPs_eff_integrated);
+    //for far_field emission
 
 
 
+    for (i = 0; i < no_EML; i++) {
+        for (j = 0; j < a_lgth; j++) {
+            for (k = 0; k < w_lgth; k++) {
+                p_out_12_ext_TM_final[j][k] += p_out_12_ext_TM_spec_EML[j][k][i];
+                p_out_12_ext_TE_final[j][k] += p_out_12_ext_TE_spec_EML[j][k][i];
+                p_out_12_ext_final[j][k] += p_out_12_ext_spec_EML[j][k][i];
 
-//    for (i = 0; i < no_EML; i++) {
-//        for (j = 0; j < a_lgth; j++) {
-//            for (k = 0; k < w_lgth; k++) {
-//                p_out_12_ext_TM_final[j][k] += p_out_12_ext_TM_spec_EML[j][k][i];
-//                p_out_12_ext_TE_final[j][k] += p_out_12_ext_TE_spec_EML[j][k][i];
-//                p_out_12_ext_final[j][k] += p_out_12_ext_spec_EML[j][k][i];
-//
-//                p_out_13_ext_TM_final[j][k] += p_out_13_ext_TM_spec_EML[j][k][i];
-//                p_out_13_ext_TE_final[j][k] += p_out_13_ext_TE_spec_EML[j][k][i];
-//                p_out_13_ext_final[j][k] += p_out_13_ext_spec_EML[j][k][i];
-//
-//                p_out_12_sub_TM_final[j][k] += p_out_12_sub_TM_spec_EML[j][k][i];
-//                p_out_12_sub_TE_final[j][k] += p_out_12_sub_TE_spec_EML[j][k][i];
-//                p_out_12_sub_final[j][k] += p_out_12_sub_spec_EML[j][k][i];
-//            }
-//        }
-//    }//	EML loop
+                p_out_13_ext_TM_final[j][k] += p_out_13_ext_TM_spec_EML[j][k][i];
+                p_out_13_ext_TE_final[j][k] += p_out_13_ext_TE_spec_EML[j][k][i];
+                p_out_13_ext_final[j][k] += p_out_13_ext_spec_EML[j][k][i];
 
+                p_out_12_sub_TM_final[j][k] += p_out_12_sub_TM_spec_EML[j][k][i];
+                p_out_12_sub_TE_final[j][k] += p_out_12_sub_TE_spec_EML[j][k][i];
+                p_out_12_sub_final[j][k] += p_out_12_sub_spec_EML[j][k][i];
+            }
+        }
+    }//	EML loop
 
 
-
-//    free3d(p_out_12_ext_TM_spec_EML);
-//    free3d(p_out_12_ext_TE_spec_EML);
-//    free3d(p_out_12_ext_spec_EML);
-//    free3d(p_out_13_ext_TM_spec_EML);
-//    free3d(p_out_13_ext_TE_spec_EML);
-//    free3d(p_out_13_ext_spec_EML);
-//    free3d(p_out_12_sub_TM_spec_EML);
-//    free3d(p_out_12_sub_TE_spec_EML);
-//    free3d(p_out_12_sub_spec_EML);
-//    //far-field emission end
+    free3d(p_out_12_ext_TM_spec_EML);free3d(p_out_12_ext_TE_spec_EML);
+    free3d(p_out_12_ext_spec_EML);free3d(p_out_13_ext_TM_spec_EML);
+    free3d(p_out_13_ext_TE_spec_EML);free3d(p_out_13_ext_spec_EML);
+    free3d(p_out_12_sub_TM_spec_EML);free3d(p_out_12_sub_TE_spec_EML);free3d(p_out_12_sub_spec_EML);
+    //far-field emission end
 
 
 
+    //	output processing for n loops
+    //	output: MOde, spectrum, PUrcell, qeff, CIE, Luminace
+
+    //	output matrix
+    //	angle * 1
+    double *output_angular_intensity_bottom = zeros(a_lgth);    //
+    double *output_angular_intensity_top = zeros(a_lgth);        //
+    double *output_angular_intensity_sub = zeros(a_lgth);        //
+    double *output_angular_intensity_bottom_TM = zeros(a_lgth);    //
+    double *output_angular_intensity_top_TM = zeros(a_lgth);    //
+    double *output_angular_intensity_sub_TM = zeros(a_lgth);    //
+    double *output_angular_intensity_bottom_TE = zeros(a_lgth);    //
+    double *output_angular_intensity_top_TE = zeros(a_lgth);    //
+    double *output_angular_intensity_sub_TE = zeros(a_lgth);    //
 
 
-//    //	output processing for n loops
-//    //	output: MOde, spectrum, PUrcell, qeff, CIE, Luminace
-//
-//    //	output matrix
-//    //	angle * 1
-//    double *output_angular_intensity_bottom = zeros(a_lgth);    //
-//    double *output_angular_intensity_top = zeros(a_lgth);        //
-//    double *output_angular_intensity_sub = zeros(a_lgth);        //
-//    double *output_angular_intensity_bottom_TM = zeros(a_lgth);    //
-//    double *output_angular_intensity_top_TM = zeros(a_lgth);    //
-//    double *output_angular_intensity_sub_TM = zeros(a_lgth);    //
-//    double *output_angular_intensity_bottom_TE = zeros(a_lgth);    //
-//    double *output_angular_intensity_top_TE = zeros(a_lgth);    //
-//    double *output_angular_intensity_sub_TE = zeros(a_lgth);    //
-
-
-
-//    //	angle * 3
-//    double **output_CIE_bottom;    //
-//    double **output_CIE_top;    //
-//    double **output_CIE_sub;    //
+    //	angle * 3
+    double **output_CIE_bottom;    //
+    double **output_CIE_top;    //
+    double **output_CIE_sub;    //
 
 
 
-//    //	7 columns
-//    double output_mode[7] = {OC_eff_final, OC_back_eff_final, ABS_eff_final, SUBS_eff_final, WG_eff_final,
-//                             SPPs_eff_final, NR_loss_final};
-//
-//    //	Candela per ampere part
-//    FILE *es = fopen("/Users/hannahlee/PycharmProjects/penProject/c/data/eyesense.dat", "rt");
-//    if (es == NULL) {
-//        printf("There is no data");
-//        return false;
-//    }
-//    char temp[20];
-//    char *temp1 = temp;
-//    char *temp2;
-//    double result;
-//    double **eyesense = zeros2_0(600, 3);
-//    while (1) {
-//        j = 0;
-//        if (feof(es))
-//            break;
-//        temp1 = fgets(temp1, 100, es);
-//        temp2 = strtok(temp1, "	");
-//        while (temp2 != NULL) {
-//            result = atof(temp2);
-//            temp2 = strtok(NULL, "	");
-//            *(*(eyesense + i) + j) = result;
-//            j++;
-//        }
-//        i++;
-//    }
-//    fclose(es);
+    //	7 columns
+    double output_mode[7] = {OC_eff_final, OC_back_eff_final, ABS_eff_final, SUBS_eff_final, WG_eff_final,
+                             SPPs_eff_final, NR_loss_final};
+
+    //	Candela per ampere part
+    FILE *es = fopen("/Users/hannahlee/PycharmProjects/penProject/c/data/eyesense.dat", "rt");
+    if (es == NULL) {
+        printf("There is no data");
+        return false;
+    }
+    char temp[20];
+    char *temp1 = temp;
+    char *temp2;
+    double result;
+    double **eyesense = zeros2_0(600, 3);
+    while (1) {
+        j = 0;
+        if (feof(es))
+            break;
+        temp1 = fgets(temp1, 100, es);
+        temp2 = strtok(temp1, "	");
+        while (temp2 != NULL) {
+            result = atof(temp2);
+            temp2 = strtok(NULL, "	");
+            *(*(eyesense + i) + j) = result;
+            j++;
+        }
+        i++;
+    }
+    fclose(es);
 
 
 
 
-//    double *Temp2 = zeros_0(w_lgth);
-//    for (i = 0; i < w_lgth; i++)
-//        Temp2[i] = p_out_12_ext_final[0][i] * eyesense[(int) WL_init - 299 + (int) WL_step * i][1];
-//    double Cd_bottom = 683.002 * sum(Temp2, w_lgth) * WL_step;        //		Watt/mA/sr -> Cd/mA
-//    for (i = 0; i < w_lgth; i++)
-//        Temp2[i] = p_out_13_ext_final[0][i] * eyesense[(int) WL_init - 299 + (int) WL_step * i][1];
-//    double Cd_top = 683.002 * sum(Temp2, w_lgth) * WL_step;
-//    double Ampere = 1000;    //	1000mA, 1Coulomb/sec
-//    for (i = 0; i < w_lgth; i++)
-//        Temp2[i] = p_out_12_ext_final[0][i];
-//    double output_Watt_per_mA_sr_bottom = sum(Temp2, w_lgth) * WL_step;
-//    for (i = 0; i < w_lgth; i++)
-//        Temp2[i] = p_out_13_ext_final[0][i];
-//    double output_Watt_per_mA_sr_top = sum(Temp2, w_lgth) * WL_step;
-//    free(Temp2);
-//    double output_Cd_per_A_bottom = Cd_bottom / Ampere;
-//    double output_Cd_per_A_top = Cd_top / Ampere;
+    double *Temp2 = zeros_0(w_lgth);
+    for (i = 0; i < w_lgth; i++)
+        Temp2[i] = p_out_12_ext_final[0][i] * eyesense[(int) WL_init - 299 + (int) WL_step * i][1];
+    double Cd_bottom = 683.002 * sum(Temp2, w_lgth) * WL_step;        //		Watt/mA/sr -> Cd/mA
+    for (i = 0; i < w_lgth; i++)
+        Temp2[i] = p_out_13_ext_final[0][i] * eyesense[(int) WL_init - 299 + (int) WL_step * i][1];
+    double Cd_top = 683.002 * sum(Temp2, w_lgth) * WL_step;
+    double Ampere = 1000;    //	1000mA, 1Coulomb/sec
+    for (i = 0; i < w_lgth; i++)
+        Temp2[i] = p_out_12_ext_final[0][i];
+    double output_Watt_per_mA_sr_bottom = sum(Temp2, w_lgth) * WL_step;
+    for (i = 0; i < w_lgth; i++)
+        Temp2[i] = p_out_13_ext_final[0][i];
+    double output_Watt_per_mA_sr_top = sum(Temp2, w_lgth) * WL_step;
+    free(Temp2);
+    double output_Cd_per_A_bottom = Cd_bottom / Ampere;
+    double output_Cd_per_A_top = Cd_top / Ampere;
+
+
 //    //	angle * 1
 //    for (i = 0; i < a_lgth; i++) {
 //        output_angular_intensity_bottom[i] = sum(p_out_12_ext_final[i], w_lgth);
@@ -1688,12 +1676,12 @@ int main(void) {
 
     strcpy(strFolderPath, "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1");
     //mkdir(strFolderPath, 0700);
-    // 7 columns
-//    output1(strFolderPath, "output_mode", output_mode, 7);
+     //7 columns
+    output1(strFolderPath, "output_mode", output_mode, 7);
 
 //    //Candela per ampere
 //    sprintf(strFolderPathCPA, "%s/Candela_per_ampere", strFolderPath);
-//    mkdir(strFolderPathCPA, 0700);
+//    //mkdir(strFolderPathCPA, 0700);
 //    output(strFolderPathCPA, "output_Watt_per_mA_sr_bottom", output_Watt_per_mA_sr_bottom);
 //    output(strFolderPathCPA, "output_Watt_per_mA_sr_top", output_Watt_per_mA_sr_top);
 //    output(strFolderPathCPA, "output_Cd_per_A_bottom", output_Cd_per_A_bottom);
@@ -1704,7 +1692,7 @@ int main(void) {
 
 //    //ELspectrum	% wavelegnth* angle
 //    sprintf(strFolderPathEL, "%s/ELspectrum", strFolderPath);
-//    mkdir(strFolderPathEL, 0700);
+//    //mkdir(strFolderPathEL, 0700);
 //    outputEL(strFolderPathEL, "output_ELspectrum_bottom", p_out_12_ext_final, w_lgth, a_lgth);
 //    outputEL(strFolderPathEL, "output_ELspectrum_top", p_out_13_ext_final, w_lgth, a_lgth);
 //    outputEL(strFolderPathEL, "output_ELspectrum_sub", p_out_12_sub_final, w_lgth, a_lgth);
