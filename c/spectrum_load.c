@@ -17,7 +17,7 @@ double** spectrum_load(emil* EML, double lambda_init, double lambda_final, doubl
 	FILE* road = fopen(EML[EML_number].spectrum_file_location, "rt");
 	if (road == NULL)
 	{
-		printf("Welcome To Spectrum Load\n");
+		printf("Welcome To Spectrum Load\nThis May Take A While...\n");
 		return false;
 	}
 	while (1)

@@ -1352,14 +1352,14 @@ int main(void) {
 //            multiply_4_2(p_out_12_sub_TE_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
 //                         p_out_12_sub_TE_spec[i][j]);
 //            arrsum_new(p_out_12_sub_TM_spec[i][j], p_out_12_sub_TE_spec[i][j], w_lgth, a_lgth, p_out_12_sub_spec[i][j]);
-//             //far_field emission end
-//        }
 //
-//
-//
-//
-//
-//        for (j = 0; j < no_EMZ; j++) {
+        }//far_field emission end
+
+
+
+
+
+        for (j = 0; j < no_EMZ; j++) {
             for (k = 0; k < w_lgth; k++) {
                 P_EML[k][i] += P_EMZ[i][j][k];
                 OC_EML[k][i] += OC_EMZ[i][j][k];
@@ -1371,14 +1371,14 @@ int main(void) {
 
                 Purcell[k][i][j] = P[i][j][k] / P0[k].A;
             }
-//        }    //	EMZ loop
-//
-//
-//
-//
-//
-//
-//
+        }    //	EMZ loop
+
+
+
+
+
+
+
 //        for (j = 0; j < w_lgth; j++) {
 //            OC_eff_integrated[i] +=
 //                    (spectrum[j][1][i] * EML[i].QY * OC_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
@@ -1393,8 +1393,9 @@ int main(void) {
 //            SPPs_eff_integrated[i] +=
 //                    (spectrum[j][1][i] * EML[i].QY * SPPs_EML[j][i]) / (1 - EML[i].QY + EML[i].QY * P_EML[j][i]);
 //        }
-//
-//
+
+
+
         OC_eff_integrated[i] *= EXC_prop[i];
         OC_back_eff_integrated[i] *= EXC_prop[i];
         ABS_eff_integrated[i] *= EXC_prop[i];
@@ -1409,7 +1410,7 @@ int main(void) {
 
 
         //	for far-field emission
-//        for (j = 0; j < no_EMZ; j++) {
+        for (j = 0; j < no_EMZ; j++) {
             for (k = 0; k < a_lgth; k++) {
                 for (l = 0; l < w_lgth; l++) {
                     p_out_12_ext_TM_spec_EML[k][l][i] += EXC_prop[i] * p_out_12_ext_TM_spec[i][j][l][k];
