@@ -1119,6 +1119,7 @@ int main(void) {
             //double d = EMZ_load(EML, thick_up[0][i], no_EMZ, i)[j][i];
 
             double d = EMZ_load(EML, thick_EML, no_EMZ, i)[j][0];
+            double g = EMZ_load(EML, thick_EML, no_EMZ, i)[j][1];
             double s = thick_EML - d;
 
 //            double d = EMZ[j][0][i];
@@ -1237,13 +1238,13 @@ int main(void) {
                 OC_eff[k][i][j] = OC[i][j][k] / P[i][j][k];
                 OC_back_eff[k][i][j] = OC_back[i][j][k] / P[i][j][k];
 
-                P_EMZ[i][j][k] = P[i][j][k] * EMZ[j][1][i];
-                OC_EMZ[i][j][k] = OC[i][j][k] * EMZ[j][1][i];
-                OC_back_EMZ[i][j][k] = OC_back[i][j][k] * EMZ[j][1][i];
-                ABS_EMZ[i][j][k] = ABS[i][j][k] * EMZ[j][1][i];
-                SUBS_EMZ[i][j][k] = SUBS[i][j][k] * EMZ[j][1][i];
-                WG_EMZ[i][j][k] = WG[i][j][k] * EMZ[j][1][i];
-                SPPs_EMZ[i][j][k] = SPPs[i][j][k] * EMZ[j][1][i];
+                P_EMZ[i][j][k] = P[i][j][k] * g;
+                OC_EMZ[i][j][k] = OC[i][j][k] * g;
+                OC_back_EMZ[i][j][k] = OC_back[i][j][k] * g;
+                ABS_EMZ[i][j][k] = ABS[i][j][k] * g;
+                SUBS_EMZ[i][j][k] = SUBS[i][j][k] * g;
+                WG_EMZ[i][j][k] = WG[i][j][k] * g;
+                SPPs_EMZ[i][j][k] = SPPs[i][j][k] * g;
             }    //	w_lgth loop
             	// mode anlysis end
 
@@ -1350,26 +1351,26 @@ int main(void) {
 
 
 
-//             //	eq (27)
-//            multiply_4_2(p_out_12_ext_TM_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
-//                         p_out_12_ext_TM_spec[i][j]);
-//            multiply_4_2(p_out_12_ext_TE_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
-//                         p_out_12_ext_TE_spec[i][j]);
-//            arrsum_new(p_out_12_ext_TM_spec[i][j], p_out_12_ext_TE_spec[i][j], w_lgth, a_lgth, p_out_12_ext_spec[i][j]);
-//
-//            multiply_4_2(p_out_13_ext_TM_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
-//                         p_out_13_ext_TM_spec[i][j]);
-//            multiply_4_2(p_out_13_ext_TE_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
-//                         p_out_13_ext_TE_spec[i][j]);
-//            arrsum_new(p_out_13_ext_TM_spec[i][j], p_out_13_ext_TE_spec[i][j], w_lgth, a_lgth, p_out_13_ext_spec[i][j]);
-//
-//            multiply_4_2(p_out_12_sub_TM_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
-//                         p_out_12_sub_TM_spec[i][j]);
-//            multiply_4_2(p_out_12_sub_TE_EMZ[i][j], spectrum, i, EMZ[j][1][i], a_lgth, w_lgth,
-//                         p_out_12_sub_TE_spec[i][j]);
-//            arrsum_new(p_out_12_sub_TM_spec[i][j], p_out_12_sub_TE_spec[i][j], w_lgth, a_lgth, p_out_12_sub_spec[i][j]);
-//
-        }//far_field emission end
+             //	eq (27)
+            multiply_4_2(p_out_12_ext_TM_EMZ[i][j], spectrum, i, g, a_lgth, w_lgth,
+                         p_out_12_ext_TM_spec[i][j]);
+            multiply_4_2(p_out_12_ext_TE_EMZ[i][j], spectrum, i, g, a_lgth, w_lgth,
+                         p_out_12_ext_TE_spec[i][j]);
+            arrsum_new(p_out_12_ext_TM_spec[i][j], p_out_12_ext_TE_spec[i][j], w_lgth, a_lgth, p_out_12_ext_spec[i][j]);
+
+            multiply_4_2(p_out_13_ext_TM_EMZ[i][j], spectrum, i, g, a_lgth, w_lgth,
+                         p_out_13_ext_TM_spec[i][j]);
+            multiply_4_2(p_out_13_ext_TE_EMZ[i][j], spectrum, i, g, a_lgth, w_lgth,
+                         p_out_13_ext_TE_spec[i][j]);
+            arrsum_new(p_out_13_ext_TM_spec[i][j], p_out_13_ext_TE_spec[i][j], w_lgth, a_lgth, p_out_13_ext_spec[i][j]);
+
+            multiply_4_2(p_out_12_sub_TM_EMZ[i][j], spectrum, i, g, a_lgth, w_lgth,
+                         p_out_12_sub_TM_spec[i][j]);
+            multiply_4_2(p_out_12_sub_TE_EMZ[i][j], spectrum, i, g, a_lgth, w_lgth,
+                         p_out_12_sub_TE_spec[i][j]);
+            arrsum_new(p_out_12_sub_TM_spec[i][j], p_out_12_sub_TE_spec[i][j], w_lgth, a_lgth, p_out_12_sub_spec[i][j]);
+
+        } //far_field emission end
 
 
 
