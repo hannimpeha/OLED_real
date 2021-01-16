@@ -295,7 +295,7 @@ int main(void) {
 
     int no_EMZ = 31; // the number of EMZ
     //input parameter end
-    printf("input parameter end");
+    printf("input parameter end\n");
 
 
     //Input organization and preallocations
@@ -992,7 +992,7 @@ int main(void) {
         // transmittance end
         printf("transmittance end\n");
         // far_field emission end
-        printf("far_field emission end");
+        printf("far_field emission end\n");
 
 
         //	determination of the boarder
@@ -1028,7 +1028,7 @@ int main(void) {
 //            double d = EMZ[j][0][i];
 //            double s = thick_EML - EMZ[j][0][i];
 //	        // common process end
-        printf("common process end");
+        printf("common process end\n");
 
             //	for mode analyesis
             //	Reflec: function
@@ -1457,7 +1457,7 @@ int main(void) {
     free3d(p_out_13_ext_TE_spec_EML);free3d(p_out_13_ext_spec_EML);
     free3d(p_out_12_sub_TM_spec_EML);free3d(p_out_12_sub_TE_spec_EML);free3d(p_out_12_sub_spec_EML);
     // far-field emission end
-    printf("far-field emission end");
+    printf("far-field emission end\n");
 
 
     //	output processing for n loops
@@ -1488,7 +1488,7 @@ int main(void) {
     //	Candela per ampere part
     FILE *es = fopen("/Users/hannahlee/PycharmProjects/penProject/c/data/eyesense.dat", "rt");
     if (es == NULL) {
-        printf("There is no data");
+        printf("There is no data\n");
         return false;
     }
     char temp[20];
