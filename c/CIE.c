@@ -4,6 +4,7 @@
 void free2d(double** a);
 double** zeros2_0(int x, int y);
 double* zeros(int x);
+
 double** CIE(double** spectrum, double* angle, int a_lgth, double* wavelength, double WL_step, int w_lgth)
 {
 	int i, j;

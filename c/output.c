@@ -1,10 +1,9 @@
 #include<stdio.h>
-#include<stdbool.h>
 
 
 void output(char* directory, char* name, double output)
 {
-	char Fold[100];
+	char Fold[1024];
 	sprintf(Fold, "%s\\%s.txt", directory, name);
 	FILE* file = fopen(Fold, "wt");
 	if (file == NULL)
@@ -21,7 +20,7 @@ void output(char* directory, char* name, double output)
 void output1(char* directory, char* name, double* output, int x)
 {
 	int i;
-	char Fold[100];
+	char Fold[1024];
 	sprintf(Fold, "%s\\%s.txt", directory, name);
 	FILE* file = fopen(Fold, "wt");
 	if (file == NULL)
@@ -41,7 +40,7 @@ void output1(char* directory, char* name, double* output, int x)
 void output2(char* directory, char* name, double** output, int x, int y)
 {
 	int i, j;
-	char Fold[60];
+	char Fold[1024];
 	sprintf(Fold, "%s\\%s.txt", directory, name);
 	FILE* file = fopen(Fold, "wt");
 	if (file == NULL)
@@ -64,7 +63,7 @@ void output2(char* directory, char* name, double** output, int x, int y)
 void outputEL(char* directory, char* name, double** output, int x, int y)
 {
 	int i, j;
-	char Fold[60];
+	char Fold[1024];
 	sprintf(Fold, "%s\\%s.txt", directory, name);
 	FILE* file = fopen(Fold, "wt");
 	if (file == NULL)
@@ -87,7 +86,7 @@ void outputEL(char* directory, char* name, double** output, int x, int y)
 void output3(char* directory, char* name, double*** output, int x, int y, int z)
 {
 	int i, j, k;
-	char Fold[60];
+	char Fold[1024];
 	sprintf(Fold, "%s\\%s.txt", directory, name);
 	FILE* file = fopen(Fold, "wt");
 	if (file == NULL)
@@ -114,7 +113,7 @@ void output3(char* directory, char* name, double*** output, int x, int y, int z)
 void outputDS(char* directory, char* name, double**** output, int x, int y, int z, int w)
 {
 	int i, j, k, l;
-	char Fold[60];
+	char Fold[1024];
 	sprintf(Fold, "%s\\%s.txt", directory, name);
 	FILE* file = fopen(Fold, "wt");
 	if (file == NULL)
