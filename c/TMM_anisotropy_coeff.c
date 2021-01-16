@@ -21,9 +21,11 @@ Complex** matxmat(Complex(*a)[2], Complex(*b)[2]);
 double** zeros2(int x, int y);
 double*** zeros3(int x, int y, int z);
 double*** zeros3_0(int x, int y, int z);
+
+
 Complex*** TMM_anisotropy_coeffs(double**** index, int no_EML, double** thick, double* inplane_vector, int ipv, int l_length, double* wavelength, int wl)
 {
-	//	Matrix¿¡¼­ 0ÀÎ°ªÀ» Áö¿ì°í 4 x 2²Ã·Î ¹Ù²Þ
+	//	Matrixï¿½ï¿½ï¿½ï¿½ 0ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ 4 x 2ï¿½Ã·ï¿½ ï¿½Ù²ï¿½
 	//	input & output
 	//	index : l*5*w matrix, refractive index
 	//	thick : l vector, thickness of the layer
@@ -189,7 +191,7 @@ Complex*** TMM_anisotropy_coeffs(double**** index, int no_EML, double** thick, d
 	free3c(Matrix);
 	return output;
 }
-Complex** TMM_anisotropy_coeffs_compinpv_w(double**** index, int no_EML, double** thick, Complex* inplane_vector, int ipv, int l_length, double wavelength, int i)	//	º¹¼Ò¼ö ÇüÅÂ inplane vector¿¡ ÆÄÀåº° °ªÀ» Ãâ·Â
+Complex** TMM_anisotropy_coeffs_compinpv_w(double**** index, int no_EML, double** thick, Complex* inplane_vector, int ipv, int l_length, double wavelength, int i)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ inplane vectorï¿½ï¿½ ï¿½ï¿½ï¿½åº° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 {
 	//	input & output
 	//	index : l*5*w matrix, refractive index

@@ -18,6 +18,8 @@ CMakeFiles/penProject.dir/c/Reflec.c.o: ../c/struct.h
 CMakeFiles/penProject.dir/c/TMM_anisotropy_coeff.c.o: ../c/TMM_anisotropy_coeff.c
 CMakeFiles/penProject.dir/c/TMM_anisotropy_coeff.c.o: ../c/struct.h
 
+CMakeFiles/penProject.dir/c/hannah.c.o: ../c/hannah.c
+
 CMakeFiles/penProject.dir/c/innerfunc.c.o: ../c/innerfunc.c
 CMakeFiles/penProject.dir/c/innerfunc.c.o: ../c/struct.h
 

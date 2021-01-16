@@ -7,8 +7,9 @@ int findx(double** Z);
 void free2d(double** a);
 double** zeros2_0(int x, int y);
 double** intp4(double** Z, double li, double lf, double ls);
+
+
 double** RI_load(Save* structure_temp, double lambda_init, double lambda_final, double lambda_step, int layer_num)
-//	�־��� ����ü�� �־��� Refractive Index ������ �о �԰ݿ� �´� �迭�� �ű� �� intp4�Լ��� �̿��Ͽ� ���ϴ� ���·� �����迭�� ������ϴ� �Լ�
 {
 	int i = 0, j;
 	int w_lgth = (int)((lambda_final - lambda_init) / lambda_step)+1;

@@ -1,56 +1,59 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
-#include "struct.h"
-#include <time.h>
 #include <stdbool.h>
-#include <err.h>
+#include <errno.h>
 #include <regex.h>
+#include <math.h>
+#include <time.h>
+#include <err.h>
+#include "struct.h"
+
 
 #define PI 3.141592
-#define SIZE 35
 #define MAXC  1024      /* if you need a constant, #define one (or more) */
+#define ROWS 32
+#define COLS 32
 #define DELIM ","
-void getData(char *buff);
+
+
+/*------------------------------------------------------------------------------------*/
+/*               CIE.c //  EMZ_load.c // RI_load.c // spectrum_load.c                 */
+/*------------------------------------------------------------------------------------*/
+double** CIE(double** spectrum, double* angle, int a_lgth, double* wavelength,double WL_step, int w_lgth);
+double** EMZ_load(emil* structure, double thick_EML, int no_of_EMzone, int EML_number);
+double** RI_load(Save* structure, double lambda_init, double lambda_final, double lambda_step, int layer_num);
+double** spectrum_load(emil* EML, double lambda_init, double lambda_final, double lambda_step, int EML_number);
+
+/*------------------------------------------------------------------------------------*/
+/*                                   innerfunc.c                                      */
+/*------------------------------------------------------------------------------------*/
+int find(double* a, double b, int len);
+
+double sum(double* a, int len);
+double trapz(double* x, double* y, int start, int last);
 double* linspace(double i, double f, int num);
 double* arrjoin(double* a, double* b, int lenga, int lengb);
-void arrsum(double** a, double** b, int x, int y);
-void arrsum_new(double** a, double** b, int x, int y, double** res);
-double sum(double* a, int len);
 double* zeros(int x);
 double* zeros_0(int x);
 double** zeros2(int x, int y);
-double*** zeros3(int x, int y, int z);
-double**** zeros4(int x, int y, int z, int w);
 double** zeros2_0(int x, int y);
+double*** zeros3(int x, int y, int z);
 double*** zeros3_0(int x, int y, int z);
+double**** zeros4(int x, int y, int z, int w);
 double**** zeros4_0(int x, int y, int z, int w);
 double**** zeros4_1(int x);
 double**** zeros4_2(int x, int y);
+
+void arrsum(double** a, double** b, int x, int y);
+void arrsum_new(double** a, double** b, int x, int y, double** res);
 void free2d(double** a);
 void free3d(double*** a);
 void free4d(double**** a);
 void free2c(Complex** a);
 void free3c(Complex*** a);
 void free4c(Complex**** a);
-int find(double* a, double b, int len);
-double trapz(double* x, double* y, int start, int last);
-double** CIE(double** spectrum, double* angle, int a_lgth, double* wavelength,double WL_step, int w_lgth);
-double** RI_load(Save* structure, double lambda_init, double lambda_final, double lambda_step, int layer_num);
-double** spectrum_load(emil* EML, double lambda_init, double lambda_final, double lambda_step, int EML_number);
-double** EMZ_load(emil* structure, double thick_EML, int no_of_EMzone, int EML_number);
-void Reflec(double distance, Complex** r, Complex* n_ordinary, Complex** L_1, double* inplane_vector, int inplane_vector_length, double* lambda, int lambda_length, Complex** Res);
-void Reflec_2(double distance, Complex** r_1, Complex** r_2, Complex* n_ordinary, Complex** L_1, double* inplane_vector, int inplane_vector_length, double* lambda, int lambda_length, Complex** Res);
-void Reflec_w(double distance, Complex** r, Complex* n_ordinary, Complex** L_1, int inplane_vector_length, double lambda, int lambdanum, Complex* Res);
-void Reflec_2_w(double distance, Complex** r_1, Complex** r_2, Complex* n_ordinary, Complex** L_1, int inplane_vector_length, double lambda, int lambdanum, Complex* Res);
-Complex*** TMM_anisotropy_coeffs(double**** index, int no_EML, double** thick, double* inplane_vector, int ipv, int l_length, double* wavelength, int wl);
-Complex** TMM_anisotropy_coeffs_compinpv_w(double**** index, int no_EML, double** thick, Complex* inplane_vector, int ipv, int l_length, double wavelength, int i);
-Complex comp(double a);
-Complex* comparr(int x);
-Complex** comparr2(int x, int y);
-Complex*** comparr3(int x, int y, int z);
-Complex*** comparr3_1(int x);
+
 Complex comsqrt(Complex a);
 Complex compow2(Complex a);
 Complex comdiv(Complex a, Complex b);
@@ -60,6 +63,17 @@ Complex comsum(Complex a, Complex b);
 Complex comxreal(Complex a, double b);
 Complex inversecom(Complex a);
 Complex compabs2(Complex a);
+Complex comp(double a);
+Complex* comparr(int x);
+Complex** comparr2(int x, int y);
+Complex*** comparr3(int x, int y, int z);
+Complex*** comparr3_1(int x);
+static Complex ONE = { 1 , 0 };
+
+
+/*------------------------------------------------------------------------------------*/
+/*                                    multiply.c                                      */
+/*------------------------------------------------------------------------------------*/
 void multiply_1(Complex** main, Complex* vec1, Complex** mat1, Complex* vec2, Complex** mat2, int x, int y, Complex** Res);
 void multiply_2(Complex** main, Complex** mat1, Complex** mat2, int x, int y, Complex** Res);
 void multiply_p_1(Complex* vec1, Complex** mat1, Complex** mat2, Complex** mat3, double* inpv, Complex** mat4, int x, int y, double** res);
@@ -74,208 +88,58 @@ void multiply_5_1_1(Complex* vec1, double** mat1, Complex** mat2, Complex** inpv
 void multiply_5_1_2(Complex* vec1, double** mat1, Complex** mat2, Complex** inpv, Complex** mat3, Complex* vec2, Complex** mat4, Complex* vec3, int x, int y, double** res);
 void multiply_5_1_3(Complex* vec1, double** mat1, Complex** mat2, Complex** mat3, Complex* vec2, Complex** mat4, Complex* vec3, int x, int y, double** res);
 void multiply_5_2(double** mat1, Complex** mat2, Complex* vec1, Complex** mat3, Complex* vec2, Complex** mat4, int x, int y, double** res);
+
+
+/*------------------------------------------------------------------------------------*/
+/*                                    output.c                                        */
+/*------------------------------------------------------------------------------------*/
 void output(char* directory, char* name, double output);
 void output1(char* directory, char* name, double* output, int x);
 void output2(char* directory, char* name, double** output, int x, int y);
 void outputEL(char* directory, char* name, double** output, int x, int y);
 void output3(char* directory, char* name, double*** output, int x, int y, int z);
 void outputDS(char* directory, char* name, double**** output, int x, int y, int z, int w);
-//Copyright:
-//OLED Optical Simulation Main Program
 
-static Complex ONE = { 1 , 0 };
-#define ROWS 32
-#define COLS 32
-#define ZALLOC(item, n, type) if ((item = (type *)calloc((n), sizeof(type))) == NULL) \
-                                  fatalx("Unable to allocate %d unit(s) for item\n", n)
-
-static void fatalx(const char *str, size_t n)
-{
-    fprintf(stderr, "%s: %zu\n", str, n);
-    exit(1);
-}
-
-static double ***alloc_3d(double **data, int levels, int rows, int cols)
-{
-    int count = 0;
-    double ***array_3d;
-    ZALLOC(array_3d, levels, double **);
-    for (int i = 0; i < levels; i++)
-    {
-        //int **data;
-        ZALLOC(data, rows, double *);
-        array_3d[i] = data;
-        for (int j = 0; j < rows; j++)
-        {
-            double *entries;
-            ZALLOC(entries, cols, double);
-            array_3d[i][j] = entries;
-            for (int k = 0; k < cols; k++)
-            {
-                array_3d[i][j][k] = count++;
-            }
-        }
-    }
-    return array_3d;
-}
-
-static void print_3d(double ***a3d, int levels, int rows, int cols)
-{
-    for (int i = 0; i < levels; i++)
-    {
-        printf("%d:\n", i);
-        for (int j = 0; j < rows; j++)
-        {
-            printf("   %d:  ", j);
-            for (int k = 0; k < cols; k++)
-                printf(" %3lf", a3d[i][j][k]);
-            putchar('\n');
-        }
-    }
-}
-
-static void free_3d(int ***a3d, int levels, int rows)
-{
-    for (int i = 0; i < levels; i++)
-    {
-        for (int j = 0; j < rows; j++)
-            free(a3d[i][j]);
-        free(a3d[i]);
-    }
-    free(a3d);
-}
+/*------------------------------------------------------------------------------------*/
+/*                                    Reflec.c                                        */
+/*------------------------------------------------------------------------------------*/
+void Reflec(double distance, Complex** r, Complex* n_ordinary, Complex** L_1, double* inplane_vector, int inplane_vector_length, double* lambda, int lambda_length, Complex** Res);
+void Reflec_2(double distance, Complex** r_1, Complex** r_2, Complex* n_ordinary, Complex** L_1, double* inplane_vector, int inplane_vector_length, double* lambda, int lambda_length, Complex** Res);
+void Reflec_w(double distance, Complex** r, Complex* n_ordinary, Complex** L_1, int inplane_vector_length, double lambda, int lambdanum, Complex* Res);
+void Reflec_2_w(double distance, Complex** r_1, Complex** r_2, Complex* n_ordinary, Complex** L_1, int inplane_vector_length, double lambda, int lambdanum, Complex* Res);
 
 
-#define ALLOC(p, n) do {                                \
-    if (!((p) = calloc((n), sizeof(*(p))))) {           \
-        fprintf(stderr, "Memory allocation failure\n"); \
-        exit(1);                                        \
-    }                                                   \
-} while (0)
+/*------------------------------------------------------------------------------------*/
+/*                              TMM_anisotropy_coeff.c                                */
+/*------------------------------------------------------------------------------------*/
+Complex*** TMM_anisotropy_coeffs(double**** index, int no_EML, double** thick, double* inplane_vector, int ipv, int l_length, double* wavelength, int wl);
+Complex** TMM_anisotropy_coeffs_compinpv_w(double**** index, int no_EML, double** thick, Complex* inplane_vector, int ipv, int l_length, double wavelength, int i);
 
-void *reshape_2d_3d(size_t id1, size_t id2, int iar[][id2],
-                    size_t od1, size_t od2, size_t od3) {
-    // oar is a pointer to a multidimensional array; in this case, it will
-    // point to the first element of an array of arrays (of arrays).
-    int (*oar)[od2][od3];
-    size_t size1 = id1 * id2;
-    size_t size2 = od1 * od2 * od3;
-    size_t min_size = (size1 <= size2) ? size1 : size2;
 
-    ALLOC(oar, od1);
+/*------------------------------------------------------------------------------------*/
+/*                                      hannah.c                                      */
+/*------------------------------------------------------------------------------------*/
+void fatalx(const char *str, size_t n);
+double ***alloc_3d(double **data, int levels, int rows, int cols);
+void print_3d(double ***a3d, int levels, int rows, int cols);
+void *reshape_2d_3d(size_t id1, size_t id2, int iar[][id2], size_t od1, size_t od2, size_t od3);
+void *xrealloc_dp (void **p, size_t *n);
+void *xrealloc_sp (void *p, size_t sz, size_t *n);
+void *xcalloc (size_t n, size_t s);
+double xstrtod (char *str, char **ep);
+const char* getfield(char* line, int num);
+const char *getfield2 (char *buf, size_t field);
 
-    // A loop nest could be used here, too, but I find this simpler for
-    // tracking the correspondence of array elements.  It also better
-    // accommodates the case where the reshaped result has different overall
-    // size from the original.
-    for (size_t i = 0; i < min_size; i++) {
-        oar[i / (od2 * od3)][(i / od3) % od2][i % od3] = iar[i / id2][i % id2];
-    }
 
-    return oar;
-}
-
-void *xrealloc_dp (void **p, size_t *n)
-{
-    void *tmp = realloc (p, 2 * *n * sizeof tmp);
-#ifdef DEBUG
-    printf ("\n  reallocating %zu to %zu\n", *n, *n * 2);
-#endif
-    if (!tmp) {
-        fprintf (stderr, "%s() error: virtual memory exhausted.\n", __func__);
-        exit (EXIT_FAILURE);
-    }
-    p = tmp;
-    memset (p + *n, 0, *n * sizeof tmp); /* set new pointers NULL */
-    *n *= 2;
-
-    return p;
-}
-void *xrealloc_sp (void *p, size_t sz, size_t *n)
-{
-    void *tmp = realloc (p, 2 * *n * sz);
-#ifdef DEBUG
-    printf ("\n  reallocating '%zu' to '%zu', size '%zu'\n", *n, *n * 2, sz);
-#endif
-    if (!tmp) {
-        fprintf (stderr, "%s() error: virtual memory exhausted.\n", __func__);
-        exit (EXIT_FAILURE);
-    }
-    p = tmp;
-    memset (p + *n * sz, 0, *n * sz); /* zero new memory */
-    *n *= 2;
-
-    return p;
-}
-void *xcalloc (size_t n, size_t s)
-{
-    register void *memptr = calloc (n, s);
-    if (memptr == 0)
-    {
-        fprintf (stderr, "%s() error: virtual memory exhausted.\n", __func__);
-        exit (EXIT_FAILURE);
-    }
-
-    return memptr;
-}
-#include <errno.h>
-
-double xstrtod (char *str, char **ep)
-{
-    errno = 0;
-
-    double val = strtod (str, ep);
-
-    /* Check for various possible errors */
-    if ((errno == ERANGE && (val == HUGE_VAL || val == HUGE_VALL)) ||
-        (errno != 0 && val == 0)) {
-        perror ("strtod");
-        exit (EXIT_FAILURE);
-    }
-
-    if (*ep == str) {
-        fprintf (stderr, "No digits were found\n");
-        exit (EXIT_FAILURE);
-    }
-
-    return val;
-}
-
-const char* getfield(char* line, int num)
-{
-    const char* tok;
-    for (tok = strtok(line, ",");
-         tok && *tok;
-         tok = strtok(NULL, ",\n"))
-    {
-        if (!--num)
-            return tok;
-    }
-    return NULL;
-}
-
-const char *getfield2 (char *buf, size_t field)
-{
-    size_t len = strlen(buf);       /* size of input string */
-    char *cpy = malloc (len + 1),   /* allocate for copy */
-    *p,                         /* pointer to use with strsep */
-    *tok = NULL;                /* token for requested field */
-
-    if (!cpy)                       /* validate allocation */
-        return NULL;
-
-    memcpy (cpy, buf, len + 1);     /* copy buf to cpy */
-    p = cpy;                        /* pointer to cpy, preserves cpy address */
-
-    while (field-- && (tok = strsep (&p, ","))) {}  /* get field field */
-
-    /* copy tok to cpy and return cpy on success or NULL on failure */
-    return tok ? memmove (cpy, tok, strlen(tok) + 1) : NULL;
-}
+//--------------------------------------------------------------------------------------//
+//                                                                                      //
+//                       OLED Optical Simulation Main Program                           //
+//                                                                                      //
+//--------------------------------------------------------------------------------------//
 int main(void) {
     printf("Welcome To My World \n");
-    clock_t start, end;    //
-    start = clock();    //
+    clock_t start, end;
+    start = clock();
     double t_result;    //
 
     int i, j, k, l;
@@ -1150,8 +1014,9 @@ int main(void) {
 
 //            double d = EMZ[j][0][i];
 //            double s = thick_EML - EMZ[j][0][i];
+//	        //common process end
 
-            //	common process end
+
             //	for mode analyesis
             //	Reflec: function
 

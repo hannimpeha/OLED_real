@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/penProject.dir/c/RI_load.c.o"
   "CMakeFiles/penProject.dir/c/Reflec.c.o"
   "CMakeFiles/penProject.dir/c/TMM_anisotropy_coeff.c.o"
+  "CMakeFiles/penProject.dir/c/hannah.c.o"
   "CMakeFiles/penProject.dir/c/innerfunc.c.o"
   "CMakeFiles/penProject.dir/c/intp.c.o"
   "CMakeFiles/penProject.dir/c/multiply.c.o"

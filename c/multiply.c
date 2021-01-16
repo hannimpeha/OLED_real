@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <math.h>
 #include "struct.h"
 double real(Complex a);
@@ -15,6 +12,8 @@ Complex compow2(Complex a);
 Complex comdiv(Complex a, Complex b);
 Complex** comparr2(int x, int y);
 static Complex ONE = { 1, 0 };
+
+
 void multiply_1(Complex** main, Complex* vec1, Complex** mat1, Complex* vec2, Complex** mat2, int x, int y, Complex** Res)
 {
 	int i, j;
@@ -28,6 +27,8 @@ void multiply_1(Complex** main, Complex* vec1, Complex** mat1, Complex* vec2, Co
 	}
 	return;
 }
+
+
 void multiply_2(Complex** main, Complex** mat1, Complex** mat2, int x, int y, Complex** Res)
 {
 	int i, j;
@@ -40,6 +41,8 @@ void multiply_2(Complex** main, Complex** mat1, Complex** mat2, int x, int y, Co
 	}
 	return;
 }
+
+
 void multiply_p_1(Complex* vec1, Complex** mat1, Complex** mat2, Complex** mat3, double* inpv, Complex** mat4, int x, int y, double** res)
 {
 	int i, j;
@@ -52,6 +55,8 @@ void multiply_p_1(Complex* vec1, Complex** mat1, Complex** mat2, Complex** mat3,
 	}
 	return;
 }
+
+
 void multiply_p_2(Complex* vec1, Complex** mat1, Complex** mat2, Complex** mat3, double* inpv, Complex** mat4, int x, int y, double** res)
 {
 	int i, j;
@@ -64,6 +69,8 @@ void multiply_p_2(Complex* vec1, Complex** mat1, Complex** mat2, Complex** mat3,
 	}
 	return;
 }
+
+
 void multiply_p_3(Complex* vec1, Complex** mat1, Complex** mat2, Complex** mat3, double* inpv, Complex** mat4, int x, int y, double** res)
 {
 	int i, j;
@@ -76,6 +83,8 @@ void multiply_p_3(Complex* vec1, Complex** mat1, Complex** mat2, Complex** mat3,
 	}
 	return;
 }
+
+
 void multiply_3_1(Complex* vec1, double** mat1, Complex** mat2, double* inpv, Complex** mat3, int x, int y, double** res)
 {
 	int i, j;
@@ -88,6 +97,8 @@ void multiply_3_1(Complex* vec1, double** mat1, Complex** mat2, double* inpv, Co
 	}
 	return;
 }
+
+
 void multiply_3_2(Complex* vec1, double** mat1, Complex** mat2, double* inpv, Complex** mat3, int x, int y, double** res)
 {
 	int i, j;
@@ -101,6 +112,7 @@ void multiply_3_2(Complex* vec1, double** mat1, Complex** mat2, double* inpv, Co
 	return;
 }
 
+
 void multiply_3_3(Complex* vec1, double** mat1, Complex** mat2, double* inpv, Complex** mat3, int x, int y, double** res)
 {
 	int i, j;
@@ -113,6 +125,8 @@ void multiply_3_3(Complex* vec1, double** mat1, Complex** mat2, double* inpv, Co
 	}
 	return;
 }
+
+
 void multiply_4_1(double** mat1, Complex* vec1, double weight, int x, int y, double** res)
 {	//	������ ���Ǹ� ���� w_lgth�� ���� �ǵ��� ��ȯ
 	int i, j;
@@ -125,6 +139,8 @@ void multiply_4_1(double** mat1, Complex* vec1, double weight, int x, int y, dou
 	}
 	return;
 }
+
+
 void multiply_4_2(double** mat1, double*** spec, int no_EML, double weight, int x, int y, double** res)
 {	//	������ ���Ǹ� ���� w_lgth�� ���� �ǵ��� ��ȯ
 	int i, j;
@@ -137,6 +153,8 @@ void multiply_4_2(double** mat1, double*** spec, int no_EML, double weight, int 
 	}
 	return;
 }
+
+
 void multiply_5_1_1(Complex* vec1, double** mat1, Complex** mat2, Complex** inpv, Complex** mat3, Complex* vec2, Complex** mat4, Complex* vec3, int x, int y, double** res)
 {
 	int i, j;
@@ -149,6 +167,8 @@ void multiply_5_1_1(Complex* vec1, double** mat1, Complex** mat2, Complex** inpv
 	}
 	return;
 }
+
+
 void multiply_5_1_2(Complex* vec1, double** mat1, Complex** mat2, Complex** inpv, Complex** mat3, Complex* vec2, Complex** mat4, Complex* vec3, int x, int y, double** res)
 {
 	int i, j;
@@ -161,6 +181,8 @@ void multiply_5_1_2(Complex* vec1, double** mat1, Complex** mat2, Complex** inpv
 	}
 	return;
 }
+
+
 void multiply_5_1_3(Complex* vec1, double** mat1, Complex** mat2, Complex** mat3, Complex* vec2, Complex** mat4, Complex* vec3, int x, int y, double** res)
 {
 	int i, j;
@@ -173,6 +195,8 @@ void multiply_5_1_3(Complex* vec1, double** mat1, Complex** mat2, Complex** mat3
 	}
 	return;
 }
+
+
 void multiply_5_2(double** mat1, Complex** mat2, Complex* vec1, Complex** mat3, Complex* vec2, Complex** mat4, int x, int y, double** res)
 {
 	int i, j;

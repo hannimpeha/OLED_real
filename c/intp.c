@@ -1,20 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 int findx(double** Z);
 int findy(double** Z);
 double** zeros2(int x, int y);
 void interp1(double* x, int x_tam, double* y, double* xx, int xx_tam, double* yy);
+
+
 double** intp3(double** Z, double li, double lf)
 {
-	int i;	//	for ±¸¹®¿ë i ÃÊ±âÈ­
-	int a = findy(Z);	//	ÁÖ¾îÁø ÀÌÂ÷¹è¿­ÀÇ ÇàÀÇ °¹¼ö ÃøÁ¤ 0À» ¹ß°ßÇÏ±â Á÷Àü±îÁö!
-	int b = findx(Z);	//	ÁÖ¾îÁø ÀÌÂ÷¹è¿­ÀÇ ¿­ÀÇ °¹¼ö ÃøÁ¤ 0Á÷Àü±îÁö
-	int len_new = (int)(lf - li) + 1;	//	»õ·Î ¸¸µé ¹è¿­ÀÇ ÇàÀÇ °¹¼ö ¼±¾ð
+	int i;	//	for ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ i ï¿½Ê±ï¿½È­
+	int a = findy(Z);	//	ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!
+	int b = findx(Z);	//	ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int len_new = (int)(lf - li) + 1;	//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	double** res = zeros2(len_new, 5);
 	if (b == 3)
 	{
-		double* x = (double*)malloc(a * sizeof(double));  // ¿­ÀÌ 3°³ÀÏ°æ¿ì¸¦ ±âº»À¸·Î ÇÔ µ¿ÀûÇÒ´çµé
+		double* x = (double*)malloc(a * sizeof(double));  // ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½Ï°ï¿½ì¸¦ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½
 		double* y1 = (double*)malloc(a * sizeof(double));
 		double* y2 = (double*)malloc(a * sizeof(double));
 		double* new_x = (double*)malloc(len_new * sizeof(double));
@@ -22,13 +25,13 @@ double** intp3(double** Z, double li, double lf)
 		double* new_y2 = (double*)malloc(len_new * sizeof(double));
 		if (x == NULL || y1 == NULL || y2 == NULL || new_x == NULL || new_y1 == NULL || new_y2 == NULL)
 			return false;
-		for (i = 0; i < a; i++)	//	ÀÔ·Â¹ÞÀº ÀÌÂ÷¹è¿­À» ÀÏÂ÷¹è¿­·Î ºÐ¸®
+		for (i = 0; i < a; i++)	//	ï¿½Ô·Â¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½Ð¸ï¿½
 		{
 			x[i] = Z[i][0];
 			y1[i] = Z[i][1];
 			y2[i] = Z[i][2];
 		}
-		for (i = 0; i < len_new; i++)	//	»õ·Î¿î ¹è¿­¿¡ index°ª ºÎ¿©
+		for (i = 0; i < len_new; i++)	//	ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½è¿­ï¿½ï¿½ indexï¿½ï¿½ ï¿½Î¿ï¿½
 		{
 			new_x[i] = li + i;
 		}
@@ -36,15 +39,15 @@ double** intp3(double** Z, double li, double lf)
 		interp1(x, a, y2, new_x, len_new, new_y2);
 		for (i = 0; i < len_new; i++)
 		{
-			res[i][0] = new_x[i];	//	°á°ú°ª¿¡ ´ëÀÀ
+			res[i][0] = new_x[i];	//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			res[i][1] = new_y1[i];
 			res[i][2] = new_y2[i];
 		}
 		free(x), free(y1), free(y2), free(new_x), free(new_y1), free(new_y2);
 	}
-	if (b == 5)  // ¿­ÀÌ 3°³°¡ ¾Æ´Ò°æ¿ì
+	if (b == 5)  // ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ò°ï¿½ï¿½
 	{
-		double* x = (double*)malloc(a * sizeof(double));  // ¿­ÀÌ 3°³ÀÏ°æ¿ì¸¦ ±âº»À¸·Î ÇÔ
+		double* x = (double*)malloc(a * sizeof(double));  // ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½Ï°ï¿½ì¸¦ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		double* y1 = (double*)malloc(a * sizeof(double));
 		double* y2 = (double*)malloc(a * sizeof(double));
 		double* y3 = (double*)malloc(a * sizeof(double));
@@ -85,16 +88,18 @@ double** intp3(double** Z, double li, double lf)
 	}
 	return res;
 }
+
+
 double** intp4(double** Z, double li, double lf, double ls)
 {
-	int i;	//	for ±¸¹®¿ë i ÃÊ±âÈ­
-	int a = findy(Z);	//	ÁÖ¾îÁø ÀÌÂ÷¹è¿­ÀÇ ÇàÀÇ °¹¼ö ÃøÁ¤ 0À» ¹ß°ßÇÏ±â Á÷Àü±îÁö!
-	int b = findx(Z);	//	ÁÖ¾îÁø ÀÌÂ÷¹è¿­ÀÇ ¿­ÀÇ °¹¼ö ÃøÁ¤ 0 Àü±îÁö
-	int len_new = (int)((lf - li) / ls) + 1;	//	»õ·Î ¸¸µé ¹è¿­ÀÇ ÇàÀÇ °¹¼ö ¼±¾ð
+	int i;	//	for ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ i ï¿½Ê±ï¿½È­
+	int a = findy(Z);	//	ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!
+	int b = findx(Z);	//	ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 0 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int len_new = (int)((lf - li) / ls) + 1;	//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	double** res = zeros2(len_new, 5);
 	if (b == 3)
 	{
-		double* x = (double*)malloc(a * sizeof(double));  // ¿­ÀÌ 3°³ÀÏ°æ¿ì¸¦ ±âº»À¸·Î ÇÔ µ¿ÀûÇÒ´çµé
+		double* x = (double*)malloc(a * sizeof(double));  // ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½Ï°ï¿½ì¸¦ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½
 		double* y1 = (double*)malloc(a * sizeof(double));
 		double* y2 = (double*)malloc(a * sizeof(double));
 		double* new_x = (double*)malloc(len_new * sizeof(double));
@@ -102,13 +107,13 @@ double** intp4(double** Z, double li, double lf, double ls)
 		double* new_y2 = (double*)malloc(len_new * sizeof(double));
 		if (x == NULL || y1 == NULL || y2 == NULL || new_x == NULL || new_y1 == NULL || new_y2 == NULL)
 			return false;
-		for (i = 0; i < a; i++)	//	ÀÔ·Â¹ÞÀº ÀÌÂ÷¹è¿­À» ÀÏÂ÷¹è¿­·Î ºÐ¸®
+		for (i = 0; i < a; i++)	//	ï¿½Ô·Â¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½Ð¸ï¿½
 		{
 			x[i] = Z[i][0];
 			y1[i] = Z[i][1];
 			y2[i] = Z[i][2];
 		}
-		for (i = 0; i < len_new; i++)	//	»õ·Î¿î ¹è¿­¿¡ index°ª ºÎ¿©
+		for (i = 0; i < len_new; i++)	//	ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½è¿­ï¿½ï¿½ indexï¿½ï¿½ ï¿½Î¿ï¿½
 		{
 			new_x[i] = li + ls * i;
 		}
@@ -116,15 +121,15 @@ double** intp4(double** Z, double li, double lf, double ls)
 		interp1(x, a, y2, new_x, len_new, new_y2);
 		for (i = 0; i < len_new; i++)
 		{
-			res[i][0] = new_x[i];	//	°á°ú°ª¿¡ ´ëÀÀ
+			res[i][0] = new_x[i];	//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			res[i][1] = new_y1[i];
 			res[i][2] = new_y2[i];
 		}
 		free(x), free(y1), free(y2), free(new_x), free(new_y1), free(new_y2);
 	}
-	if (b == 5)  // ¿­ÀÌ 3°³°¡ ¾Æ´Ò°æ¿ì
+	if (b == 5)  // ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ò°ï¿½ï¿½
 	{
-		double* x = (double*)malloc(a * sizeof(double));  // ¿­ÀÌ 3°³ÀÏ°æ¿ì¸¦ ±âº»À¸·Î ÇÔ
+		double* x = (double*)malloc(a * sizeof(double));  // ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½Ï°ï¿½ì¸¦ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		double* y1 = (double*)malloc(a * sizeof(double));
 		double* y2 = (double*)malloc(a * sizeof(double));
 		double* y3 = (double*)malloc(a * sizeof(double));

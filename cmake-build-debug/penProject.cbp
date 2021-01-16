@@ -100,6 +100,9 @@
 		<Unit filename="/Users/hannahlee/PycharmProjects/penProject/c/TMM_anisotropy_coeff.c">
 			<Option target="penProject"/>
 		</Unit>
+		<Unit filename="/Users/hannahlee/PycharmProjects/penProject/c/hannah.c">
+			<Option target="penProject"/>
+		</Unit>
 		<Unit filename="/Users/hannahlee/PycharmProjects/penProject/c/innerfunc.c">
 			<Option target="penProject"/>
 		</Unit>

@@ -1,5 +1,5 @@
-hannimpeha.so: CIE.o EMZ_load.o innerfunc.o intp.o multiply.o OLED_main.o output.o Reflec.o RI_load.o spectrum_load.o TMM_anisotropy_coeff.o
-	gcc -shared -o hannimpeha.so CIE.o EMZ_load.o  innerfunc.o intp.o multiply.o OLED_main.o output.o Reflec.o RI_load.o spectrum_load.o TMM_anisotropy_coeff.o
+hannimpeha.so: CIE.o EMZ_load.o innerfunc.o intp.o multiply.o OLED_main.o output.o Reflec.o RI_load.o spectrum_load.o TMM_anisotropy_coeff.o hannah.o
+	gcc -shared -o hannimpeha.so CIE.o EMZ_load.o  innerfunc.o intp.o multiply.o OLED_main.o output.o Reflec.o RI_load.o spectrum_load.o TMM_anisotropy_coeff.o hannah.o
 
 CIE.o: CIE.c
 	gcc -Wall -c -o CIE.o CIE.c -fPIC
@@ -33,6 +33,9 @@ spectrum_load.o: spectrum_load.c
 
 TMM_anistropy_coeff.o: TMM_anisotropy_coeff.c
 	gcc -Wall -c -o TMM_anistropy_coeff.o TMM_anisotropy_coeff.c -fPIC
+
+hannah.o: hannah.c
+	gcc -Wall -c -o hannah.o hannah.c -fPIC
 
 clean:
 	rm *.o test.so

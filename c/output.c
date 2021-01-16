@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<stdbool.h>
+
+
 void output(char* directory, char* name, double output)
 {
 	char Fold[100];
@@ -14,6 +16,8 @@ void output(char* directory, char* name, double output)
 	fclose(file);
 	return;
 }
+
+
 void output1(char* directory, char* name, double* output, int x)
 {
 	int i;
@@ -32,6 +36,8 @@ void output1(char* directory, char* name, double* output, int x)
 	fclose(file);
 	return;
 }
+
+
 void output2(char* directory, char* name, double** output, int x, int y)
 {
 	int i, j;
@@ -53,6 +59,8 @@ void output2(char* directory, char* name, double** output, int x, int y)
 	fclose(file);
 	return;
 }
+
+
 void outputEL(char* directory, char* name, double** output, int x, int y)
 {
 	int i, j;
@@ -74,6 +82,8 @@ void outputEL(char* directory, char* name, double** output, int x, int y)
 	fclose(file);
 	return;
 }
+
+
 void output3(char* directory, char* name, double*** output, int x, int y, int z)
 {
 	int i, j, k;
@@ -99,6 +109,8 @@ void output3(char* directory, char* name, double*** output, int x, int y, int z)
 	fclose(file);
 	return;
 }
+
+
 void outputDS(char* directory, char* name, double**** output, int x, int y, int z, int w)
 {
 	int i, j, k, l;

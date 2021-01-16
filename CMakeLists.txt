@@ -18,4 +18,4 @@ add_executable(penProject
         c/RI_load.c
         c/spectrum_load.c
         c/struct.h
-        c/TMM_anisotropy_coeff.c)
+        c/TMM_anisotropy_coeff.c c/hannah.c)

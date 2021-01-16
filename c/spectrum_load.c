@@ -6,6 +6,8 @@
 void free2d(double** a);
 double** zeros2_0(int x, int y);
 double** intp4(double** Z, double li, double lf, double ls);
+
+
 double** spectrum_load(emil* EML, double lambda_init, double lambda_final, double lambda_step, int EML_number)
 {
 	int i = 0, j, col = 0;

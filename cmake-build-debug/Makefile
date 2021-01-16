@@ -305,6 +305,33 @@ c/TMM_anisotropy_coeff.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/penProject.dir/build.make CMakeFiles/penProject.dir/c/TMM_anisotropy_coeff.c.s
 .PHONY : c/TMM_anisotropy_coeff.c.s
 
+c/hannah.o: c/hannah.c.o
+
+.PHONY : c/hannah.o
+
+# target to build an object file
+c/hannah.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/penProject.dir/build.make CMakeFiles/penProject.dir/c/hannah.c.o
+.PHONY : c/hannah.c.o
+
+c/hannah.i: c/hannah.c.i
+
+.PHONY : c/hannah.i
+
+# target to preprocess a source file
+c/hannah.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/penProject.dir/build.make CMakeFiles/penProject.dir/c/hannah.c.i
+.PHONY : c/hannah.c.i
+
+c/hannah.s: c/hannah.c.s
+
+.PHONY : c/hannah.s
+
+# target to generate assembly for a file
+c/hannah.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/penProject.dir/build.make CMakeFiles/penProject.dir/c/hannah.c.s
+.PHONY : c/hannah.c.s
+
 c/innerfunc.o: c/innerfunc.c.o
 
 .PHONY : c/innerfunc.o
@@ -467,6 +494,9 @@ help:
 	@echo "... c/TMM_anisotropy_coeff.o"
 	@echo "... c/TMM_anisotropy_coeff.i"
 	@echo "... c/TMM_anisotropy_coeff.s"
+	@echo "... c/hannah.o"
+	@echo "... c/hannah.i"
+	@echo "... c/hannah.s"
 	@echo "... c/innerfunc.o"
 	@echo "... c/innerfunc.i"
 	@echo "... c/innerfunc.s"

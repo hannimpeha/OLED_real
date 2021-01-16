@@ -11,9 +11,11 @@ Complex comprod(Complex a, Complex b);
 Complex inversecom(Complex a);
 Complex comxreal(Complex a, double b);
 Complex tricomp(Complex a);
+
+
 void Reflec(double distance, Complex** r, Complex* n_ordinary, Complex** L_1, double* inplane_vector, int inplane_vector_length, double* lambda, int lambda_length, Complex** Res)
 {
-	int i, j;	//	inplane_vector_lengthÇà lambda_length¿­ Å©±â¸¦ °®´Â Çà·ÄÀ» ³»¹ñÀ½
+	int i, j;	//	inplane_vector_lengthï¿½ï¿½ lambda_lengthï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	double* k0 = zeros(lambda_length);
 	for (i = 0; i < lambda_length; i++)
 		* (k0 + i) = 2 * PI / lambda[i];
@@ -25,11 +27,12 @@ void Reflec(double distance, Complex** r, Complex* n_ordinary, Complex** L_1, do
 		}
 	}
 	free(k0);
-	return;
 }
+
+
 void Reflec_2(double distance, Complex** r_1, Complex** r_2, Complex* n_ordinary, Complex** L_1, double* inplane_vector, int inplane_vector_length, double* lambda, int lambda_length, Complex** Res)
 {
-	int i, j;	//	inplane_vector_lengthÇà lambda_length¿­ Å©±â¸¦ °®´Â Çà·ÄÀ» ³»¹ñÀ½
+	int i, j;	//	inplane_vector_lengthï¿½ï¿½ lambda_lengthï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	double* k0 = zeros(lambda_length);
 	for (i = 0; i < lambda_length; i++)
 		* (k0 + i) = 2 * PI / lambda[i];
@@ -43,6 +46,8 @@ void Reflec_2(double distance, Complex** r_1, Complex** r_2, Complex* n_ordinary
 	free(k0);
 	return;
 }
+
+
 void Reflec_w(double distance, Complex** r, Complex* n_ordinary, Complex** L_1, int inplane_vector_length, double lambda, int lambdanum, Complex* res)
 {
 	int i;
@@ -53,6 +58,8 @@ void Reflec_w(double distance, Complex** r, Complex* n_ordinary, Complex** L_1, 
 	}
 	return;
 }
+
+
 void Reflec_2_w(double distance, Complex** r_1, Complex** r_2, Complex* n_ordinary, Complex** L_1, int inplane_vector_length, double lambda, int lambdanum, Complex* res)
 {
 	int i;	

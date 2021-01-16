@@ -1,12 +1,12 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <math.h>
 #include "struct.h"
 #include <time.h>
 #include <float.h> 
 #include <stdbool.h>
-double* linspace(double i, double f, int num)	//matlab linspace ÇÔ¼ö
+
+
+double* linspace(double i, double f, int num)	//matlab linspace ï¿½Ô¼ï¿½
 {
 	int a;
 	double* arr = (double*)malloc(sizeof(double) * (num));
@@ -18,7 +18,9 @@ double* linspace(double i, double f, int num)	//matlab linspace ÇÔ¼ö
 	}
 	return arr;
 }
-double* arrjoin(double* a, double* b, int lenga, int lengb)	//	µÎ°³ÀÇ ½Ç¼ö ¹è¿­À» ÇÏ³ªÀÇ ¹è¿­·Î ÀÕ´Â ÇÔ¼ö
+
+
+double* arrjoin(double* a, double* b, int lenga, int lengb)	//	ï¿½Î°ï¿½ï¿½ï¿½ ï¿½Ç¼ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Õ´ï¿½ ï¿½Ô¼ï¿½
 {
 	int i, tot = lenga + lengb;
 	double* arr = (double*)malloc(sizeof(double) * tot);
@@ -32,6 +34,7 @@ double* arrjoin(double* a, double* b, int lenga, int lengb)	//	µÎ°³ÀÇ ½Ç¼ö ¹è¿­À
 
 	return arr;
 }
+
 double* zeros(int x)
 {
 	double* arr = (double*)malloc(sizeof(double) * x);
@@ -39,6 +42,8 @@ double* zeros(int x)
 		return false;
 	return arr;
 }
+
+
 double* zeros_0(int x)
 {
 	double* arr = (double*)calloc(x,sizeof(double));
@@ -46,7 +51,9 @@ double* zeros_0(int x)
 		return false;
 	return arr;
 }
-double** zeros2(int x, int y) //		2Â÷¿ø ¹è¿­ µ¿ÀûÇÒ´ç
+
+
+double** zeros2(int x, int y) //		2ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½
 {
 	int i;
 	double** arr = (double**)malloc(sizeof(double*) * x);
@@ -61,7 +68,9 @@ double** zeros2(int x, int y) //		2Â÷¿ø ¹è¿­ µ¿ÀûÇÒ´ç
 	}
 	return arr;
 }
-double*** zeros3(int x, int y, int z) //	3Â÷¿ø ¹è¿­ µ¿ÀûÇÒ´ç
+
+
+double*** zeros3(int x, int y, int z) //	3ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½
 {
 	int i, j;
 	double*** arr = (double***)malloc(sizeof(double**) * x);
@@ -91,7 +100,9 @@ double*** zeros3(int x, int y, int z) //	3Â÷¿ø ¹è¿­ µ¿ÀûÇÒ´ç
 	}
 	return arr;
 }
-double**** zeros4(int x, int y, int z, int w)	//	4Â÷¿ø ¹è¿­ µ¿ÀûÇÒ´ç
+
+
+double**** zeros4(int x, int y, int z, int w)	//	4ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½
 {
 	int i, j, k;
 	double**** arr = (double****)malloc(sizeof(double***) * x);
@@ -146,14 +157,18 @@ double**** zeros4(int x, int y, int z, int w)	//	4Â÷¿ø ¹è¿­ µ¿ÀûÇÒ´ç
 	}
 	return arr;
 }
-double**** zeros4_1(int x)	//	4Â÷¿ø Áß 1Â÷¿ø ¹è¿­ µ¿ÀûÇÒ´ç
+
+
+double**** zeros4_1(int x)	//	4ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½
 {
 	double**** arr = (double****)malloc(sizeof(double***) * x);
 	if (arr == NULL)
 		return false;
 	return arr;
 }
-double**** zeros4_2(int x, int y)	//	4Â÷¿ø Áß 1, 2 Â÷¿ø ¹è¿­ µ¿ÀûÇÒ´ç
+
+
+double**** zeros4_2(int x, int y)	//	4ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 1, 2 ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½
 {
 	int i;
 	double**** arr = (double****)malloc(sizeof(double***) * x);
@@ -168,7 +183,9 @@ double**** zeros4_2(int x, int y)	//	4Â÷¿ø Áß 1, 2 Â÷¿ø ¹è¿­ µ¿ÀûÇÒ´ç
 	}
 	return arr;
 }
-double** zeros2_0(int x, int y) //	2Â÷¿ø zeros ÇÔ¼ö
+
+
+double** zeros2_0(int x, int y) //	2ï¿½ï¿½ï¿½ï¿½ zeros ï¿½Ô¼ï¿½
 {
 	int i;
 	double** arr = (double**)malloc(x * sizeof(double*));
@@ -183,7 +200,9 @@ double** zeros2_0(int x, int y) //	2Â÷¿ø zeros ÇÔ¼ö
 	}
 	return arr;
 }
-double*** zeros3_0(int x, int y, int z) //	3Â÷¿ø zeros ÇÔ¼ö
+
+
+double*** zeros3_0(int x, int y, int z) //	3ï¿½ï¿½ï¿½ï¿½ zeros ï¿½Ô¼ï¿½
 {
 	int i, j;
 	double*** arr = (double***)malloc(sizeof(double**) * x);
@@ -213,7 +232,9 @@ double*** zeros3_0(int x, int y, int z) //	3Â÷¿ø zeros ÇÔ¼ö
 	}
 	return arr;
 }
-double**** zeros4_0(int x, int y, int z, int w)	//	4Â÷¿ø zeros ÇÔ¼ö
+
+
+double**** zeros4_0(int x, int y, int z, int w)	//	4ï¿½ï¿½ï¿½ï¿½ zeros ï¿½Ô¼ï¿½
 {
 	int i, j, k;
 	double**** arr = (double****)malloc(sizeof(double***) * x);
@@ -268,7 +289,9 @@ double**** zeros4_0(int x, int y, int z, int w)	//	4Â÷¿ø zeros ÇÔ¼ö
 	}
 	return arr;
 }
-int findx(double** Z)	//	¹ÞÀº 6¿­Â¥¸® ¹è¿­Áß ¼ººÐÀÌ 0ÀÎ Ã¹¹øÂ°¿­À» ±¸ÇÏ¿©, ¹è¿­ÀÇ Å©±â¸¦ Æ¯Á¤ÇÏ´Â ÇÔ¼ö
+
+
+int findx(double** Z)	//	ï¿½ï¿½ï¿½ï¿½ 6ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ Ã¹ï¿½ï¿½Â°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½, ï¿½è¿­ï¿½ï¿½ Å©ï¿½â¸¦ Æ¯ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	int a = 3;
 	while (1)
@@ -279,7 +302,9 @@ int findx(double** Z)	//	¹ÞÀº 6¿­Â¥¸® ¹è¿­Áß ¼ººÐÀÌ 0ÀÎ Ã¹¹øÂ°¿­À» ±¸ÇÏ¿©, ¹è¿­À
 	}
 	return a;
 }
-int findy(double** Z)	//	¹ÞÀº 6¿­ ¹è¿­¿¡¼­ ±× ¼ººÐÀÌ 0ÀÎ Ã¹¹ø¤Š ÇàÀ» ±¸ÇÏ¿©, ¹è¿­ÀÇ Å©±â¸¦ Æ¯Á¤ÇÏ´Â ÇÔ¼ö
+
+
+int findy(double** Z)	//	ï¿½ï¿½ï¿½ï¿½ 6ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ Ã¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½, ï¿½è¿­ï¿½ï¿½ Å©ï¿½â¸¦ Æ¯ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	int a = 1;
 	while (1)
@@ -290,7 +315,9 @@ int findy(double** Z)	//	¹ÞÀº 6¿­ ¹è¿­¿¡¼­ ±× ¼ººÐÀÌ 0ÀÎ Ã¹¹ø¤Š ÇàÀ» ±¸ÇÏ¿©, ¹è¿
 	}
 	return a;
 }
-int findNearestNeighbourIndex(double value, double* x, int len)	//	»õ·Î¿î xÁÂÇ¥µé¿¡¼­ xÁÂÇ¥º¸´Ù ÀÛÁö¸¸ °¡Àå Å« °ªÀ» °¡Áö´Â Á¡À» Ã£´Â ÇÔ¼ö
+
+
+int findNearestNeighbourIndex(double value, double* x, int len)	//	ï¿½ï¿½ï¿½Î¿ï¿½ xï¿½ï¿½Ç¥ï¿½é¿¡ï¿½ï¿½ xï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å« ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Ô¼ï¿½
 {
 	double dist;
 	int idx;
@@ -307,7 +334,9 @@ int findNearestNeighbourIndex(double value, double* x, int len)	//	»õ·Î¿î xÁÂÇ¥µ
 	}
 	return idx;
 }
-void interp1(double* x, int x_tam, double* y, double* xx, int xx_tam, double* yy) // À§ÀÇ findNearestNeighbourindex ÇÔ¼ö¿¡¼­ ±¸ÇÑ Á¡À» ÅëÇØ, °¢±¸°£º°·Î linear interpolation ÇÑ Á¡µéÀ» ±¸ÇÏ´Â ÇÔ¼ö
+
+
+void interp1(double* x, int x_tam, double* y, double* xx, int xx_tam, double* yy) // ï¿½ï¿½ï¿½ï¿½ findNearestNeighbourindex ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ linear interpolation ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	double dx, dy, * slope, * intercept;
 	int i, indiceEnVector;
@@ -341,6 +370,8 @@ void interp1(double* x, int x_tam, double* y, double* xx, int xx_tam, double* yy
 	free(slope);
 	free(intercept);
 }
+
+
 Complex* comparr(int x)
 {
 	Complex* output = (Complex*)malloc(sizeof(Complex) * x);
@@ -348,7 +379,9 @@ Complex* comparr(int x)
 		return false;
 	return output;
 }
-Complex** comparr2(int x, int y)	//	º¹¼Ò¼ö Ç¥ÇöÀ» À§ÇØ 2Â÷¿ø ±¸Á¶Ã¼¸¦ µ¿ÀûÇÒ´çÇÏ´Â ÇÔ¼ö
+
+
+Complex** comparr2(int x, int y)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	int i;
 	Complex** arr = (Complex**)malloc(sizeof(Complex*) * x);
@@ -363,7 +396,9 @@ Complex** comparr2(int x, int y)	//	º¹¼Ò¼ö Ç¥ÇöÀ» À§ÇØ 2Â÷¿ø ±¸Á¶Ã¼¸¦ µ¿ÀûÇÒ´çÇÏ
 	}
 	return arr;
 }
-Complex** comparr2_0(int x, int y)	//	º¹¼Ò¼ö Ç¥ÇöÀ» À§ÇØ 3Â÷¿ø ±¸Á¶Ã¼¸¦ µ¿ÀûÇÒ´çÇÏ´Â ÇÔ¼ö
+
+
+Complex** comparr2_0(int x, int y)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	int i, j;
 	Complex O;
@@ -383,7 +418,9 @@ Complex** comparr2_0(int x, int y)	//	º¹¼Ò¼ö Ç¥ÇöÀ» À§ÇØ 3Â÷¿ø ±¸Á¶Ã¼¸¦ µ¿ÀûÇÒ´ç
 			* (*(arr + i) + j) = O;
 	return arr;
 }
-Complex*** comparr3(int x, int y, int z)	//	º¹¼Ò¼ö Ç¥ÇöÀ» À§ÇØ 3Â÷¿ø ±¸Á¶Ã¼¸¦ µ¿ÀûÇÒ´çÇÏ´Â ÇÔ¼ö
+
+
+Complex*** comparr3(int x, int y, int z)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	int i, j;
 	Complex*** arr = (Complex***)malloc(sizeof(Complex**) * x);
@@ -413,14 +450,18 @@ Complex*** comparr3(int x, int y, int z)	//	º¹¼Ò¼ö Ç¥ÇöÀ» À§ÇØ 3Â÷¿ø ±¸Á¶Ã¼¸¦ µ¿
 	}
 	return arr;
 }
-Complex*** comparr3_1(int x)	//	º¹¼Ò¼ö Ç¥ÇöÀ» À§ÇØ 3Â÷¿ø ±¸Á¶Ã¼¸¦ µ¿ÀûÇÒ´çÇÏ´Â ÇÔ¼ö
+
+
+Complex*** comparr3_1(int x)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	Complex*** output = (Complex * **)malloc(sizeof(Complex) * x);
 	if (output == NULL)
 		return false;
 	return output;
 }
-Complex*** comparr3_0(int x, int y, int z)	//	º¹¼Ò¼ö Ç¥ÇöÀ» À§ÇØ 3Â÷¿ø ±¸Á¶Ã¼¸¦ µ¿ÀûÇÒ´çÇÏ´Â ÇÔ¼ö
+
+
+Complex*** comparr3_0(int x, int y, int z)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	int i, j, k;
 	Complex O;
@@ -456,36 +497,46 @@ Complex*** comparr3_0(int x, int y, int z)	//	º¹¼Ò¼ö Ç¥ÇöÀ» À§ÇØ 3Â÷¿ø ±¸Á¶Ã¼¸¦ 
 				* (*(*(arr + i) + j) + k) = O;
 	return arr;
 }
-//º¹¼Ò¼ö ¿¬»ê
-Complex comprod(Complex a, Complex b)	//	º¹¼Ò¼ö °ö¼À
+//ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+
+Complex comprod(Complex a, Complex b)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 {
 	Complex res;
 	res.A = a.A * b.A - a.B * b.B;
 	res.B = a.B * b.A + a.A * b.B;
 	return res;
 }
-Complex comsum(Complex a, Complex b)	//	º¹¼Ò¼ö µ¡¼À
+
+
+Complex comsum(Complex a, Complex b)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 {
 	Complex res;
 	res.A = a.A + b.A;
 	res.B = a.B + b.B;
 	return res;
 }
-Complex commin(Complex a, Complex b)	//	º¹¼Ò¼ö –E¼À
+
+
+Complex commin(Complex a, Complex b)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Eï¿½ï¿½
 {
 	Complex res;
 	res.A = a.A - b.A;
 	res.B = a.B - b.B;
 	return res;
 }
-Complex comsqrt(Complex a)	//	º¹¼Ò¼ö Á¦°ö±Ù
+
+
+Complex comsqrt(Complex a)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
 	Complex res;
 	res.A = sqrt((a.A + sqrt(pow(a.A, (double)2) + pow(a.B, (double)2))) / 2);
 	res.B = sqrt((sqrt(pow(a.A, (double)2) + pow(a.B, (double)2)) - a.A) / 2);
 	return res;
 }
-Complex comsqrtsimple(Complex a)	//	º¹¼Ò¼ö Á¦°ö±Ù
+
+
+Complex comsqrtsimple(Complex a)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
 	Complex res;
 	if (a.A > 0)
@@ -505,13 +556,17 @@ Complex comsqrtsimple(Complex a)	//	º¹¼Ò¼ö Á¦°ö±Ù
 	}
 	return res;
 }
-double conj(Complex a)	//	ÄÓ·¹º¹¼Ò¼ö¿ÍÀÇ °öÀ» ±¸ÇÏ´Â ÇÔ¼ö
+
+
+double conj(Complex a)	//	ï¿½Ó·ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	double res;
 	res = pow(a.A, 2) + pow(a.B, 2);
 	return res;
 }
-Complex inversecom(Complex a)	//	º¹¼Ò¼öÀÇ ¿ª¼ö
+
+
+Complex inversecom(Complex a)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 {
 	Complex res;
 	double con = conj(a);
@@ -519,6 +574,8 @@ Complex inversecom(Complex a)	//	º¹¼Ò¼öÀÇ ¿ª¼ö
 	res.B = -a.B / con;
 	return res;
 }
+
+
 Complex comdiv(Complex a, Complex b)
 {
 	Complex res;
@@ -527,14 +584,18 @@ Complex comdiv(Complex a, Complex b)
 	res.B = (a.B * b.A - a.A * b.B) / con;
 	return res;
 }
-Complex comxreal(Complex a, double b)	//	º¹¼Ò¼öÀÇ ½Ç¼ö¹è
+
+
+Complex comxreal(Complex a, double b)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ ï¿½Ç¼ï¿½ï¿½ï¿½
 {
 	Complex res;
 	res.A = a.A * b;
 	res.B = a.B * b;
 	return res;
 }
-void matxmat(Complex(*a)[2], Complex(*b)[2])	//	4x4 º¹¼Ò¼öÇà·Ä °ö¿¬»ê ÇÔ¼ö
+
+
+void matxmat(Complex(*a)[2], Complex(*b)[2])	//	4x4 ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 {
 	int i, j, k;
 	Complex res[4][2] = { 0 };
@@ -567,27 +628,35 @@ void matxmat(Complex(*a)[2], Complex(*b)[2])	//	4x4 º¹¼Ò¼öÇà·Ä °ö¿¬»ê ÇÔ¼ö
 	}
 	return;
 }
-Complex compow2(Complex a)	//	º¹¼Ò¼öÀÇ Á¦°öÀ» ±¸ÇÏ´Â ÇÔ¼ö
+
+
+Complex compow2(Complex a)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	Complex res;
 	res.A = a.A * a.A - a.B * a.B;
 	res.B = 2 * a.A * a.B;
 	return res;
 }
-Complex comp(double a)	//	doubleÇüÅÂÀÇ ½Ç¼ö°ªÀ» º¹¼Ò¼ö ÇüÅÂ·Î ¹ÝÈ¯
+
+
+Complex comp(double a)	//	doubleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
 {
 	Complex res;
 	res.A = a;
 	res.B = 0;
 	return res;
 }
-Complex compabs2(Complex a)	//	º¹¼Ò¼öÀÇ Àý´ë°ªÀÇ Á¦°öÀ» ±¸ÇÏ´Â ÇÔ¼ö
+
+
+Complex compabs2(Complex a)	//	ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ë°ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 {
 	Complex res;
 	res.A = pow(a.A, 2) + pow(a.B, 2);
 	res.B = 0;
 	return res;
 }
+
+
 Complex realtocomp_im(double a)
 {
 	Complex res;
@@ -595,6 +664,8 @@ Complex realtocomp_im(double a)
 	res.B = a;
 	return res;
 }
+
+
 Complex realtocomp_re(double a)
 {
 	Complex res;
@@ -602,20 +673,26 @@ Complex realtocomp_re(double a)
 	res.A = a;
 	return res;
 }
-Complex tricomp(Complex a)	//	exp(ik)¸¦ cos(k)+i*sin(k)²Ã·Î ¹Ù²Ù´Â ÇÔ¼ö
+
+
+Complex tricomp(Complex a)	//	exp(ik)ï¿½ï¿½ cos(k)+i*sin(k)ï¿½Ã·ï¿½ ï¿½Ù²Ù´ï¿½ ï¿½Ô¼ï¿½
 {
 	Complex res;
 	res.A = exp(-a.B) * cos(a.A);
 	res.B = exp(-a.B) * sin(a.A);
 	return res;
 }
+
+
 double real(Complex a)
 {
 	double res;
 	res = a.A;
 	return res;
 }
-void arrsum(double** a, double** b, int x, int y)	//	µÎ ÀÌÂ÷¹è¿­ÀÇ ¼ººÐ³¢¸® ´õÇØÁÖ´Â ÇÔ¼ö
+
+
+void arrsum(double** a, double** b, int x, int y)	//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
 {
 	int i, j;
 	for (i = 0; i < x; i++)
@@ -627,7 +704,9 @@ void arrsum(double** a, double** b, int x, int y)	//	µÎ ÀÌÂ÷¹è¿­ÀÇ ¼ººÐ³¢¸® ´õÇØ
 	}
 	return;
 }
-void arrsum_new(double** a, double** b, int x, int y, double** res)	//	µÎ ÀÌÂ÷¹è¿­ÀÇ ¼ººÐ³¢¸® ´õÇØÁÖ´Â ÇÔ¼ö
+
+
+void arrsum_new(double** a, double** b, int x, int y, double** res)	//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
 {
 	int i, j;
 	for (i = 0; i < x; i++)
@@ -639,7 +718,9 @@ void arrsum_new(double** a, double** b, int x, int y, double** res)	//	µÎ ÀÌÂ÷¹è
 	}
 	return;
 }
-void arrxreal(double** a, double b, int x, int y)	//	ÀÌÂ÷¿ø¹è¿­¿¡ ½Ç¼ö¹è ÇØÁÖ´Â ÇÔ¼ö
+
+
+void arrxreal(double** a, double b, int x, int y)	//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½Ç¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
 {
 	int i, j;
 	for (i = 0; i < x; i++)
@@ -651,12 +732,16 @@ void arrxreal(double** a, double b, int x, int y)	//	ÀÌÂ÷¿ø¹è¿­¿¡ ½Ç¼ö¹è ÇØÁÖ´Â 
 	}
 	return;
 }
+
+
 void free2c(Complex** a)
 {
 	free(a[0]);
 	free(a);
 	return;
 }
+
+
 void free3c(Complex*** a)
 {
 	free(a[0][0]);
@@ -664,6 +749,8 @@ void free3c(Complex*** a)
 	free(a);
 	return;
 }
+
+
 void free4c(Complex**** a)
 {
 	free(a[0][0][0]);
@@ -672,12 +759,16 @@ void free4c(Complex**** a)
 	free(a);
 	return;
 }
+
+
 void free2d(double** a)
 {
 	free(a[0]);
 	free(a);
 	return;
 }
+
+
 void free3d(double*** a)
 {
 	free(a[0][0]);
@@ -685,6 +776,8 @@ void free3d(double*** a)
 	free(a);
 	return;
 }
+
+
 void free4d(double**** a)
 {
 	free(a[0][0][0]);
@@ -693,6 +786,8 @@ void free4d(double**** a)
 	free(a);
 	return;
 }
+
+
 int find(double* a, double b, int len)
 {
 	int i;
@@ -701,6 +796,8 @@ int find(double* a, double b, int len)
 			break;
 	return len - i;
 }
+
+
 double sum(double* a, int len)
 {
 	int i;
@@ -711,7 +808,9 @@ double sum(double* a, int len)
 	}
 	return res;
 }
-double trapz(double* x, double* y, int start, int last)	// »ç´Ù¸®²ÃÇü ÀûºÐ
+
+
+double trapz(double* x, double* y, int start, int last)	// ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 {
 	int i;
 	double res = 0;
