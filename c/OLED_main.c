@@ -200,6 +200,8 @@ int main() {
 
     char *absolute_path;
     absolute_path = my_realpath("../Qtcontrollers/resources/text_p.csv");
+    //absolute_path = my_realpath("Qtcontrollers/resources/text_p.csv");
+
     //FILE *file = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_p.csv", "r");
     FILE *file = fopen(absolute_path, "r");
     while (fgets(line, sizeof line, file)) {
@@ -235,6 +237,8 @@ int main() {
     char *External_Env = "air";
 
     absolute_path = my_realpath("../Qtcontrollers/resources/text.csv");
+    //absolute_path = my_realpath("Qtcontrollers/resources/text.csv");
+
     FILE *stream = fopen(absolute_path, "r");
     int no_l = 0;         // the number of layers
     while (fgets(line, sizeof line, stream)) {
@@ -265,6 +269,7 @@ int main() {
 
     int no_EML = 0;    // the number of EML
     absolute_path = my_realpath("../Qtcontrollers/resources/text_em.csv");
+    //absolute_path = my_realpath("Qtcontrollers/resources/text_em.csv");
     FILE *fstream = fopen(absolute_path, "r");
     char *buffer = NULL;
     int h = no_EML, u = 0;

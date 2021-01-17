@@ -12,8 +12,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/c/OLED_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/c/OLED_main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/OLED_main.o" beforeDir="false" afterPath="$PROJECT_DIR$/c/OLED_main.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/hannah.o" beforeDir="false" afterPath="$PROJECT_DIR$/c/hannah.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/hannimpeha.so" beforeDir="false" afterPath="$PROJECT_DIR$/c/hannimpeha.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/penProject" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/penProject" afterDir="false" />
     </list>
@@ -25,7 +28,6 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -78,7 +80,7 @@
       <recent name="$PROJECT_DIR$/controllers/drawing" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.penProject">
+  <component name="RunManager" selected="Python.main">
     <configuration name="penProject" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="penProject" TARGET_NAME="penProject" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="penProject" RUN_TARGET_NAME="penProject">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -88,6 +90,12 @@
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="Makefile (1)" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/c/Makefile" target="" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
     </configuration>
     <configuration name="Makefile" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
       <makefile filename="$PROJECT_DIR$/c/Makefile" target="" workingDirectory="" arguments="">
@@ -174,14 +182,15 @@
       <item itemvalue="Python.CIE" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.example" />
+      <item itemvalue="Makefile.Makefile (1)" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Makefile.Makefile (1)" />
+        <item itemvalue="Makefile.Makefile" />
         <item itemvalue="Makefile.Makefile" />
         <item itemvalue="Python.example" />
-        <item itemvalue="Makefile.Makefile" />
-        <item itemvalue="Makefile.Makefile" />
       </list>
     </recent_temporary>
   </component>
@@ -279,7 +288,7 @@
       <workItem from="1610872310618" duration="10193000" />
       <workItem from="1610882624938" duration="1270000" />
       <workItem from="1610884040234" duration="450000" />
-      <workItem from="1610884539467" duration="1817000" />
+      <workItem from="1610884539467" duration="2161000" />
     </task>
     <servers />
   </component>
