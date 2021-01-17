@@ -335,7 +335,8 @@ class Emission_Zone_Setting(QWidget):
 
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.handleSave)
-        drawButton.setFixedSize(200, 30)
+        drawButton.setFixedSize(120, 30)
+        layout.addWidget(drawButton, 1, 4)
 
     def handleSave(self):
         with open(file_emz, 'w') as stream:
