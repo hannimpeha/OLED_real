@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import *
 
 file = 'Qtcontrollers/resources/text.csv'
 file_em = 'Qtcontrollers/resources/text_em.csv'
+file_emz = 'Qtcontrollers/resources/text_emz.csv'
 
 class Elements_Structure(QWidget):
     def __init__(self):
@@ -268,27 +269,6 @@ class Emission_Zone_Setting(QWidget):
         label.setText("Emission Zone Setting")
         layout.addWidget(label, 0, 0)
 
-        radiobutton = QRadioButton("Sheet")
-        radiobutton.setChecked(True)
-        radiobutton.type = ""
-        radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 1, 0)
-
-        radiobutton = QRadioButton("Constant")
-        radiobutton.type = "x = a"
-        radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 2, 0)
-
-        radiobutton = QRadioButton("Linear")
-        radiobutton.type = "y = ax+b"
-        radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 3, 0)
-
-        radiobutton = QRadioButton("Gaussian")
-        radiobutton.type = "y = a*e^{b+x}+c"
-        radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 4, 0)
-
         label = QLabel()
         label.setText("Equation")
         layout.addWidget(label, 0, 1)
@@ -300,33 +280,68 @@ class Emission_Zone_Setting(QWidget):
         label.setText("Emit Range(nm): ")
         layout.addWidget(label, 2, 1)
 
-        textLine = QLineEdit()
-        textLine.setFixedSize(100, 20)
-        layout.addWidget(textLine, 3, 1)
+        textLine_emit = QLineEdit()
+        textLine_emit.setFixedSize(100, 20)
+        textLine_emit.setText("100")
+        layout.addWidget(textLine_emit, 3, 1)
 
         label = QLabel()
         label.setText("Value a :")
         layout.addWidget(label, 2, 2)
 
-        textLine = QLineEdit()
-        textLine.setFixedSize(100, 20)
-        layout.addWidget(textLine, 3, 2)
+        self.textLine_a = QLineEdit()
+        self.textLine_a.setFixedSize(100, 20)
+        self.textLine_a.setText("0.5")
+        layout.addWidget(self.textLine_a, 3, 2)
 
         label = QLabel()
         label.setText("Value b :")
         layout.addWidget(label, 2, 3)
 
-        textLine = QLineEdit()
-        textLine.setFixedSize(100, 20)
-        layout.addWidget(textLine, 3, 3)
+        self.textLine_b = QLineEdit()
+        self.textLine_b.setFixedSize(100, 20)
+        self.textLine_b.setText("1")
+        layout.addWidget(self.textLine_b, 3, 3)
 
         label = QLabel()
         label.setText("Value c :")
         layout.addWidget(label, 2, 4)
 
-        textLine = QLineEdit()
-        textLine.setFixedSize(100, 20)
-        layout.addWidget(textLine, 3, 4)
+        self.textLine_c = QLineEdit()
+        self.textLine_c.setFixedSize(100, 20)
+        self.textLine_c.setText("2")
+        layout.addWidget(self.textLine_c, 3, 4)
+
+        self.radiobutton_sheet = QRadioButton("Sheet")
+        self.radiobutton_sheet.setChecked(True)
+        self.radiobutton_sheet.type = ""
+        self.radiobutton_sheet.toggled.connect(self.onClicked)
+        layout.addWidget(self.radiobutton_sheet, 1, 0)
+
+        self.radiobutton_constant = QRadioButton("Constant")
+        self.radiobutton_constant.type = "x = %s" %(self.textLine_a.text())
+        self.radiobutton_constant.toggled.connect(self.onClicked)
+        layout.addWidget(self.radiobutton_constant, 2, 0)
+
+        self.radiobutton_linear = QRadioButton("Linear")
+        self.radiobutton_linear.type = "y = %s*x + %s" %(self.textLine_a.text(), self.textLine_b.text())
+        self.radiobutton_linear.toggled.connect(self.onClicked)
+        layout.addWidget(self.radiobutton_linear, 3, 0)
+
+        self.radiobutton_gaussian = QRadioButton("Gaussian")
+        self.radiobutton_gaussian.type = "y = %s*e^{%s + x} + %s" %(self.textLine_a.text(), self.textLine_b.text(), self.textLine_c.text())
+        self.radiobutton_gaussian.toggled.connect(self.onClicked)
+        layout.addWidget(self.radiobutton_gaussian, 4, 0)
+
+        drawButton = QPushButton("Save")
+        drawButton.clicked.connect(self.handleSave)
+        drawButton.setFixedSize(200, 30)
+
+    def handleSave(self):
+        with open(file_emz, 'w') as stream:
+            writer = csv.writer(stream, lineterminator='\n')
+            rowdata=[]
+            writer.writerow(rowdata)
 
 
     def onClicked(self):

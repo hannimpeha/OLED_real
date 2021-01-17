@@ -50,6 +50,7 @@ class Properties(QWidget):
         layout.addWidget(label, 1, 0)
 
         self.lineEdit_wave = QLineEdit()
+        self.lineEdit_wave.setText("300,700")
         layout.addWidget(self.lineEdit_wave, 1, 1)
 
         label = QLabel()
@@ -57,6 +58,7 @@ class Properties(QWidget):
         layout.addWidget(label, 2, 0)
 
         self.lineEdit_angle = QLineEdit()
+        self.lineEdit_angle.setText("0,90,10")
         layout.addWidget(self.lineEdit_angle, 2, 1)
 
         label = QLabel()
@@ -65,14 +67,17 @@ class Properties(QWidget):
 
         self.checkBox_mode = QCheckBox()
         self.checkBox_mode.setText("Mode Analysis")
+        self.checkBox_mode.setCheckState(True)
         layout.addWidget(self.checkBox_mode, 3, 1)
 
         self.checkBox_emission = QCheckBox()
         self.checkBox_emission.setText("Emission Spectrum")
+        self.checkBox_emission.setCheckState(True)
         layout.addWidget(self.checkBox_emission, 4, 1)
 
         self.checkBox_power = QCheckBox()
         self.checkBox_power.setText("Power Dissipation Curve")
+        self.checkBox_power.setCheckState(True)
         layout.addWidget(self.checkBox_power, 5, 1)
 
         drawButton = QPushButton("Save")
