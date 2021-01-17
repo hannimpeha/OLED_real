@@ -7,10 +7,14 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 # from selenium import webdriver
 from ctypes import *
+import sys
+import io
+from contextlib import redirect_stdout
 
 logo_image = 'resources/Logo.png'
 so_file = "c/hannimpeha.so"
 file_p = 'resources/text_p.csv'
+
 
 class Logo_Image(QWidget):
     def __init__(self):
@@ -114,6 +118,12 @@ class Execute(QWidget):
 
         layout.addWidget(self.worker.pbar)
         layout.addWidget(self.worker.btn)
+
+        textEdit = QTextEdit()
+        textEdit.setFixedSize(400, 100)
+        textEdit.setText(str(sys.stdout))
+        layout.addWidget(textEdit)
+
         self.setLayout(layout)
 
 class SeleniumWorker(QObject):

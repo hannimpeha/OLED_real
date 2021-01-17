@@ -1,96 +1,51 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore    import *
-from PyQt5.QtGui     import *
-from PyQt5.QtWidgets import *
-import csv
+import sys
+
+from PyQt5 import QtCore, QtWidgets
 
 
-class MyTabs(QWidget):
+class Widget(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        super(QWidget, self).__init__(parent)
-        layout = QVBoxLayout(self)
+        super().__init__(parent)
 
-        # Initialize tab screen
-        self.tabs = QTabWidget()
-        self.tabmon = QWidget()
-        self.tabtue = QWidget()
+        self.process = QtCore.QProcess(self)
+        self.process.setProgram("dirb")
+        self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
 
-        # Add tabs
-        self.tabs.addTab(self.tabmon, "Monday")
-        self.tabs.addTab(self.tabtue, "Tuesday")
+        self.lineedit = QtWidgets.QLineEdit("http://webscantest.com")
+        self.button = QtWidgets.QPushButton("Start")
+        self.textedit = QtWidgets.QTextEdit(readOnly=True)
 
-        #Save Button
+        lay = QtWidgets.QGridLayout(self)
+        lay.addWidget(self.lineedit, 0, 0)
+        lay.addWidget(self.button, 0, 1)
+        lay.addWidget(self.textedit, 1, 0, 1, 2)
 
-        self.buttonSavemon = QtWidgets.QPushButton('Save', self)
-        self.buttonSavemon.clicked.connect(self.handleSavemon)
+        self.button.clicked.connect(self.on_clicked)
+        self.process.readyReadStandardOutput.connect(self.on_readyReadStandardOutput)
+        self.process.finished.connect(self.on_finished)
 
-        self.buttonSavetue = QtWidgets.QPushButton('Save', self)
-        self.buttonSavetue.clicked.connect(self.handleSavetue)
+    @QtCore.pyqtSlot()
+    def on_clicked(self):
+        if self.button.text() == "Start":
+            self.textedit.clear()
+            self.process.setArguments([self.lineedit.text()])
+            self.process.start()
+            self.button.setText("Stop")
+        elif self.button.text() == "Stop":
+            self.process.kill()
 
-        #Initiate Tables
-        self.createTable()
+    @QtCore.pyqtSlot()
+    def on_readyReadStandardOutput(self):
+        text = self.process.readAllStandardOutput().data().decode()
+        self.textedit.append(text)
 
-        # Create Monday tab
-        self.tabmon_layout = QVBoxLayout(self.tabmon)
-        self.tabmon_layout.addWidget(self.tablewidgetmon)
-        self.tabmon_layout.addWidget(self.buttonSavemon)
-
-        # Create Tuesday tab
-        self.tabtue_layout = QVBoxLayout(self.tabtue)
-        self.tabtue_layout.addWidget(self.tablewidgettue)
-        self.tabtue_layout.addWidget(self.buttonSavetue)
-
-        # Add tabs to widget
-        layout.addWidget(self.tabs)
-
-    def createTable(self):
-        #Monday Table
-        self.tablewidgetmon = QTableWidget()
-        self.tablewidgetmon.setRowCount(10)
-        self.tablewidgetmon.setColumnCount(2)
-        self.tablewidgetmon.setHorizontalHeaderLabels(["Time", "File Name"])
-
-        #Tuesday Table
-        self.tablewidgettue = QTableWidget()
-        self.tablewidgettue.setRowCount(12)
-        self.tablewidgettue.setColumnCount(2)
-        self.tablewidgettue.setHorizontalHeaderLabels(["Time", "File Name"])
-
-
-    def handleSavemon(self):
-#        with open('monschedule.csv', 'wb') as stream:
-        with open('monschedule.csv', 'w') as stream:                  # 'w'
-            writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
-            for row in range(self.tablewidgetmon.rowCount()):
-                rowdata = []
-                for column in range(self.tablewidgetmon.columnCount()):
-                    item = self.tablewidgetmon.item(row, column)
-                    if item is not None:
-#                        rowdata.append(unicode(item.text()).encode('utf8'))
-                        rowdata.append(item.text())                   # +
-                    else:
-                        rowdata.append('')
-
-                writer.writerow(rowdata)
-
-
-    def handleSavetue(self):
-        with open('tueschedule.csv', "w") as fileOutput:
-            writer = csv.writer(fileOutput)
-            for rowNumber in range(self.tablewidgettue.rowCount()):
-# +
-                fields = [
-                    self.tablewidgettue.item(rowNumber, columnNumber).text() \
-                            if self.tablewidgettue.item(rowNumber, columnNumber) is not None else ""
-                    for columnNumber in range(self.tablewidgetmon.columnCount())
-                ]
-
-                writer.writerow(fields)
+    @QtCore.pyqtSlot()
+    def on_finished(self):
+        self.button.setText("Start")
 
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
-    main = MyTabs()
-    main.show()
+    w = Widget()
+    w.show()
     sys.exit(app.exec_())
