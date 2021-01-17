@@ -656,7 +656,7 @@ int main(void) {
         sprintf(structure_temp[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
         index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
         index = alloc_3d(index_temp, no_l+1, 5, 7);
-        print_3d(index, 7, 5, 7);
+        //print_3d(index, 7, 5, 7);
 //        for (k = 0; k < 5; k++) {
 //            for (j = 0; j < w_lgth; j++) {
                 //printf("\t%lf\n", index_temp[j][k]);
@@ -724,13 +724,13 @@ int main(void) {
         //double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
 
 
-        // THIS IS THE TROUBLESOME PART //
+//        // THIS IS THE TROUBLESOME PART //
 //        for (j = 0; j < no_EMZ; j++) {
 //            //printf("%lf\n", thick_up[1][i]);
 //            //EMZ[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+//            //EMZ[j][0][i] = EMZ_temp[j][0];
 //            EMZ[j][0][i] = EMZ_temp[j][0];
-////            EMZ[j][0][i] = EMZ_temp[j][0];
-////            EMZ[j][1][i] = EMZ_temp[j][1];
+//            EMZ[j][1][i] = EMZ_temp[j][1];
 //        }
 // free2d(EMZ_temp);
     }
@@ -1464,21 +1464,21 @@ int main(void) {
     //	output: MOde, spectrum, PUrcell, qeff, CIE, Luminace
     //	output matrix
     //	angle * 1
-    double *output_angular_intensity_bottom = zeros(a_lgth);    //
-    double *output_angular_intensity_top = zeros(a_lgth);        //
-    double *output_angular_intensity_sub = zeros(a_lgth);        //
-    double *output_angular_intensity_bottom_TM = zeros(a_lgth);    //
-    double *output_angular_intensity_top_TM = zeros(a_lgth);    //
-    double *output_angular_intensity_sub_TM = zeros(a_lgth);    //
-    double *output_angular_intensity_bottom_TE = zeros(a_lgth);    //
-    double *output_angular_intensity_top_TE = zeros(a_lgth);    //
-    double *output_angular_intensity_sub_TE = zeros(a_lgth);    //
+    double *output_angular_intensity_bottom = zeros(a_lgth);
+    double *output_angular_intensity_top = zeros(a_lgth);
+    double *output_angular_intensity_sub = zeros(a_lgth);
+    double *output_angular_intensity_bottom_TM = zeros(a_lgth);
+    double *output_angular_intensity_top_TM = zeros(a_lgth);
+    double *output_angular_intensity_sub_TM = zeros(a_lgth);
+    double *output_angular_intensity_bottom_TE = zeros(a_lgth);
+    double *output_angular_intensity_top_TE = zeros(a_lgth);
+    double *output_angular_intensity_sub_TE = zeros(a_lgth);
 
 
     //	angle * 3
-    double **output_CIE_bottom;    //
-    double **output_CIE_top;    //
-    double **output_CIE_sub;    //
+    double **output_CIE_bottom;
+    double **output_CIE_top;
+    double **output_CIE_sub;
 
 
     //	7 columns

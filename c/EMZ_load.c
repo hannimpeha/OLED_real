@@ -8,6 +8,7 @@ int findy(double** Z);
 void free2d(double** a);
 double** intp4(double** Z, double li, double lf, double ls);
 double** zeros2_0(int x, int y);
+
 double** EMZ_load(emil* structure, double thick_EML, int no_of_EMzone, int EML_number)
 //	�־��� ����ü�� �־��� EMZ file�� �о 2 x EMZ_length�� �迭�� �ű� �� ����Ѵ�.
 {

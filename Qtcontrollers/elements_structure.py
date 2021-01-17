@@ -1,3 +1,5 @@
+import csv
+
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 
@@ -23,8 +25,8 @@ class Elements_Structure(QWidget):
         removeButton.setFixedSize(200, 30)
 
         es_table = self.init_es_table()
-        drawButton = QPushButton("Draw")
-        drawButton.clicked.connect(self.onDrawButtonClicked)
+        drawButton = QPushButton("Save")
+        drawButton.clicked.connect(self.handleSave)
         drawButton.setFixedSize(200, 30)
 
         el_table = Emission_Layer()
@@ -44,16 +46,16 @@ class Elements_Structure(QWidget):
     def init_es_table(self):
 
         self.table = QTableWidget()
-        self.table.setRowCount(6)
+        self.table.setRowCount(12)
         self.table.setColumnCount(6)
         self.cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness', 'Unit']
         self.table.setHorizontalHeaderLabels(self.cols_element)
 
-        self.layer_name = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
-        self.material = ["Al", "ETL", "EML", "HTL2", "HTL1", "ITO"]
-        self.refractive_index = ["Al.dat", "ETL.dat", "EML.dat", "HTL.dat", "HTL1.dat", "ITO.dat"]
-        self.thickness = [100, 100.5, 20, 10, 100.5, 70]
-        self.unit = ["nm", "nm", "nm", "nm", "nm", "nm"]
+        self.layer_name = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
+        self.material = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
+        self.refractive_index = ["Al.dat", "TPBi.dat", "TPBi.dat", "mCBP.dat", "mCBP.dat", "TCTA_B3PYMPM.dat", "TCTA.dat", "NPB.dat", "NPB.dat", "TAPC.dat", "ITO_Geomatec.dat", "glass_Eagle2000.dat"]
+        self.thickness = [100, 100, 10, 20, 20, 20, 20, 30, 20, 50, 70, 0]
+        self.unit = ["nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm"]
 
         self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness, self.unit]]
         self.num_row = len(self.tempList)
@@ -92,21 +94,36 @@ class Elements_Structure(QWidget):
             row = self.table.indexAt(button.pos()).row()
             self.table.removeRow(row)
 
-    def onDrawButtonClicked(self):
-        l = self.onDraw()
-        for k in range(int(len(l)/6) + 1):
-            with open(file, 'w') as out:
-                out.write(",".join(l[k * 6:(k + 1) * 6])+"\n")
+    # def onDrawButtonClicked(self):
+    #     l = self.onDraw()
+    #     for k in range(int(len(l)/6) + 1):
+    #         with open(file, 'w') as out:
+    #             out.write(",".join(l[k * 6:(k + 1) * 6])+"\n")
+    #
+    # def onDraw(self):
+    #     self.cell = []
+    #     # row = self.table.currentRow()
+    #     row = self.table.rowCount()
+    #     col = self.table.columnCount()
+    #     for i in range(row):
+    #         for j in range(col):
+    #             self.cell.append(self.table.item(i, j).text())
+    #     return self.cell
 
-    def onDraw(self):
-        self.cell = []
-        # row = self.table.currentRow()
-        row = self.table.rowCount()
-        col = self.table.columnCount()
-        for i in range(row):
-            for j in range(col):
-                self.cell.append(self.table.item(i, j).text())
-        return self.cell
+    def handleSave(self):
+#        with open('monschedule.csv', 'wb') as stream:
+        with open(file, 'w') as stream:                  # 'w'
+            writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
+            for row in range(self.table.rowCount()):
+                rowdata = []
+                for column in range(self.table.columnCount()):
+                    item = self.table.item(row, column)
+                    if item is not None:
+                        # rowdata.append(unicode(item.text()).encode('utf8'))
+                        rowdata.append(item.text())                   # +
+                    # else:
+                    #     rowdata.append('')
+                writer.writerow(rowdata)
 
 
 class Emission_Layer(QWidget):
@@ -128,8 +145,8 @@ class Emission_Layer(QWidget):
         removeButton.clicked.connect(self.onRemoveButtonClicked)
         removeButton.setFixedSize(200, 30)
 
-        drawButton = QPushButton("Draw")
-        drawButton.clicked.connect(self.onDrawButtonClicked)
+        drawButton = QPushButton("Save")
+        drawButton.clicked.connect(self.handleSave)
         drawButton.setFixedSize(200, 30)
 
 
@@ -148,12 +165,12 @@ class Emission_Layer(QWidget):
         cols_element = ['L#', 'EMMaterials', 'Spectrum', 'ExcitonProp', 'QY', 'PQ', 'EMZone']
         self.table.setHorizontalHeaderLabels(cols_element)
 
-        self.em_materials = ["None", "None", "None", "None"]
-        self.spectrum = ["Firpic", "FCNlr", "Irppy2tmd", "Irmphmq2tmd"]
-        self.exciton_prop = [1, 2, 1, 1]
-        self.qy = [83, 90, 96, 96]
-        self.pq = [94, 75, 75, 78]
-        self.em_zone = ["Sheet", "Linear", "Sheet", "Delta"]
+        self.em_materials = ["FCNlr", "Irppy2tmd", "Irmphmq2tmd"]
+        self.spectrum = ["FCNlr", "Irppy2tmd", "Irmphmq2tmd"]
+        self.exciton_prop = [1, 1, 1]
+        self.qy = [90, 96, 96]
+        self.pq = [75, 75, 78]
+        self.em_zone = ["constant", "linear_pos", "delta_50"]
         self.tempList = [[self.em_materials, self.spectrum, self.exciton_prop,
                           self.qy, self.pq, self.em_zone]]
         self.num_row = len(self.tempList)
@@ -209,21 +226,36 @@ class Emission_Layer(QWidget):
     #     with open(file_em, 'w') as out:
     #         out.write(self.cell[0] + "\n")
 
-    def onDrawButtonClicked(self):
-        l = self.onDraw()
-        for k in range(int(len(l)/7) + 1):
-            with open(file_em, 'a') as out:
-                out.write(",".join(l[k * 7:(k + 1) * 7])+"\n")
+    # def onDrawButtonClicked(self):
+    #     l = self.onDraw()
+    #     for k in range(int(len(l)/7) + 1):
+    #         with open(file_em, 'a') as out:
+    #             out.write(",".join(l[k * 7:(k + 1) * 7])+"\n")
+    #
+    # def onDraw(self):
+    #     self.cell = []
+    #     # row = self.table.currentRow()
+    #     row = self.table.rowCount()
+    #     col = self.table.columnCount()
+    #     for i in range(row):
+    #         for j in range(col):
+    #             self.cell.append(self.table.item(i,j).text())
+    #     return self.cell
 
-    def onDraw(self):
-        self.cell = []
-        # row = self.table.currentRow()
-        row = self.table.rowCount()
-        col = self.table.columnCount()
-        for i in range(row):
-            for j in range(col):
-                self.cell.append(self.table.item(i,j).text())
-        return self.cell
+    def handleSave(self):
+#        with open('monschedule.csv', 'wb') as stream:
+        with open(file_em, 'w') as stream:                  # 'w'
+            writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
+            for row in range(self.table.rowCount()):
+                rowdata = []
+                for column in range(self.table.columnCount()):
+                    item = self.table.item(row, column)
+                    if item is not None:
+                        # rowdata.append(unicode(item.text()).encode('utf8'))
+                        rowdata.append(item.text())                   # +
+                    # else:
+                    #     rowdata.append('')
+                writer.writerow(rowdata)
 
 
 class Emission_Zone_Setting(QWidget):

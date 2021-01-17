@@ -4,6 +4,8 @@ typedef struct
 	double thick;
 	char file_location[1024];
 }Save;
+
+
 typedef struct
 {
 	int number;
@@ -15,6 +17,8 @@ typedef struct
 	double HDR;
 	double Exciton_prop;
 }emil;
+
+
 #ifndef COM
 #define COM
 typedef struct

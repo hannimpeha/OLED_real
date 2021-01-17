@@ -1,80 +1,96 @@
-import math, sys
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import QWidget, QMainWindow, QTextEdit, QGridLayout, QPushButton, QApplication
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore    import *
+from PyQt5.QtGui     import *
+from PyQt5.QtWidgets import *
+import csv
 
 
-class Overlay(QWidget):
+class MyTabs(QWidget):
+    def __init__(self, parent=None):
+        super(QWidget, self).__init__(parent)
+        layout = QVBoxLayout(self)
 
-    def __init__(self, parent = None):
+        # Initialize tab screen
+        self.tabs = QTabWidget()
+        self.tabmon = QWidget()
+        self.tabtue = QWidget()
 
-        QWidget.__init__(self, parent)
-        palette = QPalette(self.palette())
-        palette.setColor(palette.Background, Qt.transparent)
-        self.setPalette(palette)
+        # Add tabs
+        self.tabs.addTab(self.tabmon, "Monday")
+        self.tabs.addTab(self.tabtue, "Tuesday")
 
-    def paintEvent(self, event):
+        #Save Button
 
-        painter = QPainter()
-        painter.begin(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.fillRect(event.rect(), QBrush(QColor(255, 255, 255, 127)))
-        painter.setPen(QPen(Qt.NoPen))
+        self.buttonSavemon = QtWidgets.QPushButton('Save', self)
+        self.buttonSavemon.clicked.connect(self.handleSavemon)
 
-        for i in range(6):
-            if (self.counter / 5) % 6 == i:
-                painter.setBrush(QBrush(QColor(127 + (self.counter % 5)*32, 127, 127)))
-            else:
-                painter.setBrush(QBrush(QColor(127, 127, 127)))
-            painter.drawEllipse(
-                self.width()/2 + 30 * math.cos(2 * math.pi * i / 6.0) - 10,
-                self.height()/2 + 30 * math.sin(2 * math.pi * i / 6.0) - 10,
-                20, 20)
+        self.buttonSavetue = QtWidgets.QPushButton('Save', self)
+        self.buttonSavetue.clicked.connect(self.handleSavetue)
 
-        painter.end()
+        #Initiate Tables
+        self.createTable()
 
-    def showEvent(self, event):
+        # Create Monday tab
+        self.tabmon_layout = QVBoxLayout(self.tabmon)
+        self.tabmon_layout.addWidget(self.tablewidgetmon)
+        self.tabmon_layout.addWidget(self.buttonSavemon)
 
-        self.timer = self.startTimer(50)
-        self.counter = 0
+        # Create Tuesday tab
+        self.tabtue_layout = QVBoxLayout(self.tabtue)
+        self.tabtue_layout.addWidget(self.tablewidgettue)
+        self.tabtue_layout.addWidget(self.buttonSavetue)
 
-    def timerEvent(self, event):
+        # Add tabs to widget
+        layout.addWidget(self.tabs)
 
-        self.counter += 1
-        self.update()
-        if self.counter == 60:
-            self.killTimer(self.timer)
-            self.hide()
+    def createTable(self):
+        #Monday Table
+        self.tablewidgetmon = QTableWidget()
+        self.tablewidgetmon.setRowCount(10)
+        self.tablewidgetmon.setColumnCount(2)
+        self.tablewidgetmon.setHorizontalHeaderLabels(["Time", "File Name"])
+
+        #Tuesday Table
+        self.tablewidgettue = QTableWidget()
+        self.tablewidgettue.setRowCount(12)
+        self.tablewidgettue.setColumnCount(2)
+        self.tablewidgettue.setHorizontalHeaderLabels(["Time", "File Name"])
 
 
-class MainWindow(QMainWindow):
+    def handleSavemon(self):
+#        with open('monschedule.csv', 'wb') as stream:
+        with open('monschedule.csv', 'w') as stream:                  # 'w'
+            writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
+            for row in range(self.tablewidgetmon.rowCount()):
+                rowdata = []
+                for column in range(self.tablewidgetmon.columnCount()):
+                    item = self.tablewidgetmon.item(row, column)
+                    if item is not None:
+#                        rowdata.append(unicode(item.text()).encode('utf8'))
+                        rowdata.append(item.text())                   # +
+                    else:
+                        rowdata.append('')
 
-    def __init__(self, parent = None):
+                writer.writerow(rowdata)
 
-        QMainWindow.__init__(self, parent)
 
-        widget = QWidget(self)
-        self.editor = QTextEdit()
-        self.editor.setPlainText("0123456789"*100)
-        layout = QGridLayout(widget)
-        layout.addWidget(self.editor, 0, 0, 1, 3)
-        button = QPushButton("Wait")
-        layout.addWidget(button, 1, 1, 1, 1)
+    def handleSavetue(self):
+        with open('tueschedule.csv', "w") as fileOutput:
+            writer = csv.writer(fileOutput)
+            for rowNumber in range(self.tablewidgettue.rowCount()):
+# +
+                fields = [
+                    self.tablewidgettue.item(rowNumber, columnNumber).text() \
+                            if self.tablewidgettue.item(rowNumber, columnNumber) is not None else ""
+                    for columnNumber in range(self.tablewidgetmon.columnCount())
+                ]
 
-        self.setCentralWidget(widget)
-        self.overlay = Overlay(self.centralWidget())
-        self.overlay.hide()
-        button.clicked.connect(self.overlay.show)
-
-    def resizeEvent(self, event):
-
-        self.overlay.resize(event.size())
-        event.accept()
+                writer.writerow(fields)
 
 
 if __name__ == "__main__":
-
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    main = MyTabs()
+    main.show()
     sys.exit(app.exec_())

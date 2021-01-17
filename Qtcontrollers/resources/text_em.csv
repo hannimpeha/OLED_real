@@ -1,5 +1,4 @@
-0,None,Firpic,1,83,94,constant
-1,None,FCNlr,2,90,75,constant
-2,None,Irppy2tmd,1,96,75,constant
-3,None,Irmphmq2tmd,1,96,78,constant
+0,FCNlr,FCNlr,1,90,75,constant
+1,Irppy2tmd,Irppy2tmd,1,96,75,linear_pos
+2,Irmphmq2tmd,Irmphmq2tmd,1,96,78,delta_50
 

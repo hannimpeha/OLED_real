@@ -1,6 +1,12 @@
 0,Al,Al,Al.dat,100,nm
-1,ETL,ETL,ETL.dat,100.5,nm
-2,EML,EML,EML.dat,20,nm
-3,HTL2,HTL2,HTL.dat,10,nm
-4,HTL1,HTL1,HTL1.dat,100.5,nm
-5,ITO,ITO,ITO.dat,70,nm
+1,TPBi,TPBi,TPBi.dat,100,nm
+2,TPBi,TPBi,TPBi.dat,10,nm
+3,mCBP,mCBP,mCBP.dat,20,nm
+4,mCBP,mCBP,mCBP.dat,20,nm
+5,TCTA_B3PYMPM,TCTA_B3PYMPM,TCTA_B3PYMPM.dat,20,nm
+6,TCTA,TCTA,TCTA.dat,20,nm
+7,NPB,NPB,NPB.dat,30,nm
+8,NPB,NPB,NPB.dat,20,nm
+9,TAPC,TAPC,TAPC.dat,50,nm
+10,ITO_Geomatec,ITO_Geomatec,ITO_Geomatec.dat,70,nm
+11,glass_Eagle2000,glass_Eagle2000,glass_Eagle2000.dat,0,nm
