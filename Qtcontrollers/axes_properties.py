@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 
-image = 'Qtcontrollers/resources/Graph.png'
+image = 'resources/Graph.png'
 
 class Axes_Properties(QWidget):
 

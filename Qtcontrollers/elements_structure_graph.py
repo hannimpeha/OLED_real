@@ -7,11 +7,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from scipy import stats
 
-file = 'Qtcontrollers/resources/hannimpeha.csv'
-foo_file = 'Qtcontrollers/resources/foo.png'
-em_figure = 'Qtcontrollers/resources/EML_graph.png'
-txt_file = 'Qtcontrollers/resources/text.csv'
-em_file = 'Qtcontrollers/resources/text_em.csv'
+file = 'resources/hannimpeha.csv'
+foo_file = 'resources/foo.png'
+em_figure = 'resources/EML_graph.png'
+txt_file = 'resources/text.csv'
+em_file = 'resources/text_em.csv'
 
 class Elements_Structure_Graph(QWidget):
     def __init__(self):

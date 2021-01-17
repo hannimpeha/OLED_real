@@ -5,10 +5,10 @@ from PyQt5.QtWidgets import *
 import matplotlib.pyplot as plt
 import numpy as np
 
-file = 'Qtcontrollers/resources/text.csv'
-file_em = 'Qtcontrollers/resources/text_em.csv'
-file_emz = 'Qtcontrollers/resources/text_emz.txt'
-em_figure = 'Qtcontrollers/resources/EML_graph.png'
+file = 'resources/text.csv'
+file_em = 'resources/text_em.csv'
+file_emz = 'resources/text_emz.txt'
+em_figure = 'resources/EML_graph.png'
 
 class Elements_Structure(QWidget):
     def __init__(self):

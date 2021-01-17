@@ -199,10 +199,8 @@ int main() {
     int a_lgth;
 
     char *absolute_path;
-    absolute_path = my_realpath("../Qtcontrollers/resources/text_p.csv");
-    //absolute_path = my_realpath("Qtcontrollers/resources/text_p.csv");
-
-    //FILE *file = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_p.csv", "r");
+    absolute_path = my_realpath("../resources/text_p.csv");
+    // absolute_path = my_realpath("resources/text_p.csv");
     FILE *file = fopen(absolute_path, "r");
     while (fgets(line, sizeof line, file)) {
         ind++;
@@ -233,49 +231,15 @@ int main() {
 
     //input parameter
     //structure inputinplane_vector_ext_TM
-    char strFolderPath[] = { *absolute_path };
+    char strFolderPath[] = {*my_realpath("")};
     char *External_Env = "air";
 
-    absolute_path = my_realpath("../Qtcontrollers/resources/text.csv");
-    //absolute_path = my_realpath("Qtcontrollers/resources/text.csv");
-
-    FILE *stream = fopen(absolute_path, "r");
-    int no_l = 0;         // the number of layers
-    while (fgets(line, sizeof line, stream)) {
-        p = ep = line;
-        col = 1;
-        while (errno == 0) {
-            structure[row].thick = xstrtod(p, &ep);
-            while (*ep && *ep != '-' && (*ep < '0' || *ep > '9')) ep++;
-            if (*ep)
-                p = ep;
-            else  /* break if end of string */
-                break;
-        }
-        if (row == rmax) structure = xrealloc_dp((void **) structure, &rmax);
-
-        char *tmp = strchr(line, '\n');
-        if (tmp) *tmp = '\t';   // remove the '\n'
-        tmp = strdup(line);
-        no_l++;
-        strcpy(structure->name, getfield(tmp, 2));
-
-        printf("Importing Structure Name: %s\n", structure->name);
-        printf("Importing Structure Thickness: %f\n\n", structure->thick);
-
-    }
-    nrows = row;
-    fclose(stream);
-
-    int no_EML = 0;    // the number of EML
-    absolute_path = my_realpath("../Qtcontrollers/resources/text_em.csv");
-    //absolute_path = my_realpath("Qtcontrollers/resources/text_em.csv");
-    FILE *fstream = fopen(absolute_path, "r");
+    absolute_path = my_realpath("../resources/text.csv");
+    // absolute_path = my_realpath("resources/text.csv");
     char *buffer = NULL;
-    int h = no_EML, u = 0;
-    int nr = 4;
+    int u = 0;
     int nf;
-    int nfield = 7;
+    int nfield = 6;
     int erc;
     regex_t reg;
     const char fmt[] = "([^,]*)[,\n]";
@@ -296,8 +260,46 @@ int main() {
         errx(EXIT_FAILURE, "%s %s", errbuf, truncated);
     }
 
-    for (no_EML = 0; no_EML < nr && NULL!= fgets(line, sizeof(line), fstream); no_EML++) {
+    FILE *stream = fopen(absolute_path, "r");
+    int no_l = 0;         // the number of layers
+    for (no_l = 0; no_l < maximum_layer_number && NULL!= fgets(line, sizeof(line), stream); no_l++) {
         regmatch_t matches[1 + nfield];
+        const int eflags = 0;
+
+        strcpy(structure[no_l].name, getfield2(line,2));
+        structure[no_l].thick = atoi(getfield2(line,5));
+
+//    while (fgets(line, sizeof line, stream)) {
+//
+//        p = ep = line;
+//        col = 1;
+//        while (errno == 0) {
+//            structure[row].thick = xstrtod(p, &ep);
+//            while (*ep && *ep != '-' && (*ep < '0' || *ep > '9')) ep++;
+//            if (*ep)
+//                p = ep;
+//            else  /* break if end of string */
+//                break;
+//        }
+//        if (row == rmax) structure = xrealloc_dp((void **) structure, &rmax);
+//
+//        char *tmp = strchr(line, '\n');
+//        if (tmp) *tmp = '\t';   // remove the '\n'
+//        tmp = strdup(line);
+
+        printf("Importing Structure Name: %s\n", structure->name);
+        printf("Importing Structure Thickness: %f\n\n", structure->thick);
+    }
+    fclose(stream);
+
+    int no_EML = 0;    // the number of EML
+    absolute_path = my_realpath("../resources/text_em.csv");
+    // absolute_path = my_realpath("resources/text_em.csv");
+    FILE *fstream = fopen(absolute_path, "r");
+
+    int ncol = 6;
+    for (no_EML = 0; no_EML < maximum_EML_number && NULL!= fgets(line, sizeof(line), fstream); no_EML++) {
+        regmatch_t matches[1 + ncol];
         const int eflags = 0;
 
         EML[no_EML].number = atoi(getfield2(line,1));

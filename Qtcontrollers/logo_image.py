@@ -8,9 +8,9 @@ from PyQt5.QtWidgets import *
 # from selenium import webdriver
 from ctypes import *
 
-logo_image = 'Qtcontrollers/resources/Logo.png'
+logo_image = 'resources/Logo.png'
 so_file = "c/hannimpeha.so"
-file_p = 'Qtcontrollers/resources/text_p.csv'
+file_p = 'resources/text_p.csv'
 
 class Logo_Image(QWidget):
     def __init__(self):

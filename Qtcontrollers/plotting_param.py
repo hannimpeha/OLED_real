@@ -4,10 +4,10 @@ from PyQt5.QtWidgets import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-logo_image = 'Qtcontrollers/resources/Logo.png'
+logo_image = 'resources/Logo.png'
 data_path = "output/#3-2/CIE/output_CIE_bottom.txt"
 data_path2 = "output/#3-2/angular_intensity/output_angular_intensity_bottom.txt"
-graph = 'Qtcontrollers/resources/Graph.png'
+graph = 'resources/Graph.png'
 
 
 class Plotting_Param(QWidget):
