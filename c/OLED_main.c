@@ -231,7 +231,6 @@ int main() {
 
     //input parameter
     //structure inputinplane_vector_ext_TM
-    absolute_path = my_realpath("c/output/#1-1");
     char strFolderPath[] = { *absolute_path };
     char *External_Env = "air";
 
