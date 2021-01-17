@@ -129,6 +129,7 @@ void *xcalloc (size_t n, size_t s);
 double xstrtod (char *str, char **ep);
 const char* getfield(char* line, int num);
 const char *getfield2 (char *buf, size_t field);
+char *my_realpath(const char *path);
 
 
 //--------------------------------------------------------------------------------------//
@@ -136,7 +137,7 @@ const char *getfield2 (char *buf, size_t field);
 //                       OLED Optical Simulation Main Program                           //
 //                                                                                      //
 //--------------------------------------------------------------------------------------//
-int main(void) {
+int main() {
     printf("//--------------------------------------------------------------------------------------//\n");
     printf("//                                                                                      //\n");
     printf("//                       OLED Optical Simulation Main Program                           //\n");
@@ -197,7 +198,10 @@ int main(void) {
     double angle_step;
     int a_lgth;
 
-    FILE *file = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_p.csv", "r");
+    char *absolute_path;
+    absolute_path = my_realpath("../Qtcontrollers/resources/text_p.csv");
+    //FILE *file = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_p.csv", "r");
+    FILE *file = fopen(absolute_path, "r");
     while (fgets(line, sizeof line, file)) {
         ind++;
         p = ep = line;
@@ -227,10 +231,12 @@ int main(void) {
 
     //input parameter
     //structure inputinplane_vector_ext_TM
-    char strFolderPath[] = { "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1" };
+    absolute_path = my_realpath("c/output/#1-1");
+    char strFolderPath[] = { *absolute_path };
     char *External_Env = "air";
 
-    FILE *stream = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text.csv", "r");
+    absolute_path = my_realpath("../Qtcontrollers/resources/text.csv");
+    FILE *stream = fopen(absolute_path, "r");
     int no_l = 0;         // the number of layers
     while (fgets(line, sizeof line, stream)) {
         p = ep = line;
@@ -259,8 +265,8 @@ int main(void) {
     fclose(stream);
 
     int no_EML = 0;    // the number of EML
-
-    FILE *fstream = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_em.csv", "r");
+    absolute_path = my_realpath("../Qtcontrollers/resources/text_em.csv");
+    FILE *fstream = fopen(absolute_path, "r");
     char *buffer = NULL;
     int h = no_EML, u = 0;
     int nr = 4;
@@ -680,7 +686,7 @@ int main(void) {
 
     //loading refractive index & thickness
     for (i = 0; i < new_no_l; i++) {
-        sprintf(structure_temp[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
+        sprintf(structure_temp[i].file_location, my_realpath("/c/data/Refractive_index/%s.ri"), structure_temp[i].name);
         index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
         index = alloc_3d(index_temp, new_no_l, new_no_l, 4);
         //print_3d(index, 7, 5, 7);
@@ -734,7 +740,7 @@ int main(void) {
             index_low[0][2][j][i] = 0;    //	no imaginary part
             index_low[0][4][j][i] = 0;    //	no imaginary part
         }
-        sprintf(EML[i].spectrum_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/spectrum/%s.spec", EML[i].spectrum_name);
+        sprintf(EML[i].spectrum_file_location, my_realpath("c/data/spectrum/%s.spec"), EML[i].spectrum_name);
 
         //double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
         spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
@@ -746,7 +752,7 @@ int main(void) {
 //        }
 //        free2d(spectrum_temp);
 
-        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
+        sprintf(EML[i].EMZ_file_location, my_realpath("c/data/Emission_zone/%s.emz"), EML[i].EMZ_name);
         // strcpy(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/constant.emz");
         double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
 
@@ -1513,7 +1519,7 @@ int main(void) {
                              SPPs_eff_final, NR_loss_final};
 
     //	Candela per ampere part
-    FILE *es = fopen("/Users/hannahlee/PycharmProjects/penProject/c/data/eyesense.dat", "rt");
+    FILE *es = fopen(my_realpath("c/data/eyesense.dat"), "rt");
     if (es == NULL) {
         printf("There is no data\n");
         return false;
@@ -1594,7 +1600,7 @@ int main(void) {
 	char strFolderPathDS[100]={0};
 
 
-    strcpy(strFolderPath, "/Users/hannahlee/PycharmProjects/penProject/c/output/#1-1");
+    strcpy(strFolderPath, my_realpath("c/output/#1-1"));
     //mkdir(strFolderPath, 0700);
      //7 columns
     output1(strFolderPath, "output_mode", output_mode, 7);

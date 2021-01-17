@@ -204,3 +204,85 @@ const char *getfield2 (char *buf, size_t field)
     /* copy tok to cpy and return cpy on success or NULL on failure */
     return tok ? memmove (cpy, tok, strlen(tok) + 1) : NULL;
 }
+
+char *my_realpath(const char *path) {
+    const char *lastsep, *fname;
+    char *cmd, *dir, *newdir;
+    int pathlen, fnamelen, rc, size, pos, len;
+    char buf[256];
+    char tmpfile[L_tmpnam];
+    FILE *fp;
+
+    if (!tmpnam(tmpfile))
+        return NULL;
+
+    pathlen = 0;
+    lastsep = strrchr(path, '/');
+    if (lastsep) {
+        pathlen = lastsep - path;
+        if (pathlen == 0) {
+            /* special case the root directory */
+            pathlen = 1;
+        }
+    }
+    fname = path + pathlen;
+    fnamelen = strlen(fname);
+    if (!strcmp(fname, ".")
+        ||  !strcmp(fname, "/.")
+        ||  !strcmp(fname, "..")
+        ||  !strcmp(fname, "/..")) {
+        pathlen += fnamelen;
+        fname += fnamelen;
+        fnamelen = 0;
+    }
+    if (*fname == '/') {
+        fname++;
+        fnamelen--;
+    }
+    if (pathlen > 0) {
+        size = strlen("cd ") + pathlen + strlen("; pwd > ") + strlen(tmpfile) + 1;
+        cmd = malloc(size);
+        if (!cmd)
+            return NULL;
+        sprintf(cmd, "cd %.*s; pwd > %s", pathlen, path, tmpfile);
+    } else {
+        size = strlen("pwd > ") + strlen(tmpfile) + 1;
+        cmd = malloc(size);
+        if (!cmd)
+            return NULL;
+        sprintf(cmd, "pwd > %s", tmpfile);
+    }
+    rc = system(cmd);
+    free(cmd);
+    if (rc != 0)
+        return NULL;
+
+    fp = fopen(tmpfile, "r");
+    size = pos = 0;
+    dir = NULL;
+    while (fgets(buf, sizeof buf, fp)) {
+        len = strcspn(buf, "\n");
+        size += len + 1;
+        newdir = realloc(dir, size + fnamelen + 1);
+        if (!newdir) {
+            free(dir);
+            dir = NULL;
+            break;
+        }
+        dir = newdir;
+        memcpy(dir + pos, buf, len);
+        pos += len;
+        dir[pos] = '\0';
+        if (buf[len] == '\n')
+            break;
+    }
+    fclose(fp);
+    remove(tmpfile);
+    if (dir != NULL) {
+        if (pos > 0 && dir[pos - 1] != '/' && fnamelen > 0) {
+            dir[pos++] = '/';
+        }
+        strcpy(dir + pos, fname);
+    }
+    return dir;
+}

@@ -22,7 +22,6 @@ class Real(QWidget):
 
         self.setMinimumSize(QSize(1600, 900))
         self.setWindowTitle('JooAm Angular Luminence Spectometer')
-        self.setWindowIcon(QIcon('favicon.ico'))
 
 
     def making_file(self):
