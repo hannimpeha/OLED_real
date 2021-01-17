@@ -50,7 +50,7 @@ class Properties(QWidget):
         layout.addWidget(label, 1, 0)
 
         self.lineEdit_wave = QLineEdit()
-        self.lineEdit_wave.setText("300,700")
+        self.lineEdit_wave.setText("400,700,5")
         layout.addWidget(self.lineEdit_wave, 1, 1)
 
         label = QLabel()
@@ -90,10 +90,11 @@ class Properties(QWidget):
     def handleSave(self):
         with open(file_p, 'w') as stream:
             writer = csv.writer(stream, lineterminator='\n')
-            rowdata = [self.lineEdit_wave.text(), self.lineEdit_angle.text(),
-                       self.checkBox_mode.text(), self.checkBox_emission.text(),
-                       self.checkBox_power.text()]
-            writer.writerow(rowdata)
+            rowdata = [[self.lineEdit_wave.text()], [self.lineEdit_angle.text()],
+                       [self.checkBox_mode.text()], [self.checkBox_emission.text()],
+                       [self.checkBox_power.text()]]
+            for item in rowdata:
+                writer.writerow(item[0].strip('"').split(','))
 
 
 class Execute(QWidget):

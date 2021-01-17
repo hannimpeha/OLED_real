@@ -168,7 +168,7 @@ int main(void) {
     Save *structure_temp = (Save *) malloc(sizeof(Save) * maximum_layer_number);//
     emil *EML = (emil *) malloc(sizeof(emil) * maximum_EML_number);//
     // administrator options end
-    printf("administrator options end\n");
+    printf("administrator options end\n\n");
 
 
     //calculation condition
@@ -180,17 +180,49 @@ int main(void) {
     free(inpva), free(inpvb);
     int v_lgth = v_number + 100;
 
-    double WL_init = 400;
-    double WL_final = 700;
-    double WL_step = 5;
-    int w_lgth = ((int) WL_final - (int) WL_init) / (int) WL_step + 1;
+    char line[1024] = {0};
+    char *p, *ep;
+    size_t row = 0, col = 0, nrows = 0;
+    size_t rmax = ROWS, cmax = COLS;
 
-    double angle_init = 0;
-    double angle_final = 90;
-    double angle_step = 10;
-    int a_lgth = ((int) angle_final - (int) angle_init) / (int) angle_step + 1;
+    int ind = 0;
+
+    double WL_init;
+    double WL_final;
+    double WL_step;
+    int w_lgth;
+
+    double angle_init;
+    double angle_final;
+    double angle_step;
+    int a_lgth;
+
+    FILE *file = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_p.csv", "r");
+    while (fgets(line, sizeof line, file)) {
+        ind++;
+        p = ep = line;
+
+        char *tmp = strchr(line, '\n');
+        if (tmp) *tmp = '\t';   // remove the '\n'
+        tmp = strdup(line);
+
+        if (ind==1){
+            WL_init = atof(getfield2(tmp, 1));
+            WL_final = atof(getfield2(tmp, 2));
+            WL_step = atof(getfield2(tmp, 3));
+            w_lgth = ((int) WL_final - (int) WL_init) / (int) WL_step + 1;
+            printf("We are calculating WaveLength from %lf to %lf by %lf\n", WL_init, WL_final, WL_step);
+        }
+        if (ind==2){
+            angle_init = atof(getfield2(tmp, 1));
+            angle_final = atof(getfield2(tmp,2));
+            angle_step = atof(getfield2(tmp, 3));
+            a_lgth = ((int) angle_final - (int) angle_init) / (int) angle_step + 1;
+            printf("We are calculating Angle from %lf to %lf by %lf\n", angle_init, angle_final, angle_step);
+        }
+    }
     //calculation condition end
-    printf("calculation condition end\n");
+    printf("calculation condition end\n\n");
 
 
     //input parameter
@@ -199,12 +231,7 @@ int main(void) {
     char *External_Env = "air";
 
     FILE *stream = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text.csv", "r");
-    int no_l = 6;         // the number of layers
-    char line[1024] = {0};
-    char *p, *ep;
-    size_t row = 0, col = 0, nrows = 0;
-    size_t rmax = ROWS, cmax = COLS;
-
+    int no_l = 0;         // the number of layers
     while (fgets(line, sizeof line, stream)) {
         p = ep = line;
         col = 1;
@@ -221,7 +248,7 @@ int main(void) {
         char *tmp = strchr(line, '\n');
         if (tmp) *tmp = '\t';   // remove the '\n'
         tmp = strdup(line);
-
+        no_l++;
         strcpy(structure->name, getfield(tmp, 2));
 
         printf("Importing Structure Name: %s\n", structure->name);
@@ -231,11 +258,11 @@ int main(void) {
     nrows = row;
     fclose(stream);
 
-    int no_EML = 4;    // the number of EML
+    int no_EML = 0;    // the number of EML
 
     FILE *fstream = fopen("/Users/hannahlee/PycharmProjects/penProject/Qtcontrollers/resources/text_em.csv", "r");
     char *buffer = NULL;
-    int h = 0, u = 0;
+    int h = no_EML, u = 0;
     int nr = 4;
     int nf;
     int nfield = 7;
@@ -259,16 +286,16 @@ int main(void) {
         errx(EXIT_FAILURE, "%s %s", errbuf, truncated);
     }
 
-    for (h = 0; h < nr && NULL!= fgets(line, sizeof(line), fstream); h++) {
+    for (no_EML = 0; no_EML < nr && NULL!= fgets(line, sizeof(line), fstream); no_EML++) {
         regmatch_t matches[1 + nfield];
         const int eflags = 0;
 
-        EML[h].number = atoi(getfield2(line,1));
-        strcpy(EML[h].spectrum_name, getfield2(line,3));
-        EML[h].Exciton_prop = atof(getfield2(line, 4));
-        EML[h].QY = atof(getfield2(line, 5));
-        EML[h].HDR = atof(getfield2(line,6));
-        strcpy(EML[h].EMZ_name, getfield2(line, 7));
+        EML[no_EML].number = atoi(getfield2(line,1));
+        strcpy(EML[no_EML].spectrum_name, getfield2(line,3));
+        EML[no_EML].Exciton_prop = atof(getfield2(line, 4));
+        EML[no_EML].QY = atof(getfield2(line, 5));
+        EML[no_EML].HDR = atof(getfield2(line,6));
+        strcpy(EML[no_EML].EMZ_name, getfield2(line, 7));
 
 //        if ((erc = regexec(&reg, line, 1 + nfield, matches, eflags)) != 0) {
 //            if ((len = regerror(erc, &reg, errbuf, len)) > sizeof(errbuf))
@@ -284,12 +311,12 @@ int main(void) {
 //                   (int) (matches[nf].rm_eo - matches[nf].rm_so),
 //                   line + matches[nf].rm_so);
 //        }
-        printf("Importing EML number: %d\n", EML[h].number);
-        printf("Importing EML spectrum_name: %s\n", EML[h].spectrum_name);
-        printf("Importing EML Exciton_prop: %lf\n", EML[h].Exciton_prop);
-        printf("Importing EML Quantum Yield: %lf\n", EML[h].QY);
-        printf("Importing EML Horizontal Dipole Ratio: %lf\n", EML[h].HDR);
-        printf("Importing EML Emission Zone Name: %s\n", EML[h].EMZ_name);
+        printf("Importing EML number: %d\n", EML[no_EML].number);
+        printf("Importing EML spectrum_name: %s\n", EML[no_EML].spectrum_name);
+        printf("Importing EML Exciton_prop: %lf\n", EML[no_EML].Exciton_prop);
+        printf("Importing EML Quantum Yield: %lf\n", EML[no_EML].QY);
+        printf("Importing EML Horizontal Dipole Ratio: %lf\n", EML[no_EML].HDR);
+        printf("Importing EML Emission Zone Name: %s\n", EML[no_EML].EMZ_name);
     }
     fclose(fstream);
 
@@ -655,16 +682,16 @@ int main(void) {
     for (i = 0; i < new_no_l; i++) {
         sprintf(structure_temp[i].file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Refractive_index/%s.ri", structure_temp[i].name);
         index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
-        index = alloc_3d(index_temp, no_l+1, 5, 7);
+        index = alloc_3d(index_temp, new_no_l, new_no_l, 4);
         //print_3d(index, 7, 5, 7);
-//        for (k = 0; k < 5; k++) {
+//        for (k = 0; k < 12; k++) {
 //            for (j = 0; j < w_lgth; j++) {
-                //printf("\t%lf\n", index_temp[j][k]);
-                //printf("%d", new_no_l);
-                //index[i][k][j] = index_temp[j][k];
+//                printf("\t%lf\n", index_temp[j][k]);
+//                printf("%d", new_no_l);
+//                index[i][k][j] = index_temp[j][k];
 //            }
 //        }
-//        free2d(index_temp);
+        free2d(index_temp);
         *(thick + i) = structure_temp[i].thick;
     }  // loading refractive index & thickness end
     printf("loading refractive index & thickness end\n");
@@ -719,20 +746,20 @@ int main(void) {
 //        }
 //        free2d(spectrum_temp);
 
-        //sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
-        strcpy(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/constant.emz");
-        //double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+        sprintf(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/%s.emz", EML[i].EMZ_name);
+        // strcpy(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/constant.emz");
+        double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
 
 
-//        // THIS IS THE TROUBLESOME PART //
-//        for (j = 0; j < no_EMZ; j++) {
-//            //printf("%lf\n", thick_up[1][i]);
-//            //EMZ[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-//            //EMZ[j][0][i] = EMZ_temp[j][0];
-//            EMZ[j][0][i] = EMZ_temp[j][0];
-//            EMZ[j][1][i] = EMZ_temp[j][1];
-//        }
-// free2d(EMZ_temp);
+        // THIS IS THE TROUBLESOME PART //
+        for (j = 0; j < no_EMZ; j++) {
+            //printf("%lf\n", thick_up[1][i]);
+            //EMZ[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+            //EMZ[j][0][i] = EMZ_temp[j][0];
+            EMZ[j][0][i] = EMZ_temp[j][0];
+            EMZ[j][1][i] = EMZ_temp[j][1];
+        }
+        free2d(EMZ_temp);
     }
 
     free3d(index);

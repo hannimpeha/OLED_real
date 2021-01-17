@@ -1,5 +1,5 @@
 import csv
-
+import math
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 import matplotlib.pyplot as plt
@@ -366,10 +366,10 @@ class Emission_Zone_Setting(QWidget):
 
     def drawPic(self):
         equation = open(file_emz, "r").readline()
-        x_range = 1
+        x_range = 0
 
         x = np.array(x_range)
-        y = eval(equation)
+        y = eval(equation)   # need modoule math
         plt.plot(x, y)
         # plt.show()
 
