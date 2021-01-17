@@ -1,4 +1,3 @@
-import math
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
@@ -74,6 +73,7 @@ class Elements_Structure_Graph(QWidget):
     def write_graph(self):
         return pd.read_csv(file, header=0)
 
+
 class Emission_Layer_Graph(QWidget):
     def __init__(self):
         super().__init__()
@@ -97,11 +97,3 @@ class Emission_Layer_Graph(QWidget):
         layout.addWidget(tabs)
 
         self.setLayout(layout)
-
-        mu = 0
-        variance = 1
-        sigma = math.sqrt(variance)
-        x = np.linspace(mu - 3 * sigma, mu + 3 * sigma, 100)
-        plt.plot(x, stats.norm.pdf(x, mu, sigma))
-        plt.suptitle("2pplAn_PL", fontsize=20)
-        plt.savefig(em_figure, transparent=True)

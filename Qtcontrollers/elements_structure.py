@@ -2,10 +2,13 @@ import csv
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
+import matplotlib.pyplot as plt
+import numpy as np
 
 file = 'Qtcontrollers/resources/text.csv'
 file_em = 'Qtcontrollers/resources/text_em.csv'
-file_emz = 'Qtcontrollers/resources/text_emz.csv'
+file_emz = 'Qtcontrollers/resources/text_emz.txt'
+em_figure = 'Qtcontrollers/resources/EML_graph.png'
 
 class Elements_Structure(QWidget):
     def __init__(self):
@@ -262,90 +265,119 @@ class Emission_Layer(QWidget):
 class Emission_Zone_Setting(QWidget):
     def __init__(self):
         super().__init__()
-        layout = QGridLayout()
+        layout = QHBoxLayout()
+        layout1 = QGridLayout()
+        layout2 = QGridLayout()
+        layout.addLayout(layout1)
+        layout.addLayout(layout2)
         self.setLayout(layout)
 
         label = QLabel()
         label.setText("Emission Zone Setting")
-        layout.addWidget(label, 0, 0)
+        layout1.addWidget(label, 0, 0)
 
         label = QLabel()
         label.setText("Equation")
-        layout.addWidget(label, 0, 1)
+        layout2.addWidget(label, 0, 0)
 
         self.qlabel = QLabel()
-        layout.addWidget(self.qlabel, 1, 1)
+        layout2.addWidget(self.qlabel, 0, 1)
+
 
         label = QLabel()
         label.setText("Emit Range(nm): ")
-        layout.addWidget(label, 2, 1)
+        layout2.addWidget(label, 1, 0)
 
         textLine_emit = QLineEdit()
         textLine_emit.setFixedSize(100, 20)
         textLine_emit.setText("100")
-        layout.addWidget(textLine_emit, 3, 1)
+        layout2.addWidget(textLine_emit, 1, 1)
 
         label = QLabel()
         label.setText("Value a :")
-        layout.addWidget(label, 2, 2)
+        layout2.addWidget(label, 1, 2)
 
         self.textLine_a = QLineEdit()
         self.textLine_a.setFixedSize(100, 20)
         self.textLine_a.setText("0.5")
-        layout.addWidget(self.textLine_a, 3, 2)
+        layout2.addWidget(self.textLine_a, 1, 3)
 
         label = QLabel()
         label.setText("Value b :")
-        layout.addWidget(label, 2, 3)
+        layout2.addWidget(label, 2, 0)
 
         self.textLine_b = QLineEdit()
         self.textLine_b.setFixedSize(100, 20)
         self.textLine_b.setText("1")
-        layout.addWidget(self.textLine_b, 3, 3)
+        layout2.addWidget(self.textLine_b, 2, 1)
 
         label = QLabel()
         label.setText("Value c :")
-        layout.addWidget(label, 2, 4)
+        layout2.addWidget(label, 2, 2)
 
         self.textLine_c = QLineEdit()
         self.textLine_c.setFixedSize(100, 20)
         self.textLine_c.setText("2")
-        layout.addWidget(self.textLine_c, 3, 4)
+        layout2.addWidget(self.textLine_c, 2, 3)
 
         self.radiobutton_sheet = QRadioButton("Sheet")
         self.radiobutton_sheet.setChecked(True)
         self.radiobutton_sheet.type = ""
         self.radiobutton_sheet.toggled.connect(self.onClicked)
-        layout.addWidget(self.radiobutton_sheet, 1, 0)
+        layout1.addWidget(self.radiobutton_sheet, 1, 0)
 
         self.radiobutton_constant = QRadioButton("Constant")
         self.radiobutton_constant.type = "x = %s" %(self.textLine_a.text())
         self.radiobutton_constant.toggled.connect(self.onClicked)
-        layout.addWidget(self.radiobutton_constant, 2, 0)
+        layout1.addWidget(self.radiobutton_constant, 2, 0)
 
         self.radiobutton_linear = QRadioButton("Linear")
-        self.radiobutton_linear.type = "y = %s*x + %s" %(self.textLine_a.text(), self.textLine_b.text())
+        self.radiobutton_linear.type = "%s*x + %s" %(self.textLine_a.text(), self.textLine_b.text())
         self.radiobutton_linear.toggled.connect(self.onClicked)
-        layout.addWidget(self.radiobutton_linear, 3, 0)
+        layout1.addWidget(self.radiobutton_linear, 3, 0)
 
         self.radiobutton_gaussian = QRadioButton("Gaussian")
-        self.radiobutton_gaussian.type = "y = %s*e^{%s + x} + %s" %(self.textLine_a.text(), self.textLine_b.text(), self.textLine_c.text())
+        self.radiobutton_gaussian.type = "%s*math.exp(%s + x) + %s" %(self.textLine_a.text(), self.textLine_b.text(), self.textLine_c.text())
         self.radiobutton_gaussian.toggled.connect(self.onClicked)
-        layout.addWidget(self.radiobutton_gaussian, 4, 0)
+        layout1.addWidget(self.radiobutton_gaussian, 4, 0)
 
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.handleSave)
         drawButton.setFixedSize(120, 30)
-        layout.addWidget(drawButton, 1, 4)
+        layout2.addWidget(drawButton, 0, 2)
+
+        drawButton = QPushButton("Draw")
+        drawButton.clicked.connect(self.drawPic)
+        drawButton.setFixedSize(120, 30)
+        layout2.addWidget(drawButton, 0, 3)
+
+
 
     def handleSave(self):
         with open(file_emz, 'w') as stream:
             writer = csv.writer(stream, lineterminator='\n')
-            rowdata=[]
+            rowdata = [self.qlabel.text()]
             writer.writerow(rowdata)
-
 
     def onClicked(self):
         radioButton = self.sender()
         if radioButton.isChecked():
             self.qlabel.setText(radioButton.type)
+
+    def drawPic(self):
+        equation = open(file_emz, "r").readline()
+        x_range = 1
+
+        x = np.array(x_range)
+        y = eval(equation)
+        plt.plot(x, y)
+        # plt.show()
+
+        # mu = 0
+        # variance = 1
+        # sigma = math.sqrt(variance)
+        # x = np.linspace(mu - 3 * sigma, mu + 3 * sigma, 100)
+        # plt.plot(x, stats.norm.pdf(x, mu, sigma))
+
+        plt.suptitle("2pplAn_PL", fontsize=20)
+        plt.savefig(em_figure, transparent=True)

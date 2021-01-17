@@ -10,6 +10,8 @@ from Qtcontrollers.logo_image import Logo_Image
 from Qtcontrollers.plotting_param import Plotting_Param
 
 
+# http://www.antifavicon.com/
+
 class Real(QWidget):
     def __init__(self):
         super().__init__()
@@ -21,6 +23,7 @@ class Real(QWidget):
 
         self.setMinimumSize(QSize(1600, 900))
         self.setWindowTitle('JooAm Angular Luminence Spectometer')
+        self.setWindowIcon(QIcon('Qtcontrollers/resources/favicon.ico'))
 
 
     def making_file(self):

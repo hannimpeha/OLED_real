@@ -12,8 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Qtcontrollers/resources/favicon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/resources/EML_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/resources/EML_graph.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/resources/pyc.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +57,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/c/data/spectrum" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Qtcontrollers/resources" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -61,10 +66,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Qtcontrollers/resources" />
       <recent name="$PROJECT_DIR$/c/data/spectrum" />
       <recent name="$PROJECT_DIR$/c" />
       <recent name="$PROJECT_DIR$/c/data" />
-      <recent name="$PROJECT_DIR$/Qtcontrollers/resources" />
       <recent name="$PROJECT_DIR$/Qtcontrollers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -79,6 +84,11 @@
     <configuration name="penProject" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="penProject" TARGET_NAME="penProject" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="penProject" RUN_TARGET_NAME="penProject">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Makefile" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
@@ -268,7 +278,7 @@
       <workItem from="1610865928242" duration="84000" />
       <workItem from="1610866429964" duration="5682000" />
       <workItem from="1610872237307" duration="36000" />
-      <workItem from="1610872310618" duration="2752000" />
+      <workItem from="1610872310618" duration="6637000" />
     </task>
     <servers />
   </component>
