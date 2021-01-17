@@ -11,8 +11,6 @@ from Qtcontrollers.logo_image import Logo_Image
 from Qtcontrollers.plotting_param import Plotting_Param
 
 
-# http://www.antifavicon.com/
-
 class Real(QWidget):
     def __init__(self):
         super().__init__()
@@ -84,7 +82,6 @@ class Real(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     path = os.path.join(os.path.dirname(sys.modules[__name__].__file__), 'favicon.ico')
-    print(path)
     app.setWindowIcon(QIcon(path))
     window = Real()
     window.show()

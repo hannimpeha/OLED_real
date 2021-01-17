@@ -68,11 +68,11 @@
       <recent name="$PROJECT_DIR$/Qtcontrollers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/c" />
       <recent name="$PROJECT_DIR$/Qtcontrollers" />
       <recent name="$PROJECT_DIR$/controllers" />
       <recent name="$PROJECT_DIR$/controllers/drawing" />
-      <recent name="$PROJECT_DIR$/controllers/resources" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -165,7 +165,6 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="CMake Application.penProject" />
       <item itemvalue="Makefile.make" />
       <item itemvalue="Makefile.Makefile" />
       <item itemvalue="Python.CIE" />
@@ -274,7 +273,8 @@
       <workItem from="1610866429964" duration="5682000" />
       <workItem from="1610872237307" duration="36000" />
       <workItem from="1610872310618" duration="10193000" />
-      <workItem from="1610882624938" duration="1137000" />
+      <workItem from="1610882624938" duration="1270000" />
+      <workItem from="1610884040234" duration="16000" />
     </task>
     <servers />
   </component>
