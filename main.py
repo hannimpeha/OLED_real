@@ -1,4 +1,5 @@
 import sys
+import os
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
@@ -23,7 +24,7 @@ class Real(QWidget):
 
         self.setMinimumSize(QSize(1600, 900))
         self.setWindowTitle('JooAm Angular Luminence Spectometer')
-        self.setWindowIcon(QIcon('Qtcontrollers/resources/favicon.ico'))
+        self.setWindowIcon(QIcon('favicon.ico'))
 
 
     def making_file(self):
@@ -82,6 +83,9 @@ class Real(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    path = os.path.join(os.path.dirname(sys.modules[__name__].__file__), 'favicon.ico')
+    print(path)
+    app.setWindowIcon(QIcon(path))
     window = Real()
     window.show()
     sys.exit(app.exec_())
