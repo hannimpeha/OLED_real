@@ -1,14 +1,16 @@
+import csv
 from datetime import datetime
 import socket
 from PyQt5 import QtCore
 from PyQt5.QtCore import QThread, QObject
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
-from selenium import webdriver
+# from selenium import webdriver
 from ctypes import *
 
 logo_image = 'Qtcontrollers/resources/Logo.png'
 so_file = "c/hannimpeha.so"
+file_p = 'Qtcontrollers/resources/text_p.csv'
 
 class Logo_Image(QWidget):
     def __init__(self):
@@ -47,33 +49,46 @@ class Properties(QWidget):
         label.setText("Wavelength Range (nm): ")
         layout.addWidget(label, 1, 0)
 
-        lineEdit = QLineEdit()
-        layout.addWidget(lineEdit, 1, 1)
+        self.lineEdit_wave = QLineEdit()
+        layout.addWidget(self.lineEdit_wave, 1, 1)
 
         label = QLabel()
         label.setText("Angle Range (degree): ")
         layout.addWidget(label, 2, 0)
 
-        lineEdit = QLineEdit()
-        layout.addWidget(lineEdit, 2, 1)
+        self.lineEdit_angle = QLineEdit()
+        layout.addWidget(self.lineEdit_angle, 2, 1)
 
         label = QLabel()
         label.setText("Calculation Types:")
         layout.addWidget(label, 3, 0)
 
-        checkBox = QCheckBox()
-        checkBox.setText("Mode Analysis")
-        layout.addWidget(checkBox, 4, 0)
+        self.checkBox_mode = QCheckBox()
+        self.checkBox_mode.setText("Mode Analysis")
+        layout.addWidget(self.checkBox_mode, 3, 1)
 
-        checkBox = QCheckBox()
-        checkBox.setText("Emission Spectrum")
-        layout.addWidget(checkBox, 5, 0)
+        self.checkBox_emission = QCheckBox()
+        self.checkBox_emission.setText("Emission Spectrum")
+        layout.addWidget(self.checkBox_emission, 4, 1)
 
-        checkBox = QCheckBox()
-        checkBox.setText("Power Dissipation Curve")
-        layout.addWidget(checkBox, 6, 0)
+        self.checkBox_power = QCheckBox()
+        self.checkBox_power.setText("Power Dissipation Curve")
+        layout.addWidget(self.checkBox_power, 5, 1)
+
+        drawButton = QPushButton("Save")
+        drawButton.clicked.connect(self.handleSave)
+        drawButton.setFixedSize(200, 30)
+        layout.addWidget(drawButton, 6, 1)
 
         self.setLayout(layout)
+
+    def handleSave(self):
+        with open(file_p, 'w') as stream:
+            writer = csv.writer(stream, lineterminator='\n')
+            rowdata = [self.lineEdit_wave.text(), self.lineEdit_angle.text(),
+                       self.checkBox_mode.text(), self.checkBox_emission.text(),
+                       self.checkBox_power.text()]
+            writer.writerow(rowdata)
 
 
 class Execute(QWidget):
@@ -129,16 +144,16 @@ class SeleniumWorker(QObject):
         my = cdll.LoadLibrary("/Users/hannahlee/PycharmProjects/penProject/c/hannimpeha.so")
         my.main()
 
-        browser = webdriver.Chrome()
-        links = ['http://google.com']
-        for link in links:
-            browser.get(link)
-            self.step += 100 / len(links)
-            self.pbar.setValue(self.step)
-            if self.step >= 100:
-                self.btn.setText('Finished')
-                return
-        browser.close()
+        # browser = webdriver.Chrome()
+        # links = ['http://google.com']
+        # for link in links:
+        #     browser.get(link)
+        #     self.step += 100 / len(links)
+        #     self.pbar.setValue(self.step)
+        #     if self.step >= 100:
+        #         self.btn.setText('Finished')
+        #         return
+        # browser.close()
 
 
 class Project_Info(QWidget):
