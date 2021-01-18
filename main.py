@@ -21,7 +21,7 @@ class Real(QWidget):
         layout.addWidget(self.menuBar)
 
         self.setMinimumSize(QSize(1600, 900))
-        self.setWindowTitle('JooAm Angular Luminence Spectometer')
+        self.setWindowTitle('JooAm Optical Simulator for Thin Film & Devices')
 
 
     def making_file(self):

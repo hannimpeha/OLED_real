@@ -70,7 +70,7 @@ class Elements_Structure_Graph(QWidget):
         tps.plot.bar(stacked=True, ax=self.ax)
 
     def write_graph(self):
-        return pd.read_csv(file, header=0)
+        return pd.read_csv(txt_file, header=0)
 
 
 class Emission_Layer_Graph(QWidget):

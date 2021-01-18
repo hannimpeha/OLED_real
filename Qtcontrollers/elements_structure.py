@@ -1,15 +1,22 @@
 import csv
 import math
+import os
+
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import *
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from Qtcontrollers.logo_image import *
 
 file = 'resources/text.csv'
 file_em = 'resources/text_em.csv'
 file_emz = 'resources/text_emz.txt'
+file_p = 'resources/text_p.csv'
+path_p = 'resources/properties'
 em_figure = 'resources/EML_graph.png'
 project_info = 'resources/project_info.csv'
+
 
 class Elements_Structure(QWidget):
     def __init__(self):
@@ -52,13 +59,13 @@ class Elements_Structure(QWidget):
 
         self.table = QTableWidget()
         self.table.setRowCount(12)
-        self.table.setColumnCount(6)
-        self.cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness', 'Unit']
+        self.table.setColumnCount(7)
+        self.cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness', 'Unit' ,'Properties']
         self.table.setHorizontalHeaderLabels(self.cols_element)
 
         self.layer_name = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
         self.material = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
-        self.refractive_index = ["Al.dat", "TPBi.dat", "TPBi.dat", "mCBP.dat", "mCBP.dat", "TCTA_B3PYMPM.dat", "TCTA.dat", "NPB.dat", "NPB.dat", "TAPC.dat", "ITO_Geomatec.dat", "glass_Eagle2000.dat"]
+        self.refractive_index = ["Al.ri", "TPBi.ri", "TPBi.ri", "mCBP.ri", "mCBP.ri", "TCTA_B3PYMPM.ri", "TCTA.ri", "NPB.ri", "NPB.ri", "TAPC.ri", "ITO_Geomatec.ri", "glass_Eagle2000.ri"]
         self.thickness = [100, 100, 10, 20, 20, 20, 20, 30, 20, 50, 70, 0]
         self.unit = ["nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm"]
 
@@ -75,14 +82,14 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.thickness[i])))
             self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
 
-        # i = 0
-        # for j in range(len(self.layer_name)):
-        #     self.table.setItem(i, 5, QtWidgets.QTableWidgetItem(j))
-        #     comboBox = QComboBox()
-        #     comboBox.addItem("nm")
-        #     comboBox.addItem("pm")
-        #     self.table.setCellWidget(i, 5, comboBox)
-        #     i += 1
+        i = 0
+        for j in range(len(self.layer_name)):
+            self.table.setItem(i, 6, QtWidgets.QTableWidgetItem(j))
+            selectButton = QPushButton()
+            selectButton.setText("Settings")
+            selectButton.clicked.connect(self.saveDirectory)
+            self.table.setCellWidget(i, 6, selectButton)
+            i += 1
 
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
@@ -90,11 +97,36 @@ class Elements_Structure(QWidget):
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(5, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(6, QtWidgets.QHeaderView.Stretch)
 
         self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setSelectionMode(QAbstractItemView.MultiSelection)
         return self.table
+
+    def saveDirectory(self):
+        real_path = []
+        for item in self.layer_name:
+            path = os.getcwd()
+            path_interim = os.path.join(path, path_p)
+            path_real = os.path.join(path_interim, item)+".csv"
+            real_path.append(path_real)
+
+        for property_path in real_path:
+            with open(property_path, 'w') as stream:
+                writer = csv.writer(stream, lineterminator='\n')
+                for row in self.read_csv():
+                    writer.writerow(row)
+
+    def read_csv(self):
+        data = []
+        with open(file_p, 'r') as f:
+            rows = f.readlines()
+            rows = list(map(lambda x: x.strip(), rows))
+            for row in rows:
+                row = row.split(',')
+                data.append(row)
+        return data
 
     def onConnectButtonClicked(self):
         self.currentRowCount = self.table.rowCount()
@@ -124,7 +156,6 @@ class Elements_Structure(QWidget):
     #     return self.cell
 
     def handleSave(self):
-#        with open('monschedule.csv', 'wb') as stream:
         with open(file, 'w') as stream:                  # 'w'
             writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
             for row in range(self.table.rowCount()):
@@ -175,7 +206,7 @@ class Emission_Layer(QWidget):
         self.table.setRowCount(3)
         self.table.setColumnCount(7)
 
-        cols_element = ['L#', 'EMMaterials', 'Spectrum', 'ExcitonProp', 'QY', 'PQ', 'EMZone']
+        cols_element = ['L#', 'EMMaterials', 'Spectrum', 'ExcitonProp', 'QY', 'HDR', 'EMZone']
         self.table.setHorizontalHeaderLabels(cols_element)
 
         self.num = [4, 6, 8]
@@ -257,7 +288,6 @@ class Emission_Layer(QWidget):
     #     return self.cell
 
     def handleSave(self):
-#        with open('monschedule.csv', 'wb') as stream:
         with open(file_em, 'w') as stream:                  # 'w'
             writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
             for row in range(self.table.rowCount()):
@@ -362,6 +392,13 @@ class Emission_Zone_Setting(QWidget):
         drawButton.setFixedSize(120, 30)
         layout2.addWidget(drawButton, 0, 3)
 
+        self.RIList = pd.read_csv(file, header=None)
+        self.RI_name = []
+        self.RI_data = []
+        # self.RIList.itemSelectionChanged.connect(self.chkItemClicked)
+        self.readData()
+        self.initPlot()
+
     def handleSave(self):
         with open(file_emz, 'w') as stream:
             writer = csv.writer(stream, lineterminator='\n')
@@ -393,3 +430,144 @@ class Emission_Zone_Setting(QWidget):
 
         plt.suptitle(name, fontsize=20)
         plt.savefig(em_figure, transparent=True)
+
+    def readData(self):
+        path = os.path.join(os.getcwd(), "c/data/Refractive_index")
+        files = os.listdir(path)
+
+        for file in files:
+            t = file.split('.')
+            if len(t) < 2:
+                pass
+            elif t[1] != 'ri':
+                pass
+            else:
+                self.RI_name.append(t[0])
+                # self.RIList.addItem(t[0])
+                # file open
+                file_path = os.path.join(path, file)
+                f = open(file_path, 'r')
+                data = []
+                while True:
+                    line = f.readline()
+                    if not line:
+                        break
+                    line = line.rstrip()
+                    tt = line.split('\t')
+                    if len(tt) != 3:
+                        pass
+                    try:
+                        tt = list(map(float, tt))
+                        data.append(tt)
+                    except ValueError:
+                        pass
+
+                data_ = np.array(data)
+                # print(data_)
+                self.RI_data.append(data_)
+                f.close()
+
+    def initPlot(self):
+        self.fig = plt.Figure()
+        self.canvas = FigureCanvas(self.fig)
+        layout = QHBoxLayout()
+        layout.layoutLeftMargin = 0
+        layout.layoutRightMargin = 0
+        layout.layoutTopMargin = 0
+        layout.layoutBottomMargin = 0
+        layout.addWidget(self.canvas)
+
+    def updatePlotAndTable(self, name):
+        self.fig.clear()
+
+        idx = self.RI_name.index(name)
+        data = self.RI_data[idx]
+
+        wavelength = np.around(data[:, 0], decimals=1)
+        wavelength = wavelength.astype(np.int64)
+        n = np.round(data[:, 1], 4)
+        if len(data[0]) == 2:
+            k = None
+        else:
+            k = np.round(data[:, 2], 4)
+
+        self.tableWidget.setRowCount(0)
+        count = len(n)
+
+        if k is None:
+            for i in range(count):
+                self.addData(wavelength[i], n[i], '')
+        else:
+            for i in range(count):
+                self.addData(wavelength[i], n[i], k[i])
+
+        ax = self.fig.add_subplot()
+        ax.set_title(name)
+        ax.set_xlabel('Wavelength(nm)')
+        ax.set_ylabel('Refractive Index n')
+        ax.set_xlim(min(wavelength), max(wavelength))
+        ax.set_ylim(min(n), max(n) * 1.1)
+        ax.xaxis.grid(True)
+        ax.yaxis.grid(True)
+
+        line, = ax.plot([], [], 'r-', label="n", linewidth=2.0)
+        line.set_data(wavelength, n)
+
+        if k is not None:
+            ax2 = ax.twinx()
+            ax2.set_ylabel('Extinction coefficient k', rotation=270, labelpad=20)
+            ax2.set_ylim(min(k), max(k) * 1.1)
+            line2, = ax2.plot([], [], 'b-', label='k', linewidth=2.0)
+            line2.set_data(wavelength, k)
+
+        self.fig.legend()
+        self.fig.tight_layout()
+        self.canvas.draw()
+
+class Properties(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        layout = QGridLayout()
+        label = QLabel()
+        label.setText("Properties")
+        layout.addWidget(label, 0, 0)
+
+        label = QLabel()
+        label.setText("Wavelength Range (nm): ")
+        layout.addWidget(label, 1, 0)
+
+        self.lineEdit_wave = QLineEdit()
+        self.lineEdit_wave.setFixedSize(230, 20)
+        self.lineEdit_wave.setText("400,700,5")
+        layout.addWidget(self.lineEdit_wave, 1, 1)
+
+        label = QLabel()
+        label.setText("Angle Range (degree): ")
+        layout.addWidget(label, 2, 0)
+
+        self.lineEdit_angle = QLineEdit()
+        self.lineEdit_angle.setFixedSize(230, 20)
+        self.lineEdit_angle.setText("0,90,10")
+        layout.addWidget(self.lineEdit_angle, 2, 1)
+
+        label = QLabel()
+        label.setText("Calculation Types:")
+        layout.addWidget(label, 3, 0)
+
+        self.checkBox_mode = QCheckBox()
+        self.checkBox_mode.setText("Mode Analysis")
+        self.checkBox_mode.setCheckState(True)
+        layout.addWidget(self.checkBox_mode, 3, 1)
+
+        self.checkBox_emission = QCheckBox()
+        self.checkBox_emission.setText("Emission Spectrum")
+        self.checkBox_emission.setCheckState(True)
+        layout.addWidget(self.checkBox_emission, 4, 1)
+
+        self.checkBox_power = QCheckBox()
+        self.checkBox_power.setText("Power Dissipation Curve")
+        self.checkBox_power.setCheckState(True)
+        layout.addWidget(self.checkBox_power, 5, 1)
+
+        self.setLayout(layout)
