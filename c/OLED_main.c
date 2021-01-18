@@ -675,15 +675,15 @@ int main() {
     for (i = 0; i < new_no_l; i++) {
         strcpy(structure_temp[i].file_location, absolute_path);
         index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
-        //index = alloc_3d(index_temp, new_no_l, no_l, 7);
-        //print_3d(index, new_no_l, no_l, 7);
-        for (k = 0; k < no_l; k++) {
-            for (j = 0; j < w_lgth; j++) {
-                printf("\t%lf\n", index_temp[j][k]);
-                //index[i][k][j] = index_temp[j][k];
-            }
-        }
-        free2d(index_temp);
+        index = alloc_3d(index_temp, new_no_l, no_l, 7);
+        print_3d(index, new_no_l, no_l, 7);
+//        for (k = 0; k < no_l; k++) {
+//            for (j = 0; j < w_lgth; j++) {
+//                printf("%lf\n", index_temp[j][k]);
+//                //index[i][k][j] = index_temp[j][k];
+//            }
+//        }
+//        free2d(index_temp);
         *(thick + i) = structure_temp[i].thick;
     }  // loading refractive index & thickness end
     printf("loading refractive index & thickness end\n\n");

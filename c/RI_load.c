@@ -3,6 +3,8 @@
 #include <string.h>
 #include "struct.h"
 #include <stdbool.h>
+
+
 int findx(double** Z);
 void free2d(double** a);
 double** zeros2_0(int x, int y);
