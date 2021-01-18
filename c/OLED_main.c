@@ -966,7 +966,7 @@ int main() {
 
 
     /*-------------------------Reflection & Transmission Coeff----------------------------*/
-    printf("/*-------------------------Reflection & Transmission Coeff----------------------------*/\n");
+//    printf("/*-------------------------Reflection & Transmission Coeff----------------------------*/\n");
     for (i = 0; i < no_EML; i++) {
         //	reflection & transmission coeffs
         printf("reflection & transmission coeffs start\n");
@@ -1000,7 +1000,7 @@ int main() {
 
 
         /*---------------------------------Transmittance------------------------------------*/
-        printf("/*---------------------------------Transmittance------------------------------------*/\n");
+//        printf("/*---------------------------------Transmittance------------------------------------*/\n");
     for (i = 0; i < no_EML; i++) {
         //	transmittance
         printf("transmittance start\n");
