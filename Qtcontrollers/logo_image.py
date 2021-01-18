@@ -129,7 +129,7 @@ class SeleniumWorker(QObject):
     def __init__(self):
         super().__init__()
         self.step = 0
-        self.btn = QPushButton('GPU Calc')
+        self.btn = QPushButton('Run')
         self.btn.move(40, 80)
         self.btn.clicked.connect(self.doWork)
 
