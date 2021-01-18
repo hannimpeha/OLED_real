@@ -199,8 +199,8 @@ int main() {
     int a_lgth;
 
     char *absolute_path;
-    //absolute_path = my_realpath("../resources/text_p.csv");
-    absolute_path = my_realpath("resources/text_p.csv");
+    absolute_path = my_realpath("../resources/text_p.csv");
+    //absolute_path = my_realpath("resources/text_p.csv");
     FILE *file = fopen(absolute_path, "r");
     while (fgets(line, sizeof line, file)) {
         ind++;
@@ -234,8 +234,8 @@ int main() {
     char strFolderPath[] = {*my_realpath("")};
     char *External_Env = "air";
 
-    // absolute_path = my_realpath("../resources/text.csv");
-    absolute_path = my_realpath("resources/text.csv");
+    absolute_path = my_realpath("../resources/text.csv");
+    //absolute_path = my_realpath("resources/text.csv");
     char *buffer = NULL;
     int u = 0;
     int nf;
@@ -293,8 +293,8 @@ int main() {
     fclose(stream);
 
     int no_EML = 0;    // the number of EML
-    // absolute_path = my_realpath("../resources/text_em.csv");
-    absolute_path = my_realpath("resources/text_em.csv");
+    absolute_path = my_realpath("../resources/text_em.csv");
+    //absolute_path = my_realpath("resources/text_em.csv");
     FILE *fstream = fopen(absolute_path, "r");
 
     int ncol = 6;

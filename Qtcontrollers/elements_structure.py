@@ -171,12 +171,13 @@ class Emission_Layer(QWidget):
 
     def init_em_table(self):
         self.table = QTableWidget()
-        self.table.setRowCount(4)
+        self.table.setRowCount(3)
         self.table.setColumnCount(7)
 
         cols_element = ['L#', 'EMMaterials', 'Spectrum', 'ExcitonProp', 'QY', 'PQ', 'EMZone']
         self.table.setHorizontalHeaderLabels(cols_element)
 
+        self.num = [4, 6, 8]
         self.em_materials = ["FCNlr", "Irppy2tmd", "Irmphmq2tmd"]
         self.spectrum = ["FCNlr", "Irppy2tmd", "Irmphmq2tmd"]
         self.exciton_prop = [1, 1, 1]
@@ -190,7 +191,7 @@ class Emission_Layer(QWidget):
 
         for i in range(len(self.em_materials)):
             self.num_row = i
-            self.table.setItem(self.num_row, 0, QTableWidgetItem(str(self.num_row)))
+            self.table.setItem(self.num_row, 0, QTableWidgetItem(str(self.num[i])))
             self.table.setItem(self.num_row, 1, QTableWidgetItem(self.em_materials[i]))
             self.table.setItem(self.num_row, 2, QTableWidgetItem(self.spectrum[i]))
             self.table.setItem(self.num_row, 3, QTableWidgetItem(str(self.exciton_prop[i])))
