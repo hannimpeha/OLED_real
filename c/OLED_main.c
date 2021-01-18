@@ -256,35 +256,17 @@ int main() {
     }
 
     FILE *stream = fopen(absolute_path, "r");
-    int no_l;         // the number of layers
+    int no_l=0;         // the number of layers
 
-//     while (fgets(line, sizeof line, stream)) {
-    for (no_l = 0; no_l < maximum_layer_number && NULL!= fgets(line, sizeof(line), stream); no_l++) {
-        regmatch_t matches[1 + nfield];
-
-        strcpy(structure[no_l].name, getfield2(line,2));
-        structure[no_l].thick = atoi(getfield2(line,5));
-
-//            p = ep = line;
-//            col = 1;
-//            while (errno == 0) {
-//                structure[row].thick = xstrtod(p, &ep);
-//                while (*ep && *ep != '-' && (*ep < '0' || *ep > '9')) ep++;
-//                if (*ep)
-//                    p = ep;
-//                else  /* break if end of string */
-//                    break;
-//            }
-//            if (row == rmax) structure = xrealloc_dp((void **) structure, &rmax);
-//
-//            char *tmp = strchr(line, '\n');
-//            if (tmp) *tmp = '\t';   // remove the '\n'
-//            tmp = strdup(line);
-
+    while (fgets(line, sizeof line, stream)) {
+        strcpy(structure->name, getfield2(line, 2));
+        structure->thick = atof(getfield2(line, 5));
         printf("Importing Structure Name: %s\n", structure->name);
         printf("Importing Structure Thickness: %f\n\n", structure->thick);
+        no_l++;
     }
     fclose(stream);
+
 
     int no_EML = 0;    // the number of EML
     absolute_path = my_realpath("../resources/text_em.csv");
@@ -293,7 +275,6 @@ int main() {
     int ncol = 6;
     for (no_EML = 0; no_EML < maximum_EML_number && NULL!= fgets(line, sizeof(line), fstream); no_EML++) {
         regmatch_t matches[1 + ncol];
-        const int eflags = 0;
 
         EML[no_EML].number = atoi(getfield2(line,1));
         strcpy(EML[no_EML].spectrum_name, getfield2(line,3));
