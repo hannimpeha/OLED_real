@@ -13,6 +13,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/logo_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/logo_image.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -255,7 +258,7 @@
       <workItem from="1610936497003" duration="333000" />
       <workItem from="1610937092087" duration="7242000" />
       <workItem from="1610945999402" duration="2226000" />
-      <workItem from="1610948959325" duration="2462000" />
+      <workItem from="1610948959325" duration="5262000" />
     </task>
     <servers />
   </component>
@@ -275,6 +278,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/penProject$main.coverage" NAME="main Coverage Results" MODIFIED="1610951423508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/penProject$main.coverage" NAME="main Coverage Results" MODIFIED="1610954092777" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

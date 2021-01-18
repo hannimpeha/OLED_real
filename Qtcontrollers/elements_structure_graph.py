@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-file = 'resources/hannimpeha.csv'
+
 foo_file = 'resources/foo.png'
 em_figure = 'resources/EML_graph.png'
 txt_file = 'resources/text.csv'

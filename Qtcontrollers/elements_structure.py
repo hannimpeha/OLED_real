@@ -4,7 +4,6 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 import matplotlib.pyplot as plt
 import numpy as np
-from Qtcontrollers.logo_image import Project_Info
 
 file = 'resources/text.csv'
 file_em = 'resources/text_em.csv'

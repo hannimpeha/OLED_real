@@ -1,3 +1,5 @@
+import csv
+import os
 from sys import argv
 
 from PyQt5 import QtCore, QtWidgets
@@ -6,11 +8,13 @@ from PyQt5.QtWidgets import *
 import numpy as np
 import matplotlib.pyplot as plt
 
+image = 'resources/Graph.png'
 logo_image = 'resources/Logo.png'
 data_path = "output/#3-2/CIE/output_CIE_bottom.txt"
 data_path2 = "output/#3-2/angular_intensity/output_angular_intensity_bottom.txt"
 graph = 'resources/Graph.png'
 project_info = 'resources/project_info.csv'
+result = 'resources/result.csv'
 
 class Plotting_Param(QWidget):
     def __init__(self):
@@ -178,8 +182,20 @@ class Exportation(QWidget):
     def __init__(self):
         super().__init__()
 
-        layout = QGridLayout()
+        self.image = image
+        #self.path = argv[0]
+        # on Mac
+        #self.path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+        self.path = os.getcwd()
+        # on Windows
+        #self.path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 
+        self.name = "2PPlAn_33PYMPM"
+        # with open(project_info, "r") as pi:
+        #     self.name = pi.readline()
+        self.data_path = data_path2
+
+        layout = QGridLayout()
         label = QLabel()
         label.setText("Exportation")
         layout.addWidget(label, 0, 0)
@@ -190,7 +206,7 @@ class Exportation(QWidget):
         hlayout.addWidget(label)
 
         lineEdit = QLineEdit()
-        lineEdit.setText(argv[0])
+        lineEdit.setText(self.path)
         lineEdit.setFixedSize(250, 20)
         hlayout.addWidget(lineEdit)
 
@@ -208,13 +224,13 @@ class Exportation(QWidget):
 
         check_text = QCheckBox()
         check_text.setText("Text")
-        check_text.setChecked(False)
+        check_text.setChecked(True)
         check_text.setStyleSheet("QCheckBox::indicator { width: 20px; height: 20px;}")
         hlayout.addWidget(check_text)
 
         check_image = QCheckBox()
         check_image.setText("Image")
-        check_text.setChecked(False)
+        check_text.setChecked(True)
         check_image.setStyleSheet("QCheckBox::indicator { width: 20px; height: 20px;}")
         hlayout.addWidget(check_image)
 
@@ -227,16 +243,14 @@ class Exportation(QWidget):
         label.setText("Name: ")
         hlayout.addWidget(label)
 
-        with open(project_info, "r") as pi:
-            name = pi.readline()
-
         lineEdit = QLineEdit()
-        lineEdit.setText(name)
+        lineEdit.setText(self.name)
         lineEdit.setFixedSize(250, 20)
         hlayout.addWidget(lineEdit)
 
         btn = QPushButton()
         btn.setText("Export")
+        btn.clicked.connect(self.handleTextSave)
         hlayout.addWidget(btn)
 
         layout.addLayout(hlayout, 3, 0)
@@ -247,3 +261,17 @@ class Exportation(QWidget):
         options = QFileDialog.DontResolveSymlinks | QFileDialog.ShowDirsOnly
         self.directory = QFileDialog.getExistingDirectory(self.dialog, "Open Folder", options=options)
         self.dialog.show()
+
+    def handleImageSave(self):
+        self.name.join(".png")
+        real_path = os.path.join(self.path, self.name)
+        with open(real_path, 'w') as stream:
+            stream.write(open(self.image, "r").read())
+            stream.close()
+
+    def handleTextSave(self):
+        self.name.join(".txt")
+        real_path = os.path.join(self.path, self.name)
+        with open(real_path, 'w') as stream:
+            stream.write(open(self.data_path, "r").read())
+            stream.close()

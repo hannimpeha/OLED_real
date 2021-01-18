@@ -54,6 +54,7 @@ class Properties(QWidget):
         layout.addWidget(label, 1, 0)
 
         self.lineEdit_wave = QLineEdit()
+        self.lineEdit_wave.setFixedSize(230, 20)
         self.lineEdit_wave.setText("400,700,5")
         layout.addWidget(self.lineEdit_wave, 1, 1)
 
@@ -62,6 +63,7 @@ class Properties(QWidget):
         layout.addWidget(label, 2, 0)
 
         self.lineEdit_angle = QLineEdit()
+        self.lineEdit_angle.setFixedSize(230, 20)
         self.lineEdit_angle.setText("0,90,10")
         layout.addWidget(self.lineEdit_angle, 2, 1)
 
@@ -86,7 +88,7 @@ class Properties(QWidget):
 
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.handleSave)
-        drawButton.setFixedSize(200, 30)
+        drawButton.setFixedSize(230, 30)
         layout.addWidget(drawButton, 6, 1)
 
         self.setLayout(layout)
