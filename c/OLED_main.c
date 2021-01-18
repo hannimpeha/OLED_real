@@ -1624,8 +1624,11 @@ int main() {
      //7 columns
     output1(strFolderPath, "output_mode", output_mode, 7);
 
+
+
     //Candela per ampere
-    sprintf(strFolderPathCPA, "%s/Candela_per_ampere", strFolderPath);
+    real_name = concat(strFolderPath, "/Candela_per_ampere");
+    strcpy(strFolderPathCPA, real_name);
     //mkdir(strFolderPathCPA, 0700);
     output(strFolderPathCPA, "output_Watt_per_mA_sr_bottom", output_Watt_per_mA_sr_bottom);
     output(strFolderPathCPA, "output_Watt_per_mA_sr_top", output_Watt_per_mA_sr_top);
@@ -1635,7 +1638,8 @@ int main() {
 
 
     //ELspectrum	% wavelegnth* angle
-    sprintf(strFolderPathEL, "%s/ELspectrum", strFolderPath);
+    real_name = concat(strFolderPath, "/ELspectrum");
+    strcpy(strFolderPathEL, real_name);
     //mkdir(strFolderPathEL, 0700);
     outputEL(strFolderPathEL, "output_ELspectrum_bottom", p_out_12_ext_final, w_lgth, a_lgth);
     outputEL(strFolderPathEL, "output_ELspectrum_top", p_out_13_ext_final, w_lgth, a_lgth);
@@ -1650,7 +1654,8 @@ int main() {
 
 
     //angular_intensity		% angle * 1
-    sprintf(strFolderPathAI, "%s/angular_intensity", strFolderPath);
+    real_name = concat(strFolderPath, "/angular_intensity");
+    strcpy(strFolderPathAI, real_name);
     //mkdir(strFolderPathAI, 0700);
     output1(strFolderPathAI, "output_angular_intensity_bottom", output_angular_intensity_bottom, a_lgth);
     output1(strFolderPathAI, "output_angular_intensity_top", output_angular_intensity_top, a_lgth);
@@ -1663,19 +1668,18 @@ int main() {
     output1(strFolderPathAI, "output_angular_intensity_sub_TE", output_angular_intensity_sub_TE, a_lgth);
 
 
-
     //CIE			% angle * 3
-    sprintf(strFolderPathCIE, "%s/CIE", strFolderPath);
+    real_name = concat(strFolderPath, "/CIE");
+    strcpy(strFolderPathCIE, real_name);
     //mkdir(strFolderPathCIE, 0700);
     output2(strFolderPathCIE, "output_CIE_bottom", output_CIE_bottom, a_lgth, 3);
     output2(strFolderPathCIE, "output_CIE_top", output_CIE_top, a_lgth, 3);
     output2(strFolderPathCIE, "output_CIE_sub", output_CIE_sub, a_lgth, 3);
 
 
-
-
     //eff			% wavelegnth * EML * EMZ
-    sprintf(strFolderPathEFF, "%s/EFF", strFolderPath);
+    real_name = concat(strFolderPath, "/EFF");
+    strcpy(strFolderPathEFF, real_name);
     //mkdir(strFolderPathEFF, 0700);
     output3(strFolderPathEFF, "output_OC_eff", OC_eff, w_lgth, no_EML, no_EMZ);
     output3(strFolderPathEFF, "output_OC_top_eff", OC_back_eff, w_lgth, no_EML, no_EMZ);
@@ -1684,9 +1688,9 @@ int main() {
 
 
 
-
     //dissipation	% inplane_wavevector * wavelength * EML * EMZ
-    sprintf(strFolderPathDS, "%s/dissipation", strFolderPath);
+    real_name = concat(strFolderPath, "/dissipation");
+    strcpy(strFolderPathDS, real_name);
     //mkdir(strFolderPathDS, 0700);
     outputDS(strFolderPathDS, "output_power_dissipation", p_total, v_lgth, w_lgth, no_EML, no_EMZ);
     outputDS(strFolderPathDS, "output_power_dissipation_TM", p_total_TM, v_lgth, w_lgth, no_EML, no_EMZ);

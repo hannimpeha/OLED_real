@@ -14,13 +14,6 @@
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/c/OLED_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/c/OLED_main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/hannah.c" beforeDir="false" afterPath="$PROJECT_DIR$/c/hannah.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/spectrum_load.c" beforeDir="false" afterPath="$PROJECT_DIR$/c/spectrum_load.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/OLED_main.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/hannah.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/hannah.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/spectrum_load.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/penProject.dir/c/spectrum_load.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/penProject" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/penProject" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,7 +277,7 @@
       <workItem from="1610888367652" duration="2377000" />
       <workItem from="1610890902127" duration="92000" />
       <workItem from="1610936497003" duration="333000" />
-      <workItem from="1610937092087" duration="4088000" />
+      <workItem from="1610937092087" duration="4476000" />
     </task>
     <servers />
   </component>
