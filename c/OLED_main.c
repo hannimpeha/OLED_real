@@ -130,6 +130,7 @@ double xstrtod (char *str, char **ep);
 const char* getfield(char* line, int num);
 const char *getfield2 (char *buf, size_t field);
 char *my_realpath(const char *path);
+char* concat(const char *s1, const char *s2);
 
 
 //--------------------------------------------------------------------------------------//
@@ -162,6 +163,7 @@ int main() {
         % SUBS: substrate guided, NR: non-radiative*/
 
     // administrator options
+    printf("administrator options start\n");
     int maximum_layer_number = 16;
     int maximum_EML_number = 4;
 
@@ -173,6 +175,7 @@ int main() {
 
 
     //calculation condition
+    printf("calculation condition start\n");
     int v_number = 1000;       //	the number of in-plane vector
     int multiple = 25;        //	end of the in-planevector
     double *inpva = linspace(0, 1.49, v_number);
@@ -188,19 +191,14 @@ int main() {
 
     int ind = 0;
 
-    double WL_init;
-    double WL_final;
-    double WL_step;
+    double WL_init, WL_final, WL_step;
     int w_lgth;
 
-    double angle_init;
-    double angle_final;
-    double angle_step;
+    double angle_init, angle_final, angle_step;
     int a_lgth;
 
     char *absolute_path;
     absolute_path = my_realpath("../resources/text_p.csv");
-    //absolute_path = my_realpath("resources/text_p.csv");
     FILE *file = fopen(absolute_path, "r");
     while (fgets(line, sizeof line, file)) {
         ind++;
@@ -230,17 +228,14 @@ int main() {
 
 
     //input parameter
+    printf("input parameter start\n");
     //structure inputinplane_vector_ext_TM
     char strFolderPath[] = {*my_realpath("")};
     char *External_Env = "air";
 
     absolute_path = my_realpath("../resources/text.csv");
-    //absolute_path = my_realpath("resources/text.csv");
-    char *buffer = NULL;
-    int u = 0;
-    int nf;
+    int u, nf, erc;
     int nfield = 6;
-    int erc;
     regex_t reg;
     const char fmt[] = "([^,]*)[,\n]";
     char *regex = calloc(nfield, 1 + strlen(fmt));
@@ -261,31 +256,30 @@ int main() {
     }
 
     FILE *stream = fopen(absolute_path, "r");
-    int no_l = 0;         // the number of layers
+    int no_l;         // the number of layers
+
+//     while (fgets(line, sizeof line, stream)) {
     for (no_l = 0; no_l < maximum_layer_number && NULL!= fgets(line, sizeof(line), stream); no_l++) {
         regmatch_t matches[1 + nfield];
-        const int eflags = 0;
 
         strcpy(structure[no_l].name, getfield2(line,2));
         structure[no_l].thick = atoi(getfield2(line,5));
 
-//    while (fgets(line, sizeof line, stream)) {
+//            p = ep = line;
+//            col = 1;
+//            while (errno == 0) {
+//                structure[row].thick = xstrtod(p, &ep);
+//                while (*ep && *ep != '-' && (*ep < '0' || *ep > '9')) ep++;
+//                if (*ep)
+//                    p = ep;
+//                else  /* break if end of string */
+//                    break;
+//            }
+//            if (row == rmax) structure = xrealloc_dp((void **) structure, &rmax);
 //
-//        p = ep = line;
-//        col = 1;
-//        while (errno == 0) {
-//            structure[row].thick = xstrtod(p, &ep);
-//            while (*ep && *ep != '-' && (*ep < '0' || *ep > '9')) ep++;
-//            if (*ep)
-//                p = ep;
-//            else  /* break if end of string */
-//                break;
-//        }
-//        if (row == rmax) structure = xrealloc_dp((void **) structure, &rmax);
-//
-//        char *tmp = strchr(line, '\n');
-//        if (tmp) *tmp = '\t';   // remove the '\n'
-//        tmp = strdup(line);
+//            char *tmp = strchr(line, '\n');
+//            if (tmp) *tmp = '\t';   // remove the '\n'
+//            tmp = strdup(line);
 
         printf("Importing Structure Name: %s\n", structure->name);
         printf("Importing Structure Thickness: %f\n\n", structure->thick);
@@ -334,10 +328,11 @@ int main() {
 
     int no_EMZ = 31; // the number of EMZ
     //input parameter end
-    printf("input parameter end\n");
+    printf("input parameter end\n\n");
 
 
     //Input organization and preallocations
+    printf("Input organization and preallocations start\n");
     double *WL = linspace(WL_init, WL_final, ((int) WL_final - (int) WL_init) / (int) WL_step + 1);
     double *angle = linspace(angle_init, angle_final, ((int) angle_final - (int) angle_init) / (int) angle_step + 1);
 
@@ -671,11 +666,13 @@ int main() {
     double **p_out_12_sub_TE_final = zeros2_0(a_lgth, w_lgth);    // have to be a zero matrix
     double **p_out_12_sub_final = zeros2_0(a_lgth, w_lgth);        // have to be a zero matrix
     //	Input organization and preallocations end
-    printf("Input organization and preallocations end\n");
+    printf("Input organization and preallocations end\n\n");
 
 
     //	pre-processes
+    printf("pre-process start\n");
     //	inserting external layers
+    printf("inserting external layers start\n");
     strcpy(structure_temp[0].name, External_Env);
     structure_temp[0].thick = 0;
 
@@ -687,12 +684,16 @@ int main() {
 
     int new_no_l = no_l + 1;
     //inserting external layers end
-    printf("inserting external layers end\n");
+    printf("inserting external layers end\n\n");
 
+    char* real_name;
+    real_name = concat("../c/data/Refractive_index/", structure_temp[i].name);
+    absolute_path = my_realpath(concat(real_name, ".ri"));
 
     //loading refractive index & thickness
+    printf("loading refractive index & thickness start\n");
     for (i = 0; i < new_no_l; i++) {
-        sprintf(structure_temp[i].file_location, my_realpath("/c/data/Refractive_index/%s.ri"), structure_temp[i].name);
+        strcpy(structure_temp[i].file_location, absolute_path);
         index_temp = RI_load(structure_temp, WL_init, WL_final, WL_step, i);
         index = alloc_3d(index_temp, new_no_l, new_no_l, 4);
         //print_3d(index, 7, 5, 7);
@@ -706,14 +707,13 @@ int main() {
         free2d(index_temp);
         *(thick + i) = structure_temp[i].thick;
     }  // loading refractive index & thickness end
-    printf("loading refractive index & thickness end\n");
-
+    printf("loading refractive index & thickness end\n\n");
 
     double *EXC = zeros(no_EML);
     double *EXC_prop = zeros(no_EML);
 
-
     //	EML processing
+    printf("EML processing start\n");
     for (i = 0; i < no_EML; i++) {
         EXC[i] = EML[i].Exciton_prop;
 
@@ -746,8 +746,10 @@ int main() {
             index_low[0][2][j][i] = 0;    //	no imaginary part
             index_low[0][4][j][i] = 0;    //	no imaginary part
         }
-        sprintf(EML[i].spectrum_file_location, my_realpath("c/data/spectrum/%s.spec"), EML[i].spectrum_name);
 
+        real_name = concat("../c/data/spectrum/", EML[i].spectrum_name);
+        absolute_path = my_realpath(concat(real_name, ".spec"));
+        strcpy(EML[i].spectrum_file_location, absolute_path);
         //double **spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
         spectrum_temp = spectrum_load(EML, WL_init, WL_final, WL_step, i);
         spectrum[i] = spectrum_temp;
@@ -758,20 +760,21 @@ int main() {
 //        }
 //        free2d(spectrum_temp);
 
-        sprintf(EML[i].EMZ_file_location, my_realpath("c/data/Emission_zone/%s.emz"), EML[i].EMZ_name);
-        // strcpy(EML[i].EMZ_file_location, "/Users/hannahlee/PycharmProjects/penProject/c/data/Emission_zone/constant.emz");
-        double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-
-
-        // THIS IS THE TROUBLESOME PART //
-        for (j = 0; j < no_EMZ; j++) {
-            //printf("%lf\n", thick_up[1][i]);
-            //EMZ[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
-            //EMZ[j][0][i] = EMZ_temp[j][0];
-            EMZ[j][0][i] = EMZ_temp[j][0];
-            EMZ[j][1][i] = EMZ_temp[j][1];
-        }
-        free2d(EMZ_temp);
+        real_name = concat("../c/data/Emission_zone/", EML[i].EMZ_name);
+        absolute_path = my_realpath(concat(real_name, ".emz"));
+        strcpy(EML[i].EMZ_file_location, absolute_path);
+//        double **EMZ_temp = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+//
+//
+//        // THIS IS THE TROUBLESOME PART //
+//        for (j = 0; j < no_EMZ; j++) {
+//            //printf("%lf\n", thick_up[1][i]);
+//            //EMZ[j] = EMZ_load(EML, thick_up[0][i], no_EMZ, i);
+//            //EMZ[j][0][i] = EMZ_temp[j][0];
+//            EMZ[j][0][i] = EMZ_temp[j][0];
+//            EMZ[j][1][i] = EMZ_temp[j][1];
+//        }
+//        free2d(EMZ_temp);
     }
 
     free3d(index);
@@ -787,11 +790,12 @@ int main() {
     for (i = 0; i < no_EML; i++) {
         EXC_prop[i] = EXC[i] / sum_EXC;
     } // EML processing end
-    printf("EML processing end\n");
+    printf("EML processing end\n\n");
     free(EXC);
 
 
     //	Transfer matrix
+    printf("Transfer matrix start\n");
     for (i = 0; i < no_EML; i++) {
         //	TMM_anisotropy_coeffs : function
         //	row1: r_TE, row2: t_TE, row3: r_TM, row4: t_TM
@@ -801,7 +805,7 @@ int main() {
     //	Transfer matrix end
     printf("Transfer matrix end\n");
     //	pre-processes end
-    printf("pre-processes end\n");
+    printf("pre-processes end\n\n");
 
 
 
@@ -818,6 +822,7 @@ int main() {
     for (i = 0; i < no_EML; i++) {
         for (j = 0; j < w_lgth; j++) {
             //	common process
+            printf("common process\n");
             n_ordi[j].A = index_up[0][1][j][i];
             n_ordi[j].B = index_up[0][2][j][i];
             n_extra[j].A = index_up[0][3][j][i];
@@ -831,17 +836,18 @@ int main() {
 
             thick_EML = thick_up[0][i];
             //	common process end
-            printf("common process end\n");
+            printf("common process end\n\n");
 
 
             /*------------------------------------------------------------------------------------*/
             /*                                 Mode Analysis                                      */
             /*------------------------------------------------------------------------------------*/
-            printf("/*------------------------------------------------------------------------------------*/\n");
-            printf("/*                                 Mode Analysis                                      */\n");
-            printf("/*------------------------------------------------------------------------------------*/\n");
-
+//            printf("/*------------------------------------------------------------------------------------*/\n");
+//            printf("/*                                 Mode Analysis                                      */\n");
+//            printf("/*------------------------------------------------------------------------------------*/\n\n");
+            printf("Mode Analysis\n");
             //	for mode analysis 	reflection and transmission coeffs for eq(8-10)
+            printf("reflection and transmission coeffs for eq(8-10) start\n");
             for (k = 0; k < v_lgth; k++) {
                 L_1[k][j] = comsqrt(comp(1 - pow(inpv[k], 2)));
                 L_2_TM[k][j] = comsqrt(
@@ -877,7 +883,7 @@ int main() {
         printf("reflection and transmission coeffs for eq (8-10) end\n");
     }
 
-
+    printf("\ttransmittance for eq (16-18) start\n");
     for (i = 0; i < no_EML; i++) {
         //	transmittance for eq (16-18)
         multiply_1(t_12_TM, n_extra, L_2_TM, n_ordi, L_1, v_lgth, w_lgth, T_12_TM);
@@ -885,6 +891,8 @@ int main() {
         multiply_2(t_12_TE, L_2_TE, L_1, v_lgth, w_lgth, T_12_TE);
         multiply_2(t_13_TE, L_3_TE, L_1, v_lgth, w_lgth, T_13_TE);
         //	transmittance for eq(16-18) end
+        printf("\ttransmittance for eq(16-18) end\n");
+        printf("\t\tprefactors for eq (8-10, 16-18) start\n");
         for (j = 0; j < w_lgth; j++) {
             //	prefactors for eq (8-10, 16-18)
             *(prefactor_v_TM + j) = comxreal(comprod(n_extra[j], inversecom(n_ordi[j])), (double) 3 / 2);
@@ -895,9 +903,9 @@ int main() {
                                             inversecom(comsum(comxreal(compow2(n_ordi[j]), 3), compow2(n_extra[j]))));
         }
         //	prefactors for eq (8-10, 16-18) end
-        printf("prefactors for eq (8-10, 16-18) end\n");
+        printf("\t\tprefactors for eq (8-10, 16-18) end\n");
         //	mode analysis end
-        printf("mode analysis end\n");
+        printf("mode analysis end\n\n");
     }
 
     /*------------------------------------------------------------------------------------*/
@@ -985,6 +993,7 @@ int main() {
     printf("/*-------------------------Reflection & Transmission Coeff----------------------------*/\n");
     for (i = 0; i < no_EML; i++) {
         //	reflection & transmission coeffs
+        printf("reflection & transmission coeffs start\n");
         for (j = 0; j < w_lgth; j++) {
             for (k = 0; k < a_lgth; k++) {
                 r_12_ext_TM[k][j] = rt_low_ext_TM[j][2][k];
@@ -1018,6 +1027,7 @@ int main() {
         printf("/*---------------------------------Transmittance------------------------------------*/\n");
     for (i = 0; i < no_EML; i++) {
         //	transmittance
+        printf("transmittance start\n");
         multiply_1(t_12_ext_TM, n_extra, L_2_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_12_ext_TM);
         multiply_1(t_13_ext_TM, n_extra, L_3_ext_TM, n_ordi, L_1_ext_TM, a_lgth, w_lgth, T_13_ext_TM);
         multiply_1(t_12_sub_TM, n_extra, L_2_sub_TM, n_ordi, L_1_sub_TM, a_lgth, w_lgth, T_12_sub_TM);
@@ -1031,7 +1041,7 @@ int main() {
         // transmittance end
         printf("transmittance end\n");
         // far_field emission end
-        printf("far_field emission end\n");
+        printf("far_field emission end\n\n");
 
 
         //	determination of the boarder
@@ -1055,7 +1065,9 @@ int main() {
         printf("/*                                 Mode Analysis                                      */\n");
         printf("/*------------------------------------------------------------------------------------*/\n");
     for (i = 0; i < no_EML; i++) {
-        for (j = 0; j < no_EMZ; j++) {    //	common process
+        for (j = 0; j < no_EMZ; j++) {
+            //common process
+            printf("common process\n");
             //for eq (8-10)
 
             //double d = EMZ_load(EML, thick_up[0][i], no_EMZ, i)[j][i];
@@ -1067,7 +1079,7 @@ int main() {
 //            double d = EMZ[j][0][i];
 //            double s = thick_EML - EMZ[j][0][i];
 //	        // common process end
-        printf("common process end\n");
+            printf("common process end\n\n");
 
             //	for mode analyesis
             //	Reflec: function
@@ -1186,7 +1198,7 @@ int main() {
                 SPPs_EMZ[i][j][k] = SPPs[i][j][k] * g;
             }    //	w_lgth loop
             // mode anlysis end
-            printf("mode anlysis end\n");
+            printf("mode anlysis end\n\n");
         }
     }
 
@@ -1320,7 +1332,7 @@ int main() {
             arrsum_new(p_out_12_sub_TM_spec[i][j], p_out_12_sub_TE_spec[i][j], w_lgth, a_lgth, p_out_12_sub_spec[i][j]);
 
         } // far_field emission end
-        printf("far_field emission end\n");
+        printf("far_field emission end\n\n");
     }
 
 
@@ -1365,7 +1377,7 @@ int main() {
         WG_eff_integrated[i] *= EXC_prop[i];
         SPPs_eff_integrated[i] *= EXC_prop[i];
         //	mode analysis end
-        printf("mode analysis end\n");
+        printf("mode analysis end\n\n");
     }
 
 
@@ -1388,12 +1400,12 @@ int main() {
                 }
             }
         }    //	no_EMZ loop //	far-field emission end
-        printf("far-field emission end\n");
+        printf("far-field emission end\n\n");
     }    // no_EML loop  //	main calculations end
-    printf("main calculations end\n");
+    printf("main calculations end\n\n");
 
 
-
+    printf("free start\n");
     free(ext_number_TM); free(ext_number_TE); free(subs_number_TM); free(subs_number_TE);
     free(WG_number_TM); free(WG_number_TE); free2d(p_abs_TM_tailored); free2d(p_abs_TE_tailored);
     free2d(Temp); free(EML); free(EXC_prop); free(n_ordi); free(n_extra); free(n_2); free(n_3);
@@ -1444,7 +1456,7 @@ int main() {
     free4d(p_out_12_ext_EMZ);free4d(p_out_13_ext_TM_EMZ);free4d(p_out_13_ext_TE_EMZ);free4d(p_out_13_ext_EMZ);
     free4d(p_out_12_sub_TM_EMZ);free4d(p_out_12_sub_TE_EMZ);free4d(p_out_12_sub_EMZ);
     //	free end
-    printf("free end\n");
+    printf("free end\n\n");
 
 
     //	printing output
@@ -1458,12 +1470,13 @@ int main() {
     double NR_loss_final =
             1 - (OC_eff_final + OC_back_eff_final + ABS_eff_final + SUBS_eff_final + WG_eff_final + SPPs_eff_final);
 
-
+    printf("/*------------------------------------------------------------------------------------*/\n");
     printf("OC:%g, OC_back:%g, Subs:%g, WG:%g, SPPs:%g,  Abs:%g, NR_loss:%g \n", OC_eff_final, OC_back_eff_final,
            SUBS_eff_final, WG_eff_final, SPPs_eff_final, ABS_eff_final,
            NR_loss_final);        //  NR_loss�� ABS��ġ �ٲ�Ͱ���	NR loss	�� 0??...
+    printf("/*------------------------------------------------------------------------------------*/\n");
     //	mode analysis end
-    printf("mode analysis end\n");
+    printf("mode analysis end\n\n");
 
 
     free(OC_eff_integrated);free(OC_back_eff_integrated);
@@ -1496,7 +1509,7 @@ int main() {
     free3d(p_out_13_ext_TE_spec_EML);free3d(p_out_13_ext_spec_EML);
     free3d(p_out_12_sub_TM_spec_EML);free3d(p_out_12_sub_TE_spec_EML);free3d(p_out_12_sub_spec_EML);
     // far-field emission end
-    printf("far-field emission end\n");
+    printf("far-field emission end\n\n");
 
 
     //	output processing for n loops
@@ -1525,7 +1538,7 @@ int main() {
                              SPPs_eff_final, NR_loss_final};
 
     //	Candela per ampere part
-    FILE *es = fopen(my_realpath("c/data/eyesense.dat"), "rt");
+    FILE *es = fopen(my_realpath("../c/data/eyesense.dat"), "rt");
     if (es == NULL) {
         printf("There is no data\n");
         return false;
@@ -1606,7 +1619,7 @@ int main() {
 	char strFolderPathDS[100]={0};
 
 
-    strcpy(strFolderPath, my_realpath("c/output/#1-1"));
+    strcpy(strFolderPath, my_realpath("../c/output/#1-1"));
     //mkdir(strFolderPath, 0700);
      //7 columns
     output1(strFolderPath, "output_mode", output_mode, 7);
