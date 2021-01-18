@@ -1,6 +1,4 @@
-import csv
 import os
-from sys import argv
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
@@ -183,13 +181,8 @@ class Exportation(QWidget):
         super().__init__()
 
         self.image = image
-        #self.path = argv[0]
-        # on Mac
         #self.path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
         self.path = os.getcwd()
-        # on Windows
-        #self.path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-
         self.name = "2PPlAn_33PYMPM"
         # with open(project_info, "r") as pi:
         #     self.name = pi.readline()
@@ -224,13 +217,13 @@ class Exportation(QWidget):
 
         check_text = QCheckBox()
         check_text.setText("Text")
-        check_text.setChecked(True)
+        check_text.setChecked(False)
         check_text.setStyleSheet("QCheckBox::indicator { width: 20px; height: 20px;}")
         hlayout.addWidget(check_text)
 
         check_image = QCheckBox()
         check_image.setText("Image")
-        check_text.setChecked(True)
+        check_text.setChecked(False)
         check_image.setStyleSheet("QCheckBox::indicator { width: 20px; height: 20px;}")
         hlayout.addWidget(check_image)
 
@@ -248,10 +241,14 @@ class Exportation(QWidget):
         lineEdit.setFixedSize(250, 20)
         hlayout.addWidget(lineEdit)
 
-        btn = QPushButton()
-        btn.setText("Export")
-        btn.clicked.connect(self.handleTextSave)
-        hlayout.addWidget(btn)
+        self.btn = QPushButton()
+        self.btn.setText("Export")
+
+        if (check_text.setChecked(True)):
+            btn.clicked.connect(self.handleTextSave)
+        if (check_image.setChecked(True)):
+            btn.clicked.connect(self.handleImageSave)
+        hlayout.addWidget(self.btn)
 
         layout.addLayout(hlayout, 3, 0)
         self.setLayout(layout)
