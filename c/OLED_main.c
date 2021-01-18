@@ -143,7 +143,7 @@ int main() {
     printf("//                                                                                      //\n");
     printf("//                       OLED Optical Simulation Main Program                           //\n");
     printf("//                                                                                      //\n");
-    printf("//--------------------------------------------------------------------------------------//\n");
+    printf("//--------------------------------------------------------------------------------------//\n\n");
     clock_t start, end;
     start = clock();
     double t_result;
@@ -235,12 +235,12 @@ int main() {
 
     absolute_path = my_realpath("../resources/text.csv");
     int u, nf, erc;
-    int nfield = 6;
+    int ncol = 6;
     regex_t reg;
     const char fmt[] = "([^,]*)[,\n]";
-    char *regex = calloc(nfield, 1 + strlen(fmt));
+    char *regex = calloc(ncol, 1 + strlen(fmt));
 
-    for (u = 0; u < nfield; u++) {
+    for (u = 0; u < ncol; u++) {
         strcat(regex, fmt);
     }
 
@@ -272,7 +272,6 @@ int main() {
     absolute_path = my_realpath("../resources/text_em.csv");
     FILE *fstream = fopen(absolute_path, "r");
 
-    int ncol = 6;
     for (no_EML = 0; no_EML < maximum_EML_number && NULL!= fgets(line, sizeof(line), fstream); no_EML++) {
         regmatch_t matches[1 + ncol];
 
