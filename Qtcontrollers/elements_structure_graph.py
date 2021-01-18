@@ -80,6 +80,7 @@ class Emission_Layer_Graph(QWidget):
         layout = QVBoxLayout()
         tab1 = QWidget()
         tab2 = QWidget()
+        tab3 = QWidget()
 
         label = QLabel()
         sub_layout = QVBoxLayout()
@@ -90,8 +91,9 @@ class Emission_Layer_Graph(QWidget):
         sub_layout.addWidget(label)
 
         tabs = QTabWidget()
-        tabs.addTab(tab1, "hannimpeha1")
-        tabs.addTab(tab2, "hannimpeha2")
+        tabs.addTab(tab1, "FCNIr")
+        tabs.addTab(tab2, "Irppy2tmd")
+        tabs.addTab(tab3, "Irmphmq2tmd")
 
         tabs.setLayout(sub_layout)
         layout.addWidget(tabs)
