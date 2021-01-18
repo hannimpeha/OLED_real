@@ -800,7 +800,7 @@ int main() {
     for (i = 0; i < no_EML; i++) {
         for (j = 0; j < w_lgth; j++) {
             //	common process
-            printf("common process\n");
+            printf("common process start\n");
             n_ordi[j].A = index_up[0][1][j][i];
             n_ordi[j].B = index_up[0][2][j][i];
             n_extra[j].A = index_up[0][3][j][i];
@@ -1042,7 +1042,7 @@ int main() {
     for (i = 0; i < no_EML; i++) {
         for (j = 0; j < no_EMZ; j++) {
             //common process
-            printf("common process\n");
+            printf("common process start\n");
             //for eq (8-10)
 
             //double d = EMZ_load(EML, thick_up[0][i], no_EMZ, i)[j][i];
