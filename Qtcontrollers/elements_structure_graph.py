@@ -5,7 +5,6 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from scipy import stats
 
 file = 'resources/hannimpeha.csv'
 foo_file = 'resources/foo.png'

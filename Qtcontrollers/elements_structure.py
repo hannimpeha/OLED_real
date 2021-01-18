@@ -4,11 +4,13 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 import matplotlib.pyplot as plt
 import numpy as np
+from Qtcontrollers.logo_image import Project_Info
 
 file = 'resources/text.csv'
 file_em = 'resources/text_em.csv'
 file_emz = 'resources/text_emz.txt'
 em_figure = 'resources/EML_graph.png'
+project_info = 'resources/project_info.csv'
 
 class Elements_Structure(QWidget):
     def __init__(self):
@@ -274,6 +276,7 @@ class Emission_Layer(QWidget):
 class Emission_Zone_Setting(QWidget):
     def __init__(self):
         super().__init__()
+
         layout = QHBoxLayout()
         layout1 = QGridLayout()
         layout2 = QGridLayout()
@@ -360,8 +363,6 @@ class Emission_Zone_Setting(QWidget):
         drawButton.setFixedSize(120, 30)
         layout2.addWidget(drawButton, 0, 3)
 
-
-
     def handleSave(self):
         with open(file_emz, 'w') as stream:
             writer = csv.writer(stream, lineterminator='\n')
@@ -388,5 +389,8 @@ class Emission_Zone_Setting(QWidget):
         # x = np.linspace(mu - 3 * sigma, mu + 3 * sigma, 100)
         # plt.plot(x, stats.norm.pdf(x, mu, sigma))
 
-        plt.suptitle("2pplAn_PL", fontsize=20)
+        with open(project_info, "r") as pi:
+            name = pi.readline()
+
+        plt.suptitle(name, fontsize=20)
         plt.savefig(em_figure, transparent=True)

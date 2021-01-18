@@ -13,6 +13,7 @@ import sys
 logo_image = 'resources/Logo.png'
 so_file = "c/hannimpeha.so"
 file_p = 'resources/text_p.csv'
+project_info = 'resources/project_info.csv'
 
 
 class Logo_Image(QWidget):
@@ -156,7 +157,7 @@ class SeleniumWorker(QObject):
     def doWork(self):
         self.btn.setText("Stop")
 
-        my = cdll.LoadLibrary("/Users/hannahlee/PycharmProjects/penProject/c/hannimpeha.so")
+        my = cdll.LoadLibrary(so_file)
         my.main()
 
         # browser = webdriver.Chrome()
@@ -183,7 +184,7 @@ class Project_Info(QWidget):
 
         label_name = QLabel()
         label_name.setText("Name")
-        layout1.addWidget(label_name)
+        layout1.addWidget(label_name, 1, 0)
 
         label = QLabel()
         label.setText("Designer")
@@ -205,35 +206,51 @@ class Project_Info(QWidget):
         label.setText("IP Address")
         layout1.addWidget(label, 6, 0)
 
-        layout2 = QGridLayout()
-        name_label = QLabel()
-        name_label.setText("2PPlAn_33PYMPM")
-        layout2.addWidget(name_label, 1, 0)
+        self.name_label = QLineEdit()
+        self.name_label.setFixedSize(180, 20)
+        self.name_label.setText("2PPlAn_33PYMPM")
+        layout1.addWidget(self.name_label, 1, 1)
 
-        label = QLabel()
-        label.setText("Hannah Lee")
-        layout2.addWidget(label, 2, 0)
+        self.label_designer = QLabel()
+        self.label_designer.setText("Hannah Lee")
+        layout1.addWidget(self.label_designer, 2, 1)
 
-        label = QLabel()
-        label.setText("Hannah Lee")
-        layout2.addWidget(label, 3, 0)
+        self.label_analyzer = QLabel()
+        self.label_analyzer.setText("Hannah Lee")
+        layout1.addWidget(self.label_analyzer, 3, 1)
 
-        c_date = QLabel()
-        c_date.setText(datetime.today().strftime('%Y-%m-%d'))
-        layout2.addWidget(c_date, 4, 0)
+        self.c_date = QLineEdit()
+        self.c_date.setFixedSize(180, 20)
+        self.c_date.setText(datetime.today().strftime('%Y-%m-%d'))
+        layout1.addWidget(self.c_date, 4, 1)
 
-        c_date = QLabel()
-        c_date.setText(datetime.today().strftime('%Y-%m-%d'))
-        layout2.addWidget(c_date, 5, 0)
+        self.m_date = QLabel()
+        self.m_date.setText(datetime.today().strftime('%Y-%m-%d'))
+        layout1.addWidget(self.m_date, 5, 1)
 
-        qlabel = QLabel()
-        qlabel.setText(self.get_ip())
-        layout2.addWidget(qlabel, 6, 0)
+        self.qlabel_ip = QLabel()
+        self.qlabel_ip.setText(self.get_ip())
+        layout1.addWidget(self.qlabel_ip, 6, 1)
+
+        layout2 = QHBoxLayout()
+        button = QPushButton()
+        button.setText("Save")
+        button.setFixedSize(100, 170)
+        button.clicked.connect(self.handleSave)
+        layout2.addWidget(button)
 
         layout.addLayout(layout1)
         layout.addLayout(layout2)
-
         self.setLayout(layout)
+
+    def handleSave(self):
+        with open(project_info, 'w') as stream:
+            writer = csv.writer(stream, lineterminator='\n')
+            rowdata = [[self.name_label.text()], [self.label_designer.text()],
+                       [self.label_analyzer.text()], [self.c_date.text()],
+                       [self.m_date.text()]]
+            for item in rowdata:
+                writer.writerow(item[0].strip('"').split(','))
 
     def get_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
