@@ -288,7 +288,6 @@ int main() {
 
     int no_EML = 0;    // the number of EML
     absolute_path = my_realpath("../resources/text_em.csv");
-    //absolute_path = my_realpath("resources/text_em.csv");
     FILE *fstream = fopen(absolute_path, "r");
 
     int ncol = 6;
