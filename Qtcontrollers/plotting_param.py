@@ -1,3 +1,5 @@
+from sys import argv
+
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
@@ -8,7 +10,7 @@ logo_image = 'resources/Logo.png'
 data_path = "output/#3-2/CIE/output_CIE_bottom.txt"
 data_path2 = "output/#3-2/angular_intensity/output_angular_intensity_bottom.txt"
 graph = 'resources/Graph.png'
-
+project_info = 'resources/project_info.csv'
 
 class Plotting_Param(QWidget):
     def __init__(self):
@@ -47,7 +49,7 @@ class Plotting(QWidget):
         self.qlabel.setText("Graph: ")
 
         xcombo = QComboBox()
-        xcombo.addItems(["Emission Spectrum (3D)", "Pear", "Lemon", "Apple"])
+        xcombo.addItems(["Emission Spectrum (3D)", "Emission Spectrum (2D)", "Lemon", "Apple"])
         #xcombo.activated[str].connect(self.onChanged)
         xcombo.setFixedSize(330, 20)
         hlayout.addWidget(self.qlabel)
@@ -188,7 +190,8 @@ class Exportation(QWidget):
         hlayout.addWidget(label)
 
         lineEdit = QLineEdit()
-        lineEdit.setFixedSize(200, 20)
+        lineEdit.setText(argv[0])
+        lineEdit.setFixedSize(250, 20)
         hlayout.addWidget(lineEdit)
 
         btn = QPushButton()
@@ -224,8 +227,12 @@ class Exportation(QWidget):
         label.setText("Name: ")
         hlayout.addWidget(label)
 
+        with open(project_info, "r") as pi:
+            name = pi.readline()
+
         lineEdit = QLineEdit()
-        lineEdit.setFixedSize(200, 20)
+        lineEdit.setText(name)
+        lineEdit.setFixedSize(250, 20)
         hlayout.addWidget(lineEdit)
 
         btn = QPushButton()
