@@ -8,8 +8,7 @@ from PyQt5.QtWidgets import *
 # from selenium import webdriver
 from ctypes import *
 import sys
-import io
-from contextlib import redirect_stdout
+
 
 logo_image = 'resources/Logo.png'
 so_file = "c/hannimpeha.so"

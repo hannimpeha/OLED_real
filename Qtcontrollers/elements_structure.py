@@ -83,6 +83,14 @@ class Elements_Structure(QWidget):
         #     self.table.setCellWidget(i, 5, comboBox)
         #     i += 1
 
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(5, QtWidgets.QHeaderView.Stretch)
+
         self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setSelectionMode(QAbstractItemView.MultiSelection)
         return self.table
