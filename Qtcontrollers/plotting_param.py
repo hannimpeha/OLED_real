@@ -1,5 +1,6 @@
 import os
 
+import shutil
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
@@ -217,13 +218,13 @@ class Exportation(QWidget):
 
         check_text = QCheckBox()
         check_text.setText("Text")
-        check_text.setChecked(False)
+        check_text.setChecked(True)
         check_text.setStyleSheet("QCheckBox::indicator { width: 20px; height: 20px;}")
         hlayout.addWidget(check_text)
 
         check_image = QCheckBox()
         check_image.setText("Image")
-        check_text.setChecked(False)
+        check_text.setChecked(True)
         check_image.setStyleSheet("QCheckBox::indicator { width: 20px; height: 20px;}")
         hlayout.addWidget(check_image)
 
@@ -244,10 +245,11 @@ class Exportation(QWidget):
         self.btn = QPushButton()
         self.btn.setText("Export")
 
-        if (check_text.setChecked(True)):
+        if(check_text.setChecked(True)):
             btn.clicked.connect(self.handleTextSave)
-        if (check_image.setChecked(True)):
+        elif (check_image.setChecked(True)):
             btn.clicked.connect(self.handleImageSave)
+
         hlayout.addWidget(self.btn)
 
         layout.addLayout(hlayout, 3, 0)
@@ -258,13 +260,16 @@ class Exportation(QWidget):
         options = QFileDialog.DontResolveSymlinks | QFileDialog.ShowDirsOnly
         self.directory = QFileDialog.getExistingDirectory(self.dialog, "Open Folder", options=options)
         self.dialog.show()
+        return self.directory
 
     def handleImageSave(self):
         self.name.join(".png")
         real_path = os.path.join(self.path, self.name)
-        with open(real_path, 'w') as stream:
-            stream.write(open(self.image, "r").read())
-            stream.close()
+        # shutil.copy(self.image, str(real_path))
+        with open(self.image, "rb") as real_image:
+            data = real_image.read()
+        with open(real_path, "wb") as stream:
+            stream.write(data)
 
     def handleTextSave(self):
         self.name.join(".txt")
