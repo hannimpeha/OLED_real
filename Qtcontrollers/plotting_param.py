@@ -73,6 +73,7 @@ class Plotting(QWidget):
 
         self.text = str(combo.currentText())
 
+
         if (self.text == "Mode Analysis (2D)"):
             self.xcombo.addItems(["Thickness of b3p","Thickness of npb"])
         elif (self.text == "Mode Analysis (3D)"):

@@ -100,7 +100,6 @@ class Axes_Properties(QWidget):
                 min_max.append(["-","-"])
 
         # text = pd.read_csv(plotting_option).columns.tolist()[0] # later in labels of graph
-        # mat = zip(*min_max)
         mat = np.array(min_max).transpose()
         self.min = mat[0]
         self.max = mat[1]
