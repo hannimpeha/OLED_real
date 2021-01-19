@@ -273,8 +273,8 @@ class Plotting(QWidget):
         self.table.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
 
         header = self.table.horizontalHeader()
-        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
         return self.table
 
 

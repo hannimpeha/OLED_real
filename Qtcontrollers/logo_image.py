@@ -133,6 +133,7 @@ class SeleniumWorker(QObject):
         super().__init__()
         self.step = 0
         self.btn = QPushButton('Run')
+        self.btn.setFixedSize(410, 50)
         self.btn.move(40, 80)
         self.btn.clicked.connect(self.doWork)
 

@@ -247,16 +247,6 @@ class Emission_Layer(QWidget):
             # selectButton.clicked.connect(self.saveDirectory)
             self.table.setCellWidget(i, 7, selectButton)
             i += 1
-        # i = 0
-        # for j in range(len(self.em_materials)):
-        #     self.table.setItem(i, 6, QtWidgets.QTableWidgetItem(j))
-        #     comboBox = QComboBox()
-        #     comboBox.addItem("Sheet")
-        #     comboBox.addItem("Constant")
-        #     comboBox.addItem("Linear")
-        #     comboBox.addItem("Gaussian")
-        #     self.table.setCellWidget(i, 6, comboBox)
-        #     i += 1
 
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
@@ -375,14 +365,14 @@ class Emission_Zone_Setting(QWidget):
         layout1.addWidget(label, 1, 1)
 
         drawButton = QPushButton("Save")
-        drawButton.clicked.connect(self.handleSave)
-        drawButton.setFixedSize(130, 20)
-        layout1.addWidget(drawButton, 6, 2)
-
-        drawButton = QPushButton("Draw")
         drawButton.clicked.connect(self.drawPic)
         drawButton.setFixedSize(130, 20)
         layout1.addWidget(drawButton, 5, 2)
+
+        drawButton = QPushButton("Draw")
+        drawButton.clicked.connect(self.arrow)
+        drawButton.setFixedSize(130, 20)
+        layout1.addWidget(drawButton, 6, 2)
 
 
         label = QLabel()
@@ -411,8 +401,8 @@ class Emission_Zone_Setting(QWidget):
 
     def arrow(self):
         label = QLabel()
-        pixmap = QPixmap(arrow)
-        pixmap = pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio)
+        pixmap = QPixmap(em_figure)
+        pixmap = pixmap.scaled(200, 340, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         return label
@@ -430,24 +420,16 @@ class Emission_Zone_Setting(QWidget):
 
     def drawPic(self):
         equation = open(file_emz, "r").readline()
-        x_range = 0
-
-        x = np.array(x_range)
-        y = eval(equation)   # need modoule math
-        plt.plot(x, y)
+        plt.axvline(equation)
+        plt.xlabel("Emit Range(nm)")
+        # equation = open(file_emz, "r").readline()
+        # x_range = 1
+        # x = np.array(x_range)
+        # y = eval(equation)   # need modoule math
+        # plt.plot(x, y)
         # plt.show()
-
-        # mu = 0
-        # variance = 1
-        # sigma = math.sqrt(variance)
-        # x = np.linspace(mu - 3 * sigma, mu + 3 * sigma, 100)
-        # plt.plot(x, stats.norm.pdf(x, mu, sigma))
-
-        with open(project_info, "r") as pi:
-            name = pi.readline()
-
-        plt.suptitle(name, fontsize=20)
         plt.savefig(em_figure, transparent=True)
+
 
     def readData(self):
         path = os.path.join(os.getcwd(), "c/data/Refractive_index")
