@@ -51,45 +51,111 @@ class Plotting(QWidget):
         self.qlabel = QLabel()
         self.qlabel.setText("Graph: ")
 
-        xcombo = QComboBox()
-        xcombo.addItems(["Emission Spectrum (3D)", "Emission Spectrum (2D)", "Lemon", "Apple"])
-        #xcombo.activated[str].connect(self.onChanged)
-        xcombo.setFixedSize(330, 20)
+        combo = QComboBox()
+        combo.addItems(["Mode Analysis (2D)", "Mode Analysis (3D)",
+                        "Current Efficiency (2D)", "Current Efficiency (3D)",
+                        "Emission Spectrum (2D)", "Emission Spectrum (3D)", "Microcavity Effect",
+                        "Power Dissipation Curve (2D)", "Power Dissipation Curve (3D)",
+                        "CIE 1931", "Polar Plot"])
+
+        combo.activated[str].connect(self.onChanged)
+        combo.setFixedSize(330, 20)
         hlayout.addWidget(self.qlabel)
-        hlayout.addWidget(xcombo)
+        hlayout.addWidget(combo)
         layout.addLayout(hlayout, 1, 0)
 
         hlayout = QHBoxLayout()
         self.qlabel_x = QLabel()
         self.qlabel_x.setText("X-axis: ")
-        xcombo = QComboBox()
-        xcombo.addItems(["Angle", "Pear", "Lemon", "Apple"])
-        xcombo.setFixedSize(330, 20)
+        self.xcombo = QComboBox()
+
+        self.text = str(combo.currentText())
+
+        if (self.text == "Mode Analysis (2D)"):
+            self.xcombo.addItems(["Thickness of b3p","Thickness of npb"])
+        elif (self.text == "Mode Analysis (3D)"):
+            self.xcombo.addItems(["Thickness of b3p","Thickness of npb"])
+        elif (self.text == "Current Efficiency (2D)"):
+            self.xcombo.addItems(["Thickness of b3p","Thickness of npb"])
+        elif (self.text == "Current Efficiency (3D)"):
+            self.xcombo.addItems(["Thickness of b3p","Thickness of npb"])
+        elif (self.text == "Emission Spectrum (2D)"):
+            self.xcombo.addItems(["Wavelength", "Angle"])
+        elif (self.text == "Emission Spectrum (3D)"):
+            self.xcombo.addItems(["Wavelength", "Angle"])
+        elif (self.text == "Power Dissipation Curve (2D)"):
+            self.xcombo.addItems(["In-plane Wavevector"])
+        elif (self.text == "Power Dissipation Curve (3D)"):
+            self.xcombo.addItems(["In-plane Wavevector"])
+        elif (self.text == "Microcavity Effect"):
+            self.xcombo.addItems(["Wavelength", "Angle"])
+        else: # CIE 1931 // Polar Plot : None
+            self.xcombo.addItems([""])
+
+        self.xcombo.setFixedSize(330, 20)
         #xcombo.activated[str].connect(self.onChanged)
         hlayout.addWidget(self.qlabel_x)
-        hlayout.addWidget(xcombo)
+        hlayout.addWidget(self.xcombo)
         layout.addLayout(hlayout, 2, 0)
 
         hlayout = QHBoxLayout()
         self.qlabel_y = QLabel()
         self.qlabel_y.setText("Y-axis: ")
-        ycombo = QComboBox()
-        ycombo.addItems(["Wavelength","Pear", "Lemon", "Apple"])
-        ycombo.setFixedSize(330, 20)
+        self.ycombo = QComboBox()
+
+        if (self.text == "Mode Analysis (2D)"):
+            self.ycombo.addItems(["Optical Modes", "Air Mode", "Substrate-Guided Mode",
+                             "Wave-Guided Mode","SPP Mode", "Absorption", "NR Losses"])
+        elif (self.text == "Mode Analysis (3D)"):
+            self.ycombo.addItems(["Thickness of b3p","Thickness of npb"])
+        elif (self.text == "Current Efficiency (2D)"):
+            self.ycombo.addItems(["Cd/A (photometry)", "W/mA/sr (radiometry)"])
+        elif (self.text == "Current Efficiency (3D)"):
+            self.ycombo.addItems(["Thickness of b3p","Thickness of npb"])
+        elif (self.text == "Emission Spectrum (2D)"):
+            self.ycombo.addItems(["Intensity", "Intensity (p-pol)", "Intensity (s-pol)",
+                             "Intensity (h-dipole, p-pol)", "Intensity (v-dipole, p-pol)"])
+        elif (self.text == "Emission Spectrum (3D)"):
+            self.ycombo.addItems(["Wavelength", "Angle"])
+        elif (self.text == "Power Dissipation Curve (2D)"):
+            self.ycombo.addItems(["Dissipated Power", "Dissipated Power (p-pol)", "Dissipated Power (s-pol)"])
+        elif (self.text == "Power Dissipation Curve (3D)"):
+            self.ycombo.addItems(["Dissipated Power", "Dissipated Power (p-pol)", "Dissipated Power (s-pol)"])
+        elif (self.text == "Microcavity Effect"):
+            self.ycombo.addItems(["Effective Quantum Efficiency", "Purcell Factor"])
+        else: # CIE 1931 // Polar Plot : None
+            self.ycombo.addItems([""])
+
+        self.ycombo.setFixedSize(330, 20)
         #ycombo.activated[str].connect(self.onChanged)
         hlayout.addWidget(self.qlabel_y)
-        hlayout.addWidget(ycombo)
+        hlayout.addWidget(self.ycombo)
         layout.addLayout(hlayout, 3, 0)
 
         hlayout = QHBoxLayout()
         self.qlabel_z = QLabel()
         self.qlabel_z.setText("Z-axis: ")
-        zcombo = QComboBox()
-        zcombo.addItems(["Intensity", "Pear", "Lemon", "Apple"])
-        zcombo.setFixedSize(330, 20)
+        self.zcombo = QComboBox()
+
+        if (self.text == "Mode Analysis (3D)"):
+            self.zcombo.addItems(["Air Mode", "Substrate-Guided Mode", "Wave-Guided Mode",
+                             "SPP Mode", "Absorption", "NR Losses"])
+        elif (self.text == "Current Efficiency (3D)"):
+            self.zcombo.addItems(["Cd/A (photometry)", "W/mA/sr (radiometry)"])
+        elif (self.text == "Emission Spectrum (3D)"):
+            self.zcombo.addItems(["Intensity", "Intensity (p-pol)", "Intensity (s-pol)",
+                             "Intensity (h-dipole, p-pol)", "Intensity (v-dipole, p-pol)",
+                             "Intensity (h-dipole, s-pol)"])
+        elif (self.text == "Power Dissipation Curve (3D)"):
+            self.zcombo.addItems(["Dissipated Power", "Dissipated Power (p-pol)", "Dissipated Power (s-pol)"])
+        else: # Mode Analysis (2D) // Current Efficiencty (2D) // Emission Spectrum (2D) //
+              # Power Dissipation Curve (2D) // Microcavity Effect // CIE1 1931 // Polar Plot
+            self.zcombo.addItems([""])
+
+        self.zcombo.setFixedSize(330, 20)
         #zcombo.activated[str].connect(self.onChanged)
         hlayout.addWidget(self.qlabel_z)
-        hlayout.addWidget(zcombo)
+        hlayout.addWidget(self.zcombo)
         layout.addLayout(hlayout, 4, 0)
 
         label = QLabel()
@@ -153,16 +219,49 @@ class Plotting(QWidget):
 
     def making_table(self):
         self.table = QTableWidget()
-        self.table.setRowCount(16)
+        self.table.setRowCount(3)
         self.table.setColumnCount(2)
-        cols_element = ['1', '2']
+        cols_element = ['Name', 'Measure']
         self.table.setHorizontalHeaderLabels(cols_element)
 
-        self.x = ["Thickness of B3PYMPM", "Thickness of TAPC"]
-        self.y = ["50", "50"]
+        if (self.text == "Mode Analysis (2D)"):
+            another_text = str(self.xcombo.currentText())
+            if (another_text=="Thickness of b3p"):
+                self.x = ["Thickness of npb"]
+            elif (another_text=="Thickness of npb"):
+                self.x = ["Thickness of b3p"]
+            self.y = ["30"]
+
+        elif (self.text == "Current Efficiency (2D)"):
+            another_text = str(self.xcombo.currentText())
+            if (another_text=="Thickness of b3p"):
+                self.x = ["Thickness of npb"]
+            elif (another_text=="Thickness of npb"):
+                self.x = ["Thickness of b3p"]
+            self.y = ["30"]
+
+        elif (self.text == "Emission Spectrum (2D)"):
+            self.x = ["Thickness of b3p", "Thickness of npb", "Wavelength"] # difference between 2 and 3
+            self.y = ["30", "30", "400"]
+        elif (self.text == "Emission Spectrum (3D)"):
+            self.x = ["Thickness of b3p", "Thickness of npb"]
+            self.y = ["30", "30"]
+        elif (self.text == "Power Dissipation Curve (2D)"):
+            self.x = ["Thickness of b3p", "Thickness of npb", "Wavelength"]
+            self.y = ["10", "10", "400"]
+        elif (self.text == "Power Dissipation Curve (3D)"):
+            self.x = ["Thickness of b3p", "Thickness of npb"]
+            self.y = ["10", "10"]
+        elif (self.text == "Microcavity Effect"):
+            self.x = ["Thickness of b3p", "Thickness of npb"]
+            self.y = ["30", "30"]
+        else: # Mode Analysis (3D) // Current Efficiency (3D) // CIE 1931 // Polar Plot
+            self.x = [""]
+            self.y = [""]
+
         self.tempList = [[self.x, self.y]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(380, 180)
+        self.table.setFixedSize(400, 110)
 
         for i in range(len(self.x)):
             self.num_row = i
@@ -182,7 +281,6 @@ class Exportation(QWidget):
         super().__init__()
 
         self.image = image
-        #self.path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
         self.path = os.getcwd()
         self.name = "2PPlAn_33PYMPM"
         # with open(project_info, "r") as pi:

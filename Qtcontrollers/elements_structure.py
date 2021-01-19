@@ -263,6 +263,20 @@ class Emission_Layer(QWidget):
             row = self.table.indexAt(button.pos()).row()
             self.table.removeRow(row)
 
+    def handleSave(self):
+        with open(file_em, 'w') as stream:                  # 'w'
+            writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
+            for row in range(self.table.rowCount()):
+                rowdata = []
+                for column in range(self.table.columnCount()):
+                    item = self.table.item(row, column)
+                    if item is not None:
+                        # rowdata.append(unicode(item.text()).encode('utf8'))
+                        rowdata.append(item.text())                   # +
+                    # else:
+                    #     rowdata.append('')
+                writer.writerow(rowdata)
+
     # def onDrawButtonClicked(self):
     #     self.cell = []
     #     row = self.table.currentRow()
@@ -286,20 +300,6 @@ class Emission_Layer(QWidget):
     #         for j in range(col):
     #             self.cell.append(self.table.item(i,j).text())
     #     return self.cell
-
-    def handleSave(self):
-        with open(file_em, 'w') as stream:                  # 'w'
-            writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
-            for row in range(self.table.rowCount()):
-                rowdata = []
-                for column in range(self.table.columnCount()):
-                    item = self.table.item(row, column)
-                    if item is not None:
-                        # rowdata.append(unicode(item.text()).encode('utf8'))
-                        rowdata.append(item.text())                   # +
-                    # else:
-                    #     rowdata.append('')
-                writer.writerow(rowdata)
 
 
 class Emission_Zone_Setting(QWidget):
@@ -523,6 +523,7 @@ class Emission_Zone_Setting(QWidget):
         self.fig.legend()
         self.fig.tight_layout()
         self.canvas.draw()
+
 
 class Properties(QWidget):
     def __init__(self):

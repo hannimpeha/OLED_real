@@ -12,8 +12,221 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/spectrum/(HJH)_pBcb2cz_BM-A10_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/10BAEK39PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/10wt_dfpysipy2Irmpic_HJH.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/15wt_dfpysipy2Irmpic_HJH.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/1SAZAB.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/20wt_dfpysipy2Irmpic_HJH.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/2CzPN_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/2PPIAn_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/2SSAFB.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/3ASAFB.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/4ASAFT.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/4CzIPN_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/4CzPN_EL.DAT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/4CzTPN_EL.DAT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/4PPIAn_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/5ASAFX - tr.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/5ASAFX.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/5ASAFXtr.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/5wt_TBPe_HJH.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Alq3_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/AnDPX-3Py_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/BAEK39mcpTSPO1_10.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/BAEK39mcpTSPO1_15.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/BDAPM_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/C545T_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/CBP_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/CN-SBAF_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/CN-SBAF_PL_1step.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/CZF_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DABNA-1_1wt.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DBA-SAB_20wt_DPEPO.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DBA-SAB_20wt_o-Siph-CN_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DBP_EL_4Cz20_400800.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DBP_H2_POT2T.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DBP_PL_4Cz20_400700.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DBP_PL_4Cz20_400800.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DBP_PL_4Cz20_450700.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DBP_PL_4Cz20_450800.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DBP_TC_B4.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DCJTB0.5.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DCJTB_exciplex_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DCJTB_only.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DHNR_.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DHNRs.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DTPDDA.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DTPDDA_mCP.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DTPDDA_mCP2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/DTPPDDA_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FCNIr_BMA10_mCP.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FCNIr_BMA10_mCP_161013.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FCNIr_BMA10_mCP_angleset.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FCNIr_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FCNIrpic.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FCNIrpic_modified.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FDTD_454nm.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FDTD_500THz_10fs.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FDTD_500THz_20fs.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FDTD_500nm.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FDTD_510nm.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FDTD_588THz_10fs.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FDTD_600nm.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/FDTD_660THz_10fs.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Firpic_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GGD01_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GNU-03_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GNU-04_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GNUPt_1_4wt_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GNUPt_2_4wt_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GNUPt_3_4wt_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GNUPt_core_4wt_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GNU_mpic.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GNU_pic.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/GNU_taz.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_0.5wt_C545T_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_0.5wt_TBRb_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_1wt_C545T_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_1wt_TBRb_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_2wt_C545T_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_2wt_TBRb_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_4wt_C545T_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_4wt_TBRb_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_Ir(mphmq)2tmd_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_Ir(ppy)2tmd_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/H2_POT2T_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/HSEML_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/HSref1-EML_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/HSref1-EML_strange-PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/ICzICz_POT2T_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Ir(ppy)3_2TBRb.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/IrMDQ2acac_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irchpy3_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irdmppy_ph2tmd.PL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irdmppy_ph2tmd.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irmphmq2tmd_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irmphmq2tmdwhite_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irmphq2acac_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irmpp2acac_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irmppy3_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irphq3_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irpiq3_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irppy2acac_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irppy2tmd_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irppy2tmd_white2_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irppy2tmdwhite_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irppy3_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/Irppy3_PL_for_pBCb2Cz.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/LGD_G10_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/LGD_G2-10_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/LGD_G2-20_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/LGD_G20_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/LGD_YG10_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/LGD_YG20_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/M-tDABNA_1wt.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/M-tDABNA_3wt.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/M-tDABNA_5wt.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/M-tDABNA_7wt.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/MAPbBr3.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/MBD105_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/NAXPT_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/OPL4_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/OPL5_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/PL_CBE16.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/PL_TDBA-AC.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/POT2T_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/PXZF_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/PtSN1_8wt_in_mCBP_TSPO1_spectrum.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/PtSN5_8wt_in_mCBP_TSPO1_spectrum.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/PtSN6_8wt_in_mCBP_TSPO1_spectrum.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_PL_10_OPL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_PL_20_OPL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_F30.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_constPL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_E0.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_E15.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_E30.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_F0.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_F10.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_F15.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_F20.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_F25.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_F30.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SAIT_CBE16_newPL_lowJ_F5.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SELBD_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SPDDA_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SpiroAC-Trz (copy).dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/SpiroAC-Trz.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/T-SAF.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TAPC_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBPe.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBPe_05wt_HG.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBPe_1wt%.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBPe_2wt_HJH.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBPe_DPEPO_ACRSA.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBPe_DPEPO_CzACSF.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBPe_dfpy_HG.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBRb_4wt_Ir(ppy)2tmd.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBRb_4wt_Ir(ppy)3.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBRb_Ir(ppy)2tmd.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBRb_Ir(ppy)3.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TBRb_exciplex.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TCTA_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TC_B4_exciplex.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TDAF_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TDBA-SAF_10wt_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TDBA-SAF_20wt_DPEPO.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TDBA-SAF_20wt_o-Siph-CN_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TEST_PL1.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TEST_PL2.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TTAZ.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TTSAmCP.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TXAZ.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TXSAmCP.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TXSAmCPCN.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/TpAD_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/X-SAF.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/YJ_510nm.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/YJ_514nm.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/YJ_600nm.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/YJ_LTgreendopant.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/coco_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/dfpy_5wt_HG.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/dfpy_5wt_TBPe_1wt.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/exci_tmd_DCJTB_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/irdmppyph2tmd.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/irdmppyph2tmd.orifiles/irdmppyph2tmd-convert.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/irdmppyph2tmd.orifiles/irdmppyph2tmd.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/irdmppyph2tmd.orifiles/irdmppyph2tmd.dat.ori" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/m-PO-ABN_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/mCBP-CN_40wt_4CzBN.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/mCP_BMA10_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/motm.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/motr.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/nyd.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/o-DBFDPO_TAPC_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/p-PO-ABN_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/pBCb2Cz_MBD105_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/pBCb2Cz_TBPe_PL.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/pBcb2cz_BM-A10_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/pBcb2cz_BM-A11_1wt_TBPe_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/pBcb2cz_BM-A11_pl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/tmtr.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/trispcz_b4pympm.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/trispcz_b4pympm_0.5wtdcjtb.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/trispcz_b4pympm_1.0wtdcjtb.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/white_B.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/white_G.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spectrum/white_R.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +237,6 @@
     <option name="clangTidyViaClangd" value="false" />
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -63,11 +275,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/c/data" />
       <recent name="$PROJECT_DIR$/Qtcontrollers/resources" />
       <recent name="$PROJECT_DIR$/c/data/spectrum" />
       <recent name="$PROJECT_DIR$/c" />
-      <recent name="$PROJECT_DIR$/c/data" />
-      <recent name="$PROJECT_DIR$/Qtcontrollers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -77,7 +289,7 @@
       <recent name="$PROJECT_DIR$/controllers/drawing" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.penProject">
+  <component name="RunManager" selected="Python.main">
     <configuration name="penProject" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="penProject" TARGET_NAME="penProject" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="penProject" RUN_TARGET_NAME="penProject">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -261,7 +473,8 @@
       <workItem from="1610956503554" duration="711000" />
       <workItem from="1610962488471" duration="2213000" />
       <workItem from="1610973951216" duration="6501000" />
-      <workItem from="1610980622051" duration="233000" />
+      <workItem from="1610980622051" duration="332000" />
+      <workItem from="1611023540258" duration="8479000" />
     </task>
     <servers />
   </component>

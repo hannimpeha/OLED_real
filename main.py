@@ -21,7 +21,7 @@ class Real(QWidget):
         layout.addWidget(self.menuBar)
 
         self.setMinimumSize(QSize(1600, 900))
-        self.setWindowTitle('JooAm Optical Simulator for Thin Film & Devices')
+        self.setWindowTitle('JooAm Optical Simulator for Thin Film & Devices (J-OSTD)')
 
 
     def making_file(self):
@@ -64,7 +64,7 @@ class Real(QWidget):
         tab2.setLayout(grid_tab2)
 
         tabs = QTabWidget()
-        tabs.addTab(tab1, '2PPlAn_PL')
+        tabs.addTab(tab1, 'Structure')
         tabs.addTab(tab2, 'Result')
         grid = QVBoxLayout()
         grid.addWidget(tabs)
