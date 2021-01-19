@@ -16,6 +16,7 @@ file_p = 'resources/text_p.csv'
 path_p = 'resources/properties'
 em_figure = 'resources/EML_graph.png'
 project_info = 'resources/project_info.csv'
+arrow = 'resources/arrow.png'
 
 
 class Elements_Structure(QWidget):
@@ -65,11 +66,11 @@ class Elements_Structure(QWidget):
 
         self.layer_name = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
         self.material = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
-        self.refractive_index = ["Al.ri", "TPBi.ri", "TPBi.ri", "mCBP.ri", "mCBP.ri", "TCTA_B3PYMPM.ri", "TCTA.ri", "NPB.ri", "NPB.ri", "TAPC.ri", "ITO_Geomatec.ri", "glass_Eagle2000.ri"]
+        self.refractive_index = ["Al.dat", "TPBi.dat", "TPBi.dat", "mCBP.dat", "mCBP.dat", "TCTA_B3PYMPM.dat", "TCTA.dat", "NPB.dat", "NPB.dat", "TAPC.dat", "ITO_Geomatec.dat", "glass_Eagle2000.dat"]
         self.thickness = [100, 100, 10, 20, 20, 20, 20, 30, 20, 50, 70, 0]
-        self.unit = ["nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm"]
+        # self.unit = ["nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm"]
 
-        self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness, self.unit]]
+        self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness]]
         self.num_row = len(self.tempList)
         self.table.setFixedSize(610, 250)
 
@@ -80,11 +81,15 @@ class Elements_Structure(QWidget):
             self.table.setItem(self.num_row, 2, QTableWidgetItem(self.material[i]))
             self.table.setItem(self.num_row, 3, QTableWidgetItem(self.refractive_index[i]))
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.thickness[i])))
-            self.table.setItem(self.num_row, 5, QTableWidgetItem(self.unit[i]))
 
         i = 0
         for j in range(len(self.layer_name)):
-            self.table.setItem(i, 6, QtWidgets.QTableWidgetItem(j))
+            self.table.setItem(i, 5, QTableWidgetItem(j))
+            measure = QComboBox()
+            measure.addItems(["nm", "um", "pm"])
+            self.table.setCellWidget(i, 5, measure)
+
+            self.table.setItem(i, 6, QTableWidgetItem(j))
             selectButton = QPushButton()
             selectButton.setText("Settings")
             selectButton.clicked.connect(self.saveDirectory)
@@ -93,9 +98,9 @@ class Elements_Structure(QWidget):
 
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(3, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(6, QtWidgets.QHeaderView.Stretch)
@@ -139,34 +144,15 @@ class Elements_Structure(QWidget):
             row = self.table.indexAt(button.pos()).row()
             self.table.removeRow(row)
 
-    # def onDrawButtonClicked(self):
-    #     l = self.onDraw()
-    #     for k in range(int(len(l)/6) + 1):
-    #         with open(file, 'w') as out:
-    #             out.write(",".join(l[k * 6:(k + 1) * 6])+"\n")
-    #
-    # def onDraw(self):
-    #     self.cell = []
-    #     # row = self.table.currentRow()
-    #     row = self.table.rowCount()
-    #     col = self.table.columnCount()
-    #     for i in range(row):
-    #         for j in range(col):
-    #             self.cell.append(self.table.item(i, j).text())
-    #     return self.cell
-
     def handleSave(self):
-        with open(file, 'w') as stream:                  # 'w'
-            writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
+        with open(file, 'w') as stream:
+            writer = csv.writer(stream, lineterminator='\n')
             for row in range(self.table.rowCount()):
                 rowdata = []
                 for column in range(self.table.columnCount()):
                     item = self.table.item(row, column)
                     if item is not None:
-                        # rowdata.append(unicode(item.text()).encode('utf8'))
-                        rowdata.append(item.text())                   # +
-                    # else:
-                    #     rowdata.append('')
+                        rowdata.append(item.text())
                 writer.writerow(rowdata)
 
 
@@ -203,10 +189,10 @@ class Emission_Layer(QWidget):
 
     def init_em_table(self):
         self.table = QTableWidget()
-        self.table.setRowCount(3)
-        self.table.setColumnCount(7)
+        self.table.setRowCount(4)
+        self.table.setColumnCount(8)
 
-        cols_element = ['L#', 'EMMaterials', 'Spectrum', 'ExcitonProp', 'QY', 'HDR', 'EMZone']
+        cols_element = ['L#', 'EMMaterials', 'Spectrum', 'Exciton Prop', 'QY', 'HDR', 'EMZone', 'Properties']
         self.table.setHorizontalHeaderLabels(cols_element)
 
         self.num = [4, 6, 8]
@@ -219,7 +205,7 @@ class Emission_Layer(QWidget):
         self.tempList = [[self.em_materials, self.spectrum, self.exciton_prop,
                           self.qy, self.pq, self.em_zone]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(610, 300)
+        self.table.setFixedSize(610, 140)
 
         for i in range(len(self.em_materials)):
             self.num_row = i
@@ -231,6 +217,16 @@ class Emission_Layer(QWidget):
             self.table.setItem(self.num_row, 5, QTableWidgetItem(str(self.pq[i])))
             self.table.setItem(self.num_row, 6, QTableWidgetItem(str(self.em_zone[i])))
 
+
+        i = 0
+        for j in range(len(self.em_materials)):
+            self.table.setItem(i, 7, QTableWidgetItem(j))
+            selectButton = QPushButton()
+            selectButton.setText("Settings")
+            selectButton.setFixedSize(140, 23)
+            # selectButton.clicked.connect(self.saveDirectory)
+            self.table.setCellWidget(i, 7, selectButton)
+            i += 1
         # i = 0
         # for j in range(len(self.em_materials)):
         #     self.table.setItem(i, 6, QtWidgets.QTableWidgetItem(j))
@@ -249,7 +245,8 @@ class Emission_Layer(QWidget):
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(6, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(6, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(7, QtWidgets.QHeaderView.Stretch)
         return self.table
 
     def onConnectButtonClicked(self):
@@ -264,42 +261,15 @@ class Emission_Layer(QWidget):
             self.table.removeRow(row)
 
     def handleSave(self):
-        with open(file_em, 'w') as stream:                  # 'w'
-            writer = csv.writer(stream, lineterminator='\n')          # + , lineterminator='\n'
+        with open(file_em, 'w') as stream:
+            writer = csv.writer(stream, lineterminator='\n')
             for row in range(self.table.rowCount()):
                 rowdata = []
                 for column in range(self.table.columnCount()):
                     item = self.table.item(row, column)
                     if item is not None:
-                        # rowdata.append(unicode(item.text()).encode('utf8'))
-                        rowdata.append(item.text())                   # +
-                    # else:
-                    #     rowdata.append('')
+                        rowdata.append(item.text())
                 writer.writerow(rowdata)
-
-    # def onDrawButtonClicked(self):
-    #     self.cell = []
-    #     row = self.table.currentRow()
-    #     col = self.table.currentColumn()
-    #     self.cell.append(self.table.item(row, col).text())
-    #     with open(file_em, 'w') as out:
-    #         out.write(self.cell[0] + "\n")
-
-    # def onDrawButtonClicked(self):
-    #     l = self.onDraw()
-    #     for k in range(int(len(l)/7) + 1):
-    #         with open(file_em, 'a') as out:
-    #             out.write(",".join(l[k * 7:(k + 1) * 7])+"\n")
-    #
-    # def onDraw(self):
-    #     self.cell = []
-    #     # row = self.table.currentRow()
-    #     row = self.table.rowCount()
-    #     col = self.table.columnCount()
-    #     for i in range(row):
-    #         for j in range(col):
-    #             self.cell.append(self.table.item(i,j).text())
-    #     return self.cell
 
 
 class Emission_Zone_Setting(QWidget):
@@ -309,88 +279,101 @@ class Emission_Zone_Setting(QWidget):
         layout = QHBoxLayout()
         layout1 = QGridLayout()
         layout2 = QGridLayout()
+
         layout.addLayout(layout1)
         layout.addLayout(layout2)
+
         self.setLayout(layout)
 
         label = QLabel()
-        label.setText("Emission Zone Setting")
+        label.setText("Equation: ")
+        label.setFixedSize(100, 30)
         layout1.addWidget(label, 0, 0)
 
+        self.qlabel = QTextEdit()
+        self.qlabel.setFixedSize(200, 30)
+        layout2.addWidget(self.qlabel, 0, 0)
+
+        arrow = self.arrow()
+        layout2.addWidget(arrow, 0, 2)
+
         label = QLabel()
-        label.setText("Equation")
-        layout2.addWidget(label, 0, 0)
-
-        self.qlabel = QLabel()
-        layout2.addWidget(self.qlabel, 0, 1)
-
+        label.setText("Emission Zone Setting")
+        layout1.addWidget(label, 1, 0)
 
         label = QLabel()
         label.setText("Emit Range(nm): ")
-        layout2.addWidget(label, 1, 0)
+        label.setFixedSize(100, 20)
+        layout2.addWidget(label, 2, 0)
 
         textLine_emit = QLineEdit()
         textLine_emit.setFixedSize(100, 20)
         textLine_emit.setText("100")
-        layout2.addWidget(textLine_emit, 1, 1)
+        layout2.addWidget(textLine_emit, 2, 1)
 
         label = QLabel()
         label.setText("Value a :")
-        layout2.addWidget(label, 1, 2)
+        layout2.addWidget(label, 2, 2)
 
         self.textLine_a = QLineEdit()
         self.textLine_a.setFixedSize(100, 20)
         self.textLine_a.setText("0.5")
-        layout2.addWidget(self.textLine_a, 1, 3)
+        layout2.addWidget(self.textLine_a, 2, 3)
 
         label = QLabel()
         label.setText("Value b :")
-        layout2.addWidget(label, 2, 0)
+        layout2.addWidget(label, 3, 0)
 
         self.textLine_b = QLineEdit()
         self.textLine_b.setFixedSize(100, 20)
         self.textLine_b.setText("1")
-        layout2.addWidget(self.textLine_b, 2, 1)
+        layout2.addWidget(self.textLine_b, 3, 1)
 
         label = QLabel()
         label.setText("Value c :")
-        layout2.addWidget(label, 2, 2)
+        layout2.addWidget(label, 3, 2)
 
         self.textLine_c = QLineEdit()
         self.textLine_c.setFixedSize(100, 20)
         self.textLine_c.setText("2")
-        layout2.addWidget(self.textLine_c, 2, 3)
+        layout2.addWidget(self.textLine_c, 3, 3)
 
         self.radiobutton_sheet = QRadioButton("Sheet")
         self.radiobutton_sheet.setChecked(True)
         self.radiobutton_sheet.type = ""
         self.radiobutton_sheet.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_sheet, 1, 0)
+        layout1.addWidget(self.radiobutton_sheet, 2, 0)
 
         self.radiobutton_constant = QRadioButton("Constant")
         self.radiobutton_constant.type = "x = %s" %(self.textLine_a.text())
         self.radiobutton_constant.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_constant, 2, 0)
+        layout1.addWidget(self.radiobutton_constant, 3, 0)
 
         self.radiobutton_linear = QRadioButton("Linear")
         self.radiobutton_linear.type = "%s*x + %s" %(self.textLine_a.text(), self.textLine_b.text())
         self.radiobutton_linear.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_linear, 3, 0)
+        layout1.addWidget(self.radiobutton_linear, 4, 0)
 
-        self.radiobutton_gaussian = QRadioButton("Gaussian")
+        self.radiobutton_gaussian = QRadioButton("Exponential")
         self.radiobutton_gaussian.type = "%s*math.exp(%s + x) + %s" %(self.textLine_a.text(), self.textLine_b.text(), self.textLine_c.text())
         self.radiobutton_gaussian.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_gaussian, 4, 0)
+        layout1.addWidget(self.radiobutton_gaussian, 5, 0)
+
+        self.radiobutton_gaussian = QRadioButton("Gaussian")
+        self.radiobutton_gaussian.type = "(%s*(math.sqrt(2*math.pi)))**(-1)*math.exp((x-%s)/(2*%s**2))" \
+                                         %(self.textLine_b.text(), self.textLine_a.text(), self.textLine_b.text())
+        self.radiobutton_gaussian.toggled.connect(self.onClicked)
+        layout1.addWidget(self.radiobutton_gaussian, 6, 0)
 
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.handleSave)
         drawButton.setFixedSize(120, 30)
-        layout2.addWidget(drawButton, 0, 2)
+        layout2.addWidget(drawButton, 1, 2)
 
         drawButton = QPushButton("Draw")
         drawButton.clicked.connect(self.drawPic)
         drawButton.setFixedSize(120, 30)
-        layout2.addWidget(drawButton, 0, 3)
+        layout2.addWidget(drawButton, 1, 3)
 
         self.RIList = pd.read_csv(file, header=None)
         self.RI_name = []
@@ -398,6 +381,14 @@ class Emission_Zone_Setting(QWidget):
         # self.RIList.itemSelectionChanged.connect(self.chkItemClicked)
         self.readData()
         self.initPlot()
+
+    def arrow(self):
+        label = QLabel()
+        pixmap = QPixmap(arrow)
+        pixmap = pixmap.scaled(20, 20, QtCore.Qt.KeepAspectRatio)
+        label.setPixmap(pixmap)
+        label.resize(pixmap.width(), pixmap.height())
+        return label
 
     def handleSave(self):
         with open(file_emz, 'w') as stream:
