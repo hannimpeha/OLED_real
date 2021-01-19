@@ -367,24 +367,24 @@ class Emission_Zone_Setting(QWidget):
 
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.drawPic)
-        drawButton.setFixedSize(110, 20)
+        drawButton.setFixedSize(110, 30)
         layout1.addWidget(drawButton, 5, 2)
 
         drawButton = QPushButton("Draw")
         drawButton.clicked.connect(self.arrow)
-        drawButton.setFixedSize(110, 20)
+        drawButton.setFixedSize(110, 30)
         layout1.addWidget(drawButton, 6, 2)
 
 
         label = QLabel()
         label.setText("Equation: ")
         label.setFixedSize(100, 20)
-        layout1.addWidget(label, 6, 0)
+        layout1.addWidget(label, 7, 0)
 
         self.qlabel = QTextEdit()
-        self.qlabel.setFixedSize(100, 20)
+        self.qlabel.setFixedSize(220, 40)
         self.qlabel.setText("x = %s" %(self.textLine_a.text()))
-        layout1.addWidget(self.qlabel, 6, 1)
+        layout1.addWidget(self.qlabel, 7, 1)
 
         label = QLabel()
         label.setText("Emission Zone Graph")
@@ -403,7 +403,7 @@ class Emission_Zone_Setting(QWidget):
     def arrow(self):
         label = QLabel()
         pixmap = QPixmap(em_figure)
-        pixmap = pixmap.scaled(300, 300, QtCore.Qt.KeepAspectRatio)
+        pixmap = pixmap.scaled(330, 330, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         return label
