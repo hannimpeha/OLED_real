@@ -297,10 +297,11 @@ class Emission_Zone_Setting(QWidget):
 
         label = QLabel()
         label.setText("Emission Zone Setting")
+        label.setFixedSize(150, 20)
         layout1.addWidget(label, 0, 0)
 
         textLine_emit = QLineEdit()
-        textLine_emit.setFixedSize(120, 20)
+        textLine_emit.setFixedSize(100, 20)
         textLine_emit.setText("0,100,10")
         layout1.addWidget(textLine_emit, 1, 2)
 
@@ -309,7 +310,7 @@ class Emission_Zone_Setting(QWidget):
         layout1.addWidget(label, 2, 1)
 
         self.textLine_a = QLineEdit()
-        self.textLine_a.setFixedSize(120, 20)
+        self.textLine_a.setFixedSize(100, 20)
         self.textLine_a.setText("0.5")
         layout1.addWidget(self.textLine_a, 2, 2)
 
@@ -318,17 +319,17 @@ class Emission_Zone_Setting(QWidget):
         layout1.addWidget(label, 3, 1)
 
         self.textLine_b = QLineEdit()
-        self.textLine_b.setFixedSize(120, 20)
+        self.textLine_b.setFixedSize(100, 20)
         self.textLine_b.setText("1")
         layout1.addWidget(self.textLine_b, 3, 2)
 
         label = QLabel()
         label.setText("Value c :")
-        label.setFixedSize(120, 20)
+        label.setFixedSize(100, 20)
         layout1.addWidget(label, 4, 1)
 
         self.textLine_c = QLineEdit()
-        self.textLine_c.setFixedSize(120, 20)
+        self.textLine_c.setFixedSize(100, 20)
         self.textLine_c.setText("2")
         layout1.addWidget(self.textLine_c, 4, 2)
 
@@ -361,17 +362,17 @@ class Emission_Zone_Setting(QWidget):
 
         label = QLabel()
         label.setText("Emit Range(nm): ")
-        label.setFixedSize(120, 20)
+        label.setFixedSize(100, 20)
         layout1.addWidget(label, 1, 1)
 
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.drawPic)
-        drawButton.setFixedSize(130, 20)
+        drawButton.setFixedSize(110, 20)
         layout1.addWidget(drawButton, 5, 2)
 
         drawButton = QPushButton("Draw")
         drawButton.clicked.connect(self.arrow)
-        drawButton.setFixedSize(130, 20)
+        drawButton.setFixedSize(110, 20)
         layout1.addWidget(drawButton, 6, 2)
 
 
@@ -381,7 +382,7 @@ class Emission_Zone_Setting(QWidget):
         layout1.addWidget(label, 6, 0)
 
         self.qlabel = QTextEdit()
-        self.qlabel.setFixedSize(120, 20)
+        self.qlabel.setFixedSize(100, 20)
         self.qlabel.setText("x = %s" %(self.textLine_a.text()))
         layout1.addWidget(self.qlabel, 6, 1)
 
@@ -402,7 +403,7 @@ class Emission_Zone_Setting(QWidget):
     def arrow(self):
         label = QLabel()
         pixmap = QPixmap(em_figure)
-        pixmap = pixmap.scaled(200, 340, QtCore.Qt.KeepAspectRatio)
+        pixmap = pixmap.scaled(300, 300, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         return label
