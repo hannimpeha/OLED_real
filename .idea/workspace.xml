@@ -12,10 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/polar_plot.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/drawing/Polar.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/drawing/Polar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/Graph.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +99,27 @@
       </makefile>
       <method v="2" />
     </configuration>
+    <configuration name="Polar" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="penProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Qtcontrollers/drawing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Qtcontrollers/drawing/Polar.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="example" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="penProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -146,14 +170,15 @@
       <item itemvalue="Makefile.Makefile" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.example" />
+      <item itemvalue="Python.Polar" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.Polar" />
         <item itemvalue="Makefile.Makefile" />
         <item itemvalue="Makefile.Makefile" />
         <item itemvalue="Python.example" />
-        <item itemvalue="Makefile.Makefile" />
       </list>
     </recent_temporary>
   </component>
@@ -264,7 +289,13 @@
       <workItem from="1610973951216" duration="6501000" />
       <workItem from="1610980622051" duration="332000" />
       <workItem from="1611023540258" duration="24753000" />
-      <workItem from="1611051019796" duration="1248000" />
+      <workItem from="1611051019796" duration="1429000" />
+      <workItem from="1611053115838" duration="175000" />
+      <workItem from="1611054175360" duration="248000" />
+      <workItem from="1611054958006" duration="2893000" />
+      <workItem from="1611057870073" duration="99000" />
+      <workItem from="1611058376577" duration="124000" />
+      <workItem from="1611058507708" duration="777000" />
     </task>
     <servers />
   </component>

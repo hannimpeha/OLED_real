@@ -80,6 +80,7 @@ class Emission_Layer_Graph(QWidget):
         tab1 = QWidget()
         tab2 = QWidget()
         tab3 = QWidget()
+        tab4 = QWidget()
 
         label = QLabel()
         sub_layout = QVBoxLayout()
@@ -90,9 +91,23 @@ class Emission_Layer_Graph(QWidget):
         sub_layout.addWidget(label)
 
         tabs = QTabWidget()
-        tabs.addTab(tab1, "FCNIr")
-        tabs.addTab(tab2, "Irppy2tmd")
-        tabs.addTab(tab3, "Irmphmq2tmd")
+
+        names = pd.read_csv(em_file, header=None)[1].tolist()
+
+        if len(names)==1:
+            tabs.addTab(tab1, names[0])
+        elif len(names)==2:
+            tabs.addTab(tab1, names[0])
+            tabs.addTab(tab2, names[1])
+        elif len(names)==3:
+            tabs.addTab(tab1, names[0])
+            tabs.addTab(tab2, names[1])
+            tabs.addTab(tab3, names[2])
+        else:
+            tabs.addTab(tab1, names[0])
+            tabs.addTab(tab2, names[1])
+            tabs.addTab(tab3, names[2])
+            tabs.addTab(tab4, names[3])
 
         tabs.setLayout(sub_layout)
         layout.addWidget(tabs)

@@ -5,17 +5,15 @@ import shutil
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
-import numpy as np
-import matplotlib.pyplot as plt
 
-image = 'resources/Graph.png'
+polar_plot = 'resources/polar_plot.png'
 logo_image = 'resources/Logo.png'
-data_path = "output/#3-2/CIE/output_CIE_bottom.txt"
-data_path2 = "output/#3-2/angular_intensity/output_angular_intensity_bottom.txt"
-graph = 'resources/Graph.png'
+graph = 'resources/polar_plot.png'
 project_info = 'resources/project_info.csv'
 result = 'resources/result.csv'
 plotting_option = 'resources/plotting_option.csv'
+data_polar_plot = "output/#3-2/angular_intensity/output_angular_intensity_bottom.txt"
+
 
 class Plotting_Param(QWidget):
     def __init__(self):
@@ -189,21 +187,6 @@ class Plotting(QWidget):
             for item in rowdata:
                 writer.writerow(item)
 
-        if (self.text=="Polar Plot"):
-            data = np.genfromtxt(data_path2, unpack=True)
-            theta = np.linspace(0, np.pi / 2, 10)
-            r = np.cos(theta)
-            r_data = data
-            fig = plt.figure()
-            ax = fig.add_subplot(111, polar=True)
-            ax.set_thetamin(0)
-            ax.set_thetamax(90)
-
-            ax.scatter(theta, r)
-            ax.scatter(theta, r_data)
-
-            fig.savefig(graph, transparent=True)
-
 
     def onChanged(self, text):
         self.qlabel.setText(text)
@@ -212,7 +195,7 @@ class Plotting(QWidget):
 
     def making_table(self):
         self.table = QTableWidget()
-        self.table.setRowCount(3)
+        self.table.setRowCount(10)
         self.table.setColumnCount(2)
         cols_element = ['Name', 'Measure']
         self.table.setHorizontalHeaderLabels(cols_element)
@@ -280,7 +263,7 @@ class Plotting(QWidget):
 
         self.tempList = [[self.x, self.y]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(400, 110)
+        self.table.setFixedSize(400, 200)
 
         for i in range(len(self.x)):
             self.num_row = i
@@ -299,12 +282,12 @@ class Exportation(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.image = image
+        self.image = polar_plot
         self.path = os.getcwd()
         self.name = "2PPlAn_33PYMPM"
         # with open(project_info, "r") as pi:
         #     self.name = pi.readline()
-        self.data_path = data_path2
+        self.data_path = data_polar_plot
 
         layout = QGridLayout()
         label = QLabel()
