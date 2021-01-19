@@ -20,22 +20,17 @@ class Axes_Properties(QWidget):
         label.setFixedSize(100, 20)
         layout.addWidget(label)
 
-        grid = QGridLayout()
         table = self.making_table()
-        button_save = QPushButton()
-        button_save.setText("Save")
-        button_save.setFixedSize(335, 80)
-        grid.addWidget(button_save, 0, 0)
+        layout.addWidget(table)
 
         button_plot = QPushButton()
         button_plot.setText("Plot")
-        button_plot.setFixedSize(335, 80)
+        button_plot.setFixedSize(700, 80)
         button_plot.clicked.connect(self.making_image)
-        grid.addWidget(button_plot, 0, 1)
+        layout.addWidget(button_plot)
 
         image = self.making_image()
-        layout.addWidget(table)
-        layout.addLayout(grid)
+
         layout.addWidget(image)
         self.setLayout(layout)
 

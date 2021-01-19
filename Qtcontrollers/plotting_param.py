@@ -166,16 +166,11 @@ class Plotting(QWidget):
 
         layout.addWidget(table, 6, 0)
 
-        hlayout = QHBoxLayout()
         btn = QPushButton()
+        btn.setFixedSize(410, 30)
         btn.setText("Save")
         btn.clicked.connect(self.onButtonClickedPlot)
-        hlayout.addWidget(btn)
-
-        btn = QPushButton()
-        btn.setText("Clear")
-        hlayout.addWidget(btn)
-        layout.addLayout(hlayout, 7, 0)
+        layout.addWidget(btn, 7, 0)
 
         self.setLayout(layout)
 

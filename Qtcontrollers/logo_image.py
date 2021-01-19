@@ -86,10 +86,10 @@ class Properties(QWidget):
         self.checkBox_power.setCheckState(True)
         layout.addWidget(self.checkBox_power, 5, 1)
 
-        drawButton = QPushButton("Save")
-        drawButton.clicked.connect(self.handleSave)
-        drawButton.setFixedSize(230, 30)
-        layout.addWidget(drawButton, 6, 1)
+        # drawButton = QPushButton("Save")
+        # drawButton.clicked.connect(self.handleSave)
+        # drawButton.setFixedSize(230, 30)
+        # layout.addWidget(drawButton, 6, 1)
 
         self.setLayout(layout)
 
@@ -115,7 +115,7 @@ class Execute(QWidget):
         layout.addWidget(label)
 
         self.thread = QThread()
-        self.worker = SeleniumWorker()
+        self.worker = Worker()
         self.worker.moveToThread(self.thread)
 
         layout.addWidget(self.worker.pbar)
@@ -128,7 +128,8 @@ class Execute(QWidget):
 
         self.setLayout(layout)
 
-class SeleniumWorker(QObject):
+
+class Worker(QObject):
     def __init__(self):
         super().__init__()
         self.step = 0
@@ -140,7 +141,7 @@ class SeleniumWorker(QObject):
         DEFAULT_STYLE = """
                             QProgressBar{
                                 border: 1px solid grey;
-                                border-radius: 5px;
+                                border-radius: 8px;                     
                                 text-align: center
                             }
 

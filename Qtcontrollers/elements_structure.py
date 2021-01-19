@@ -365,10 +365,10 @@ class Emission_Zone_Setting(QWidget):
         label.setFixedSize(100, 20)
         layout1.addWidget(label, 1, 1)
 
-        drawButton = QPushButton("Save")
-        drawButton.clicked.connect(self.drawPic)
-        drawButton.setFixedSize(110, 30)
-        layout1.addWidget(drawButton, 5, 2)
+        # drawButton = QPushButton("Save")
+        # drawButton.clicked.connect(self.drawPic)
+        # drawButton.setFixedSize(110, 30)
+        # layout1.addWidget(drawButton, 5, 2)
 
         drawButton = QPushButton("Draw")
         drawButton.clicked.connect(self.arrow)

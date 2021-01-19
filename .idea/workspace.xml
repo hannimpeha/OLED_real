@@ -13,8 +13,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/logo_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/logo_image.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,14 +80,14 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="penProject" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="penProject" TARGET_NAME="penProject" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="penProject" RUN_TARGET_NAME="penProject">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="penProject" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="penProject" TARGET_NAME="penProject" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="penProject" RUN_TARGET_NAME="penProject">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Makefile" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
@@ -112,6 +114,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Qtcontrollers/drawing/Polar.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -133,6 +136,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Qtcontrollers/drawing/emission_zone_setting.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -187,7 +191,6 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="CMake Application.penProject" />
       <item itemvalue="Makefile.make" />
       <item itemvalue="Makefile.Makefile" />
       <item itemvalue="Python.main" />
@@ -318,7 +321,8 @@
       <workItem from="1611054958006" duration="2893000" />
       <workItem from="1611057870073" duration="99000" />
       <workItem from="1611058376577" duration="124000" />
-      <workItem from="1611058507708" duration="3753000" />
+      <workItem from="1611058507708" duration="3903000" />
+      <workItem from="1611071919629" duration="1038000" />
     </task>
     <servers />
   </component>
@@ -336,5 +340,8 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/penProject$main.coverage" NAME="main Coverage Results" MODIFIED="1611072983206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
