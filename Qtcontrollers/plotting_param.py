@@ -1,3 +1,4 @@
+import csv
 import os
 
 import shutil
@@ -14,6 +15,7 @@ data_path2 = "output/#3-2/angular_intensity/output_angular_intensity_bottom.txt"
 graph = 'resources/Graph.png'
 project_info = 'resources/project_info.csv'
 result = 'resources/result.csv'
+plotting_option = 'resources/plotting_option.csv'
 
 class Plotting_Param(QWidget):
     def __init__(self):
@@ -58,7 +60,7 @@ class Plotting(QWidget):
                         "Power Dissipation Curve (2D)", "Power Dissipation Curve (3D)",
                         "CIE 1931", "Polar Plot"])
 
-        combo.activated[str].connect(self.onChanged)
+        # combo.activated[str].connect(self.onChanged)
         combo.setFixedSize(330, 20)
         hlayout.addWidget(self.qlabel)
         hlayout.addWidget(combo)
@@ -179,37 +181,29 @@ class Plotting(QWidget):
         self.setLayout(layout)
 
     def onButtonClickedPlot(self):
-        # data = np.loadtxt(data_path, unpack=True)
-        # index = np.array(range(0, 100, 10))
-        # # labels = ('x', 'y', 'z')
-        # dic = {k: v for k, v in (zip(index, np.transpose(data)))}
-        #
-        # x_dic = {k: v[0] for k, v in dic.items()}
-        # y_dic = {k: v[1] for k, v in dic.items()}
-        # z_dic = {k: v[2] for k, v in dic.items()}
-        #
-        # ds = [x_dic, y_dic, z_dic]
-        # d = {}
-        # for k in x_dic.keys():
-        #     d[k] = tuple(d[k] for d in ds)
-        #
-        # sds = MultiSpectralDistributions(d)
-        # plot = plot_chromaticity_diagram_CIE1931()
-        # write_image(plot, graph)
 
-        data = np.genfromtxt(data_path2, unpack=True)
-        theta = np.linspace(0, np.pi / 2, 10)
-        r = np.cos(theta)
-        r_data = data
-        fig = plt.figure()
-        ax = fig.add_subplot(111, polar=True)
-        ax.set_thetamin(0)
-        ax.set_thetamax(90)
+        with open(plotting_option, 'w') as stream:
+            writer = csv.writer(stream, lineterminator='\n')
+            for row in range(self.table.rowCount()):
+                rowdata = [[self.text], [self.xcombo.currentText],
+                           [self.ycombo.currentText], [self.zcombo.currentText]]
+                for item in rowdata:
+                    writer.writerow(item[0].strip('"').split(','))
 
-        ax.scatter(theta, r)
-        ax.scatter(theta, r_data)
+        if (self.text=="Polar Plot"):
+            data = np.genfromtxt(data_path2, unpack=True)
+            theta = np.linspace(0, np.pi / 2, 10)
+            r = np.cos(theta)
+            r_data = data
+            fig = plt.figure()
+            ax = fig.add_subplot(111, polar=True)
+            ax.set_thetamin(0)
+            ax.set_thetamax(90)
 
-        fig.savefig(graph, transparent=True)
+            ax.scatter(theta, r)
+            ax.scatter(theta, r_data)
+
+            fig.savefig(graph, transparent=True)
 
 
     def onChanged(self, text):
@@ -230,7 +224,7 @@ class Plotting(QWidget):
                 self.x = ["Thickness of npb"]
             elif (another_text=="Thickness of npb"):
                 self.x = ["Thickness of b3p"]
-            self.y = ["30"]
+                self.y = ["30"]
 
         elif (self.text == "Current Efficiency (2D)"):
             another_text = str(self.xcombo.currentText())
@@ -238,23 +232,49 @@ class Plotting(QWidget):
                 self.x = ["Thickness of npb"]
             elif (another_text=="Thickness of npb"):
                 self.x = ["Thickness of b3p"]
+                self.y = ["30"]
+
+        # difference between 2 and 3 #####################
+        elif (self.text == "Emission Spectrum (2D)"):
+            another_text = str(self.xcombo.currentText())
+            if (another_text == "Thickness of b3p"):
+                self.x = ["Thickness of npb", "Wavelength"]
+            elif (another_text == "Thickness of npb"):
+                self.x = ["Thickness of b3p", "Wavelength"]
+            self.y = ["30", "400"]
+
+        elif (self.text == "Emission Spectrum (3D)"):
+            another_text = str(self.xcombo.currentText())
+            if (another_text == "Thickness of b3p"):
+                self.x = ["Thickness of npb"]
+            elif (another_text == "Thickness of npb"):
+                self.x = ["Thickness of b3p"]
             self.y = ["30"]
 
-        elif (self.text == "Emission Spectrum (2D)"):
-            self.x = ["Thickness of b3p", "Thickness of npb", "Wavelength"] # difference between 2 and 3
-            self.y = ["30", "30", "400"]
-        elif (self.text == "Emission Spectrum (3D)"):
-            self.x = ["Thickness of b3p", "Thickness of npb"]
-            self.y = ["30", "30"]
         elif (self.text == "Power Dissipation Curve (2D)"):
-            self.x = ["Thickness of b3p", "Thickness of npb", "Wavelength"]
-            self.y = ["10", "10", "400"]
+            another_text = str(self.xcombo.currentText())
+            if (another_text == "Thickness of b3p"):
+                self.x = ["Thickness of npb", "Wavelength"]
+            elif (another_text == "Thickness of npb"):
+                self.x = ["Thickness of b3p", "Wavelength"]
+            self.y = ["30", "400"]
+
         elif (self.text == "Power Dissipation Curve (3D)"):
-            self.x = ["Thickness of b3p", "Thickness of npb"]
-            self.y = ["10", "10"]
+            another_text = str(self.xcombo.currentText())
+            if (another_text == "Thickness of b3p"):
+                self.x = ["Thickness of npb"]
+            elif (another_text == "Thickness of npb"):
+                self.x = ["Thickness of b3p"]
+            self.y = ["30"]
+
         elif (self.text == "Microcavity Effect"):
-            self.x = ["Thickness of b3p", "Thickness of npb"]
-            self.y = ["30", "30"]
+            another_text = str(self.xcombo.currentText())
+            if (another_text == "Thickness of b3p"):
+                self.x = ["Thickness of npb"]
+            elif (another_text == "Thickness of npb"):
+                self.x = ["Thickness of b3p"]
+            self.y = ["30"]
+
         else: # Mode Analysis (3D) // Current Efficiency (3D) // CIE 1931 // Polar Plot
             self.x = [""]
             self.y = [""]

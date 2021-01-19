@@ -28,9 +28,14 @@ class Axes_Properties(QWidget):
         self.table.setHorizontalHeaderLabels(cols_element)
 
         self.axis = ["X-axis", "Y-axis", "Z-axis"]
+
+
         self.name = ["Angle", "Wavelength", "Intensity"]
         self.min = ["0" , "400", "0"]
         self.max = ["90", "700", "2.35"]
+
+
+
         self.remark = ["-","-","-"]
         self.tempList = [[self.axis, self.name, self.min, self.max, self.remark]]
         self.num_row = len(self.tempList)
