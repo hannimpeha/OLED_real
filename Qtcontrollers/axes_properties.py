@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 import pandas as pd
-
+import numpy as np
 
 image = 'resources/Graph.png'
 plotting_option = 'resources/plotting_option.csv'
@@ -39,52 +39,71 @@ class Axes_Properties(QWidget):
 
         data = pd.read_csv(plotting_option, header=None, skiprows=[0])
         data.fillna("-", inplace=True)
-        data[0].astype(str).tolist()
         self.name = data[0].astype(str).tolist()
 
+        min_max = []
+        for i in range(len(self.name)):
+            if self.name[i] == "Thickness of b3p":
+                min_max.append([10, 50])
+            elif self.name[i] == "Thickness of npb":
+                min_max.append([10, 50])
 
-        thicknesss_of_b3p = [10, 50]
-        thickness_of_npb = [10, 50]
+            elif self.name[i] == "Optical Modes":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "Air Mode":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "Substrate-Guided Mode":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "Wave-Guided Mode":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "SPP Mode":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "Absorption":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "NR Losses":
+                min_max.append([0.1, 0.3])
 
-        optical_mode = [0.1, 0.3]
-        air_mode = [0.1, 0.3]
-        substrate_guided_mode = [0.1, 0.3]
-        wave_guided_mode = [0.1, 0.3]
-        spp_mode = [0.1, 0.3]
-        absorption = [0.1, 0.3]
-        nr_losses = [0.1, 0.3]
+            elif self.name[i] == "Wavelength":
+                min_max.append([400, 700])
+            elif self.name[i] == "Angle":
+                min_max.append([0, 90])
 
-        wavelength = [400, 700]
-        angle = [0, 90]
+            elif self.name[i] == "Cd/A (photometry)":
+                min_max.append([11.5, 28.6])
+            elif self.name[i] == "W/mA/sr (radiometry)":
+                min_max.append([71, 217])
 
-        cd_a_phtometry = [11.5, 28.6]
-        w_ma_sr_radiometry = [71, 217]
+            elif self.name[i] == "Intensity":
+                min_max.append([0.0, 3.0])
+            elif self.name[i] == "Intensity (p-pol)":
+                min_max.append([0.0, 3.0])
+            elif self.name[i] == "Intensity (h-dipole, p-pol)":
+                min_max.append([0.0, 3.0])
+            elif self.name[i] == "Intensity (v-dipole, p-pol)":
+                min_max.append([0.0, 3.0])
 
-        intensity = [0.0, 3.0]
-        intensity_p_pol = [0.0, 3.0]
-        intensity_s_pol = [0.0, 3.0]
-        intensity_h_dipole_p_pol = [0.0, 3.0]
-        intensity_v_dipole_p_pol = [0.0, 3.0]
+            elif self.name[i] == "In-plane Wavevector":
+                min_max.append([0.0, 1.96])
 
-        in_plane_wavevector = [0.0, 1.96]
+            elif self.name[i] == "Dissipated Power":
+                min_max.append([0, 412])
+            elif self.name[i] == "Dissipated Power (p-pol)":
+                min_max.append([0, 412])
+            elif self.name[i] == "Dissipated Power (s-pol)":
+                min_max.append([0, 412])
 
-        dissipated_power = [0, 412]
-        dissipated_power_p_pol = [0, 412]
-        dissipated_power_s_pol = [0, 412]
+            elif self.name[i] == "Effective Quantum Efficiency":
+                min_max.append([0.77, 0.87])
+            elif self.name[i] == "Purcell Factor":
+                min_max.append([0.87, 1.67])
+            else:
+                min_max.append(["-","-"])
 
-        effective_quantum_efficiency = [0.77, 0.87]
-        purcell_factor = [0.87, 1.67]
-
-        # Into the Unknown
-        power_function = [0, 100]
-        power_coupling = [0, 100]
-        none = ["-", "-"]
-
-        text = pd.read_csv(plotting_option).columns.tolist()[0]
-
-
-        self.min = ["0" , "400", "0"]
-        self.max = ["90", "700", "2.35"]
+        # text = pd.read_csv(plotting_option).columns.tolist()[0] # later in labels of graph
+        # mat = zip(*min_max)
+        mat = np.array(min_max).transpose()
+        self.min = mat[0]
+        self.max = mat[1]
 
 
         self.remark = ["-","-","-"]
@@ -96,8 +115,8 @@ class Axes_Properties(QWidget):
             self.num_row = i
             self.table.setItem(self.num_row, 0, QTableWidgetItem(self.axis[i]))
             self.table.setItem(self.num_row, 1, QTableWidgetItem(self.name[i]))
-            self.table.setItem(self.num_row, 2, QTableWidgetItem(self.min[i]))
-            self.table.setItem(self.num_row, 3, QTableWidgetItem(self.max[i]))
+            self.table.setItem(self.num_row, 2, QTableWidgetItem(str(self.min[i])))
+            self.table.setItem(self.num_row, 3, QTableWidgetItem(str(self.max[i])))
             self.table.setItem(self.num_row, 4, QTableWidgetItem(self.remark[i]))
 
         header = self.table.horizontalHeader()
