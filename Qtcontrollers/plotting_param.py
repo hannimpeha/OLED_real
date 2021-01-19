@@ -169,7 +169,7 @@ class Plotting(QWidget):
 
         hlayout = QHBoxLayout()
         btn = QPushButton()
-        btn.setText("Plot")
+        btn.setText("Save")
         btn.clicked.connect(self.onButtonClickedPlot)
         hlayout.addWidget(btn)
 
