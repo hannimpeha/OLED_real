@@ -47,7 +47,8 @@ class Elements_Structure_Graph(QWidget):
 
         tps = pd.DataFrame(list(zip(self.layer_name, self.thickness)), columns=['LayerName', 'Thickness'])
         tps.pivot_table(values=["Thickness"], columns="LayerName", aggfunc='sum')
-        colors = ['#7fc97f', '#beaed4', '#fdc086', '#ffff99', '#386cb0', '#f0027f', '#bf5b17', '#666666']
+        colors = ["red", "orange", "yellow", "chartreuse", "green", "springgreen",
+                  "cyan", "azure", "blue", "violet", "magenta", "pink"]
         tps.set_index('LayerName').T.plot(kind='bar', stacked=True, ax=self.ax, color=colors, width=200)
 
         for index, rect in enumerate(self.ax.patches):
