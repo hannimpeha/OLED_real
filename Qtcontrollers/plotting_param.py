@@ -107,7 +107,7 @@ class Plotting(QWidget):
 
         if (self.text == "Mode Analysis (2D)"):
             self.ycombo.addItems(["Optical Modes", "Air Mode", "Substrate-Guided Mode",
-                             "Wave-Guided Mode","SPP Mode", "Absorption", "NR Losses"])
+                             "Wave-Guided Mode", "SPP Mode", "Absorption", "NR Losses"])
         elif (self.text == "Mode Analysis (3D)"):
             self.ycombo.addItems(["Thickness of b3p","Thickness of npb"])
         elif (self.text == "Current Efficiency (2D)"):
@@ -140,8 +140,8 @@ class Plotting(QWidget):
         self.zcombo = QComboBox()
 
         if (self.text == "Mode Analysis (3D)"):
-            self.zcombo.addItems(["Air Mode", "Substrate-Guided Mode", "Wave-Guided Mode",
-                             "SPP Mode", "Absorption", "NR Losses"])
+            self.zcombo.addItems(["Optical Mode", "Air Mode", "Substrate-Guided Mode",
+                                  "Wave-Guided Mode", "SPP Mode", "Absorption", "NR Losses"])
         elif (self.text == "Current Efficiency (3D)"):
             self.zcombo.addItems(["Cd/A (photometry)", "W/mA/sr (radiometry)"])
         elif (self.text == "Emission Spectrum (3D)"):

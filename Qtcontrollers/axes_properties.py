@@ -39,6 +39,18 @@ class Axes_Properties(QWidget):
 
         self.name = data[0].astype(str).tolist()
 
+        # Mode Analysis
+        thicknesss_of_b3p = [10, 50]
+        thickness_of_npb = [10, 50]
+
+
+
+
+
+
+
+        text = pd.read_csv(plotting_option).columns.tolist()[0]
+
 
         self.min = ["0" , "400", "0"]
         self.max = ["90", "700", "2.35"]
