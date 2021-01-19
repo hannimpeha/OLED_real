@@ -21,7 +21,7 @@ class Axes_Properties(QWidget):
         table = self.making_table()
         button = QPushButton()
         button.setText("Plot")
-        button.setFixedSize(620, 87)
+        button.setFixedSize(700, 87)
         image = self.making_image()
         layout.addWidget(table)
         layout.addWidget(button)
@@ -32,7 +32,7 @@ class Axes_Properties(QWidget):
         self.table = QTableWidget()
         self.table.setRowCount(3)
         self.table.setColumnCount(5)
-        cols_element = ["Axis", 'Name', 'Min', 'Max', "Remark"]
+        cols_element = ["Axis", 'Name', 'Minimum', 'Maximum', "Remark"]
         self.table.setHorizontalHeaderLabels(cols_element)
 
         self.axis = ["X-axis", "Y-axis", "Z-axis"]
@@ -108,7 +108,7 @@ class Axes_Properties(QWidget):
         self.remark = ["-","-","-"]
         self.tempList = [[self.axis, self.name, self.min, self.max, self.remark]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(610, 110)
+        self.table.setFixedSize(700, 110)
 
         for i in range(len(self.axis)):
             self.num_row = i

@@ -23,6 +23,7 @@ class Elements_Structure(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout()
+        layout.setContentsMargins(0,0,0,0)
 
         label = QLabel()
         label.setText("Elements Structure")
@@ -31,16 +32,16 @@ class Elements_Structure(QWidget):
         grid = QGridLayout()
         connectButton = QPushButton('Add')
         connectButton.clicked.connect(self.onConnectButtonClicked)
-        connectButton.setFixedSize(200, 30)
+        connectButton.setFixedSize(230, 30)
 
         removeButton = QPushButton('Delete')
         removeButton.clicked.connect(self.onRemoveButtonClicked)
-        removeButton.setFixedSize(200, 30)
+        removeButton.setFixedSize(230, 30)
 
         es_table = self.init_es_table()
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.handleSave)
-        drawButton.setFixedSize(200, 30)
+        drawButton.setFixedSize(230, 30)
 
         el_table = Emission_Layer()
         emission_zone_setting = Emission_Zone_Setting()
@@ -67,23 +68,40 @@ class Elements_Structure(QWidget):
         self.layer_name = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
         self.material = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
         self.refractive_index = ["Al.dat", "TPBi.dat", "TPBi.dat", "mCBP.dat", "mCBP.dat", "TCTA_B3PYMPM.dat", "TCTA.dat", "NPB.dat", "NPB.dat", "TAPC.dat", "ITO_Geomatec.dat", "glass_Eagle2000.dat"]
-        self.thickness = [100, 100, 10, 20, 20, 20, 20, 30, 20, 50, 70, 0]
-        # self.unit = ["nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm", "nm"]
 
-        self.tempList = [[self.layer_name, self.material, self.refractive_index, self.thickness]]
+        self.thickness = [100, 100, 10, 20, 20, 20, 20, 30, 20, 50, 70, 0]
+        self.tempList = [[self.layer_name, self.material, self.thickness]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(610, 250)
+        self.table.setFixedSize(700, 250)
 
         for i in range(len(self.layer_name)):
             self.num_row = i
             self.table.setItem(self.num_row, 0, QTableWidgetItem(str(self.num_row)))
             self.table.setItem(self.num_row, 1, QTableWidgetItem(self.layer_name[i]))
             self.table.setItem(self.num_row, 2, QTableWidgetItem(self.material[i]))
-            self.table.setItem(self.num_row, 3, QTableWidgetItem(self.refractive_index[i]))
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.thickness[i])))
 
         i = 0
         for j in range(len(self.layer_name)):
+            self.table.setItem(i, 3, QTableWidgetItem(j))
+            label = QLabel()
+            layout = QHBoxLayout()
+            layout.setContentsMargins(0,0,0,0)
+
+            ri_name = self.refractive_index[j]
+
+            another_label = QLabel()
+            another_label.setText(ri_name)
+            layout.addWidget(another_label)
+
+            button = QPushButton()
+            button.setText("b")
+            button.setFixedSize(30, 30)
+            layout.addWidget(button)
+
+            label.setLayout(layout)
+            self.table.setCellWidget(i, 3, label)
+
             self.table.setItem(i, 5, QTableWidgetItem(j))
             measure = QComboBox()
             measure.addItems(["nm", "um", "pm"])
@@ -92,18 +110,20 @@ class Elements_Structure(QWidget):
             self.table.setItem(i, 6, QTableWidgetItem(j))
             selectButton = QPushButton()
             selectButton.setText("Settings")
+            selectButton.setFixedSize(140, 20)
             selectButton.clicked.connect(self.saveDirectory)
             self.table.setCellWidget(i, 6, selectButton)
             i += 1
 
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
-        header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(6, QtWidgets.QHeaderView.Stretch)
+
 
         self.table.horizontalHeader().setStretchLastSection(True)
         self.table.setSelectionMode(QAbstractItemView.MultiSelection)
@@ -169,15 +189,15 @@ class Emission_Layer(QWidget):
         grid = QGridLayout()
         connectButton = QPushButton('Add')
         connectButton.clicked.connect(self.onConnectButtonClicked)
-        connectButton.setFixedSize(200, 30)
+        connectButton.setFixedSize(230, 30)
 
         removeButton = QPushButton('Delete')
         removeButton.clicked.connect(self.onRemoveButtonClicked)
-        removeButton.setFixedSize(200, 30)
+        removeButton.setFixedSize(230, 30)
 
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.handleSave)
-        drawButton.setFixedSize(200, 30)
+        drawButton.setFixedSize(230, 30)
 
 
         grid.addWidget(connectButton, 0, 0)
@@ -205,7 +225,7 @@ class Emission_Layer(QWidget):
         self.tempList = [[self.em_materials, self.spectrum, self.exciton_prop,
                           self.qy, self.pq, self.em_zone]]
         self.num_row = len(self.tempList)
-        self.table.setFixedSize(610, 140)
+        self.table.setFixedSize(700, 140)
 
         for i in range(len(self.em_materials)):
             self.num_row = i
@@ -223,7 +243,7 @@ class Emission_Layer(QWidget):
             self.table.setItem(i, 7, QTableWidgetItem(j))
             selectButton = QPushButton()
             selectButton.setText("Settings")
-            selectButton.setFixedSize(140, 20)
+            selectButton.setFixedSize(230, 20)
             # selectButton.clicked.connect(self.saveDirectory)
             self.table.setCellWidget(i, 7, selectButton)
             i += 1
