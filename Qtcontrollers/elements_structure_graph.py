@@ -25,15 +25,19 @@ class Elements_Structure_Graph(QWidget):
         self.draw_fig()
         graph = Emission_Layer_Graph()
 
-        label = QLabel()
+        label_name = QLabel()
+        label_name.setText("Elements Structure Graph")
+
+        label_image = QLabel()
         pixmap = QPixmap(foo_file)
         pixmap = pixmap.scaled(430, 430, QtCore.Qt.KeepAspectRatio)
-        label.setPixmap(pixmap)
+        label_image.setPixmap(pixmap)
 
-        layout = QGridLayout()
-        layout.addWidget(label, 0, 0)
-        layout.addWidget(graph, 1, 0)
-
+        layout = QVBoxLayout()
+        layout.addWidget(label_name)
+        layout.addWidget(label_image)
+        layout.addWidget(graph)
+        layout.setContentsMargins(0,0,0,0)
         self.setLayout(layout)
 
     def draw_fig(self):
@@ -82,6 +86,9 @@ class Emission_Layer_Graph(QWidget):
         tab3 = QWidget()
         tab4 = QWidget()
 
+        label_name = QLabel()
+        label_name.setText("Emission Layer Graph")
+
         label = QLabel()
         sub_layout = QVBoxLayout()
         pixmap = QPixmap(em_figure)
@@ -110,6 +117,7 @@ class Emission_Layer_Graph(QWidget):
             tabs.addTab(tab4, names[3])
 
         tabs.setLayout(sub_layout)
+        layout.addWidget(label_name)
         layout.addWidget(tabs)
 
         self.setLayout(layout)
