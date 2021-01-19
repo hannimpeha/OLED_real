@@ -306,95 +306,101 @@ class Emission_Zone_Setting(QWidget):
         self.setLayout(layout)
 
         label = QLabel()
-        label.setText("Equation: ")
-        label.setFixedSize(100, 30)
+        label.setText("Emission Zone Setting")
         layout1.addWidget(label, 0, 0)
+
+        textLine_emit = QLineEdit()
+        textLine_emit.setFixedSize(120, 20)
+        textLine_emit.setText("0,100,10")
+        layout1.addWidget(textLine_emit, 1, 2)
 
         label = QLabel()
         label.setText("Value a :")
-        layout2.addWidget(label, 2, 2)
+        layout1.addWidget(label, 2, 1)
 
         self.textLine_a = QLineEdit()
-        self.textLine_a.setFixedSize(100, 20)
+        self.textLine_a.setFixedSize(120, 20)
         self.textLine_a.setText("0.5")
-        layout2.addWidget(self.textLine_a, 2, 3)
+        layout1.addWidget(self.textLine_a, 2, 2)
 
         label = QLabel()
         label.setText("Value b :")
-        layout2.addWidget(label, 3, 0)
+        layout1.addWidget(label, 3, 1)
 
         self.textLine_b = QLineEdit()
-        self.textLine_b.setFixedSize(100, 20)
+        self.textLine_b.setFixedSize(120, 20)
         self.textLine_b.setText("1")
-        layout2.addWidget(self.textLine_b, 3, 1)
+        layout1.addWidget(self.textLine_b, 3, 2)
 
         label = QLabel()
         label.setText("Value c :")
-        layout2.addWidget(label, 3, 2)
+        label.setFixedSize(120, 20)
+        layout1.addWidget(label, 4, 1)
 
         self.textLine_c = QLineEdit()
-        self.textLine_c.setFixedSize(100, 20)
+        self.textLine_c.setFixedSize(120, 20)
         self.textLine_c.setText("2")
-        layout2.addWidget(self.textLine_c, 3, 3)
+        layout1.addWidget(self.textLine_c, 4, 2)
 
         self.radiobutton_sheet = QRadioButton("Sheet")
         self.radiobutton_sheet.setChecked(True)
         self.radiobutton_sheet.type = "x = %s" %(self.textLine_a.text())
         self.radiobutton_sheet.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_sheet, 2, 0)
+        layout1.addWidget(self.radiobutton_sheet, 1, 0)
 
         self.radiobutton_constant = QRadioButton("Constant")
         self.radiobutton_constant.type = "%s" %(self.textLine_a.text())
         self.radiobutton_constant.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_constant, 3, 0)
+        layout1.addWidget(self.radiobutton_constant, 2, 0)
 
         self.radiobutton_linear = QRadioButton("Linear")
         self.radiobutton_linear.type = "%s*x + %s" %(self.textLine_a.text(), self.textLine_b.text())
         self.radiobutton_linear.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_linear, 4, 0)
+        layout1.addWidget(self.radiobutton_linear, 3, 0)
 
         self.radiobutton_gaussian = QRadioButton("Exponential")
         self.radiobutton_gaussian.type = "%s*math.exp(%s + x) + %s" %(self.textLine_a.text(), self.textLine_b.text(), self.textLine_c.text())
         self.radiobutton_gaussian.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_gaussian, 5, 0)
+        layout1.addWidget(self.radiobutton_gaussian, 4, 0)
 
         self.radiobutton_gaussian = QRadioButton("Gaussian")
         self.radiobutton_gaussian.type = "(%s*(math.sqrt(2*math.pi)))**(-1)*math.exp((x-%s)/(2*%s**2))" \
                                          %(self.textLine_b.text(), self.textLine_a.text(), self.textLine_b.text())
         self.radiobutton_gaussian.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_gaussian, 6, 0)
-
-        self.qlabel = QTextEdit()
-        self.qlabel.setFixedSize(200, 30)
-        self.qlabel.setText("x = %s" %(self.textLine_a.text()))
-        layout2.addWidget(self.qlabel, 0, 0)
-
-        arrow = self.arrow()
-        layout2.addWidget(arrow, 0, 2)
-
-        label = QLabel()
-        label.setText("Emission Zone Setting")
-        layout1.addWidget(label, 1, 0)
+        layout1.addWidget(self.radiobutton_gaussian, 5, 0)
 
         label = QLabel()
         label.setText("Emit Range(nm): ")
-        label.setFixedSize(100, 20)
-        layout2.addWidget(label, 2, 0)
-
-        textLine_emit = QLineEdit()
-        textLine_emit.setFixedSize(100, 20)
-        textLine_emit.setText("100")
-        layout2.addWidget(textLine_emit, 2, 1)
+        label.setFixedSize(120, 20)
+        layout1.addWidget(label, 1, 1)
 
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.handleSave)
-        drawButton.setFixedSize(120, 30)
-        layout2.addWidget(drawButton, 1, 2)
+        drawButton.setFixedSize(130, 20)
+        layout1.addWidget(drawButton, 6, 2)
 
         drawButton = QPushButton("Draw")
         drawButton.clicked.connect(self.drawPic)
-        drawButton.setFixedSize(120, 30)
-        layout2.addWidget(drawButton, 1, 3)
+        drawButton.setFixedSize(130, 20)
+        layout1.addWidget(drawButton, 5, 2)
+
+
+        label = QLabel()
+        label.setText("Equation: ")
+        label.setFixedSize(100, 20)
+        layout1.addWidget(label, 6, 0)
+
+        self.qlabel = QTextEdit()
+        self.qlabel.setFixedSize(120, 20)
+        self.qlabel.setText("x = %s" %(self.textLine_a.text()))
+        layout1.addWidget(self.qlabel, 6, 1)
+
+        label = QLabel()
+        label.setText("Emission Zone Graph")
+        layout2.addWidget(label, 0, 0)
+
+        arrow = self.arrow()
+        layout2.addWidget(arrow, 1, 0)
 
         self.RIList = pd.read_csv(file, header=None)
         self.RI_name = []
@@ -406,7 +412,7 @@ class Emission_Zone_Setting(QWidget):
     def arrow(self):
         label = QLabel()
         pixmap = QPixmap(arrow)
-        pixmap = pixmap.scaled(20, 20, QtCore.Qt.KeepAspectRatio)
+        pixmap = pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         return label

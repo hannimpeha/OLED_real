@@ -27,7 +27,7 @@ class Elements_Structure_Graph(QWidget):
 
         label = QLabel()
         pixmap = QPixmap(foo_file)
-        pixmap = pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio)
+        pixmap = pixmap.scaled(430, 430, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
 
         layout = QGridLayout()
@@ -84,7 +84,7 @@ class Emission_Layer_Graph(QWidget):
         label = QLabel()
         sub_layout = QVBoxLayout()
         pixmap = QPixmap(em_figure)
-        pixmap = pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio)
+        pixmap = pixmap.scaled(430, 430, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         sub_layout.addWidget(label)

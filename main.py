@@ -20,7 +20,7 @@ class Real(QWidget):
         layout = QGridLayout()
         layout.addWidget(self.menuBar)
 
-        self.setMinimumSize(QSize(1680, 900))
+        self.setMinimumSize(QSize(1680,960))
         self.setWindowTitle('JooAm Optical Simulator for Thin Film & Devices (J-OSTD)')
 
 
