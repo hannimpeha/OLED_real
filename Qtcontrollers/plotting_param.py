@@ -3,7 +3,7 @@ import os
 
 import shutil
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import *
 
 polar_plot = 'resources/polar_plot.png'
@@ -45,6 +45,7 @@ class Plotting(QWidget):
 
         label = QLabel()
         label.setText("Plotting")
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout.addWidget(label, 0, 0)
 
         hlayout = QHBoxLayout()
@@ -91,7 +92,7 @@ class Plotting(QWidget):
         elif (self.text == "Microcavity Effect"):
             self.xcombo.addItems(["Wavelength", "Angle"])
         else: # CIE 1931 // Polar Plot : None
-            self.xcombo.addItems([""])
+            self.xcombo.addItems(["-"])
 
         self.xcombo.setFixedSize(330, 20)
         #xcombo.activated[str].connect(self.onChanged)
@@ -125,7 +126,7 @@ class Plotting(QWidget):
         elif (self.text == "Microcavity Effect"):
             self.ycombo.addItems(["Effective Quantum Efficiency", "Purcell Factor"])
         else: # CIE 1931 // Polar Plot : None
-            self.ycombo.addItems([""])
+            self.ycombo.addItems(["-"])
 
         self.ycombo.setFixedSize(330, 20)
         #ycombo.activated[str].connect(self.onChanged)
@@ -151,7 +152,7 @@ class Plotting(QWidget):
             self.zcombo.addItems(["Dissipated Power", "Dissipated Power (p-pol)", "Dissipated Power (s-pol)"])
         else: # Mode Analysis (2D) // Current Efficiencty (2D) // Emission Spectrum (2D) //
               # Power Dissipation Curve (2D) // Microcavity Effect // CIE1 1931 // Polar Plot
-            self.zcombo.addItems([""])
+            self.zcombo.addItems(["-"])
 
         self.zcombo.setFixedSize(330, 20)
         #zcombo.activated[str].connect(self.onChanged)
@@ -287,6 +288,7 @@ class Exportation(QWidget):
         layout = QGridLayout()
         label = QLabel()
         label.setText("Exportation")
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout.addWidget(label, 0, 0)
 
         hlayout = QHBoxLayout()

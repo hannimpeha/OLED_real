@@ -6,6 +6,7 @@ from PyQt5 import QtCore, QtWidgets
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from PyQt5.QtGui import QFont
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from Qtcontrollers.logo_image import *
 
@@ -27,6 +28,7 @@ class Elements_Structure(QWidget):
 
         label = QLabel()
         label.setText("Elements Structure")
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout.addWidget(label)
 
         grid = QGridLayout()
@@ -184,6 +186,7 @@ class Emission_Layer(QWidget):
 
         label = QLabel()
         label.setText("Emission Layer")
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout.addWidget(label)
 
         grid = QGridLayout()
@@ -297,7 +300,8 @@ class Emission_Zone_Setting(QWidget):
 
         label = QLabel()
         label.setText("Emission Zone Setting")
-        label.setFixedSize(150, 20)
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
+        label.setFixedSize(180, 20)
         layout1.addWidget(label, 0, 0)
 
         textLine_emit = QLineEdit()
@@ -388,6 +392,7 @@ class Emission_Zone_Setting(QWidget):
 
         label = QLabel()
         label.setText("Emission Zone Graph")
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout2.addWidget(label, 0, 0)
 
         arrow = self.arrow()

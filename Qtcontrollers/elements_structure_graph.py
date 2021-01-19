@@ -1,5 +1,5 @@
 from PyQt5 import QtCore
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np
@@ -27,6 +27,7 @@ class Elements_Structure_Graph(QWidget):
 
         label_name = QLabel()
         label_name.setText("Elements Structure Graph")
+        label_name.setFont(QFont("Arial", 15, weight=QFont.Bold))
 
         label_image = QLabel()
         pixmap = QPixmap(foo_file)
@@ -89,6 +90,7 @@ class Emission_Layer_Graph(QWidget):
 
         label_name = QLabel()
         label_name.setText("Emission Layer Graph")
+        label_name.setFont(QFont("Arial", 15, weight=QFont.Bold))
 
         label = QLabel()
         sub_layout = QVBoxLayout()

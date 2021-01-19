@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import *
 import pandas as pd
 import numpy as np
@@ -17,7 +17,8 @@ class Axes_Properties(QWidget):
         layout = QVBoxLayout()
         label = QLabel()
         label.setText("Axes Properties")
-        label.setFixedSize(100, 20)
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
+        label.setFixedSize(150, 20)
         layout.addWidget(label)
 
         table = self.making_table()

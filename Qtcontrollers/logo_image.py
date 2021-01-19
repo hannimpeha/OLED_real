@@ -3,7 +3,7 @@ from datetime import datetime
 import socket
 from PyQt5 import QtCore
 from PyQt5.QtCore import QThread, QObject
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import *
 # from selenium import webdriver
 from ctypes import *
@@ -47,6 +47,7 @@ class Properties(QWidget):
         layout = QGridLayout()
         label = QLabel()
         label.setText("Properties")
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout.addWidget(label, 0, 0)
 
         label = QLabel()
@@ -111,6 +112,7 @@ class Execute(QWidget):
 
         label = QLabel()
         label.setText("Progress")
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         label.setFixedSize(100, 20)
         layout.addWidget(label)
 
@@ -184,6 +186,7 @@ class Project_Info(QWidget):
         layout1 = QGridLayout()
         label = QLabel()
         label.setText("Project Info")
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout1.addWidget(label, 0, 0)
 
         label_name = QLabel()
