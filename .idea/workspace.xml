@@ -14,7 +14,10 @@
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/axes_properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtcontrollers/logo_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/logo_image.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/text_emz.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/text_emz.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,7 +270,7 @@
       <workItem from="1610962488471" duration="2213000" />
       <workItem from="1610973951216" duration="6501000" />
       <workItem from="1610980622051" duration="332000" />
-      <workItem from="1611023540258" duration="13563000" />
+      <workItem from="1611023540258" duration="16719000" />
     </task>
     <servers />
   </component>

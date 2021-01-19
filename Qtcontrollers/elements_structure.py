@@ -223,7 +223,7 @@ class Emission_Layer(QWidget):
             self.table.setItem(i, 7, QTableWidgetItem(j))
             selectButton = QPushButton()
             selectButton.setText("Settings")
-            selectButton.setFixedSize(140, 23)
+            selectButton.setFixedSize(140, 20)
             # selectButton.clicked.connect(self.saveDirectory)
             self.table.setCellWidget(i, 7, selectButton)
             i += 1
@@ -290,27 +290,6 @@ class Emission_Zone_Setting(QWidget):
         label.setFixedSize(100, 30)
         layout1.addWidget(label, 0, 0)
 
-        self.qlabel = QTextEdit()
-        self.qlabel.setFixedSize(200, 30)
-        layout2.addWidget(self.qlabel, 0, 0)
-
-        arrow = self.arrow()
-        layout2.addWidget(arrow, 0, 2)
-
-        label = QLabel()
-        label.setText("Emission Zone Setting")
-        layout1.addWidget(label, 1, 0)
-
-        label = QLabel()
-        label.setText("Emit Range(nm): ")
-        label.setFixedSize(100, 20)
-        layout2.addWidget(label, 2, 0)
-
-        textLine_emit = QLineEdit()
-        textLine_emit.setFixedSize(100, 20)
-        textLine_emit.setText("100")
-        layout2.addWidget(textLine_emit, 2, 1)
-
         label = QLabel()
         label.setText("Value a :")
         layout2.addWidget(label, 2, 2)
@@ -340,12 +319,12 @@ class Emission_Zone_Setting(QWidget):
 
         self.radiobutton_sheet = QRadioButton("Sheet")
         self.radiobutton_sheet.setChecked(True)
-        self.radiobutton_sheet.type = ""
+        self.radiobutton_sheet.type = "x = %s" %(self.textLine_a.text())
         self.radiobutton_sheet.toggled.connect(self.onClicked)
         layout1.addWidget(self.radiobutton_sheet, 2, 0)
 
         self.radiobutton_constant = QRadioButton("Constant")
-        self.radiobutton_constant.type = "x = %s" %(self.textLine_a.text())
+        self.radiobutton_constant.type = "%s" %(self.textLine_a.text())
         self.radiobutton_constant.toggled.connect(self.onClicked)
         layout1.addWidget(self.radiobutton_constant, 3, 0)
 
@@ -364,6 +343,28 @@ class Emission_Zone_Setting(QWidget):
                                          %(self.textLine_b.text(), self.textLine_a.text(), self.textLine_b.text())
         self.radiobutton_gaussian.toggled.connect(self.onClicked)
         layout1.addWidget(self.radiobutton_gaussian, 6, 0)
+
+        self.qlabel = QTextEdit()
+        self.qlabel.setFixedSize(200, 30)
+        self.qlabel.setText("x = %s" %(self.textLine_a.text()))
+        layout2.addWidget(self.qlabel, 0, 0)
+
+        arrow = self.arrow()
+        layout2.addWidget(arrow, 0, 2)
+
+        label = QLabel()
+        label.setText("Emission Zone Setting")
+        layout1.addWidget(label, 1, 0)
+
+        label = QLabel()
+        label.setText("Emit Range(nm): ")
+        label.setFixedSize(100, 20)
+        layout2.addWidget(label, 2, 0)
+
+        textLine_emit = QLineEdit()
+        textLine_emit.setFixedSize(100, 20)
+        textLine_emit.setText("100")
+        layout2.addWidget(textLine_emit, 2, 1)
 
         drawButton = QPushButton("Save")
         drawButton.clicked.connect(self.handleSave)

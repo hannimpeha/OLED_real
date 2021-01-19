@@ -1,8 +1,12 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
+import pandas as pd
+
 
 image = 'resources/Graph.png'
+plotting_option = 'resources/plotting_option.csv'
+
 
 class Axes_Properties(QWidget):
 
@@ -29,8 +33,13 @@ class Axes_Properties(QWidget):
 
         self.axis = ["X-axis", "Y-axis", "Z-axis"]
 
+        data = pd.read_csv(plotting_option, header=None, skiprows=[0])
+        data.fillna("-", inplace=True)
+        data[0].astype(str).tolist()
 
-        self.name = ["Angle", "Wavelength", "Intensity"]
+        self.name = data[0].astype(str).tolist()
+
+
         self.min = ["0" , "400", "0"]
         self.max = ["90", "700", "2.35"]
 

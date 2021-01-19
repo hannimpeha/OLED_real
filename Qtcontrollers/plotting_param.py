@@ -181,14 +181,12 @@ class Plotting(QWidget):
         self.setLayout(layout)
 
     def onButtonClickedPlot(self):
-
         with open(plotting_option, 'w') as stream:
             writer = csv.writer(stream, lineterminator='\n')
-            for row in range(self.table.rowCount()):
-                rowdata = [[self.text], [self.xcombo.currentText],
-                           [self.ycombo.currentText], [self.zcombo.currentText]]
-                for item in rowdata:
-                    writer.writerow(item[0].strip('"').split(','))
+            rowdata = [[self.text], [self.xcombo.currentText()],
+                       [self.ycombo.currentText()], [self.zcombo.currentText()]]
+            for item in rowdata:
+                writer.writerow(item)
 
         if (self.text=="Polar Plot"):
             data = np.genfromtxt(data_path2, unpack=True)
@@ -224,7 +222,7 @@ class Plotting(QWidget):
                 self.x = ["Thickness of npb"]
             elif (another_text=="Thickness of npb"):
                 self.x = ["Thickness of b3p"]
-                self.y = ["30"]
+            self.y = [30]
 
         elif (self.text == "Current Efficiency (2D)"):
             another_text = str(self.xcombo.currentText())
@@ -232,7 +230,7 @@ class Plotting(QWidget):
                 self.x = ["Thickness of npb"]
             elif (another_text=="Thickness of npb"):
                 self.x = ["Thickness of b3p"]
-                self.y = ["30"]
+            self.y = [30]
 
         # difference between 2 and 3 #####################
         elif (self.text == "Emission Spectrum (2D)"):
@@ -241,7 +239,7 @@ class Plotting(QWidget):
                 self.x = ["Thickness of npb", "Wavelength"]
             elif (another_text == "Thickness of npb"):
                 self.x = ["Thickness of b3p", "Wavelength"]
-            self.y = ["30", "400"]
+            self.y = [30, 400]
 
         elif (self.text == "Emission Spectrum (3D)"):
             another_text = str(self.xcombo.currentText())
@@ -249,7 +247,7 @@ class Plotting(QWidget):
                 self.x = ["Thickness of npb"]
             elif (another_text == "Thickness of npb"):
                 self.x = ["Thickness of b3p"]
-            self.y = ["30"]
+            self.y = [30]
 
         elif (self.text == "Power Dissipation Curve (2D)"):
             another_text = str(self.xcombo.currentText())
@@ -257,7 +255,7 @@ class Plotting(QWidget):
                 self.x = ["Thickness of npb", "Wavelength"]
             elif (another_text == "Thickness of npb"):
                 self.x = ["Thickness of b3p", "Wavelength"]
-            self.y = ["30", "400"]
+            self.y = [30, 400]
 
         elif (self.text == "Power Dissipation Curve (3D)"):
             another_text = str(self.xcombo.currentText())
@@ -265,7 +263,7 @@ class Plotting(QWidget):
                 self.x = ["Thickness of npb"]
             elif (another_text == "Thickness of npb"):
                 self.x = ["Thickness of b3p"]
-            self.y = ["30"]
+            self.y = [30]
 
         elif (self.text == "Microcavity Effect"):
             another_text = str(self.xcombo.currentText())
@@ -273,7 +271,7 @@ class Plotting(QWidget):
                 self.x = ["Thickness of npb"]
             elif (another_text == "Thickness of npb"):
                 self.x = ["Thickness of b3p"]
-            self.y = ["30"]
+            self.y = [30]
 
         else: # Mode Analysis (3D) // Current Efficiency (3D) // CIE 1931 // Polar Plot
             self.x = [""]
@@ -286,7 +284,7 @@ class Plotting(QWidget):
         for i in range(len(self.x)):
             self.num_row = i
             self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-            self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
+            self.table.setItem(self.num_row, 1, QTableWidgetItem(str(self.y[i])))
 
         self.table.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
 
