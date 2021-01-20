@@ -5,6 +5,8 @@ import shutil
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import *
+import numpy as np
+import pandas as pd
 
 polar_plot = 'resources/polar_plot.png'
 logo_image = 'resources/Logo.png'
@@ -47,21 +49,44 @@ class Plotting(QWidget):
         label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout.addWidget(label, 0, 0)
 
+        layout_v = QVBoxLayout()
+        layout_h = QHBoxLayout()
         self.qlabel = QLabel()
         self.qlabel.setText("Graph: ")
+        layout_v.addWidget(self.qlabel)
 
+        self.qlabel = QLabel()
+        self.qlabel.setText("X-axis: ")
+        layout_v.addWidget(self.qlabel)
+
+        self.qlabel = QLabel()
+        self.qlabel.setText("Y-axis: ")
+        layout_v.addWidget(self.qlabel)
+
+        self.qlabel = QLabel()
+        self.qlabel.setText("Z-axis: ")
+        layout_v.addWidget(self.qlabel)
+        layout_h.addLayout(layout_v)
+
+        v_layout = QVBoxLayout()
         self.combo = QComboBox()
-        layout.addWidget(self.combo, 1, 0)
+        self.combo.setFixedSize(330, 30)
+        v_layout.addWidget(self.combo)
 
         self.combo_x = QComboBox()
-        layout.addWidget(self.combo_x, 2, 0)
+        self.combo_x.setFixedSize(330, 30)
+        v_layout.addWidget(self.combo_x)
 
         self.combo_y = QComboBox()
-        layout.addWidget(self.combo_y, 3, 0)
+        self.combo_y.setFixedSize(330, 30)
+        v_layout.addWidget(self.combo_y)
 
         self.combo_z = QComboBox()
-        layout.addWidget(self.combo_z, 4, 0)
+        self.combo_z.setFixedSize(330, 30)
+        v_layout.addWidget(self.combo_z)
+        layout_h.addLayout(v_layout)
 
+        layout.addLayout(layout_h, 1, 0)
         self.combo.addItem("Mode Analysis (2D)", ["Thickness of b3p", "Thickness of npb"])
         self.combo.addItem("Mode Analysis (3D)", ["Thickness of b3p", "Thickness of npb"])
         self.combo.addItem("Current Efficiency (2D)", ["Thickness of b3p", "Thickness of npb"])
@@ -83,9 +108,9 @@ class Plotting(QWidget):
         layout.addWidget(label, 5, 0)
 
         self.table = QTableWidget()
-        self.table.setRowCount(6)
+        self.table.setRowCount(3)
         self.table.setColumnCount(2)
-        self.table.setFixedSize(400, 200)
+        self.table.setFixedSize(430, 115)
         self.table.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
 
         self.indexChangedx(self.combo.currentIndex())
@@ -98,16 +123,36 @@ class Plotting(QWidget):
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
-
         layout.addWidget(self.table, 6, 0)
 
-        btn = QPushButton()
-        btn.setFixedSize(410, 30)
-        btn.setText("Save")
-        btn.clicked.connect(self.onButtonClickedPlot)
-        layout.addWidget(btn, 7, 0)
+        label = QLabel()
+        label.setText("Axes Properties")
+        label.setFont(QFont("Arial", 15, weight=QFont.Bold))
+        label.setFixedSize(150, 20)
+        layout.addWidget(label, 7, 0)
+
+        self.table_axes = QTableWidget()
+        self.table_axes.setRowCount(3)
+        self.table_axes.setColumnCount(4)
+        cols_element = ["Axis", 'Name', 'Minimum', 'Maximum']
+        self.table_axes.setHorizontalHeaderLabels(cols_element)
+        self.table.setFixedSize(430, 110)
+
+        header = self.table_axes.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QtWidgets.QHeaderView.Stretch)
+        layout.addWidget(self.table_axes, 8, 0)
+
+        # btn = QPushButton()
+        # btn.setFixedSize(410, 30)
+        # btn.setText("Save")
+        # btn.clicked.connect(self.onButtonClickedPlot)
+        # layout.addWidget(btn, 8, 0)
 
         self.setLayout(layout)
+
 
     def indexChangedx(self, index):
         self.combo_x.clear()
@@ -347,13 +392,88 @@ class Plotting(QWidget):
                     self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
 
 
-    def onButtonClickedPlot(self):
-        with open(plotting_option, 'w') as stream:
-            writer = csv.writer(stream, lineterminator='\n')
-            rowdata = [[self.text], [self.xcombo.currentText()],
-                       [self.ycombo.currentText()], [self.zcombo.currentText()]]
-            for item in rowdata:
-                writer.writerow(item)
+            self.table_axes.clear()
+            self.axis = ["X-axis", "Y-axis", "Z-axis"]
+            self.tempList = [[self.axis, self.name, self.min, self.max]]
+            self.num_row = len(self.tempList)
+            self.name = [self.combo_x.currentText(), self.combo_y.currentText(),
+                         self.combo_z.currentText()]
+            min_max = []
+            for i in range(len(self.name)):
+                if self.name[i] == "Thickness of b3p":
+                    min_max.append([10, 50])
+                elif self.name[i] == "Thickness of npb":
+                    min_max.append([10, 50])
+
+                elif self.name[i] == "Optical Modes":
+                    min_max.append([0.1, 0.3])
+                elif self.name[i] == "Air Mode":
+                    min_max.append([0.1, 0.3])
+                elif self.name[i] == "Substrate-Guided Mode":
+                    min_max.append([0.1, 0.3])
+                elif self.name[i] == "Wave-Guided Mode":
+                    min_max.append([0.1, 0.3])
+                elif self.name[i] == "SPP Mode":
+                    min_max.append([0.1, 0.3])
+                elif self.name[i] == "Absorption":
+                    min_max.append([0.1, 0.3])
+                elif self.name[i] == "NR Losses":
+                    min_max.append([0.1, 0.3])
+
+                elif self.name[i] == "Wavelength":
+                    min_max.append([400, 700])
+                elif self.name[i] == "Angle":
+                    min_max.append([0, 90])
+
+                elif self.name[i] == "Cd/A (photometry)":
+                    min_max.append([11.5, 28.6])
+                elif self.name[i] == "W/mA/sr (radiometry)":
+                    min_max.append([71, 217])
+
+                elif self.name[i] == "Intensity":
+                    min_max.append([0.0, 3.0])
+                elif self.name[i] == "Intensity (p-pol)":
+                    min_max.append([0.0, 3.0])
+                elif self.name[i] == "Intensity (h-dipole, p-pol)":
+                    min_max.append([0.0, 3.0])
+                elif self.name[i] == "Intensity (v-dipole, p-pol)":
+                    min_max.append([0.0, 3.0])
+
+                elif self.name[i] == "In-plane Wavevector":
+                    min_max.append([0.0, 1.96])
+
+                elif self.name[i] == "Dissipated Power":
+                    min_max.append([0, 412])
+                elif self.name[i] == "Dissipated Power (p-pol)":
+                    min_max.append([0, 412])
+                elif self.name[i] == "Dissipated Power (s-pol)":
+                    min_max.append([0, 412])
+
+                elif self.name[i] == "Effective Quantum Efficiency":
+                    min_max.append([0.77, 0.87])
+                elif self.name[i] == "Purcell Factor":
+                    min_max.append([0.87, 1.67])
+                else:
+                    min_max.append(["-","-"])
+
+            mat = np.array(min_max).transpose()
+            self.min = mat[0]
+            self.max = mat[1]
+
+            for i in range(len(self.axis)):
+                self.num_row = i
+                self.table_axes.setItem(self.num_row, 0, QTableWidgetItem(self.axis[i]))
+                self.table_axes.setItem(self.num_row, 1, QTableWidgetItem(self.name[i]))
+                self.table_axes.setItem(self.num_row, 2, QTableWidgetItem(str(self.min[i])))
+                self.table_axes.setItem(self.num_row, 3, QTableWidgetItem(str(self.max[i])))
+
+    # def onButtonClickedPlot(self):
+    #     with open(plotting_option, 'w') as stream:
+    #         writer = csv.writer(stream, lineterminator='\n')
+    #         rowdata = [[self.combo.currentText()], [self.combo_x.currentText()],
+    #                    [self.combo_y.currentText()], [self.combo_z.currentText()]]
+    #         for item in rowdata:
+    #             writer.writerow(item)
 
     def onChanged(self, text):
         self.qlabel.setText(text)
