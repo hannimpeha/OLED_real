@@ -94,7 +94,7 @@ class Emission_Layer_Graph(QWidget):
 
         label = QLabel()
         sub_layout = QVBoxLayout()
-        pixmap = QPixmap(em_figure)
+        pixmap = QPixmap()
         pixmap = pixmap.scaled(430, 430, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())

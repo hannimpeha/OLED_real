@@ -353,10 +353,10 @@ class Emission_Zone_Setting(QWidget):
         self.radiobutton_linear.toggled.connect(self.onClicked)
         layout1.addWidget(self.radiobutton_linear, 3, 0)
 
-        self.radiobutton_gaussian = QRadioButton("Exponential")
-        self.radiobutton_gaussian.type = "%s*math.exp(%s + x) + %s" %(self.textLine_a.text(), self.textLine_b.text(), self.textLine_c.text())
-        self.radiobutton_gaussian.toggled.connect(self.onClicked)
-        layout1.addWidget(self.radiobutton_gaussian, 4, 0)
+        self.radiobutton_exponential = QRadioButton("Exponential")
+        self.radiobutton_exponential.type = "%s*math.exp(%s + x) + %s" %(self.textLine_a.text(), self.textLine_b.text(), self.textLine_c.text())
+        self.radiobutton_exponential.toggled.connect(self.onClicked)
+        layout1.addWidget(self.radiobutton_exponential, 4, 0)
 
         self.radiobutton_gaussian = QRadioButton("Gaussian")
         self.radiobutton_gaussian.type = "(%s*(math.sqrt(2*math.pi)))**(-1)*math.exp((x-%s)/(2*%s**2))" \
@@ -368,17 +368,6 @@ class Emission_Zone_Setting(QWidget):
         label.setText("Emit Range(nm): ")
         label.setFixedSize(100, 20)
         layout1.addWidget(label, 1, 1)
-
-        # drawButton = QPushButton("Save")
-        # drawButton.clicked.connect(self.drawPic)
-        # drawButton.setFixedSize(110, 30)
-        # layout1.addWidget(drawButton, 5, 2)
-
-        # drawButton = QPushButton("Draw")
-        # drawButton.clicked.connect(self.arrow)
-        # drawButton.setFixedSize(110, 30)
-        # layout1.addWidget(drawButton, 6, 2)
-
 
         label = QLabel()
         label.setText("Equation: ")
@@ -395,8 +384,12 @@ class Emission_Zone_Setting(QWidget):
         label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout2.addWidget(label, 0, 0)
 
-        arrow = self.arrow()
-        layout2.addWidget(arrow, 1, 0)
+        label = QLabel()
+        self.pixmap = QPixmap(em_figure)
+        self.pixmap.scaled(300, 300, QtCore.Qt.KeepAspectRatio)
+        label.setPixmap(self.pixmap)
+        label.resize(self.pixmap.width(), self.pixmap.height())
+        layout2.addWidget(label, 1, 0)
 
         self.RIList = pd.read_csv(file, header=None)
         self.RI_name = []
@@ -405,36 +398,62 @@ class Emission_Zone_Setting(QWidget):
         self.readData()
         self.initPlot()
 
-    def arrow(self):
-        label = QLabel()
-        pixmap = QPixmap(em_figure)
-        pixmap = pixmap.scaled(330, 330, QtCore.Qt.KeepAspectRatio)
-        label.setPixmap(pixmap)
-        label.resize(pixmap.width(), pixmap.height())
-        return label
+    # def arrow(self):
+    #     label = QLabel()
+    #     pixmap = QPixmap(em_figure)
+    #     pixmap = pixmap.scaled(330, 330, QtCore.Qt.KeepAspectRatio)
+    #     label.setPixmap(pixmap)
+    #     label.resize(pixmap.width(), pixmap.height())
+    #     return label
 
-    def handleSave(self):
-        with open(file_emz, 'w') as stream:
-            writer = csv.writer(stream, lineterminator='\n')
-            rowdata = [self.qlabel.text()]
-            writer.writerow(rowdata)
 
     def onClicked(self):
         radioButton = self.sender()
+        self.fig = plt.Figure(figsize=(2.5, 2.5))
+        self.canvas = FigureCanvas(self.fig)
+        self.ax = self.fig.add_subplot(111)
+        self.fig.savefig(em_figure, transparent=True)
         if radioButton.isChecked():
-            self.qlabel.setText(radioButton.type)
+            equation = radioButton.type
+            self.qlabel.setText(equation)
 
-    def drawPic(self):
-        equation = open(file_emz, "r").readline()
-        plt.axvline(equation)
-        plt.xlabel("Emit Range(nm)")
-        # equation = open(file_emz, "r").readline()
-        # x_range = 1
-        # x = np.array(x_range)
-        # y = eval(equation)   # need modoule math
-        # plt.plot(x, y)
-        # plt.show()
-        plt.savefig(em_figure, transparent=True)
+            if self.radiobutton_sheet.isChecked():
+                self.textLine_a.setEnabled(True)
+                self.textLine_b.setEnabled(False)
+                self.textLine_c.setEnabled(False)
+                self.ax.axvline(equation)
+                self.fig.savefig(em_figure, transparent=True)
+                # self.ax.xlabel("Emit Range(nm)"
+
+            elif self.radiobutton_constant.isChecked():
+                self.textLine_a.setEnabled(False)
+                self.textLine_b.setEnabled(False)
+                self.textLine_c.setEnabled(False)
+                x_range = 1
+                x = np.array(x_range)
+                y = eval(equation)
+                self.ax.plot(x, y)
+                self.fig.savefig(em_figure, transparent=True)
+
+            elif self.radiobutton_linear.isChecked():
+                self.textLine_a.setEnabled(True)
+                self.textLine_b.setEnabled(True)
+                self.textLine_c.setEnabled(False)
+                x_range = 1
+                x = np.array(x_range)
+                y = eval(equation)
+                self.ax.plot(x, y)
+                self.fig.savefig(em_figure, transparent=True)
+
+            else:
+                self.textLine_a.setEnabled(True)
+                self.textLine_b.setEnabled(True)
+                self.textLine_c.setEnabled(True)
+                x_range = 1
+                x = np.array(x_range)
+                y = eval(equation)
+                self.ax.plot(x, y)
+                self.fig.savefig(em_figure, transparent=True)
 
 
     def readData(self):
