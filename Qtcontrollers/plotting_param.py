@@ -69,9 +69,8 @@ class Plotting(QWidget):
         self.qlabel_x = QLabel()
         self.qlabel_x.setText("X-axis: ")
         self.xcombo = QComboBox()
-
+        self.xcombo.update()
         self.text = str(combo.currentText())
-
 
         if (self.text == "Mode Analysis (2D)"):
             self.xcombo.addItems(["Thickness of b3p","Thickness of npb"])
@@ -104,7 +103,7 @@ class Plotting(QWidget):
         self.qlabel_y = QLabel()
         self.qlabel_y.setText("Y-axis: ")
         self.ycombo = QComboBox()
-
+        self.ycombo.update()
         if (self.text == "Mode Analysis (2D)"):
             self.ycombo.addItems(["Optical Modes", "Air Mode", "Substrate-Guided Mode",
                              "Wave-Guided Mode", "SPP Mode", "Absorption", "NR Losses"])
@@ -138,7 +137,7 @@ class Plotting(QWidget):
         self.qlabel_z = QLabel()
         self.qlabel_z.setText("Z-axis: ")
         self.zcombo = QComboBox()
-
+        self.zcombo.update()
         if (self.text == "Mode Analysis (3D)"):
             self.zcombo.addItems(["Optical Mode", "Air Mode", "Substrate-Guided Mode",
                                   "Wave-Guided Mode", "SPP Mode", "Absorption", "NR Losses"])

@@ -218,7 +218,7 @@ class Project_Info(QWidget):
         self.name_label.setText("2PPlAn_33PYMPM")
         layout1.addWidget(self.name_label, 1, 1)
 
-        self.label_designer = QLineEdit()
+        self.label_designer = QLabel()
         self.label_designer.setFixedSize(180, 20)
         self.label_designer.setText("Hannah Lee")
         layout1.addWidget(self.label_designer, 2, 1)

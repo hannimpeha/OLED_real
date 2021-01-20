@@ -1,51 +1,42 @@
 import sys
+from PyQt5 import QtWidgets
 
-from PyQt5 import QtCore, QtWidgets
 
+class ComboWidget(QtWidgets.QWidget):
 
-class Widget(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super(ComboWidget, self).__init__(parent)
+        self.setGeometry(50, 50, 200, 200)
 
-        self.process = QtCore.QProcess(self)
-        self.process.setProgram("dirb")
-        self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
+        layout = QtWidgets.QVBoxLayout(self)
 
-        self.lineedit = QtWidgets.QLineEdit("http://webscantest.com")
-        self.button = QtWidgets.QPushButton("Start")
-        self.textedit = QtWidgets.QTextEdit(readOnly=True)
+        self.comboA = QtWidgets.QComboBox()
+        # The second addItem parameter is itemData, which we will retrieve later
+        self.comboA.addItem('A', ['1', '2', '3', '4'])
+        self.comboA.addItem('B', ['a', 'b', 'c', 'd', 'e'])
+        self.comboA.currentIndexChanged.connect(self.indexChanged)
+        layout.addWidget(self.comboA)
 
-        lay = QtWidgets.QGridLayout(self)
-        lay.addWidget(self.lineedit, 0, 0)
-        lay.addWidget(self.button, 0, 1)
-        lay.addWidget(self.textedit, 1, 0, 1, 2)
+        self.comboB = QtWidgets.QComboBox()
+        # We could have added the 1,2,3,4 items directly, but the following
+        # is a bit more generic in case the combobox starts with a different
+        # index for some reason:
+        self.indexChanged(self.comboA.currentIndex())
+        layout.addWidget(self.comboB)
 
-        self.button.clicked.connect(self.on_clicked)
-        self.process.readyReadStandardOutput.connect(self.on_readyReadStandardOutput)
-        self.process.finished.connect(self.on_finished)
+        self.show()
 
-    @QtCore.pyqtSlot()
-    def on_clicked(self):
-        if self.button.text() == "Start":
-            self.textedit.clear()
-            self.process.setArguments([self.lineedit.text()])
-            self.process.start()
-            self.button.setText("Stop")
-        elif self.button.text() == "Stop":
-            self.process.kill()
-
-    @QtCore.pyqtSlot()
-    def on_readyReadStandardOutput(self):
-        text = self.process.readAllStandardOutput().data().decode()
-        self.textedit.append(text)
-
-    @QtCore.pyqtSlot()
-    def on_finished(self):
-        self.button.setText("Start")
+    def indexChanged(self, index):
+        self.comboB.clear()
+        data = self.comboA.itemData(index)
+        if data is not None:
+            self.comboB.addItems(data)
 
 
-if __name__ == "__main__":
+def main():
     app = QtWidgets.QApplication(sys.argv)
-    w = Widget()
-    w.show()
+    w = ComboWidget()
     sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()
