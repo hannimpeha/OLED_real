@@ -6,7 +6,6 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import *
 import numpy as np
-import pandas as pd
 
 polar_plot = 'resources/polar_plot.png'
 logo_image = 'resources/Logo.png'
@@ -23,6 +22,7 @@ class Plotting_Param(QWidget):
         layout = QGridLayout()
         logo_image = self.logo_image()
         plotting = Plotting()
+        plotting.setFixedSize(430, 500)
         exportation = Exportation()
 
         layout.addWidget(logo_image, 0, 0)
@@ -110,7 +110,7 @@ class Plotting(QWidget):
         self.table = QTableWidget()
         self.table.setRowCount(3)
         self.table.setColumnCount(2)
-        self.table.setFixedSize(430, 115)
+        self.table.setFixedSize(390, 40)
         self.table.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
 
         self.indexChangedx(self.combo.currentIndex())
@@ -121,8 +121,8 @@ class Plotting(QWidget):
         self.table.setHorizontalHeaderLabels(cols_element)
 
         header = self.table.horizontalHeader()
-        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         layout.addWidget(self.table, 6, 0)
 
         label = QLabel()
@@ -140,16 +140,16 @@ class Plotting(QWidget):
 
         header = self.table_axes.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(3, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
         layout.addWidget(self.table_axes, 8, 0)
 
-        # btn = QPushButton()
-        # btn.setFixedSize(410, 30)
-        # btn.setText("Save")
-        # btn.clicked.connect(self.onButtonClickedPlot)
-        # layout.addWidget(btn, 8, 0)
+        btn = QPushButton()
+        btn.setFixedSize(430, 25)
+        btn.setText("Plot")
+        btn.clicked.connect(self.onButtonClickedPlot)
+        layout.addWidget(btn, 9, 0)
 
         self.setLayout(layout)
 
@@ -277,8 +277,7 @@ class Plotting(QWidget):
         data = self.combo_y.itemData(index)
         if data is not None:
             self.combo_z.addItems(data)
-
-            self.table.clear()
+            # self.table.clear()
             self.x=[]
             self.y=[]
             data = self.combo.itemData(index)
@@ -392,10 +391,8 @@ class Plotting(QWidget):
                     self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
 
 
-            self.table_axes.clear()
+            # self.table_axes.clear()
             self.axis = ["X-axis", "Y-axis", "Z-axis"]
-            self.tempList = [[self.axis, self.name, self.min, self.max]]
-            self.num_row = len(self.tempList)
             self.name = [self.combo_x.currentText(), self.combo_y.currentText(),
                          self.combo_z.currentText()]
             min_max = []
@@ -460,6 +457,9 @@ class Plotting(QWidget):
             self.min = mat[0]
             self.max = mat[1]
 
+            self.tempList = [[self.axis, self.name, self.min, self.max]]
+            self.num_row = len(self.tempList)
+
             for i in range(len(self.axis)):
                 self.num_row = i
                 self.table_axes.setItem(self.num_row, 0, QTableWidgetItem(self.axis[i]))
@@ -467,13 +467,13 @@ class Plotting(QWidget):
                 self.table_axes.setItem(self.num_row, 2, QTableWidgetItem(str(self.min[i])))
                 self.table_axes.setItem(self.num_row, 3, QTableWidgetItem(str(self.max[i])))
 
-    # def onButtonClickedPlot(self):
-    #     with open(plotting_option, 'w') as stream:
-    #         writer = csv.writer(stream, lineterminator='\n')
-    #         rowdata = [[self.combo.currentText()], [self.combo_x.currentText()],
-    #                    [self.combo_y.currentText()], [self.combo_z.currentText()]]
-    #         for item in rowdata:
-    #             writer.writerow(item)
+    def onButtonClickedPlot(self):
+        with open(plotting_option, 'w') as stream:
+            writer = csv.writer(stream, lineterminator='\n')
+            rowdata = [[self.combo.currentText()], [self.combo_x.currentText()],
+                       [self.combo_y.currentText()], [self.combo_z.currentText()]]
+            for item in rowdata:
+                writer.writerow(item)
 
     def onChanged(self, text):
         self.qlabel.setText(text)
@@ -492,6 +492,7 @@ class Exportation(QWidget):
         self.data_path = data_polar_plot
 
         layout = QGridLayout()
+        layout.setContentsMargins(0,0,0,0)
         label = QLabel()
         label.setText("Exportation")
         label.setFont(QFont("Arial", 15, weight=QFont.Bold))

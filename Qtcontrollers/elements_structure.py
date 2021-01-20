@@ -374,10 +374,10 @@ class Emission_Zone_Setting(QWidget):
         # drawButton.setFixedSize(110, 30)
         # layout1.addWidget(drawButton, 5, 2)
 
-        drawButton = QPushButton("Draw")
-        drawButton.clicked.connect(self.arrow)
-        drawButton.setFixedSize(110, 30)
-        layout1.addWidget(drawButton, 6, 2)
+        # drawButton = QPushButton("Draw")
+        # drawButton.clicked.connect(self.arrow)
+        # drawButton.setFixedSize(110, 30)
+        # layout1.addWidget(drawButton, 6, 2)
 
 
         label = QLabel()

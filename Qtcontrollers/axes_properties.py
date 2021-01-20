@@ -17,17 +17,12 @@ class Axes_Properties(QWidget):
         layout = QVBoxLayout()
         image = self.making_image()
         layout.addWidget(image)
-        button_plot = QPushButton()
-        button_plot.setText("Plot")
-        button_plot.setFixedSize(700, 80)
-        button_plot.clicked.connect(self.making_image)
-        layout.addWidget(button_plot)
         self.setLayout(layout)
 
     def making_image(self):
         label = QLabel()
         pixmap = QPixmap(polar_plot)
-        pixmap = pixmap.scaled(730, 730, QtCore.Qt.KeepAspectRatio)
+        pixmap = pixmap.scaled(700, 700, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(pixmap.width(), pixmap.height())
         return label
