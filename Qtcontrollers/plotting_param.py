@@ -114,8 +114,6 @@ class Plotting(QWidget):
         self.table.setColumnCount(2)
         self.table.setFixedSize(390, 40)
         self.table.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
-        cols_element = ['Name', 'Measure']
-        self.table.setHorizontalHeaderLabels(cols_element)
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
@@ -130,8 +128,6 @@ class Plotting(QWidget):
         self.table_axes = QTableWidget()
         self.table_axes.setRowCount(3)
         self.table_axes.setColumnCount(4)
-        cols_element = ["Axis", 'Name', 'Minimum', 'Maximum']
-        self.table_axes.setHorizontalHeaderLabels(cols_element)
         self.table.setFixedSize(430, 110)
         header = self.table_axes.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
@@ -306,6 +302,9 @@ class Plotting(QWidget):
         self.table.clear()
         self.x=[]
         self.y=[]
+        cols_element = ['Name', 'Measure']
+        self.table.setHorizontalHeaderLabels(cols_element)
+
         if self.combo.currentText() == "Mode Analysis (2D)":
             if self.combo_x.currentText() =="Thickness of b3p":
                 self.x.append("Thickness of npb")
@@ -327,16 +326,16 @@ class Plotting(QWidget):
             else:
                 self.x.append("Wavelength")
                 self.y.append("400")
-        elif self.combo.currentText() == "Power Dissipation Curve (2D)":
-            if self.combo_x.currentText() == "Dissipated Power":
-                self.x.append(["Dissipated Power (p-pol)", "Dissipated Power (s-pol)"])
-                self.y.append(["400", "400"])
-            elif self.combo_x.currentText() == "Dissipated Power (p-pol)":
-                self.x.append(["Dissipated Power", "Dissipated Power (s-pol)"])
-                self.y.append(["400", "400"])
-            else:
-                self.x.append(["Dissipated Power", "Dissipated Power (p-pol)"])
-                self.y.append(["400", "400"])
+        # elif self.combo.currentText() == "Power Dissipation Curve (2D)":
+        #     if self.combo_x.currentText() == "Dissipated Power":
+        #         self.x.append(["Dissipated Power (p-pol)", "Dissipated Power (s-pol)"])
+        #         self.y.append(["400", "400"])
+        #     elif self.combo_x.currentText() == "Dissipated Power (p-pol)":
+        #         self.x.append(["Dissipated Power", "Dissipated Power (s-pol)"])
+        #         self.y.append(["400", "400"])
+        #     else:
+        #         self.x.append(["Dissipated Power", "Dissipated Power (p-pol)"])
+        #         self.y.append(["400", "400"])
         elif self.combo.currentText() == "Microcavity Effect":
             if self.combo_x.currentText() == "Wavelength":
                 self.x.append("Angle")
@@ -355,9 +354,12 @@ class Plotting(QWidget):
             self.num_row = i
             self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
             self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
+        self.indexChanged()
 
     def indexChanged(self):
         self.table_axes.clear()
+        cols_element = ["Axis", 'Name', 'Minimum', 'Maximum']
+        self.table_axes.setHorizontalHeaderLabels(cols_element)
         self.axis = ["X-axis", "Y-axis", "Z-axis"]
         self.name = [self.combo_x.currentText(), self.combo_y.currentText(),
                      self.combo_z.currentText()]
