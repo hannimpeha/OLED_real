@@ -102,6 +102,8 @@ class Plotting(QWidget):
         self.combo.currentIndexChanged.connect(self.indexChangedx)
         self.combo_x.currentIndexChanged.connect(self.indexChangedy)
         self.combo_y.currentIndexChanged.connect(self.indexChangedz)
+        self.combo_z.currentIndexChanged.connect(self.indexChanged)
+        self.combo_y.currentIndexChanged.connect(self.indexNotChanged)
 
         label = QLabel()
         label.setText("Fixed Parameters:")
@@ -112,14 +114,8 @@ class Plotting(QWidget):
         self.table.setColumnCount(2)
         self.table.setFixedSize(390, 40)
         self.table.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
-
-        self.indexChangedx(self.combo.currentIndex())
-        self.indexChangedy(self.combo_x.currentIndex())
-        self.indexChangedz(self.combo_y.currentIndex())
-
         cols_element = ['Name', 'Measure']
         self.table.setHorizontalHeaderLabels(cols_element)
-
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
@@ -137,13 +133,18 @@ class Plotting(QWidget):
         cols_element = ["Axis", 'Name', 'Minimum', 'Maximum']
         self.table_axes.setHorizontalHeaderLabels(cols_element)
         self.table.setFixedSize(430, 110)
-
         header = self.table_axes.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
         layout.addWidget(self.table_axes, 8, 0)
+
+        self.indexChangedx(self.combo.currentIndex())
+        self.indexChangedy(self.combo_x.currentIndex())
+        self.indexChangedz(self.combo_y.currentIndex())
+        self.indexNotChanged()
+        self.indexChanged()
 
         btn = QPushButton()
         btn.setFixedSize(430, 25)
@@ -215,7 +216,6 @@ class Plotting(QWidget):
                                       "Substrate-Guided Mode",
                                       "Wave-Guided Mode", "SPP Mode",
                                       "Absorption", "NR Losses"])
-
             elif self.combo.currentText() == "Mode Analysis (3D)":
                 if self.combo_x.currentText() =="Thickness of b3p":
                     self.combo_y.addItem("Thickness of npb", ["Optical Modes", "Air Mode",
@@ -242,7 +242,6 @@ class Plotting(QWidget):
             elif self.combo.currentText() == "Emission Spectrum (2D)":
                 self.combo_y.addItems(["Intensity", "Intensity (p-pol)", "Intensity (s-pol)",
                                       "Intensity (h-dipole, p-pol)", "Intensity (v-dipole, p-pol)"])
-
             elif self.combo.currentText() == "Emission Spectrum (3D)":
                 if self.combo_x.currentText() =="Wavelength":
                     self.combo_y.addItem("Angle", ["Intensity", "Intensity (p-pol)", "Intensity (s-pol)",
@@ -251,11 +250,9 @@ class Plotting(QWidget):
                     self.combo_y.addItem("Wavelength", ["Intensity", "Intensity (p-pol)", "Intensity (s-pol)",
                                                    "Intensity (h-dipole, p-pol)", "Intensity (v-dipole, p-pol)"])
 
-
             elif self.combo.currentText() == "Power Dissipation Curve (2D)":
                 self.combo_y.addItems(["Dissipated Power", "Dissipated Power (p-pol)",
                                        "Dissipated Power (s-pol)"])
-
             elif self.combo.currentText() == "Power Dissipation Curve (3D))":
                 self.combo_y.addItem("Dissipated Power", ["Dissipated Power (p-pol)",
                                                           "Dissipated Power (s-pol)"])
@@ -272,200 +269,169 @@ class Plotting(QWidget):
             elif self.combo.currentText() == "Polar Plot":
                 self.combo_y.addItems(data)
 
+
     def indexChangedz(self, index):
         self.combo_z.clear()
         data = self.combo_y.itemData(index)
         if data is not None:
-            self.combo_z.addItems(data)
-            # self.table.clear()
-            self.x=[]
-            self.y=[]
-            data = self.combo.itemData(index)
             if self.combo.currentText() == "Mode Analysis (2D)":
-                if data == "Thickness of b3p":
-                    self.x.append("Thickness of npb")
-                    self.y.append("30")
-                    self.tempList = [[self.x, self.y]]
-                    self.num_row = len(self.tempList)
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-                else:
-                    self.x.append("Thickness of b3p")
-                    self.y.append("30")
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-
+                self.combo_z.addItems(data)
+            elif self.combo.currentText() == "Mode Analysis (3D)":
+                self.combo_z.addItems(["Optical Modes", "Air Mode",
+                                       "Substrate-Guided Mode",
+                                       "Wave-Guided Mode", "SPP Mode",
+                                        "Absorption", "NR Losses"])
             elif self.combo.currentText() == "Current Efficiency (2D)":
-                if data == "Thickness of b3p":
-                    self.x.append("Thickness of npb")
-                    self.y.append("30")
-                    self.tempList = [[self.x, self.y]]
-                    self.num_row = len(self.tempList)
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-                else:
-                    self.x.append("Thickness of b3p")
-                    self.y.append("30")
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-
+                self.combo_z.addItems(data)
+            elif self.combo.currentText() == "Current Efficiency (3D)":
+                self.combo_z.addItems(["Cd/A (photometry)", "W/mA/sr (radiometry)"])
             elif self.combo.currentText() == "Emission Spectrum (2D)":
-                if data == "Wavelength":
-                    self.x.append("Angle")
-                    self.y.append("0")
-                    self.tempList = [[self.x, self.y]]
-                    self.num_row = len(self.tempList)
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-                else:
-                    self.x.append("Wavelength")
-                    self.y.append("400")
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-
+                self.combo_z.addItems(data)
+            elif self.combo.currentText() == "Emission Spectrum (3D)":
+                self.combo_z.addItems(["Intensity", "Intensity (p-pol)", "Intensity (s-pol)",
+                                       "Intensity (h-dipole, p-pol)", "Intensity (v-dipole, p-pol)"])
             elif self.combo.currentText() == "Power Dissipation Curve (2D)":
-                if data == "Dissipated Power":
-                    self.x.append(["Dissipated Power (p-pol)", "Dissipated Power (s-pol)"])
-                    self.y.append(["400", "400"])
-                    self.tempList = [[self.x, self.y]]
-                    self.num_row = len(self.tempList)
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-                elif data == "Dissipated Power (p-pol)":
-                    self.x.append(["Dissipated Power", "Dissipated Power (s-pol)"])
-                    self.y.append(["400", "400"])
-                    self.tempList = [[self.x, self.y]]
-                    self.num_row = len(self.tempList)
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-                else:
-                    self.x.append(["Dissipated Power", "Dissipated Power (p-pol)"])
-                    self.y.append(["400", "400"])
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-
+                self.combo_z.addItems(data)
+            elif self.combo.currentText() == "Power Dissipation Curve (3D))":
+                self.combo_z.addItems(["Dissipated Power", "Dissipated Power (p-pol)",
+                                      "Dissipated Power (s-pol)"])
             elif self.combo.currentText() == "Microcavity Effect":
-                if data == "Wavelength":
-                    self.x.append("Angle")
-                    self.y.append("0")
-                    self.tempList = [[self.x, self.y]]
-                    self.num_row = len(self.tempList)
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
-                else:
-                    self.x.append("Wavelength")
-                    self.y.append("400")
-                    for i in range(len(self.x)):
-                        self.num_row = i
-                        self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                        self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
+                self.combo_z.addItems(data)
+            elif self.combo.currentText() == "CIE 1931":
+                self.combo_z.addItems(data)
+            elif self.combo.currentText() == "Polar Plot":
+                self.combo_z.addItems(data)
 
+    def indexNotChanged(self):
+        self.table.clear()
+        self.x=[]
+        self.y=[]
+        if self.combo.currentText() == "Mode Analysis (2D)":
+            if self.combo_x.currentText() =="Thickness of b3p":
+                self.x.append("Thickness of npb")
+                self.y.append("30")
             else:
-                self.x.append("-")
-                self.y.append("-")
-                self.tempList = [[self.x, self.y]]
-                self.num_row = len(self.tempList)
-                for i in range(len(self.x)):
-                    self.num_row = i
-                    self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
-                    self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
+                self.x.append("Thickness of b3p")
+                self.y.append("30")
+        elif self.combo.currentText() == "Current Efficiency (2D)":
+            if self.combo_x.currentText() == "Thickness of b3p":
+                self.x.append("Thickness of npb")
+                self.y.append("30")
+            else:
+                self.x.append("Thickness of b3p")
+                self.y.append("30")
+        elif self.combo.currentText() == "Emission Spectrum (2D)":
+            if self.combo_x.currentText() == "Wavelength":
+                self.x.append("Angle")
+                self.y.append("0")
+            else:
+                self.x.append("Wavelength")
+                self.y.append("400")
+        elif self.combo.currentText() == "Power Dissipation Curve (2D)":
+            if self.combo_x.currentText() == "Dissipated Power":
+                self.x.append(["Dissipated Power (p-pol)", "Dissipated Power (s-pol)"])
+                self.y.append(["400", "400"])
+            elif self.combo_x.currentText() == "Dissipated Power (p-pol)":
+                self.x.append(["Dissipated Power", "Dissipated Power (s-pol)"])
+                self.y.append(["400", "400"])
+            else:
+                self.x.append(["Dissipated Power", "Dissipated Power (p-pol)"])
+                self.y.append(["400", "400"])
+        elif self.combo.currentText() == "Microcavity Effect":
+            if self.combo_x.currentText() == "Wavelength":
+                self.x.append("Angle")
+                self.y.append("0")
+            else:
+                self.x.append("Wavelength")
+                self.y.append("400")
+        else:
+            self.x.append("")
+            self.y.append("")
 
+        self.tempList = [[self.x, self.y]]
+        self.num_row = len(self.tempList)
 
-            # self.table_axes.clear()
-            self.axis = ["X-axis", "Y-axis", "Z-axis"]
-            self.name = [self.combo_x.currentText(), self.combo_y.currentText(),
-                         self.combo_z.currentText()]
-            min_max = []
-            for i in range(len(self.name)):
-                if self.name[i] == "Thickness of b3p":
-                    min_max.append([10, 50])
-                elif self.name[i] == "Thickness of npb":
-                    min_max.append([10, 50])
+        for i in range(len(self.x)):
+            self.num_row = i
+            self.table.setItem(self.num_row, 0, QTableWidgetItem(self.x[i]))
+            self.table.setItem(self.num_row, 1, QTableWidgetItem(self.y[i]))
 
-                elif self.name[i] == "Optical Modes":
-                    min_max.append([0.1, 0.3])
-                elif self.name[i] == "Air Mode":
-                    min_max.append([0.1, 0.3])
-                elif self.name[i] == "Substrate-Guided Mode":
-                    min_max.append([0.1, 0.3])
-                elif self.name[i] == "Wave-Guided Mode":
-                    min_max.append([0.1, 0.3])
-                elif self.name[i] == "SPP Mode":
-                    min_max.append([0.1, 0.3])
-                elif self.name[i] == "Absorption":
-                    min_max.append([0.1, 0.3])
-                elif self.name[i] == "NR Losses":
-                    min_max.append([0.1, 0.3])
+    def indexChanged(self):
+        self.table_axes.clear()
+        self.axis = ["X-axis", "Y-axis", "Z-axis"]
+        self.name = [self.combo_x.currentText(), self.combo_y.currentText(),
+                     self.combo_z.currentText()]
+        min_max = []
+        for i in range(len(self.name)):
+            if self.name[i] == "Thickness of b3p":
+                min_max.append([10, 50])
+            elif self.name[i] == "Thickness of npb":
+                min_max.append([10, 50])
 
-                elif self.name[i] == "Wavelength":
-                    min_max.append([400, 700])
-                elif self.name[i] == "Angle":
-                    min_max.append([0, 90])
+            elif self.name[i] == "Optical Modes":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "Air Mode":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "Substrate-Guided Mode":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "Wave-Guided Mode":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "SPP Mode":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "Absorption":
+                min_max.append([0.1, 0.3])
+            elif self.name[i] == "NR Losses":
+                min_max.append([0.1, 0.3])
 
-                elif self.name[i] == "Cd/A (photometry)":
-                    min_max.append([11.5, 28.6])
-                elif self.name[i] == "W/mA/sr (radiometry)":
-                    min_max.append([71, 217])
+            elif self.name[i] == "Wavelength":
+                min_max.append([400, 700])
+            elif self.name[i] == "Angle":
+                min_max.append([0, 90])
 
-                elif self.name[i] == "Intensity":
-                    min_max.append([0.0, 3.0])
-                elif self.name[i] == "Intensity (p-pol)":
-                    min_max.append([0.0, 3.0])
-                elif self.name[i] == "Intensity (h-dipole, p-pol)":
-                    min_max.append([0.0, 3.0])
-                elif self.name[i] == "Intensity (v-dipole, p-pol)":
-                    min_max.append([0.0, 3.0])
+            elif self.name[i] == "Cd/A (photometry)":
+                min_max.append([11.5, 28.6])
+            elif self.name[i] == "W/mA/sr (radiometry)":
+                min_max.append([71, 217])
 
-                elif self.name[i] == "In-plane Wavevector":
-                    min_max.append([0.0, 1.96])
+            elif self.name[i] == "Intensity":
+                min_max.append([0.0, 3.0])
+            elif self.name[i] == "Intensity (p-pol)":
+                min_max.append([0.0, 3.0])
+            elif self.name[i] == "Intensity (h-dipole, p-pol)":
+                min_max.append([0.0, 3.0])
+            elif self.name[i] == "Intensity (v-dipole, p-pol)":
+                min_max.append([0.0, 3.0])
 
-                elif self.name[i] == "Dissipated Power":
-                    min_max.append([0, 412])
-                elif self.name[i] == "Dissipated Power (p-pol)":
-                    min_max.append([0, 412])
-                elif self.name[i] == "Dissipated Power (s-pol)":
-                    min_max.append([0, 412])
+            elif self.name[i] == "In-plane Wavevector":
+                min_max.append([0.0, 1.96])
 
-                elif self.name[i] == "Effective Quantum Efficiency":
-                    min_max.append([0.77, 0.87])
-                elif self.name[i] == "Purcell Factor":
-                    min_max.append([0.87, 1.67])
-                else:
-                    min_max.append(["-","-"])
+            elif self.name[i] == "Dissipated Power":
+                min_max.append([0, 412])
+            elif self.name[i] == "Dissipated Power (p-pol)":
+                min_max.append([0, 412])
+            elif self.name[i] == "Dissipated Power (s-pol)":
+                min_max.append([0, 412])
 
-            mat = np.array(min_max).transpose()
-            self.min = mat[0]
-            self.max = mat[1]
+            elif self.name[i] == "Effective Quantum Efficiency":
+                min_max.append([0.77, 0.87])
+            elif self.name[i] == "Purcell Factor":
+                min_max.append([0.87, 1.67])
+            else:
+                min_max.append(["-","-"])
 
-            self.tempList = [[self.axis, self.name, self.min, self.max]]
-            self.num_row = len(self.tempList)
+        mat = np.array(min_max).transpose()
+        self.min = mat[0]
+        self.max = mat[1]
 
-            for i in range(len(self.axis)):
-                self.num_row = i
-                self.table_axes.setItem(self.num_row, 0, QTableWidgetItem(self.axis[i]))
-                self.table_axes.setItem(self.num_row, 1, QTableWidgetItem(self.name[i]))
-                self.table_axes.setItem(self.num_row, 2, QTableWidgetItem(str(self.min[i])))
-                self.table_axes.setItem(self.num_row, 3, QTableWidgetItem(str(self.max[i])))
+        self.tempList = [[self.axis, self.name, self.min, self.max]]
+        self.num_row = len(self.tempList)
+
+        for i in range(len(self.axis)):
+            self.num_row = i
+            self.table_axes.setItem(self.num_row, 0, QTableWidgetItem(self.axis[i]))
+            self.table_axes.setItem(self.num_row, 1, QTableWidgetItem(self.name[i]))
+            self.table_axes.setItem(self.num_row, 2, QTableWidgetItem(str(self.min[i])))
+            self.table_axes.setItem(self.num_row, 3, QTableWidgetItem(str(self.max[i])))
 
     def onButtonClickedPlot(self):
         with open(plotting_option, 'w') as stream:
