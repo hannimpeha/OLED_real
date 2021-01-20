@@ -12,7 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/plotting_param.py" afterDir="false" />
     </list>
@@ -342,7 +341,7 @@
       <workItem from="1611058376577" duration="124000" />
       <workItem from="1611058507708" duration="3903000" />
       <workItem from="1611071919629" duration="2550000" />
-      <workItem from="1611114531594" duration="17327000" />
+      <workItem from="1611114531594" duration="21278000" />
     </task>
     <servers />
   </component>
