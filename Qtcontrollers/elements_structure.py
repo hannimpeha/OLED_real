@@ -409,13 +409,6 @@ class Emission_Zone_Setting(QWidget):
         label.resize(self.pixmap.width(), self.pixmap.height())
         layout2.addWidget(label, 1, 0)
 
-        self.RIList = pd.read_csv(file, header=None)
-        self.RI_name = []
-        self.RI_data = []
-        # self.RIList.itemSelectionChanged.connect(self.chkItemClicked)
-        self.readData()
-        self.initPlot()
-
     # def arrow(self):
     #     label = QLabel()
     #     pixmap = QPixmap(em_figure)
@@ -472,100 +465,6 @@ class Emission_Zone_Setting(QWidget):
                 y = eval(equation)
                 self.ax.plot(x, y)
                 self.fig.savefig(em_figure, transparent=True)
-
-
-    def readData(self):
-        path = os.path.join(os.getcwd(), "c/data/Refractive_index")
-        files = os.listdir(path)
-
-        for file in files:
-            t = file.split('.')
-            if len(t) < 2:
-                pass
-            elif t[1] != 'ri':
-                pass
-            else:
-                self.RI_name.append(t[0])
-                # self.RIList.addItem(t[0])
-                # file open
-                file_path = os.path.join(path, file)
-                f = open(file_path, 'r')
-                data = []
-                while True:
-                    line = f.readline()
-                    if not line:
-                        break
-                    line = line.rstrip()
-                    tt = line.split('\t')
-                    if len(tt) != 3:
-                        pass
-                    try:
-                        tt = list(map(float, tt))
-                        data.append(tt)
-                    except ValueError:
-                        pass
-
-                data_ = np.array(data)
-                # print(data_)
-                self.RI_data.append(data_)
-                f.close()
-
-    def initPlot(self):
-        self.fig = plt.Figure()
-        self.canvas = FigureCanvas(self.fig)
-        layout = QHBoxLayout()
-        layout.layoutLeftMargin = 0
-        layout.layoutRightMargin = 0
-        layout.layoutTopMargin = 0
-        layout.layoutBottomMargin = 0
-        layout.addWidget(self.canvas)
-
-    def updatePlotAndTable(self, name):
-        self.fig.clear()
-
-        idx = self.RI_name.index(name)
-        data = self.RI_data[idx]
-
-        wavelength = np.around(data[:, 0], decimals=1)
-        wavelength = wavelength.astype(np.int64)
-        n = np.round(data[:, 1], 4)
-        if len(data[0]) == 2:
-            k = None
-        else:
-            k = np.round(data[:, 2], 4)
-
-        self.tableWidget.setRowCount(0)
-        count = len(n)
-
-        if k is None:
-            for i in range(count):
-                self.addData(wavelength[i], n[i], '')
-        else:
-            for i in range(count):
-                self.addData(wavelength[i], n[i], k[i])
-
-        ax = self.fig.add_subplot()
-        ax.set_title(name)
-        ax.set_xlabel('Wavelength(nm)')
-        ax.set_ylabel('Refractive Index n')
-        ax.set_xlim(min(wavelength), max(wavelength))
-        ax.set_ylim(min(n), max(n) * 1.1)
-        ax.xaxis.grid(True)
-        ax.yaxis.grid(True)
-
-        line, = ax.plot([], [], 'r-', label="n", linewidth=2.0)
-        line.set_data(wavelength, n)
-
-        if k is not None:
-            ax2 = ax.twinx()
-            ax2.set_ylabel('Extinction coefficient k', rotation=270, labelpad=20)
-            ax2.set_ylim(min(k), max(k) * 1.1)
-            line2, = ax2.plot([], [], 'b-', label='k', linewidth=2.0)
-            line2.set_data(wavelength, k)
-
-        self.fig.legend()
-        self.fig.tight_layout()
-        self.canvas.draw()
 
 
 class Properties(QWidget):
