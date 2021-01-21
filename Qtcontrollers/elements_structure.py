@@ -376,15 +376,19 @@ class Emission_Zone_Setting(QWidget):
         self.valueChanged()
 
         formlayout = QFormLayout()
-        formlayout.addRow(QLabel("Emit Range(nm): "), self.textLine_emit)
-        formlayout.addRow(QLabel("Value a: "), self.textLine_a)
-        formlayout.addRow(QLabel("Value b: "), self.textLine_b)
-        formlayout.addRow(QLabel("Value c: "), self.textLine_c)
+        self.label_emit = QLabel("Emit Range(nm): ")
+        self.label_a = QLabel("Value a: ")
+        self.label_b = QLabel("Value b: ")
+        self.label_c = QLabel("Value c: ")
+        formlayout.addRow(self.label_emit, self.textLine_emit)
+        formlayout.addRow(self.label_a, self.textLine_a)
+        formlayout.addRow(self.label_b, self.textLine_b)
+        formlayout.addRow(self.label_c, self.textLine_c)
 
         layoutform = QFormLayout()
         self.qlabel = QTextEdit()
         self.qlabel.setFixedSize(220, 100)
-        self.qlabel.setText("x = %s" %(self.textLine_a.value))
+        self.qlabel.setText("x = %s" %(self.textLine_a.value()))
         layoutform.addRow(QLabel("Equation: "))
         layoutform.addRow(self.qlabel)
         layout2.addLayout(formlayout)
@@ -395,13 +399,16 @@ class Emission_Zone_Setting(QWidget):
         label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         layout3.addRow(label)
 
-        label = QLabel()
-        self.pixmap = QPixmap(em_figure)
-        self.pixmap.scaled(300, 300, QtCore.Qt.KeepAspectRatio)
-        label.setPixmap(self.pixmap)
-        label.resize(self.pixmap.width(), self.pixmap.height())
-        layout3.addRow(label)
+        self.special_label = QLabel()
+        self.special_label.setFixedSize(330, 330)
+        self.fig = plt.Figure(figsize=(3, 3))
+        self.canvas = FigureCanvas(self.fig)
+        self.canvas.setParent(self.special_label)
+        self.ax = self.fig.add_subplot(111)
+        self.ax.set_xlim([-10, 10])
 
+        layout3.addWidget(NavigationToolbar(self.canvas, self.special_label))
+        layout3.addRow(self.special_label)
 
     def valueChanged(self):
         self.radiobutton_sheet.type = "x = %s" %(self.textLine_a.value())
@@ -415,27 +422,27 @@ class Emission_Zone_Setting(QWidget):
 
 
     def onClicked(self, checked):
-        self.fig = plt.Figure(figsize=(2.5, 2.5))
-        self.canvas = FigureCanvas(self.fig)
-        self.ax = self.fig.add_subplot(111)
-        self.ax.set_xlim([-10, 10])
-        self.anim = animation.FuncAnimation(self.fig, self.update,
-                                            frames = 720, interval = 10)
-        # if radioButton.isChecked():
         if self.radiobutton_sheet.isChecked():
             equation = self.radiobutton_sheet.type
             self.qlabel.setText(equation)
 
+            self.label_a.setEnabled(True)
+            self.label_b.setEnabled(False)
+            self.label_c.setEnabled(False)
             self.textLine_a.setEnabled(True)
             self.textLine_b.setEnabled(False)
             self.textLine_c.setEnabled(False)
 
             self.ax.axvline(equation)
 
+
         elif self.radiobutton_constant.isChecked():
             equation = self.radiobutton_constant.type
             self.qlabel.setText(equation)
 
+            self.label_a.setEnabled(False)
+            self.label_b.setEnabled(False)
+            self.label_c.setEnabled(False)
             self.textLine_a.setEnabled(False)
             self.textLine_b.setEnabled(False)
             self.textLine_c.setEnabled(False)
@@ -447,6 +454,9 @@ class Emission_Zone_Setting(QWidget):
             equation = self.radiobutton_linear.type
             self.qlabel.setText(equation)
 
+            self.label_a.setEnabled(True)
+            self.label_b.setEnabled(True)
+            self.label_c.setEnabled(False)
             self.textLine_a.setEnabled(True)
             self.textLine_b.setEnabled(True)
             self.textLine_c.setEnabled(False)
@@ -459,6 +469,9 @@ class Emission_Zone_Setting(QWidget):
             equation = self.radiobutton_exponential.type
             self.qlabel.setText(equation)
 
+            self.label_a.setEnabled(True)
+            self.label_b.setEnabled(True)
+            self.label_c.setEnabled(True)
             self.textLine_a.setEnabled(True)
             self.textLine_b.setEnabled(True)
             self.textLine_c.setEnabled(True)
@@ -471,6 +484,9 @@ class Emission_Zone_Setting(QWidget):
             equation = self.radiobutton_gaussian.type
             self.qlabel.setText(equation)
 
+            self.label_a.setEnabled(True)
+            self.label_b.setEnabled(True)
+            self.label_c.setEnabled(True)
             self.textLine_a.setEnabled(True)
             self.textLine_b.setEnabled(True)
             self.textLine_c.setEnabled(True)

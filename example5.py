@@ -1,37 +1,59 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+#!/usr/bin/python
+import sys
+from PyQt5.QtGui import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QPushButton, QApplication
+
+from pylab import *
+from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
+
+class MyMainWindow(QMainWindow):
+
+    def __init__(self, parent=None):
+        """
+        """
+
+        super(MyMainWindow,self).__init__(parent)
+        self.setWidgets()
+
+    def setWidgets(self, ):
 
 
-def update_line(num, data, line):
-    line.set_data(data[..., :num])
-    return line,
+        vBox = QVBoxLayout()
+        mainFrame = QWidget()
 
-fig1 = plt.figure()
+        self._plotGraphButton = QPushButton("Plot Random Graph")
+        self._plotGraphButton.clicked.connect(self.plotRandom)
 
-data = np.random.rand(2, 25)
-l, = plt.plot([], [], 'r-')
-plt.xlim(0, 1)
-plt.ylim(0, 1)
-plt.xlabel('x')
-plt.title('test')
-line_ani = animation.FuncAnimation(fig1, update_line, 25, fargs=(data, l),
-                                   interval=50, blit=True)
+        self._fig = figure(facecolor="white")
+        self._ax = self._fig.add_subplot(111)
 
-# To save the animation, use the command: line_ani.save('lines.mp4')
+        self._canvas = FigureCanvas(self._fig)
+        self._canvas.setParent(mainFrame)
+        self._canvas.setFocusPolicy(Qt.StrongFocus)
 
-fig2 = plt.figure()
 
-x = np.arange(-9, 10)
-y = np.arange(-9, 10).reshape(-1, 1)
-base = np.hypot(x, y)
-ims = []
-for add in np.arange(15):
-    ims.append((plt.pcolor(x, y, base + add, norm=plt.Normalize(0, 30)),))
+        vBox.addWidget(self._plotGraphButton)
+        vBox.addWidget(self._canvas)
+        vBox.addWidget(NavigationToolbar(self._canvas,mainFrame))
+        mainFrame.setLayout(vBox)
+        self.setCentralWidget(mainFrame)
 
-im_ani = animation.ArtistAnimation(fig2, ims, interval=50, repeat_delay=3000,
-                                   blit=True)
-# To save this second animation with some metadata, use the following command:
-# im_ani.save('im.mp4', metadata={'artist':'Guido'})
+    def plotRandom(self, ):
+        """
+        """
 
-plt.show()
+        x = linspace(0,4*pi,1000)
+
+        self._ax.plot(x,sin(2*pi*rand()*2*x),lw=2)
+        self._canvas.draw()
+
+
+if __name__ == '__main__':
+    qApp = QApplication(sys.argv)
+    MainWindow = MyMainWindow()
+
+    MainWindow.show()
+    sys.exit(qApp.exec_())
