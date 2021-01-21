@@ -215,7 +215,7 @@ class Emission_Layer(QWidget):
         self.table.setRowCount(4)
         self.table.setColumnCount(8)
 
-        cols_element = ['L#', 'EMMaterials', 'Spectrum', 'Exciton Prop', 'QY', 'HDR', 'EMZone', 'Properties']
+        cols_element = ['L#', 'EMMaterials', 'Spectrum', 'Exciton Prop', 'QY', 'HDR', 'EMZone', 'Graph']
         self.table.setHorizontalHeaderLabels(cols_element)
 
         self.num = [4, 6, 8]
@@ -223,10 +223,10 @@ class Emission_Layer(QWidget):
         self.spectrum = ["FCNlr", "Irppy2tmd", "Irmphmq2tmd"]
         self.exciton_prop = [1, 1, 1]
         self.qy = [90, 96, 96]
-        self.pq = [75, 75, 78]
+        self.hdr = [75, 75, 78]
         self.em_zone = ["constant", "linear_pos", "delta_50"]
         self.tempList = [[self.em_materials, self.spectrum, self.exciton_prop,
-                          self.qy, self.pq, self.em_zone]]
+                          self.qy, self.hdr]]
         self.num_row = len(self.tempList)
         self.table.setFixedSize(700, 140)
 
@@ -237,16 +237,34 @@ class Emission_Layer(QWidget):
             self.table.setItem(self.num_row, 2, QTableWidgetItem(self.spectrum[i]))
             self.table.setItem(self.num_row, 3, QTableWidgetItem(str(self.exciton_prop[i])))
             self.table.setItem(self.num_row, 4, QTableWidgetItem(str(self.qy[i])))
-            self.table.setItem(self.num_row, 5, QTableWidgetItem(str(self.pq[i])))
-            self.table.setItem(self.num_row, 6, QTableWidgetItem(str(self.em_zone[i])))
+            self.table.setItem(self.num_row, 5, QTableWidgetItem(str(self.hdr[i])))
 
 
         i = 0
         for j in range(len(self.em_materials)):
+            self.table.setItem(i, 6, QTableWidgetItem(j))
+            label = QLabel()
+            layout = QHBoxLayout()
+            layout.setContentsMargins(0,0,0,0)
+
+            em_zone = self.em_zone[j]
+
+            another_label = QLabel()
+            another_label.setText(em_zone)
+            layout.addWidget(another_label)
+
+            button = QPushButton()
+            button.setText("b")
+            button.setFixedSize(30, 30)
+            layout.addWidget(button)
+            label.setLayout(layout)
+
+            self.table.setCellWidget(i, 6, label)
+
             self.table.setItem(i, 7, QTableWidgetItem(j))
             selectButton = QPushButton()
-            selectButton.setText("Settings")
-            selectButton.setFixedSize(230, 20)
+            selectButton.setText("Plot")
+            selectButton.setFixedSize(150, 20)
             # selectButton.clicked.connect(self.saveDirectory)
             self.table.setCellWidget(i, 7, selectButton)
             i += 1
@@ -258,7 +276,7 @@ class Emission_Layer(QWidget):
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(6, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(6, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(7, QtWidgets.QHeaderView.Stretch)
         return self.table
 

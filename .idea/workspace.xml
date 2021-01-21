@@ -14,10 +14,8 @@
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure_graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/EML_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/EML_graph.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/arrow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/plotting_option.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,16 +79,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="penProject" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="penProject" TARGET_NAME="penProject" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="penProject" RUN_TARGET_NAME="penProject">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -180,6 +168,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -345,7 +334,11 @@
       <workItem from="1611058376577" duration="124000" />
       <workItem from="1611058507708" duration="3903000" />
       <workItem from="1611071919629" duration="2550000" />
-      <workItem from="1611114531594" duration="33966000" />
+      <workItem from="1611114531594" duration="34175000" />
+      <workItem from="1611153212590" duration="61000" />
+      <workItem from="1611153316133" duration="142000" />
+      <workItem from="1611153487450" duration="259000" />
+      <workItem from="1611190773586" duration="537000" />
     </task>
     <servers />
   </component>
