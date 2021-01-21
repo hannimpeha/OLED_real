@@ -2,6 +2,7 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from IPython.display import clear_output
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd

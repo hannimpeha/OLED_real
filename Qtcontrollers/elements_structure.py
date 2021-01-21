@@ -1,13 +1,14 @@
 import csv
-import math
 import os
 
 from PyQt5 import QtCore, QtWidgets
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 from PyQt5.QtGui import QFont
+from IPython.display import clear_output
+from matplotlib import animation
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from Qtcontrollers.logo_image import *
 
 file = 'resources/text.csv'
@@ -324,7 +325,7 @@ class Emission_Zone_Setting(QWidget):
 
         textLine_emit = QLineEdit()
         textLine_emit.setFixedSize(100, 20)
-        textLine_emit.setText("0,100,10")
+        textLine_emit.setText("-10,10,5")
         layout1.addWidget(textLine_emit, 1, 2)
 
         label = QLabel()
@@ -372,12 +373,14 @@ class Emission_Zone_Setting(QWidget):
         layout1.addWidget(self.radiobutton_linear, 3, 0)
 
         self.radiobutton_exponential = QRadioButton("Exponential")
-        self.radiobutton_exponential.type = "%s*math.exp(%s + x) + %s" %(self.textLine_a.text(), self.textLine_b.text(), self.textLine_c.text())
+        self.radiobutton_exponential.type = "%s*np.exp(%s + x) + %s" %(self.textLine_a.text(),
+                                                                         self.textLine_b.text(),
+                                                                         self.textLine_c.text())
         self.radiobutton_exponential.toggled.connect(self.onClicked)
         layout1.addWidget(self.radiobutton_exponential, 4, 0)
 
         self.radiobutton_gaussian = QRadioButton("Gaussian")
-        self.radiobutton_gaussian.type = "(%s*(math.sqrt(2*math.pi)))**(-1)*math.exp((x-%s)/(2*%s**2))" \
+        self.radiobutton_gaussian.type = "(%s*(np.sqrt(2*np.pi)))**(-1)*np.exp((x-%s)/(2*%s**2))" \
                                          %(self.textLine_b.text(), self.textLine_a.text(), self.textLine_b.text())
         self.radiobutton_gaussian.toggled.connect(self.onClicked)
         layout1.addWidget(self.radiobutton_gaussian, 5, 0)
@@ -409,21 +412,17 @@ class Emission_Zone_Setting(QWidget):
         label.resize(self.pixmap.width(), self.pixmap.height())
         layout2.addWidget(label, 1, 0)
 
-    # def arrow(self):
-    #     label = QLabel()
-    #     pixmap = QPixmap(em_figure)
-    #     pixmap = pixmap.scaled(330, 330, QtCore.Qt.KeepAspectRatio)
-    #     label.setPixmap(pixmap)
-    #     label.resize(pixmap.width(), pixmap.height())
-    #     return label
-
 
     def onClicked(self):
         radioButton = self.sender()
+
         self.fig = plt.Figure(figsize=(2.5, 2.5))
         self.canvas = FigureCanvas(self.fig)
         self.ax = self.fig.add_subplot(111)
-        self.fig.savefig(em_figure, transparent=True)
+        self.ax.set_xlim([-10, 10])
+        self.anim = animation.FuncAnimation(self.fig, self.update,
+                                            frames = 720, interval = 10)
+
         if radioButton.isChecked():
             equation = radioButton.type
             self.qlabel.setText(equation)
@@ -432,39 +431,34 @@ class Emission_Zone_Setting(QWidget):
                 self.textLine_a.setEnabled(True)
                 self.textLine_b.setEnabled(False)
                 self.textLine_c.setEnabled(False)
+
                 self.ax.axvline(equation)
-                self.fig.savefig(em_figure, transparent=True)
-                # self.ax.xlabel("Emit Range(nm)"
 
             elif self.radiobutton_constant.isChecked():
                 self.textLine_a.setEnabled(False)
                 self.textLine_b.setEnabled(False)
                 self.textLine_c.setEnabled(False)
-                x_range = 1
-                x = np.array(x_range)
+
                 y = eval(equation)
-                self.ax.plot(x, y)
-                self.fig.savefig(em_figure, transparent=True)
+                self.ax.plot(y)
 
             elif self.radiobutton_linear.isChecked():
                 self.textLine_a.setEnabled(True)
                 self.textLine_b.setEnabled(True)
                 self.textLine_c.setEnabled(False)
-                x_range = 1
-                x = np.array(x_range)
+
+                x = np.linspace(-10, 10)
                 y = eval(equation)
                 self.ax.plot(x, y)
-                self.fig.savefig(em_figure, transparent=True)
 
             else:
                 self.textLine_a.setEnabled(True)
                 self.textLine_b.setEnabled(True)
                 self.textLine_c.setEnabled(True)
-                x_range = 1
-                x = np.array(x_range)
+
+                x = np.linspace(-10, 10)
                 y = eval(equation)
                 self.ax.plot(x, y)
-                self.fig.savefig(em_figure, transparent=True)
 
 
 class Properties(QWidget):
