@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
 
+
 from Qtcontrollers.axes_properties import Axes_Properties
 from Qtcontrollers.elements_structure import Elements_Structure
 from Qtcontrollers.elements_structure_graph import Elements_Structure_Graph

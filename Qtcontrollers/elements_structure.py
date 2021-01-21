@@ -10,6 +10,7 @@ from matplotlib import animation
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from Qtcontrollers.logo_image import *
+import functools
 
 file = 'resources/text.csv'
 file_em = 'resources/text_em.csv'
@@ -65,12 +66,17 @@ class Elements_Structure(QWidget):
         self.table = QTableWidget()
         self.table.setRowCount(12)
         self.table.setColumnCount(7)
-        self.cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness', 'Unit' ,'Properties']
+        self.cols_element = ['L#', 'LayerName', 'Material', 'RefractiveIndex', 'Thickness',
+                             'Unit' ,'Properties']
         self.table.setHorizontalHeaderLabels(self.cols_element)
 
-        self.layer_name = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
-        self.material = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA", "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
-        self.refractive_index = ["Al.dat", "TPBi.dat", "TPBi.dat", "mCBP.dat", "mCBP.dat", "TCTA_B3PYMPM.dat", "TCTA.dat", "NPB.dat", "NPB.dat", "TAPC.dat", "ITO_Geomatec.dat", "glass_Eagle2000.dat"]
+        self.layer_name = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA",
+                           "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
+        self.material = ["Al", "TPBi", "TPBi", "mCBP", "mCBP", "TCTA_B3PYMPM", "TCTA",
+                         "NPB", "NPB", "TAPC", "ITO_Geomatec", "glass_Eagle2000"]
+        self.refractive_index = ["Al.dat", "TPBi.dat", "TPBi.dat", "mCBP.dat", "mCBP.dat",
+                                 "TCTA_B3PYMPM.dat", "TCTA.dat", "NPB.dat", "NPB.dat",
+                                 "TAPC.dat", "ITO_Geomatec.dat", "glass_Eagle2000.dat"]
 
         self.thickness = [100, 100, 10, 20, 20, 20, 20, 30, 20, 50, 70, 0]
         self.tempList = [[self.layer_name, self.material, self.thickness]]
@@ -99,7 +105,7 @@ class Elements_Structure(QWidget):
 
             button = QPushButton()
             button.setText("b")
-            button.setFixedSize(30, 30)
+            button.setFixedSize(25, 25)
             layout.addWidget(button)
 
             label.setLayout(layout)
@@ -216,7 +222,8 @@ class Emission_Layer(QWidget):
         self.table.setRowCount(4)
         self.table.setColumnCount(8)
 
-        cols_element = ['L#', 'EMMaterials', 'Spectrum', 'Exciton Prop', 'QY', 'HDR', 'EMZone', 'Graph']
+        cols_element = ['L#', 'EMMaterials', 'Spectrum', 'Exciton Prop', 'QY',
+                        'HDR', 'EMZone', 'Graph']
         self.table.setHorizontalHeaderLabels(cols_element)
 
         self.num = [4, 6, 8]
@@ -256,7 +263,7 @@ class Emission_Layer(QWidget):
 
             button = QPushButton()
             button.setText("b")
-            button.setFixedSize(30, 30)
+            button.setFixedSize(25, 25)
             layout.addWidget(button)
             label.setLayout(layout)
 
@@ -326,24 +333,34 @@ class Emission_Zone_Setting(QWidget):
         textLine_emit = QLineEdit()
         textLine_emit.setFixedSize(100, 20)
         textLine_emit.setText("-10,10,5")
+        textLine_emit.textChanged.connect(self.sync_lineEdit)
         layout1.addWidget(textLine_emit, 1, 2)
 
         label = QLabel()
         label.setText("Value a :")
         layout1.addWidget(label, 2, 1)
 
-        self.textLine_a = QLineEdit()
+
+        self.lineEdits = []
+
+
+        self.textLine_a = QLineEdit(self)
         self.textLine_a.setFixedSize(100, 20)
-        self.textLine_a.setText("0.5")
+        self.my_a = "0.5"
+        self.textLine_a.setText(self.my_a)
+        self.textLine_a.textChanged.connect(lambda text: self.sync_lineEdit(text))
+        self.textLine_a.eq = ["x = %s" % (self.my_a)]
         layout1.addWidget(self.textLine_a, 2, 2)
 
         label = QLabel()
         label.setText("Value b :")
         layout1.addWidget(label, 3, 1)
 
-        self.textLine_b = QLineEdit()
+        self.textLine_b = QLineEdit(self)
         self.textLine_b.setFixedSize(100, 20)
-        self.textLine_b.setText("1")
+        self.my_b="1"
+        self.textLine_b.setText(self.my_b)
+        self.textLine_b.textChanged.connect(lambda text: self.sync_lineEdit(text))
         layout1.addWidget(self.textLine_b, 3, 2)
 
         label = QLabel()
@@ -351,38 +368,38 @@ class Emission_Zone_Setting(QWidget):
         label.setFixedSize(100, 20)
         layout1.addWidget(label, 4, 1)
 
-        self.textLine_c = QLineEdit()
+        self.textLine_c = QLineEdit(self)
         self.textLine_c.setFixedSize(100, 20)
-        self.textLine_c.setText("2")
+        self.my_c = "2"
+        self.textLine_c.setText(self.my_c)
+        self.textLine_c.textChanged.connect(lambda text: self.sync_lineEdit(text))
         layout1.addWidget(self.textLine_c, 4, 2)
 
         self.radiobutton_sheet = QRadioButton("Sheet")
         self.radiobutton_sheet.setChecked(True)
-        self.radiobutton_sheet.type = "x = %s" %(self.textLine_a.text())
-        self.radiobutton_sheet.toggled.connect(self.onClicked)
+        self.radiobutton_sheet.type = "x = %s" %(self.my_a)
+        self.radiobutton_sheet.toggled.connect(lambda x : self.onClicked(x))
         layout1.addWidget(self.radiobutton_sheet, 1, 0)
 
         self.radiobutton_constant = QRadioButton("Constant")
-        self.radiobutton_constant.type = "%s" %(self.textLine_a.text())
-        self.radiobutton_constant.toggled.connect(self.onClicked)
+        self.radiobutton_constant.type = "%s" %(self.my_a)
+        self.radiobutton_constant.toggled.connect(lambda checked: self.onClicked(checked))
         layout1.addWidget(self.radiobutton_constant, 2, 0)
 
         self.radiobutton_linear = QRadioButton("Linear")
-        self.radiobutton_linear.type = "%s*x + %s" %(self.textLine_a.text(), self.textLine_b.text())
-        self.radiobutton_linear.toggled.connect(self.onClicked)
+        self.radiobutton_linear.type = "%s*x + %s" %(self.my_a, self.my_b)
+        self.radiobutton_linear.toggled.connect(lambda checked: self.onClicked(checked))
         layout1.addWidget(self.radiobutton_linear, 3, 0)
 
         self.radiobutton_exponential = QRadioButton("Exponential")
-        self.radiobutton_exponential.type = "%s*np.exp(%s + x) + %s" %(self.textLine_a.text(),
-                                                                         self.textLine_b.text(),
-                                                                         self.textLine_c.text())
-        self.radiobutton_exponential.toggled.connect(self.onClicked)
+        self.radiobutton_exponential.type = "%s*np.exp(%s + x) + %s" %(self.my_a, self.my_b, self.my_c)
+        self.radiobutton_exponential.toggled.connect(lambda checked: self.onClicked(checked))
         layout1.addWidget(self.radiobutton_exponential, 4, 0)
 
         self.radiobutton_gaussian = QRadioButton("Gaussian")
         self.radiobutton_gaussian.type = "(%s*(np.sqrt(2*np.pi)))**(-1)*np.exp((x-%s)/(2*%s**2))" \
-                                         %(self.textLine_b.text(), self.textLine_a.text(), self.textLine_b.text())
-        self.radiobutton_gaussian.toggled.connect(self.onClicked)
+                                         %(self.my_b, self.my_a, self.my_b)
+        self.radiobutton_gaussian.toggled.connect(lambda checked: self.onClicked(checked))
         layout1.addWidget(self.radiobutton_gaussian, 5, 0)
 
         label = QLabel()
@@ -413,9 +430,18 @@ class Emission_Zone_Setting(QWidget):
         layout2.addWidget(label, 1, 0)
 
 
-    def onClicked(self):
-        radioButton = self.sender()
+    def sync_lineEdit(self, text):
+        if self.textLine_a.textChanged==True:
+            self.textLine_a.setText(text)
+        elif self.textLine_b.textChanged==True:
+            self.textLine_b.setText(text)
+        elif self.textLine_c.textChanged==True:
+            self.textLine_c.setText(text)
 
+
+    def onClicked(self, checked):
+        # radioButton = self.sender()
+        # self.sync_lineEdit()
         self.fig = plt.Figure(figsize=(2.5, 2.5))
         self.canvas = FigureCanvas(self.fig)
         self.ax = self.fig.add_subplot(111)
@@ -423,42 +449,63 @@ class Emission_Zone_Setting(QWidget):
         self.anim = animation.FuncAnimation(self.fig, self.update,
                                             frames = 720, interval = 10)
 
-        if radioButton.isChecked():
-            equation = radioButton.type
+        # if radioButton.isChecked():
+        if self.radiobutton_sheet.isChecked():
+            equation = self.radiobutton_sheet.type
             self.qlabel.setText(equation)
 
-            if self.radiobutton_sheet.isChecked():
-                self.textLine_a.setEnabled(True)
-                self.textLine_b.setEnabled(False)
-                self.textLine_c.setEnabled(False)
+            self.textLine_a.setEnabled(True)
+            self.textLine_b.setEnabled(False)
+            self.textLine_c.setEnabled(False)
 
-                self.ax.axvline(equation)
+            self.ax.axvline(equation)
 
-            elif self.radiobutton_constant.isChecked():
-                self.textLine_a.setEnabled(False)
-                self.textLine_b.setEnabled(False)
-                self.textLine_c.setEnabled(False)
+        elif self.radiobutton_constant.isChecked():
+            equation = self.radiobutton_constant.type
+            self.qlabel.setText(equation)
 
-                y = eval(equation)
-                self.ax.plot(y)
+            self.textLine_a.setEnabled(False)
+            self.textLine_b.setEnabled(False)
+            self.textLine_c.setEnabled(False)
 
-            elif self.radiobutton_linear.isChecked():
-                self.textLine_a.setEnabled(True)
-                self.textLine_b.setEnabled(True)
-                self.textLine_c.setEnabled(False)
+            y = eval(equation)
+            self.ax.plot(y)
 
-                x = np.linspace(-10, 10)
-                y = eval(equation)
-                self.ax.plot(x, y)
+        elif self.radiobutton_linear.isChecked():
+            equation = self.radiobutton_linear.type
+            self.qlabel.setText(equation)
 
-            else:
-                self.textLine_a.setEnabled(True)
-                self.textLine_b.setEnabled(True)
-                self.textLine_c.setEnabled(True)
+            self.textLine_a.setEnabled(True)
+            self.textLine_b.setEnabled(True)
+            self.textLine_c.setEnabled(False)
 
-                x = np.linspace(-10, 10)
-                y = eval(equation)
-                self.ax.plot(x, y)
+            x = np.linspace(-10, 10)
+            y = eval(equation)
+            self.ax.plot(x, y)
+
+        elif self.radiobutton_exponential.isChecked():
+            equation = self.radiobutton_exponential.type
+            self.qlabel.setText(equation)
+
+            self.textLine_a.setEnabled(True)
+            self.textLine_b.setEnabled(True)
+            self.textLine_c.setEnabled(True)
+
+            x = np.linspace(-10, 10)
+            y = eval(equation)
+            self.ax.plot(x, y)
+
+        else:
+            equation = self.radiobutton_gaussian.type
+            self.qlabel.setText(equation)
+
+            self.textLine_a.setEnabled(True)
+            self.textLine_b.setEnabled(True)
+            self.textLine_c.setEnabled(True)
+
+            x = np.linspace(-10, 10)
+            y = eval(equation)
+            self.ax.plot(x, y)
 
 
 class Properties(QWidget):
