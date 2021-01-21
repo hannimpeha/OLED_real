@@ -12,23 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d39b5c69-978b-44a9-b297-f81e2679542d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example11.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example12.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example13.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example14.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example15.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example16.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example17.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example18.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example19.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example20.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example21.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gui.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/penProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/penProject.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example22.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qtcontrollers/elements_structure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,28 +89,6 @@
       </makefile>
       <method v="2" />
     </configuration>
-    <configuration name="example18" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="penProject" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example18.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="example19" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="penProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -191,6 +155,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="example22" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="penProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example22.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="penProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -216,18 +202,18 @@
     <list>
       <item itemvalue="Makefile.make" />
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.example18" />
       <item itemvalue="Python.example19" />
       <item itemvalue="Python.example20" />
       <item itemvalue="Python.example21" />
+      <item itemvalue="Python.example22" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.example22" />
         <item itemvalue="Python.example20" />
         <item itemvalue="Python.example21" />
         <item itemvalue="Python.example19" />
-        <item itemvalue="Python.example18" />
       </list>
     </recent_temporary>
   </component>
@@ -355,7 +341,7 @@
       <workItem from="1611197148674" duration="1428000" />
       <workItem from="1611198629557" duration="6831000" />
       <workItem from="1611206011998" duration="1000" />
-      <workItem from="1611206025026" duration="4404000" />
+      <workItem from="1611206025026" duration="9488000" />
     </task>
     <servers />
   </component>
@@ -378,6 +364,7 @@
     <SUITE FILE_PATH="coverage/penProject$example21.coverage" NAME="example21 Coverage Results" MODIFIED="1611208234080" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/penProject$example19.coverage" NAME="example19 Coverage Results" MODIFIED="1611206402145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/penProject$example20.coverage" NAME="example20 Coverage Results" MODIFIED="1611209308924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/penProject$main.coverage" NAME="main Coverage Results" MODIFIED="1611210495529" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/penProject$main.coverage" NAME="main Coverage Results" MODIFIED="1611215669026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/penProject$example22.coverage" NAME="example22 Coverage Results" MODIFIED="1611211897435" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

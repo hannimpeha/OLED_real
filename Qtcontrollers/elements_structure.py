@@ -316,11 +316,13 @@ class Emission_Zone_Setting(QWidget):
         super().__init__()
 
         layout = QHBoxLayout()
-        layout1 = QGridLayout()
-        layout2 = QGridLayout()
+        layout1 = QFormLayout()
+        layout2 = QVBoxLayout()
+        layout3 = QFormLayout()
 
         layout.addLayout(layout1)
         layout.addLayout(layout2)
+        layout.addLayout(layout3)
 
         self.setLayout(layout)
 
@@ -328,127 +330,97 @@ class Emission_Zone_Setting(QWidget):
         label.setText("Emission Zone Setting")
         label.setFont(QFont("Arial", 15, weight=QFont.Bold))
         label.setFixedSize(180, 20)
-        layout1.addWidget(label, 0, 0)
+        layout1.addRow(label)
 
-        textLine_emit = QLineEdit()
-        textLine_emit.setFixedSize(100, 20)
-        textLine_emit.setText("-10,10,5")
-        textLine_emit.textChanged.connect(self.sync_lineEdit)
-        layout1.addWidget(textLine_emit, 1, 2)
+        self.textLine_emit = QDoubleSpinBox()
+        self.textLine_emit.setFixedSize(100, 20)
+        self.textLine_emit.setValue(10)
+        self.textLine_emit.valueChanged.connect(self.valueChanged)
 
-        label = QLabel()
-        label.setText("Value a :")
-        layout1.addWidget(label, 2, 1)
-
-
-        self.lineEdits = []
-
-
-        self.textLine_a = QLineEdit(self)
+        self.textLine_a = QDoubleSpinBox()
         self.textLine_a.setFixedSize(100, 20)
-        self.my_a = "0.5"
-        self.textLine_a.setText(self.my_a)
-        self.textLine_a.textChanged.connect(lambda text: self.sync_lineEdit(text))
-        self.textLine_a.eq = ["x = %s" % (self.my_a)]
-        layout1.addWidget(self.textLine_a, 2, 2)
+        self.textLine_a.setValue(0.5)
+        self.textLine_a.valueChanged.connect(self.valueChanged)
 
-        label = QLabel()
-        label.setText("Value b :")
-        layout1.addWidget(label, 3, 1)
-
-        self.textLine_b = QLineEdit(self)
+        self.textLine_b = QDoubleSpinBox()
         self.textLine_b.setFixedSize(100, 20)
-        self.my_b="1"
-        self.textLine_b.setText(self.my_b)
-        self.textLine_b.textChanged.connect(lambda text: self.sync_lineEdit(text))
-        layout1.addWidget(self.textLine_b, 3, 2)
+        self.textLine_b.setValue(1)
+        self.textLine_b.valueChanged.connect(self.valueChanged)
 
-        label = QLabel()
-        label.setText("Value c :")
-        label.setFixedSize(100, 20)
-        layout1.addWidget(label, 4, 1)
-
-        self.textLine_c = QLineEdit(self)
+        self.textLine_c = QDoubleSpinBox()
         self.textLine_c.setFixedSize(100, 20)
-        self.my_c = "2"
-        self.textLine_c.setText(self.my_c)
-        self.textLine_c.textChanged.connect(lambda text: self.sync_lineEdit(text))
-        layout1.addWidget(self.textLine_c, 4, 2)
+        self.textLine_c.setValue(2)
+        self.textLine_c.valueChanged.connect(self.valueChanged)
 
         self.radiobutton_sheet = QRadioButton("Sheet")
         self.radiobutton_sheet.setChecked(True)
-        self.radiobutton_sheet.type = "x = %s" %(self.my_a)
-        self.radiobutton_sheet.toggled.connect(lambda x : self.onClicked(x))
-        layout1.addWidget(self.radiobutton_sheet, 1, 0)
+        self.radiobutton_sheet.toggled.connect(lambda x: self.onClicked(x))
+        layout1.addRow(self.radiobutton_sheet)
 
         self.radiobutton_constant = QRadioButton("Constant")
-        self.radiobutton_constant.type = "%s" %(self.my_a)
-        self.radiobutton_constant.toggled.connect(lambda checked: self.onClicked(checked))
-        layout1.addWidget(self.radiobutton_constant, 2, 0)
+        self.radiobutton_constant.toggled.connect(lambda x: self.onClicked(x))
+        layout1.addRow(self.radiobutton_constant)
 
         self.radiobutton_linear = QRadioButton("Linear")
-        self.radiobutton_linear.type = "%s*x + %s" %(self.my_a, self.my_b)
-        self.radiobutton_linear.toggled.connect(lambda checked: self.onClicked(checked))
-        layout1.addWidget(self.radiobutton_linear, 3, 0)
+        self.radiobutton_linear.toggled.connect(lambda x: self.onClicked(x))
+        layout1.addRow(self.radiobutton_linear)
 
         self.radiobutton_exponential = QRadioButton("Exponential")
-        self.radiobutton_exponential.type = "%s*np.exp(%s + x) + %s" %(self.my_a, self.my_b, self.my_c)
-        self.radiobutton_exponential.toggled.connect(lambda checked: self.onClicked(checked))
-        layout1.addWidget(self.radiobutton_exponential, 4, 0)
+        self.radiobutton_exponential.toggled.connect(lambda x: self.onClicked(x))
+        layout1.addRow(self.radiobutton_exponential)
 
         self.radiobutton_gaussian = QRadioButton("Gaussian")
-        self.radiobutton_gaussian.type = "(%s*(np.sqrt(2*np.pi)))**(-1)*np.exp((x-%s)/(2*%s**2))" \
-                                         %(self.my_b, self.my_a, self.my_b)
         self.radiobutton_gaussian.toggled.connect(lambda checked: self.onClicked(checked))
-        layout1.addWidget(self.radiobutton_gaussian, 5, 0)
+        layout1.addRow(self.radiobutton_gaussian)
 
-        label = QLabel()
-        label.setText("Emit Range(nm): ")
-        label.setFixedSize(100, 20)
-        layout1.addWidget(label, 1, 1)
+        self.valueChanged()
 
-        label = QLabel()
-        label.setText("Equation: ")
-        label.setFixedSize(100, 20)
-        layout1.addWidget(label, 7, 0)
+        formlayout = QFormLayout()
+        formlayout.addRow(QLabel("Emit Range(nm): "), self.textLine_emit)
+        formlayout.addRow(QLabel("Value a: "), self.textLine_a)
+        formlayout.addRow(QLabel("Value b: "), self.textLine_b)
+        formlayout.addRow(QLabel("Value c: "), self.textLine_c)
 
+        layoutform = QFormLayout()
         self.qlabel = QTextEdit()
-        self.qlabel.setFixedSize(220, 40)
-        self.qlabel.setText("x = %s" %(self.textLine_a.text()))
-        layout1.addWidget(self.qlabel, 7, 1)
+        self.qlabel.setFixedSize(220, 100)
+        self.qlabel.setText("x = %s" %(self.textLine_a.value))
+        layoutform.addRow(QLabel("Equation: "))
+        layoutform.addRow(self.qlabel)
+        layout2.addLayout(formlayout)
+        layout2.addLayout(layoutform)
 
         label = QLabel()
         label.setText("Emission Zone Graph")
         label.setFont(QFont("Arial", 15, weight=QFont.Bold))
-        layout2.addWidget(label, 0, 0)
+        layout3.addRow(label)
 
         label = QLabel()
         self.pixmap = QPixmap(em_figure)
         self.pixmap.scaled(300, 300, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(self.pixmap)
         label.resize(self.pixmap.width(), self.pixmap.height())
-        layout2.addWidget(label, 1, 0)
+        layout3.addRow(label)
 
 
-    def sync_lineEdit(self, text):
-        if self.textLine_a.textChanged==True:
-            self.textLine_a.setText(text)
-        elif self.textLine_b.textChanged==True:
-            self.textLine_b.setText(text)
-        elif self.textLine_c.textChanged==True:
-            self.textLine_c.setText(text)
+    def valueChanged(self):
+        self.radiobutton_sheet.type = "x = %s" %(self.textLine_a.value())
+        self.radiobutton_constant.type = "%s" %(self.textLine_a.value())
+        self.radiobutton_linear.type = "%s*x + %s" %(self.textLine_a.value(), self.textLine_b.value())
+        self.radiobutton_exponential.type = "%s*np.exp(%s + x) + %s" %(
+            self.textLine_a.value(), self.textLine_b.value(),self.textLine_c.value())
+        self.radiobutton_gaussian.type = \
+            "(%s*(np.sqrt(2*np.pi)))**(-1)*np.exp((x-%s)/(2*%s**2))" \
+            % (self.textLine_b.value(), self.textLine_a.value(), self.textLine_c.value())
 
 
     def onClicked(self, checked):
-        # radioButton = self.sender()
-        # self.sync_lineEdit()
         self.fig = plt.Figure(figsize=(2.5, 2.5))
         self.canvas = FigureCanvas(self.fig)
         self.ax = self.fig.add_subplot(111)
         self.ax.set_xlim([-10, 10])
         self.anim = animation.FuncAnimation(self.fig, self.update,
                                             frames = 720, interval = 10)
-
         # if radioButton.isChecked():
         if self.radiobutton_sheet.isChecked():
             equation = self.radiobutton_sheet.type
