@@ -354,23 +354,23 @@ class Emission_Zone_Setting(QWidget):
 
         self.radiobutton_sheet = QRadioButton("Sheet")
         self.radiobutton_sheet.setChecked(True)
-        self.radiobutton_sheet.toggled.connect(lambda x: self.onClicked(x))
+        self.radiobutton_sheet.toggled.connect(self.onClicked)
         layout1.addRow(self.radiobutton_sheet)
 
         self.radiobutton_constant = QRadioButton("Constant")
-        self.radiobutton_constant.toggled.connect(lambda x: self.onClicked(x))
+        self.radiobutton_constant.toggled.connect(self.onClicked)
         layout1.addRow(self.radiobutton_constant)
 
         self.radiobutton_linear = QRadioButton("Linear")
-        self.radiobutton_linear.toggled.connect(lambda x: self.onClicked(x))
+        self.radiobutton_linear.toggled.connect(self.onClicked)
         layout1.addRow(self.radiobutton_linear)
 
         self.radiobutton_exponential = QRadioButton("Exponential")
-        self.radiobutton_exponential.toggled.connect(lambda x: self.onClicked(x))
+        self.radiobutton_exponential.toggled.connect(self.onClicked)
         layout1.addRow(self.radiobutton_exponential)
 
         self.radiobutton_gaussian = QRadioButton("Gaussian")
-        self.radiobutton_gaussian.toggled.connect(lambda checked: self.onClicked(checked))
+        self.radiobutton_gaussian.toggled.connect(self.onClicked)
         layout1.addRow(self.radiobutton_gaussian)
 
         self.valueChanged()
@@ -400,15 +400,29 @@ class Emission_Zone_Setting(QWidget):
         layout3.addRow(label)
 
         self.special_label = QLabel()
-        self.special_label.setFixedSize(330, 330)
-        self.fig = plt.Figure(figsize=(3, 3))
+        self.special_label.setFixedSize(300, 300)
+        self.fig = plt.Figure(figsize=(2.8, 1.7))
         self.canvas = FigureCanvas(self.fig)
         self.canvas.setParent(self.special_label)
         self.ax = self.fig.add_subplot(111)
+        self.onClicked()
         self.ax.set_xlim([-10, 10])
-
-        layout3.addWidget(NavigationToolbar(self.canvas, self.special_label))
+        self.toolbar = NavigationToolbar(self.canvas, self.special_label)
+        self.toolbar.setMinimumWidth(self.canvas.width())
+        layout3.addWidget(self.toolbar)
         layout3.addRow(self.special_label)
+
+    def drawing(self, equation):
+        if self.radiobutton_sheet.isChecked():
+            self.ax.axvline(equation)
+
+        elif self.radiobutton_constant.isChecked():
+            y = eval(equation)
+            self.ax.plot(y)
+        else:
+            x = np.linspace(-10, 10)
+            y = eval(equation)
+            self.ax.plot(x, y)
 
     def valueChanged(self):
         self.radiobutton_sheet.type = "x = %s" %(self.textLine_a.value())
@@ -421,7 +435,7 @@ class Emission_Zone_Setting(QWidget):
             % (self.textLine_b.value(), self.textLine_a.value(), self.textLine_c.value())
 
 
-    def onClicked(self, checked):
+    def onClicked(self):
         if self.radiobutton_sheet.isChecked():
             equation = self.radiobutton_sheet.type
             self.qlabel.setText(equation)
@@ -434,7 +448,6 @@ class Emission_Zone_Setting(QWidget):
             self.textLine_c.setEnabled(False)
 
             self.ax.axvline(equation)
-
 
         elif self.radiobutton_constant.isChecked():
             equation = self.radiobutton_constant.type
